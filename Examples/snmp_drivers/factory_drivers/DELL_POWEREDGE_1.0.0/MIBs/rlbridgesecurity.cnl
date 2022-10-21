@@ -1,0 +1,189 @@
+RADLAN-BRIDGE-SECURITY-A DEFINITIONS ::= BEGIN
+
+-- Version:    7.43
+-- Date:       24 JAN 2006
+
+
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE,
+    Unsigned32, IpAddress                           FROM SNMPv2-SMI
+    InterfaceIndex, ifIndex                         FROM IF-MIB
+    RowStatus                                       FROM RADLAN-SNMPv2
+    TEXTUAL-CONVENTION, MacAddress                  FROM SNMPv2-TC
+    VlanId                                          FROM Q-BRIDGE-MIB
+    rnd                                             FROM RADLAN-MIB;
+
+rlBridgeSecurity OBJECT IDENTIFIER ::= { rnd  112}
+
+rlIpDhcpSnoop OBJECT IDENTIFIER ::= { rlBridgeSecurity  1}
+
+rlIpSourceGuard OBJECT IDENTIFIER ::= { rlBridgeSecurity  2}
+
+rlIpArpInspect OBJECT IDENTIFIER ::= { rlBridgeSecurity  3}
+
+--
+-- DHCP Snoop
+--
+rlIpDhcpSnoopMibVersion OBJECT-TYPE
+        ::= { rlIpDhcpSnoop 1 }
+
+rlIpDhcpSnoopEnable OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 2 }
+
+rlIpDhcpSnoopFileEnable OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 3 }
+
+rlIpDhcpSnoopClearAction OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 4 }
+
+rlIpDhcpSnoopFileUpdateTime OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 5 }
+
+rlIpDhcpSnoopVerifyMacAddress OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 6 }
+
+rlIpDhcpSnoopCurrentEntiresNumber OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 7 }
+
+rlIpDhcpOpt82InsertionEnable OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 8 }
+
+rlIpDhcpOpt82RxOnUntrustedEnable OBJECT-TYPE
+    ::= { rlIpDhcpSnoop 9 }
+
+--
+-- Dhcp Snoop Static table
+--
+rlIpDhcpSnoopStaticTable  OBJECT-TYPE
+  ::= { rlIpDhcpSnoop 10 }
+
+rlIpDhcpSnoopStaticEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpDhcpSnoopStaticRowStatus
+::= { rlIpDhcpSnoopStaticTable 1 }
+
+--
+-- Dhcp Snoop table
+--
+
+rlIpDhcpSnoopTable  OBJECT-TYPE
+  ::= { rlIpDhcpSnoop 11 }
+
+rlIpDhcpSnoopEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpDhcpSnoopRowStatus
+::= { rlIpDhcpSnoopTable 1 }
+
+--
+-- Dhcp Snoop Enable VLAN Table
+--
+rlIpDhcpSnoopEnableVlanTable  OBJECT-TYPE
+  ::= { rlIpDhcpSnoop 12 }
+
+rlIpDhcpSnoopEnableVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpDhcpSnoopEnableVlanRowStatus
+::= { rlIpDhcpSnoopEnableVlanTable 1 }
+
+
+--
+-- Dhcp Snoop Trusted ports Table
+--
+rlIpDhcpSnoopTrustedPortTable  OBJECT-TYPE
+  ::= { rlIpDhcpSnoop 13 }
+
+rlIpDhcpSnoopTrustedPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpDhcpSnoopTrustedPortRowStatus
+::= { rlIpDhcpSnoopTrustedPortTable 1 }
+
+--
+--  IP Source Guard
+--
+rlIpSourceGuardMibVersion OBJECT-TYPE
+    ::= { rlIpSourceGuard 1 }
+
+rlIpSourceGuardEnable OBJECT-TYPE
+    ::= { rlIpSourceGuard 2 }
+
+rlIpSourceGuardRetryToInsert OBJECT-TYPE
+    ::= { rlIpSourceGuard 3 }
+
+rlIpSourceGuardRetryTime OBJECT-TYPE
+    ::= { rlIpSourceGuard 4 }
+
+--
+--  IP Source Guard Ports table
+--
+
+rlIpSourceGuardPortTable OBJECT-TYPE
+  ::= { rlIpSourceGuard 5 }
+
+rlIpSourceGuardPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpSourceGuardPortRowStatus
+::= { rlIpSourceGuardPortTable 1 }
+
+--
+--  IP Source Guard table
+--
+
+rlIpSourceGuardTable  OBJECT-TYPE
+  ::= { rlIpSourceGuard 6 }
+
+rlIpSourceGuardEntry OBJECT-TYPE
+::= { rlIpSourceGuardTable 1 }
+
+--
+-- ARP Inspection
+--
+rlIpArpInspectMibVersion OBJECT-TYPE
+    ::= { rlIpArpInspect 1 }
+
+rlIpArpInspectEnable OBJECT-TYPE
+   ::= { rlIpArpInspect 2 }
+
+rlIpArpInspectLogInterval OBJECT-TYPE
+    ::= { rlIpArpInspect 3 }
+
+rlIpArpInspectValidation OBJECT-TYPE
+    ::= { rlIpArpInspect 4 }
+
+--
+-- ARP Inspection List table
+--
+rlIpArpInspectListTable  OBJECT-TYPE
+  ::= { rlIpArpInspect 5 }
+
+rlIpArpInspectListEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpArpInspectListRowStatus
+::= { rlIpArpInspectListTable 1 }
+
+
+--
+-- Arp Inspection Enable VLAN Table
+--
+rlIpArpInspectEnableVlanTable  OBJECT-TYPE
+  ::= { rlIpArpInspect 6 }
+
+rlIpArpInspectEnableVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpArpInspectEnableVlanRowStatus
+::= { rlIpArpInspectEnableVlanTable 1 }
+
+
+--
+-- ARP Inspection Trusted ports Table
+--
+rlIpArpInspectTrustedPortTable  OBJECT-TYPE
+  ::= { rlIpArpInspect 7 }
+
+rlIpArpInspectTrustedPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpArpInspectTrustedPortRowStatus
+::= { rlIpArpInspectTrustedPortTable 1 }
+
+
+END

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on Juniper QFX10008 switch at SLP, 7th September 2016.
+	The software version of the unit tested is:
+		 Junos: 15.1X53-D33.3
+	This unit is configured with V2c SNMP, so this config is for V2c SNMP units.  It hasn't been tested
+	and may not work with units configured for V1 SNMP.
+	
+	This driver requires RollSNMP version 2.6.86 or later
+-->
+<DefinitionGroup>
+
+	<MIBSource href="drivers/JUNIPER_QFX10008-LINECARD_1.0.0/MIBs"/>
+	
+	<!-- Juniper doesn't seem to support ascii OIDs, revert to decimal -->
+	
+	<!-- OIDs for Juniper QFX switches only -->
+	
+	<OIDAlias id="JUNIPER" oid=".1.3.6.1.4.1.2636" >
+		<OIDAlias id="JNX MIBS" oid=".3" >
+			<OIDAlias id="IF JNX ENTRY" oid=".3.1.1" />
+			<OIDAlias id="JNX BOX" oid=".1" >
+				<OIDAlias id="JNX FRU" oid=".15.1" >
+					<OIDAlias id="JNX UPTIME" oid=".13" />
+					<OIDAlias id="JNX FRU NAME" oid=".5" />
+					<OIDAlias id="JNX FRU STATE" oid=".8" />
+					<OIDAlias id="JNX FRU TEMP" oid=".9" />
+				</OIDAlias>
+				<OIDAlias id="JNX LEDS" oid=".10.1" >
+					<OIDAlias id="JNX LED STATE" oid=".8" />
+					<OIDAlias id="JNX LED NAME" oid=".7" />
+				</OIDAlias>
+				<OIDAlias id="JNX OPERATING" oid=".13.1" />
+				<OIDAlias id="JNX CONTENTS" oid=".8.1" />
+			</OIDAlias>
+			</OIDAlias>
+	</OIDAlias>
+	<OIDAlias id="MIB2" oid=".1.3.6.1.2.1" >
+		<OIDAlias id="VRRP" oid=".68.1.3.1" />
+		<OIDAlias id="IFX ENTRY" oid=".31.1.1.1">
+			<OIDAlias id="IF ALIAS" oid=".18"/>
+		</OIDAlias>
+		<OIDAlias id="IF ENTRY" oid=".2.2.1" >
+			<OIDAlias id="IF DESC" oid=".2" />
+		</OIDAlias>
+	</OIDAlias>
+		
+	<UnitTypeDef typeName="JUNIPER_QFX10008-LINECARD_1.0.0">
+	
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: QFX10008 Linecard.rsnmp 3674 2017-11-28 16:46:25Z michaelmunns $</StaticString>
+		</StaticDef>
+		
+		<!--userIndex1 is used to define which Linecard is polled, the first Juniper linecard is 0 -->
+		
+		<OIDFilter id="PORT" exclude="false">
+			<OID alias="PORT NAME ARRAY">.#I</OID>
+			<OIDFilterRule regex="^et-#1|^xe-#1"/> <!-- add ports starting with "et-" or "xe-" -->
+			<!--OIDFilterRule regex="^[xe]*-"/--> <!-- adds ports starting with "xe-" -->
+			<!--OIDSortRule regex="(^[a-zA-Z]*)[0-9]*\.*[0-9]*" type="Alpha"/--> <!-- sort "xxx" "xxx0" and "xxx0.0" to the top -->
+			<OIDSortRule regex="\D*(\d*)/\d*/\d*" type="Num"/> <!-- sort first group of numbers numerically "xx-<num>/0/0" -->
+			<OIDSortRule regex="\D*\d*/(\d*)/\d*" type="Num"/> <!-- sort second group of numbers numerically "xx-0/<num>/0" -->
+			<OIDSortRule regex="\D*\d*/\d*/(\d*)" type="Num"/> <!-- sort third group of numbers numerically "xx-0/0/<num>" -->
+			<OIDSortRule regex="\D*\d*/\d*/\d*:(\d*)" type="Num"/> <!-- sort fourth group of numbers numerically "xx-0/0/0:<num>" -->
+			<OIDSortRule regex="\D*\d*/\d*/\d*:\d*.(\d*)" type="Num"/> <!-- sort fifth group of numbers numerically "xx-0/0/0:0.<num>" -->
+			<!-- by this point you should have a list of filterd and sorted OIDs under the specified alias eg "4, 6, 9, 44" -->
+			
+		</OIDFilter>
+
+		<!-- Standard Network translations -->
+
+		<TranslationDef link="PORT STATUS ARRAY" >
+			<Array filter="PORT"/>
+		</TranslationDef>	
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<Array filter="PORT"/>  
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		
+		<!--TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<Array filter="PORT"/>
+		</TranslationDef-->
+
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<Array filter="PORT"/>
+		</TranslationDef>
+		
+		<!-- Juniper Specific definitions -->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAF_OUT_STATE" pollRate="10" >
+			<Array filter="PORT"/>
+			<ExpOID alias="IF JNX ENTRY">.5.#I</ExpOID>	<!--used bandwidth in octets-->
+			<ExpOID alias="IFX ENTRY">.15.#I</ExpOID>			<!--total bandwidth in bps-->
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 85 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="OK: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="WARN: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &gt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="FAIL: %1.3f percent bandwidth used" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAF_IN_STATE" pollRate="10" >
+			<Array filter="PORT"/>
+			<ExpOID alias="IF JNX ENTRY">.2.#I</ExpOID>	<!--used bandwidth in octets-->
+			<ExpOID alias="IFX ENTRY">.15.#I</ExpOID>			<!--total bandwidth in bps-->
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 85 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="OK: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="WARN: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &gt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="FAIL: %1.3f percent bandwidth used" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_ERRORS" pollRate="1">
+			<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.20.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_ERRORS" pollRate="1">
+			<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.14.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_DISCARDS" pollRate="1">
+			<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.13.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_DISCARDS" pollRate="1">
+			<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.19.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_IN" pollRate="30" >
+			<OID alias="IF JNX ENTRY">.2.#I</OID>
+			<Array filter="PORT"/>
+			
+			<!-- If rate of change is <= 999 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="999" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1000, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_OUT" pollRate="30" >
+			<OID alias="IF JNX ENTRY">.5.#I</OID>
+			<Array filter="PORT"/>
+			
+			<!-- If rate of change is <= 1023 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="1023" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1024, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_NAME" pollRate="600" >
+			<ExpOID alias="IF ALIAS">.#I</ExpOID>
+			<ExpOID alias="IF DESC">.#I</ExpOID>
+			<Array filter="PORT"/>
+			<ExpressionRule format="$2 : $1" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>		
+		
+	</UnitTypeDef>
+
+</DefinitionGroup>

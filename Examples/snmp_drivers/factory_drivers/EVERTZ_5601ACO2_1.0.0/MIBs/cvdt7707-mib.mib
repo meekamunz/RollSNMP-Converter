@@ -1,0 +1,427 @@
+-- Copyright Evertz Microsystems Ltd.
+-- Confidential 
+
+CVDT7707-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS        
+
+	exprCVDT7707                     
+		FROM EVERTZ-EXPERIMENTAL-NODE        
+	OBJECT-TYPE                
+		FROM RFC-1212;
+
+	cvdt7707InstanceInfo			OBJECT IDENTIFIER ::= { exprCVDT7707 2 }
+	cvdt7707Control			OBJECT IDENTIFIER ::= { exprCVDT7707 3 }
+      	cvdt7707Notify		 	OBJECT IDENTIFIER ::= { exprCVDT7707 4 }
+	cvdt7707Configure			OBJECT IDENTIFIER ::= { exprCVDT7707 5 }
+	cvdt7707Traps			OBJECT IDENTIFIER ::= { exprCVDT7707 6 }
+
+-- beginning of CVDT7707 Instance Information table       
+
+	instanceTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains information and objects related to the
+			instance.               
+		"        
+	::= { cvdt7707InstanceInfo 1 }        
+
+	instanceEntry OBJECT-TYPE                
+		SYNTAX InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object is used to access the objects in this table.
+		"                
+		INDEX { cvdt7707Instance }        
+	::= { instanceTable 1 }        
+
+	InstanceEntry ::= SEQUENCE {                
+		cvdt7707Instance		INTEGER       
+	}        
+
+	cvdt7707Instance OBJECT-TYPE                
+		SYNTAX INTEGER ( 1..15 )                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This object is the main index for this product.  Every object
+			is referenced by it.                
+		"        
+	::= { instanceEntry 1 }        
+
+-- end of CVDT7707 Instance Information table
+-- beginning of CVDT7707 misc Control table       
+
+	miscControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+		    This table contains information and objects related to card status.	
+		"        
+	::= { cvdt7707Control 1 }        
+
+	miscControlEntry OBJECT-TYPE                
+		SYNTAX MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+	        This entry object is used to access the objects in this table.
+		"                
+		INDEX { cvdt7707Instance }        
+	::= { miscControlTable 1 }        
+
+	MiscControlEntry ::= SEQUENCE {                
+		cardType		OCTET STRING,
+        serialPortTxActive  INTEGER,
+        serialPortRxActive  INTEGER,
+        opticalPower        INTEGER
+	}        
+
+	cardType OBJECT-TYPE                
+		SYNTAX OCTET STRING (SIZE(17))                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This control reads the card name and it can either be
+            '7707CVDT', '7707CVDT-F2', '7707CVDT-A4', or '7707CVDT-A4-F2'
+		"        
+	::= { miscControlEntry 1 }        
+
+    serialPortTxActive OBJECT-TYPE                
+		SYNTAX INTEGER { false(1),
+					true(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This parameter is used to determine if there is currently any
+            activity on the serial port transmit lines
+        "        
+	::= { miscControlEntry 2 }                
+
+    serialPortRxActive OBJECT-TYPE                
+		SYNTAX INTEGER { false(1),
+					true(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This parameter is used to determine if there is currently any
+            activity on the serial port receive lines
+        "        
+	::= { miscControlEntry 3 }
+
+    opticalPower OBJECT-TYPE                
+		SYNTAX INTEGER ( -128..127 ) 
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+            This parameter indicates the optical power and it has a range
+            from -128 to 127.  The card range is from -28dB to -12dB where
+            -128 = < min and 127 = OK.
+            Note: The measurable optical power range is so small, it is not
+            possible to determine an over condition.  The 'over' value is kept
+            for future use.
+        "        
+	::= { miscControlEntry 4 }                
+-- end of CVDT7707 misc control table
+-- beginning of CVDT7707 video control table       
+
+	videoControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF VideoControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+		    This table contains information and objects related to video.
+		"        
+	::= { cvdt7707Control 2 }        
+
+	videoControlEntry OBJECT-TYPE                
+		SYNTAX VideoControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+	        This entry object is used to access the objects in this table.
+		"                
+		INDEX { videoChannel, cvdt7707Instance }        
+	::= { videoControlTable 1 }        
+
+	VideoControlEntry ::= SEQUENCE { 
+		videoChannel		INTEGER,               
+		outputCableEQ		INTEGER,
+		videoStandard		INTEGER
+	}     
+
+	videoChannel OBJECT-TYPE                
+		SYNTAX INTEGER {	videoA(1),
+					videoB(2)
+		}
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+            This is the main index in this table. Every other object in this 
+            table is indexed on this.
+		"        
+	::= { videoControlEntry 1 }         
+
+	outputCableEQ OBJECT-TYPE                
+		SYNTAX INTEGER (0..300)
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This control configures the Input Cable Equalization and it is the
+            amount of pre-emphasis being applied at the output video.  The
+            range is from 0 to 300 metres.
+            Note: This parameter only applies to the Video A index and a
+            default value of 0 will be returned for the Video B index.
+		"        
+	::= { videoControlEntry 2 }
+
+	videoStandard OBJECT-TYPE                
+		SYNTAX INTEGER { loss(1),	
+                    ntsc(2),
+					pal(3)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This is the input video standard and it can either be loss, NTSC,
+            or PAL.
+        "        
+	::= { videoControlEntry 3 }              
+
+-- end of CVDT video control table  
+-- beginning of CVDT audio control table       
+
+	audioControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF AudioControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+		    This table contains information and objects related to audio
+		"        
+	::= { cvdt7707Control 3 }        
+
+	audioControlEntry OBJECT-TYPE                
+		SYNTAX AudioControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+	        This entry object is used to access the objects in this table		
+		"                
+		INDEX { audioChannel, cvdt7707Instance }        
+	::= { audioControlTable 1 }        
+
+	AudioControlEntry ::= SEQUENCE {                
+		audioChannel		INTEGER,
+		audioSilenceDetect	INTEGER,
+		audioSilenceDuration	INTEGER,
+		audioSilenceLevel		INTEGER
+	}        
+
+	audioChannel OBJECT-TYPE                
+		SYNTAX INTEGER {	audio1(1),
+					audio2(2),
+					audio3(3),
+					audio4(4)
+		}
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+            This is the main index in this table. Every other object in this 
+            table is indexed on this.
+		"        
+	::= { audioControlEntry 1 }      
+
+	audioSilenceDetect OBJECT-TYPE                
+		SYNTAX INTEGER {	off(1),
+					on(2)
+		}
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+		    This control enables/disables the audio silence faults.
+            Note: This parameter is not supported on the '7707CVDT' and the
+            '7707CVDT-F2' and will return an error.
+		"        
+	::= { audioControlEntry 2 }
+
+	audioSilenceDuration OBJECT-TYPE                
+		SYNTAX INTEGER (1..20)
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+            This control sets the amount of time the audio is silent
+            before a fault occurs.
+            Note: This parameter is not supported on the '7707CVDT' and the
+            '7707CVDT-F2' and will return an error.
+		"        
+	::= { audioControlEntry 3 }
+
+	audioSilenceLevel OBJECT-TYPE                
+		SYNTAX INTEGER (-67..0)
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control sets the audio level under which it is considered
+            to be silent.
+            Note: This parameter is not supported on the '7707CVDT' and the
+            '7707CVDT-F2' and will return an error.
+		"        
+	::= { audioControlEntry 4 }
+
+-- end of CVDT audio control table    
+-- beginning of cvdt7707 Configuration table       
+
+	configurationTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ConfigurationEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       		
+			This table contains information and objects
+			related to the configuration of the card.	                      
+		"        
+	::= { cvdt7707Configure 1 }        
+
+	configurationEntry OBJECT-TYPE                
+		SYNTAX ConfigurationEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                            
+			This entry object type is used to access all of
+			the objects in this table.
+		"                
+		INDEX { cvdt7707Instance }        
+	::= { configurationTable 1 }        
+
+	ConfigurationEntry ::= SEQUENCE {                
+		masterJumper		INTEGER
+	}        
+	
+	masterJumper OBJECT-TYPE                
+		SYNTAX  INTEGER {local(1),
+				 remote(2)		
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control allows the user to read if the
+			master jumper is on local or remote control.
+			The values for this object are local and
+			remote.
+		"        
+	::= { configurationEntry 1 }        	
+
+-- end of cvdt7707 Configuration table 
+-- beginning of CVDT Management Notification table       
+
+	mgmtFaultTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			                      
+			This table contains information and objects related to 
+			traps and their control.
+		"        
+	::= { cvdt7707Notify 1 }        
+
+	mgmtFaultEntry OBJECT-TYPE                
+		SYNTAX MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"      
+			This entry object type is used to access all of the objects
+			in this table.			
+		"                
+		INDEX { faultName, cvdt7707Instance }        
+	::= { mgmtFaultTable 1 }        
+
+	MgmtFaultEntry ::= SEQUENCE {                
+		faultName		INTEGER,                
+		sendTrap		INTEGER,
+		faultPresent	INTEGER        
+	}        
+
+	faultName OBJECT-TYPE                
+		SYNTAX  INTEGER {	lossOfVideoInputA(1),
+				 	lossOfVideoInputB(2),
+				 	audioSilence1(3),
+				 	audioSilence2(4),
+				 	audioSilence3(5),
+				 	audioSilence4(6),
+                    laserNotOK(7),
+                    fiberLinkLost(8),
+                    carrierWeak(9)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This is the main index of this table, all of the objects
+			in this table are referenced by it.  Each of the indexes 
+			values corresponds to a particular trap.
+            Note: The audioSilence1, audioSilence2, audioSilence3 and
+            audioSilence4 traps are not supported on the '7707CVDT' and the
+            '7707CVDT-F2' and will return false for the faultPresent parameter.
+		"        
+	::= { mgmtFaultEntry 1 }        
+
+	sendTrap OBJECT-TYPE                
+		SYNTAX  INTEGER {false(1),
+				 true(2)
+		}                
+		ACCESS  read-write                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"     
+			This control allows the user to set whether the manager
+			will receive a particular trap or ignore that trap.                  			                   
+		"        
+	::= { mgmtFaultEntry 2 }
+
+	faultPresent OBJECT-TYPE                
+		SYNTAX  INTEGER {false(1),				 			
+				 true(2)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control allows the user to check the status of a 
+			particular trap.
+            Note: A default value of false will be returned for the
+            audioSilence traps on the '7707CVDT' and the '7707CVDT-F2'.
+		"        
+	::= { mgmtFaultEntry 3 }
+
+-- end of CVDT Management Notification table   
+END

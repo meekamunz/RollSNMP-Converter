@@ -1,0 +1,88 @@
+-- MIB created 4/24/97 17:58:32, by
+--   SMIC (the next generation) version 1.6.29, November 22, 1994.
+
+SNMP-REPEATER-MIB-A DEFINITIONS ::= BEGIN
+
+-- From file: "rfc2108.MIB"
+-- Compile options "H M"
+
+IMPORTS
+    mib-2
+            FROM RFC1213-MIB
+    Counter32, Integer32, Gauge32
+            FROM SNMPv2-SMI-v1
+    TimeTicks
+            FROM RFC1155-SMI
+    OBJECT-TYPE
+            FROM RFC-1212
+    TRAP-TYPE
+            FROM RFC-1215
+    TimeStamp, DisplayString, MacAddress, RowStatus, TestAndIncr
+            FROM SNMPv2-TC-v1
+    OwnerString
+            FROM IF-MIB;
+
+snmpDot3RptrMgt OBJECT IDENTIFIER ::= { mib-2 22 }
+snmpRptrMod OBJECT IDENTIFIER ::= { snmpDot3RptrMgt 5 }
+
+rptrBasicPackage OBJECT IDENTIFIER ::= { snmpDot3RptrMgt 1 }
+rptrRptrInfo    OBJECT IDENTIFIER ::= { rptrBasicPackage 1 }
+rptrGroupInfo   OBJECT IDENTIFIER ::= { rptrBasicPackage 2 }
+rptrPortInfo    OBJECT IDENTIFIER ::= { rptrBasicPackage 3 }
+rptrAllRptrInfo OBJECT IDENTIFIER ::= { rptrBasicPackage 4 }
+rptrMonitorPackage OBJECT IDENTIFIER ::= { snmpDot3RptrMgt 2 }
+rptrMonitorRptrInfo OBJECT IDENTIFIER ::= { rptrMonitorPackage 1 }
+rptrMonitorGroupInfo OBJECT IDENTIFIER ::= { rptrMonitorPackage 2 }
+rptrMonitorPortInfo OBJECT IDENTIFIER ::= { rptrMonitorPackage 3 }
+rptrMonitorAllRptrInfo OBJECT IDENTIFIER ::= { rptrMonitorPackage 4 }
+rptrAddrTrackPackage OBJECT IDENTIFIER ::= { snmpDot3RptrMgt 3 }
+rptrAddrTrackRptrInfo OBJECT IDENTIFIER ::= { rptrAddrTrackPackage 1 }
+rptrAddrTrackGroupInfo OBJECT IDENTIFIER ::= { rptrAddrTrackPackage 2 }
+rptrAddrTrackPortInfo OBJECT IDENTIFIER ::= { rptrAddrTrackPackage 3 }
+rptrTopNPackage OBJECT IDENTIFIER ::= { snmpDot3RptrMgt 4 }
+rptrTopNRptrInfo OBJECT IDENTIFIER ::= { rptrTopNPackage 1 }
+rptrTopNGroupInfo OBJECT IDENTIFIER ::= { rptrTopNPackage 2 }
+rptrTopNPortInfo OBJECT IDENTIFIER ::= { rptrTopNPackage 3 }
+snmpRptrModConf OBJECT IDENTIFIER ::= { snmpRptrMod 1 }
+snmpRptrModCompls OBJECT IDENTIFIER ::= { snmpRptrModConf 1 }
+snmpRptrModObjGrps OBJECT IDENTIFIER ::= { snmpRptrModConf 2 }
+snmpRptrModNotGrps OBJECT IDENTIFIER ::= { snmpRptrModConf 3 }
+
+OptMacAddr ::= OCTET STRING(SIZE(0 | 6))
+-- TEXTUAL-CONVENTION
+--  DspHint
+--    1x:
+--  Status
+--    mandatory
+--  Descr
+--    Either a 6 octet address in the `canonical'
+--    order defined by IEEE 802.1a, i.e., as if it
+--    were transmitted least significant bit first
+--    if a value is available or a zero length string.
+--  Refer
+--    See MacAddress in SNMPv2-TC. The only difference
+--    is that a zero length string is allowed as a value
+--    for OptMacAddr and not for MacAddress.
+
+rptrGroupTable OBJECT-TYPE
+    ::= { rptrGroupInfo 1 }
+
+rptrGroupEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rptrGroupTable 1 }
+
+rptrPortTable OBJECT-TYPE
+    ::= { rptrPortInfo 1 }
+
+rptrPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rptrPortTable 1 }
+
+rptrMonitorPortTable OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rptrMonitorPortInfo 1 }
+
+rptrMonitorPortEntry OBJECT-TYPE
+    ::= { rptrMonitorPortTable 1 }
+
+END

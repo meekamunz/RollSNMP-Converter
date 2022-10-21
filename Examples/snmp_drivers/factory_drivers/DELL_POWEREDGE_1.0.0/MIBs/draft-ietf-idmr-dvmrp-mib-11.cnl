@@ -1,0 +1,99 @@
+--
+-- from draft-ietf-idmr-dvmrp-mib-11.mib
+--
+DVMRP-STD-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, mib-2,
+    Integer32, Counter32, Gauge32, NOTIFICATION-TYPE,
+    IpAddress, TimeTicks             FROM SNMPv2-SMI
+    DisplayString, RowStatus         FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP,
+    NOTIFICATION-GROUP               FROM SNMPv2-CONF
+    SnmpAdminString                  FROM SNMP-FRAMEWORK-MIB
+    InterfaceIndexOrZero,
+    InterfaceIndex                   FROM IF-MIB
+    dvmrpStdMIB                      FROM DVMRP-STD-MIB;
+
+
+dvmrpMIBObjects OBJECT IDENTIFIER ::= { dvmrpStdMIB 1 }
+
+dvmrp           OBJECT IDENTIFIER ::= { dvmrpMIBObjects 1 }
+
+dvmrpScalar     OBJECT IDENTIFIER ::= { dvmrp 1 }
+
+dvmrpVersionString OBJECT-TYPE
+    ::= { dvmrpScalar 1 }
+
+dvmrpGenerationId OBJECT-TYPE
+    ::= { dvmrpScalar 2 }
+
+dvmrpNumRoutes OBJECT-TYPE
+    ::= { dvmrpScalar 3 }
+
+dvmrpReachableRoutes OBJECT-TYPE
+    ::= { dvmrpScalar 4 }
+
+-- The DVMRP Interface Table
+
+dvmrpInterfaceTable OBJECT-TYPE
+    ::= { dvmrp 2 }
+
+dvmrpInterfaceEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME dvmrpInterfaceStatus
+    ::= { dvmrpInterfaceTable 1 }
+
+-- The DVMRP Neighbor Table
+
+dvmrpNeighborTable OBJECT-TYPE
+    ::= { dvmrp 3 }
+
+dvmrpNeighborEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dvmrpNeighborTable 1 }
+
+-- The DVMRP Route Table
+
+dvmrpRouteTable OBJECT-TYPE
+    ::= { dvmrp 4 }
+
+dvmrpRouteEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dvmrpRouteTable 1 }
+
+-- The DVMRP Routing Next Hop Table
+
+dvmrpRouteNextHopTable OBJECT-TYPE
+    ::= { dvmrp 5 }
+
+dvmrpRouteNextHopEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dvmrpRouteNextHopTable 1 }
+
+-- The DVMRP Prune Table
+
+dvmrpPruneTable OBJECT-TYPE
+    ::= { dvmrp 6 }
+
+dvmrpPruneEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dvmrpPruneTable 1 }
+
+-- DVMRP Traps
+
+dvmrpTraps      OBJECT IDENTIFIER ::= { dvmrp 7 }
+
+dvmrpNeighborLoss TRAP-TYPE
+    ENTERPRISE  dvmrpTraps
+    ERRCODE     RSG_ErrMsg_code_dvmrpNeighborLoss_E
+    SEVERITY    WARNING
+    ::= 1
+
+dvmrpNeighborNotPruning TRAP-TYPE
+    ENTERPRISE  dvmrpTraps
+    ERRCODE     RSG_ErrMsg_code_dvmrpNeighborNotPruning_E
+    SEVERITY    WARNING
+    ::= 2
+
+END

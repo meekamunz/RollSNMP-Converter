@@ -1,0 +1,40 @@
+ENTITY-SENSOR-MIB-A DEFINITIONS ::= BEGIN
+
+-- draft-ietf-entmib-sensor-mib-02.txt
+
+IMPORTS
+        entitySensorMIB
+                FROM ENTITY-SENSOR-MIB
+        rlEnv   FROM RADLAN-MIB
+        MODULE-IDENTITY, OBJECT-TYPE,
+        Integer32, Unsigned32, mib-2
+                FROM SNMPv2-SMI
+        MODULE-COMPLIANCE, OBJECT-GROUP
+                FROM SNMPv2-CONF
+        TEXTUAL-CONVENTION, TimeStamp
+                FROM SNMPv2-TC
+        entPhysicalIndex, entityPhysicalGroup
+                FROM ENTITY-MIB
+        SnmpAdminString
+                FROM SNMP-FRAMEWORK-MIB;
+
+entitySensorObjects              OBJECT IDENTIFIER
+     ::= { entitySensorMIB 1 }
+-- entitySensorNotifications        OBJECT IDENTIFIER
+--     ::= { entitySensorMIB 2 }
+entitySensorConformance          OBJECT IDENTIFIER
+     ::= { entitySensorMIB 3 }
+
+--
+-- Entity Sensor Table
+--
+
+entPhySensorTable OBJECT-TYPE
+    ::= { entitySensorObjects 1 }
+
+entPhySensorEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { entPhySensorTable 1 }
+
+END
+

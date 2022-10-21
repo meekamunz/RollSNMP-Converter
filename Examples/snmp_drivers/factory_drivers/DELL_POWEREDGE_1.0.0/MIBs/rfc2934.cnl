@@ -1,0 +1,270 @@
+PIM-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, experimental,
+    NOTIFICATION-TYPE,
+    Integer32, IpAddress, TimeTicks  FROM SNMPv2-SMI
+    RowStatus, TruthValue            FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP,
+    NOTIFICATION-GROUP               FROM SNMPv2-CONF
+    ipMRouteGroup, ipMRouteSource,
+    ipMRouteSourceMask, ipMRouteNextHopGroup,
+    ipMRouteNextHopSource, ipMRouteNextHopSourceMask,
+    ipMRouteNextHopIfIndex,
+    ipMRouteNextHopAddress           FROM IPMROUTE-STD-MIB
+    InterfaceIndex                   FROM IF-MIB
+    pimMIB                           FROM PIM-MIB;
+
+pimMIBObjects OBJECT IDENTIFIER ::= { pimMIB 1 }
+
+pimTraps      OBJECT IDENTIFIER ::= { pimMIBObjects 0 }
+
+pim           OBJECT IDENTIFIER ::= { pimMIBObjects 1 }
+
+pimJoinPruneInterval OBJECT-TYPE
+    ::= { pim 1 }
+
+-- The PIM Interface Table
+
+pimInterfaceTable OBJECT-TYPE
+    ::= { pim 2 }
+
+pimInterfaceEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME pimInterfaceStatus
+    ::= { pimInterfaceTable 1 }
+
+-- The PIM Neighbor Table
+
+pimNeighborTable OBJECT-TYPE
+    ::= { pim 3 }
+
+pimNeighborEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { pimNeighborTable 1 }
+
+--
+-- The PIM IP Multicast Route Table
+--
+
+pimIpMRouteTable OBJECT-TYPE
+    ::= { pim 4 }
+
+pimIpMRouteEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { pimIpMRouteTable 1 }
+
+--
+-- The PIM Next Hop Table
+--
+pimIpMRouteNextHopTable OBJECT-TYPE
+    ::= { pim 7 }
+
+pimIpMRouteNextHopEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { pimIpMRouteNextHopTable 1 }
+
+-- The PIM RP Table
+
+pimRPTable OBJECT-TYPE
+    ::= { pim 5 }
+
+pimRPEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME pimRPRowStatus
+    ::= { pimRPTable 1 }
+
+-- The PIM RP-Set Table
+
+pimRPSetTable OBJECT-TYPE
+    ::= { pim 6 }
+
+pimRPSetEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { pimRPSetTable 1 }
+
+--
+-- Note: { pim 8 } through { pim 10 } were used in older versions
+-- of this MIB.  Since some earlier versions of this MIB have been
+-- widely-deployed, these values must not be used in the future,
+-- as long the MIB is rooted under { experimental 61 }.
+--
+
+-- The PIM Candidate-RP Table
+
+pimCandidateRPTable OBJECT-TYPE
+    ::= { pim 11 }
+
+pimCandidateRPEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME pimCandidateRPRowStatus
+    ::= { pimCandidateRPTable 1 }
+
+-- The PIM Component Table
+
+pimComponentTable OBJECT-TYPE
+    ::= { pim 12 }
+
+pimComponentEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME pimComponentStatus
+    ::= { pimComponentTable 1 }
+
+-- PIM Traps
+
+pimNeighborLoss TRAP-TYPE
+    ENTERPRISE pimTraps
+    ERRCODE    RSG_ErrMsg_code_rlPimTableOverflow_E
+    SEVERITY   WARNING
+    ::= 1
+
+-- conformance information
+
+pimMIBConformance OBJECT IDENTIFIER ::= { pimMIB 2 }
+pimMIBCompliances OBJECT IDENTIFIER ::= { pimMIBConformance 1 }
+pimMIBGroups      OBJECT IDENTIFIER ::= { pimMIBConformance 2 }
+
+
+-- compliance statements
+--
+--pimV1MIBCompliance MODULE-COMPLIANCE
+--    STATUS  deprecated
+--    DESCRIPTION
+--            "The compliance statement for routers running PIMv1 and
+--            implementing the PIM MIB."
+--    MODULE  ## this module
+--        MANDATORY-GROUPS { pimV1MIBGroup }
+--
+--    ::= { pimMIBCompliances 1 }
+--
+--pimSparseV2MIBCompliance MODULE-COMPLIANCE
+--    STATUS  current
+--    DESCRIPTION
+--            "The compliance statement for routers running PIM Sparse
+--            Mode and implementing the PIM MIB."
+--    MODULE  ## this module
+--    MANDATORY-GROUPS { pimV2MIBGroup }
+--
+--    GROUP      pimV2CandidateRPMIBGroup
+--    DESCRIPTION
+--            "This group is mandatory if the router is capable of being a
+--            Candidate RP."
+--
+--    OBJECT     pimInterfaceStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--             "Write access is not required."
+--
+--    ::= { pimMIBCompliances 2 }
+--
+--pimDenseV2MIBCompliance MODULE-COMPLIANCE
+--    STATUS  current
+--    DESCRIPTION
+--            "The compliance statement for routers running PIM Dense Mode
+--            and implementing the PIM MIB."
+--    MODULE  ## this module
+--
+--        MANDATORY-GROUPS { pimDenseV2MIBGroup }
+--
+--    OBJECT     pimInterfaceStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--             "Write access is not required."
+--
+--    ::= { pimMIBCompliances 3 }
+--
+--## units of conformance
+--
+--pimNotificationGroup NOTIFICATION-GROUP
+--    NOTIFICATIONS { pimNeighborLoss }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of notifications for signaling important PIM
+--            events."
+--    ::= { pimMIBGroups 1 }
+--
+--pimV2MIBGroup OBJECT-GROUP
+--    OBJECTS { pimJoinPruneInterval, pimNeighborIfIndex,
+--              pimNeighborUpTime, pimNeighborExpiryTime,
+--              pimInterfaceAddress, pimInterfaceNetMask,
+--              pimInterfaceDR, pimInterfaceHelloInterval,
+--              pimInterfaceStatus, pimInterfaceJoinPruneInterval,
+--              pimInterfaceCBSRPreference, pimInterfaceMode,
+--              pimRPSetHoldTime, pimRPSetExpiryTime,
+--              pimComponentBSRAddress, pimComponentBSRExpiryTime,
+--              pimComponentCRPHoldTime, pimComponentStatus,
+--              pimIpMRouteFlags, pimIpMRouteUpstreamAssertTimer
+--            }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of PIM Sparse
+--            Mode (version 2) routers."
+--    ::= { pimMIBGroups 2 }
+--
+--pimDenseV2MIBGroup OBJECT-GROUP
+--    OBJECTS { pimNeighborIfIndex,
+--              pimNeighborUpTime, pimNeighborExpiryTime,
+--              pimInterfaceAddress, pimInterfaceNetMask,
+--              pimInterfaceDR, pimInterfaceHelloInterval,
+--              pimInterfaceStatus, pimInterfaceMode
+--            }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of PIM Dense
+--            Mode (version 2) routers."
+--    ::= { pimMIBGroups 5 }
+--
+--pimV2CandidateRPMIBGroup OBJECT-GROUP
+--    OBJECTS { pimCandidateRPAddress,
+--              pimCandidateRPRowStatus
+--            }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support configuration of which
+--            groups a router is to advertise itself as a Candidate-RP."
+--    ::= { pimMIBGroups 3 }
+--
+--pimV1MIBGroup OBJECT-GROUP
+--    OBJECTS { pimJoinPruneInterval, pimNeighborIfIndex,
+--              pimNeighborUpTime, pimNeighborExpiryTime,
+--              pimNeighborMode,
+--              pimInterfaceAddress, pimInterfaceNetMask,
+--              pimInterfaceJoinPruneInterval, pimInterfaceStatus,
+--              pimInterfaceMode, pimInterfaceDR,
+--              pimInterfaceHelloInterval,
+--              pimRPState, pimRPStateTimer,
+--              pimRPLastChange, pimRPRowStatus
+--            }
+--    STATUS  deprecated
+--    DESCRIPTION
+--            "A collection of objects to support management of PIM
+--            (version 1) routers."
+--    ::= { pimMIBGroups 4 }
+--
+--pimNextHopGroup OBJECT-GROUP
+--    OBJECTS { pimIpMRouteNextHopPruneReason }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of optional objects to provide per-next hop
+--            information for diagnostic purposes.  Supporting this group
+--            may add a large number of instances to a tree walk, but the
+--            information in this group can be extremely useful in
+--            tracking down multicast connectivity problems."
+--    ::= { pimMIBGroups 6 }
+--
+--pimAssertGroup OBJECT-GROUP
+--    OBJECTS { pimIpMRouteAssertMetric, pimIpMRouteAssertMetricPref,
+--              pimIpMRouteAssertRPTBit }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of optional objects to provide extra
+--            information about the assert election process.  There is no
+--            protocol reason to keep such information, but some
+--            implementations may already keep this information and make
+--            it available.  These objects can also be very useful in
+--            debugging connectivity or duplicate packet problems,
+--            especially if the assert winner does not support the PIM and
+--            IP Multicast MIBs."
+--    ::= { pimMIBGroups 7 }
+
+END

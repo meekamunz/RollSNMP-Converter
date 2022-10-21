@@ -1,0 +1,474 @@
+
+-- ***************************************************************************
+-- *     Copyright (c) 2003  Miranda Technologies Inc.
+-- *     All rights reserved.
+-- *
+-- *     This is the MIB of the Icontrol Application Server
+-- *
+-- *	The unique module ID will be : 11
+-- ***************************************************************************
+
+    GSM-MIB
+
+    DEFINITIONS ::= BEGIN
+
+    IMPORTS
+      MODULE-IDENTITY, NOTIFICATION-TYPE
+	FROM SNMPv2-SMI
+      IpAddress
+        FROM RFC1155-SMI
+      OBJECT-TYPE
+        FROM RFC-1212
+      miranda, AlarmState, GsmStatus, GsmTraps
+        FROM MIRANDA-MIB;
+
+    gsm MODULE-IDENTITY
+      LAST-UPDATED "201104080000Z"
+      ORGANIZATION "Miranda Technologies Inc."
+      CONTACT-INFO "Contact:"
+      DESCRIPTION  "GSM MIB"
+      REVISION     "200805271200Z"
+        DESCRIPTION  "Added text and status info to trap, and text info to statusTable"
+      REVISION     "201104080000Z"
+        DESCRIPTION  "Full alarm query/notification support with an expanded set of attributes: 
+                      1. Alarm query definitions: alarmTable, alarmEntry.
+                      2. Alarm notification definitions: alarmTraps, alarmNotifications.
+                      3. Using new state definition from MIRANDA-MIB: AlarmState."
+      REVISION     "201404190000Z"
+        DESCRIPTION  "Removed deprecated statusTable"
+	::= { miranda 11 }
+
+        
+-- *****************************************
+-- User Trap Events 
+-- *****************************************
+
+traps OBJECT IDENTIFIER ::= { gsm 2 }
+
+trapAlarm OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The Alarm Identifier"
+        ::= { traps 1 }
+        
+
+trapDevice OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The device class URI that generated the alarm"
+        ::= { traps 2 }
+
+trapStatus OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The alarm status"
+        ::= { traps 3 }
+
+trapTextStatus OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "the alarm text"
+        ::= { traps 4 }
+                        
+statusTrap NOTIFICATION-TYPE
+       OBJECTS { trapDevice, trapAlarm, trapStatus, trapTextStatus }
+       STATUS  current
+       DESCRIPTION
+               "User traps sent after certain conditions"
+     ::= { traps 0 3 }
+
+
+
+--------------------------------------------------------------------------------
+-- Table of alarm entries (iControl 4.20+) 
+--------------------------------------------------------------------------------
+
+alarmTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF AlarmEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION "This table contains the statuses for all alarms in GSM"
+        ::= { gsm 3 }
+
+alarmEntry OBJECT-TYPE
+        SYNTAX  AlarmEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION "Each entry is indexed by alarmIndex (auto-incrementing
+        index that resets upon GSM restarts)."
+        INDEX { alarmIndex }
+        ::= { alarmTable 1 }
+
+AlarmEntry ::= SEQUENCE {
+      alarmIndex        INTEGER,
+      uri               OCTET STRING,
+      friendlyName      OCTET STRING,
+      path              OCTET STRING,
+      typeInfo          INTEGER,
+      timestamp         Counter64,
+      gsmTimestamp      Counter64,
+      state             AlarmState,
+      latchState        AlarmState,
+      ackState          AlarmState,
+      mode              INTEGER,
+      text              OCTET STRING,
+      modeFlag          INTEGER,
+      actionsFlag       INTEGER,
+      deviceId          OCTET STRING,
+      deviceType        OCTET STRING,
+      deviceLabel       OCTET STRING,
+      deviceShortLabel  OCTET STRING,
+      deviceSourceId    OCTET STRING,
+      deviceComments    OCTET STRING,
+      deviceFrame       OCTET STRING,
+      deviceRack        OCTET STRING,
+      deviceSlot        OCTET STRING,
+      deviceCustomInfo  OCTET STRING
+      }
+
+--------------------------------------------------------------------------------
+-- Each element of the AlarmEntry sequence must be specified individually.
+--------------------------------------------------------------------------------
+
+alarmIndex OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "This is the index in the alarm table."
+        ::= { alarmEntry 1 }
+
+uri OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "URI that uniquely identifies each alarm entry."
+        ::= { alarmEntry 2 }
+
+friendlyName OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm entry's friendly name"
+        ::= { alarmEntry 3 }
+
+path OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm entry's logical path"
+        ::= { alarmEntry 4 }
+
+typeInfo OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm entry's type, encoded as bits 
+        (00000001 = status, 00000100 = text)"
+        ::= { alarmEntry 5 }
+
+timestamp OBJECT-TYPE
+        SYNTAX  Counter64
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Timestamp of the alarm's latest update (device assigned).
+        This is a UTC-time value that represents the number of milliseconds
+        since the 'epoch', namely January 1, 1970, 00:00:00 GMT."
+        ::= { alarmEntry 6 }
+
+gsmTimestamp OBJECT-TYPE
+        SYNTAX  Counter64
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Timestamp of the alarm's latest update (GSM assigned).
+        This is a UTC-time value that represents the number of milliseconds
+        since the 'epoch', namely January 1, 1970, 00:00:00 GMT."
+        ::= { alarmEntry 7 }
+
+state OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current severity state."
+        ::= { alarmEntry 8 }
+
+latchState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's latched severity state."
+        ::= { alarmEntry 9 }
+
+ackState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's acknowledged severity state."
+        ::= { alarmEntry 10 }
+
+mode OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current operation modes, encoded as bits
+        (00000001 = offline, 00000010 = maintenance, 
+        00000100 = snoozed, 00001000 = inverted)"
+        ::= { alarmEntry 11 }
+
+text OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current text information."
+        ::= { alarmEntry 12 }
+
+modeFlag OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Indicator flag about the alarm's current operation mode,
+        encoded as bits
+        (00000001 = offline, 00000010 = maintenance, 
+        00000100 = snoozed, 00001000 = inverted)"
+        ::= { alarmEntry 13 }
+
+actionsFlag OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Indicator flag about the alarm's attached actions,
+        encoded as bits (00000001 = has actions attached)"
+        ::= { alarmEntry 14 }
+
+deviceId OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Uniquely identifies the device"
+        ::= { alarmEntry 15 }
+
+deviceType OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Identifies the type of the device"
+        ::= { alarmEntry 16 }
+
+deviceLabel OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Label that describes the device"
+        ::= { alarmEntry 17 }
+
+deviceShortLabel OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Short label for the device"
+        ::= { alarmEntry 18 }
+
+deviceSourceId OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Indentifies the source of the device"
+        ::= { alarmEntry 19 }
+
+deviceComments OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Comments about the device"
+        ::= { alarmEntry 20 }
+
+deviceFrame OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Device's frame ID"
+        ::= { alarmEntry 21 }
+
+deviceRack OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Device's rack ID"
+        ::= { alarmEntry 22 }
+
+deviceSlot OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Device's slot ID"
+        ::= { alarmEntry 23 }
+
+deviceCustomInfo OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Other information about the device"
+        ::= { alarmEntry 24 }
+
+--------------------------------------------------------------------------------
+-- Trap definitions for alarm notifications (iControl 4.20+) 
+--------------------------------------------------------------------------------
+
+alarmTraps OBJECT IDENTIFIER ::= { gsm 4 }
+
+alarmNotification NOTIFICATION-TYPE
+       OBJECTS { trapAlarmIndex, trapUri, trapChangeInfo, 
+                 trapTimestamp, trapGsmTimestamp, 
+                 trapOldState, trapNewState, 
+                 trapOldLatchState, trapNewLatchState, 
+                 trapOldAckState, trapNewAckState, 
+                 trapOldMode, trapNewMode, 
+                 trapText, 
+                 trapModeFlag, trapActionsFlag, 
+                 trapPrincipal, trapTimecode, trapExtraInfo }
+       STATUS  current
+       DESCRIPTION "Notification that is sent when an alarm entry changes"
+     ::= { alarmTraps 0 1 }
+
+trapAlarmIndex OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Index of the alarm entry in the alarm table."
+        ::= { alarmTraps 1 }
+
+trapUri OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "URI that uniquely identifies each alarm entry."
+        ::= { alarmTraps 2 }
+
+trapChangeInfo OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Information about the change, encoded as bits
+        (00000001 = descriptor changed, 00000010 = metadata changed)"
+        ::= { alarmTraps 3 }
+
+trapTimestamp OBJECT-TYPE
+        SYNTAX  Counter64
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The value of the alarm entry's timestamp attribute."
+        ::= { alarmTraps 4 }
+
+trapGsmTimestamp OBJECT-TYPE
+        SYNTAX  Counter64
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The value of the alarm entry's gsmTimestamp attribute."
+        ::= { alarmTraps 5 }
+
+trapOldState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's previous severity state."
+        ::= { alarmTraps 6 }
+trapNewState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current severity state."
+        ::= { alarmTraps 7 }
+
+trapOldLatchState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's previous latched severity state."
+        ::= { alarmTraps 8 }
+trapNewLatchState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current latched severity state."
+        ::= { alarmTraps 9 }
+
+trapOldAckState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's previous acknowledged severity state."
+        ::= { alarmTraps 10 }
+trapNewAckState OBJECT-TYPE
+        SYNTAX  AlarmState
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current acknowledged severity state."
+        ::= { alarmTraps 11 }
+
+trapOldMode OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's previous operation modes, encoded as bits
+        (00000001 = offline, 00000010 = maintenance, 
+        00000100 = snoozed, 00001000 = inverted)"
+        ::= { alarmTraps 12 }
+trapNewMode OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current operation modes, encoded as bits
+        (00000001 = offline, 00000010 = maintenance, 
+        00000100 = snoozed, 00001000 = inverted)"
+        ::= { alarmTraps 13 }
+
+trapText OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Alarm's current text information."
+        ::= { alarmTraps 14 }
+
+trapModeFlag OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Indicator flag about the alarm's current operation mode,
+        encoded as bits
+        (00000001 = offline, 00000010 = maintenance, 
+        00000100 = snoozed, 00001000 = inverted)"
+        ::= { alarmTraps 15 }
+
+trapActionsFlag OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Indicator flag about the alarm's attached actions,
+        encoded as bits (00000001 = has actions attached)"
+        ::= { alarmTraps 16 }
+
+trapPrincipal OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "The entity that triggered the alarm notification"
+        ::= { alarmTraps 17 }
+
+trapTimecode OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Timecode information if applicable (HH:MM:SS:00)"
+        ::= { alarmTraps 18 }
+
+trapExtraInfo OBJECT-TYPE
+        SYNTAX  OCTET STRING
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION "Additional information about the alarm notification"
+        ::= { alarmTraps 19 }
+
+END

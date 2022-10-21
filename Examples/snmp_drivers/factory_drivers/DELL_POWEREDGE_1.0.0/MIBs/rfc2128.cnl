@@ -1,0 +1,57 @@
+DIAL-CONTROL-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    OBJECT-TYPE
+            FROM RFC-1212
+    transmission
+            FROM RFC1213-MIB;
+
+dialControlMib OBJECT IDENTIFIER ::= { transmission 21 }
+dialControlMibObjects OBJECT IDENTIFIER ::= { dialControlMib 1 }
+dialCtlConfiguration OBJECT IDENTIFIER ::= { dialControlMibObjects 1 }
+dialCtlPeer     OBJECT IDENTIFIER ::= { dialControlMibObjects 2 } -- no
+callActive      OBJECT IDENTIFIER ::= { dialControlMibObjects 3 } -- yes
+callHistory     OBJECT IDENTIFIER ::= { dialControlMibObjects 4 } -- yes
+dialControlMibTrapPrefix OBJECT IDENTIFIER ::= { dialControlMib 2 }
+dialControlMibTraps OBJECT IDENTIFIER ::= { dialControlMibTrapPrefix 0 }
+dialControlMibConformance OBJECT IDENTIFIER ::= { dialControlMib 3 }
+dialControlMibCompliances OBJECT IDENTIFIER ::= { dialControlMibConformance 1 }
+dialControlMibGroups OBJECT IDENTIFIER ::= { dialControlMibConformance 2 }
+
+callActiveTable OBJECT-TYPE
+    ::= { callActive 1 }
+
+callActiveEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { callActiveTable 1 }
+
+callHistoryTable OBJECT-TYPE
+    ::= { callHistory 3 }
+
+callHistoryEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { callHistoryTable 1 }
+
+dialCtlPeerCfgTable OBJECT-TYPE
+    ::= { dialCtlPeer 1 }
+
+dialCtlPeerCfgEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME dialCtlPeerCfgStatus
+    ::= { dialCtlPeerCfgTable 1 }
+
+dialCtlPeerStatsTable OBJECT-TYPE
+    ::= { dialCtlPeer 2 }
+
+dialCtlPeerStatsEntry OBJECT-TYPE
+    AUGMENTS {dialCtlPeerCfgEntry}
+    ::= { dialCtlPeerStatsTable 1 }
+
+dialCtlPeerCallInformation TRAP-TYPE
+-- Reverse mappable trap
+    ENTERPRISE dialControlMibTrapPrefix
+    ERRCODE     RSG_ErrMsg_code_dialCtlPeerCallInformation_E
+    SEVERITY    WARNING
+    ::= 1
+
+END

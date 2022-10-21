@@ -1,0 +1,392 @@
+P-BRIDGE-MIB-A DEFINITIONS ::= BEGIN
+
+-- -------------------------------------------------------------
+-- MIB for IEEE 802.1p devices
+-- -------------------------------------------------------------
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Counter32, Counter64
+        FROM SNMPv2-SMI
+    TruthValue, TimeInterval, MacAddress, TEXTUAL-CONVENTION
+        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP
+        FROM SNMPv2-CONF
+    dot1dTp, dot1dTpPort, dot1dBridge,
+    dot1dBasePortEntry, dot1dBasePort
+        FROM BRIDGE-MIB
+    pBridgeMIB
+        FROM P-BRIDGE-MIB;
+
+pBridgeMIBObjects OBJECT IDENTIFIER ::= { pBridgeMIB 1 }
+
+-- -------------------------------------------------------------
+-- groups in the P-BRIDGE MIB
+-- -------------------------------------------------------------
+
+dot1dExtBase    OBJECT IDENTIFIER ::= { pBridgeMIBObjects 1 }
+dot1dPriority   OBJECT IDENTIFIER ::= { pBridgeMIBObjects 2 }
+dot1dGarp       OBJECT IDENTIFIER ::= { pBridgeMIBObjects 3 }
+dot1dGmrp       OBJECT IDENTIFIER ::= { pBridgeMIBObjects 4 }
+
+-- -------------------------------------------------------------
+
+-- -------------------------------------------------------------
+-- the dot1dExtBase group
+-- -------------------------------------------------------------
+
+dot1dDeviceCapabilities OBJECT-TYPE
+    ::= { dot1dExtBase 1 }
+
+dot1dTrafficClassesEnabled OBJECT-TYPE
+    ::= { dot1dExtBase 2 }
+
+dot1dGmrpStatus OBJECT-TYPE
+    ::= { dot1dExtBase 3 }
+
+-- -------------------------------------------------------------
+-- Port Capabilities Table
+-- -------------------------------------------------------------
+
+dot1dPortCapabilitiesTable OBJECT-TYPE
+    ::= { dot1dExtBase 4 }
+
+dot1dPortCapabilitiesEntry OBJECT-TYPE
+    INDEX { dot1dBasePort }
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dPortCapabilitiesTable 1 }
+
+-- -------------------------------------------------------------
+-- the dot1dPriority group
+-- -------------------------------------------------------------
+
+-- -------------------------------------------------------------
+-- Port Priority Table
+-- -------------------------------------------------------------
+
+dot1dPortPriorityTable OBJECT-TYPE
+    ::= { dot1dPriority 1 }
+
+dot1dPortPriorityEntry OBJECT-TYPE
+    INDEX { dot1dBasePort }
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dPortPriorityTable 1 }
+
+-- -------------------------------------------------------------
+-- User Priority Regeneration Table
+-- -------------------------------------------------------------
+
+dot1dUserPriorityRegenTable OBJECT-TYPE
+    ::= { dot1dPriority 2 }
+
+dot1dUserPriorityRegenEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dUserPriorityRegenTable 1 }
+
+-- -------------------------------------------------------------
+-- Traffic Class Table
+-- -------------------------------------------------------------
+
+dot1dTrafficClassTable OBJECT-TYPE
+    ::= { dot1dPriority 3 }
+
+dot1dTrafficClassEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dTrafficClassTable 1 }
+
+-- -------------------------------------------------------------
+-- Outbound Access Priority Table
+-- -------------------------------------------------------------
+
+dot1dPortOutboundAccessPriorityTable OBJECT-TYPE
+    ::= { dot1dPriority 4 }
+
+dot1dPortOutboundAccessPriorityEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dPortOutboundAccessPriorityTable 1 }
+
+-- -------------------------------------------------------------
+-- the dot1dGarp group
+-- -------------------------------------------------------------
+
+-- -------------------------------------------------------------
+-- The GARP Port Table
+-- -------------------------------------------------------------
+
+dot1dPortGarpTable OBJECT-TYPE
+     ::= { dot1dGarp 1 }
+
+dot1dPortGarpEntry OBJECT-TYPE
+    INDEX { dot1dBasePort }
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dPortGarpTable 1 }
+
+-- -------------------------------------------------------------
+-- The GMRP Port Configuration and Status Table
+-- -------------------------------------------------------------
+
+dot1dPortGmrpTable OBJECT-TYPE
+    ::= { dot1dGmrp 1 }
+
+dot1dPortGmrpEntry OBJECT-TYPE
+    INDEX { dot1dBasePort }
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dPortGmrpTable 1 }
+
+-- -------------------------------------------------------------
+--  High Capacity Port Table for Transparent Bridges
+-- -------------------------------------------------------------
+
+dot1dTpHCPortTable OBJECT-TYPE
+     ::= { dot1dTp 5 }
+
+dot1dTpHCPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dTpHCPortTable 1 }
+
+-- ----------------------------------------------------
+--  Upper part of High Capacity Port Table for Transparent Bridges
+-- ----------------------------------------------------
+
+dot1dTpPortOverflowTable OBJECT-TYPE
+      ::= { dot1dTp 6 }
+
+dot1dTpPortOverflowEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dTpPortOverflowTable 1 }
+
+END
+
+Q-BRIDGE-MIB-A DEFINITIONS ::= BEGIN
+
+-- -------------------------------------------------------------
+-- MIB for IEEE 802.1Q Devices
+-- -------------------------------------------------------------
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE,
+    Counter32, Counter64, Unsigned32, TimeTicks
+        FROM SNMPv2-SMI
+    RowStatus, TruthValue, TEXTUAL-CONVENTION, MacAddress
+        FROM SNMPv2-TC
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP
+        FROM SNMPv2-CONF
+    dot1dBridge, dot1dBasePortEntry, dot1dBasePort
+        FROM BRIDGE-MIB
+    EnabledStatus
+        FROM P-BRIDGE-MIB
+    TimeFilter
+        FROM RMON2-MIB
+    qBridgeMIB
+        FROM Q-BRIDGE-MIB;
+
+qBridgeMIBObjects OBJECT IDENTIFIER ::= { qBridgeMIB 1 }
+
+-- -------------------------------------------------------------
+-- groups in the Q-BRIDGE MIB
+-- -------------------------------------------------------------
+
+dot1qBase       OBJECT IDENTIFIER ::= { qBridgeMIBObjects 1 }
+dot1qTp         OBJECT IDENTIFIER ::= { qBridgeMIBObjects 2 }
+dot1qStatic     OBJECT IDENTIFIER ::= { qBridgeMIBObjects 3 }
+dot1qVlan       OBJECT IDENTIFIER ::= { qBridgeMIBObjects 4 }
+dot1vProtocol   OBJECT IDENTIFIER ::= { qBridgeMIBObjects 5 }
+
+-- -------------------------------------------------------------
+-- dot1qBase group
+-- -------------------------------------------------------------
+
+dot1qVlanVersionNumber OBJECT-TYPE
+     ::= { dot1qBase 1 }
+
+dot1qMaxVlanId OBJECT-TYPE
+     ::= { dot1qBase 2 }
+
+dot1qMaxSupportedVlans OBJECT-TYPE
+     ::= { dot1qBase 3 }
+
+dot1qNumVlans OBJECT-TYPE
+      ::= { dot1qBase 4 }
+
+dot1qGvrpStatus OBJECT-TYPE
+    ::= { dot1qBase 5 }
+
+-- -------------------------------------------------------------
+-- the dot1qTp group
+-- -------------------------------------------------------------
+
+-- -------------------------------------------------------------
+-- the current Filtering Database Table
+-- -------------------------------------------------------------
+dot1qFdbTable OBJECT-TYPE
+    ::= { dot1qTp 1 }
+
+dot1qFdbEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qFdbTable 1 }
+
+-- -------------------------------------------------------------
+-- Multiple Forwarding Databases for 802.1Q Transparent devices
+-- This table is an alternative to the dot1dTpFdbTable,
+-- previously defined for 802.1D devices which only support a
+-- single Forwarding Database.
+-- -------------------------------------------------------------
+
+dot1qTpFdbTable OBJECT-TYPE
+    ::= { dot1qTp 2 }
+
+dot1qTpFdbEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qTpFdbTable 1 }
+
+-- -------------------------------------------------------------
+-- Dynamic Group Registration Table
+-- -------------------------------------------------------------
+
+dot1qTpGroupTable OBJECT-TYPE
+    ::= { dot1qTp 3 }
+
+dot1qTpGroupEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qTpGroupTable 1 }
+
+-- -------------------------------------------------------------
+-- Service Requirements Group
+-- -------------------------------------------------------------
+
+dot1qForwardAllTable OBJECT-TYPE
+    ::= { dot1qTp 4 }
+
+dot1qForwardAllEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qForwardAllTable 1 }
+
+dot1qForwardUnregisteredTable OBJECT-TYPE
+    ::= { dot1qTp 5 }
+
+dot1qForwardUnregisteredEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qForwardUnregisteredTable 1 }
+
+-- -------------------------------------------------------------
+-- The Static (Destination-Address Filtering) Database
+-- -------------------------------------------------------------
+
+dot1qStaticUnicastTable OBJECT-TYPE
+    ::= { dot1qStatic 1 }
+
+dot1qStaticUnicastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME dot1qStaticUnicastStatus
+    DELETE-VALUE      invalid
+    ::= { dot1qStaticUnicastTable 1 }
+
+dot1qStaticMulticastTable OBJECT-TYPE
+    ::= { dot1qStatic 2 }
+
+dot1qStaticMulticastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME dot1qStaticMulticastStatus
+    DELETE-VALUE      invalid
+    ::= { dot1qStaticMulticastTable 1 }
+
+-- -------------------------------------------------------------
+-- The Current VLAN Database
+-- -------------------------------------------------------------
+
+dot1qVlanNumDeletes OBJECT-TYPE
+    ::= { dot1qVlan 1 }
+
+dot1qVlanCurrentTable OBJECT-TYPE
+    ::= { dot1qVlan 2 }
+
+dot1qVlanCurrentEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qVlanCurrentTable 1 }
+
+-- -------------------------------------------------------------
+-- The Static VLAN Database
+-- -------------------------------------------------------------
+
+dot1qVlanStaticTable OBJECT-TYPE
+    ::= { dot1qVlan 3 }
+
+dot1qVlanStaticEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME dot1qVlanStaticRowStatus
+    ::= { dot1qVlanStaticTable 1 }
+
+dot1qNextFreeLocalVlanIndex OBJECT-TYPE
+    ::= { dot1qVlan 4 }
+
+-- -------------------------------------------------------------
+-- The VLAN Port Configuration Table
+-- -------------------------------------------------------------
+
+dot1qPortVlanTable OBJECT-TYPE
+    ::= { dot1qVlan 5 }
+
+dot1qPortVlanEntry OBJECT-TYPE
+    INDEX { dot1dBasePort }
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qPortVlanTable 1 }
+
+-- -------------------------------------------------------------
+-- Per port VLAN Statistics Table
+-- -------------------------------------------------------------
+
+dot1qPortVlanStatisticsTable OBJECT-TYPE
+    ::= { dot1qVlan 6 }
+
+dot1qPortVlanStatisticsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qPortVlanStatisticsTable 1 }
+
+dot1qPortVlanHCStatisticsTable OBJECT-TYPE
+    ::= { dot1qVlan 7 }
+
+dot1qPortVlanHCStatisticsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1qPortVlanHCStatisticsTable 1 }
+
+-- -------------------------------------------------------------
+-- The VLAN Learning Constraints Table
+-- -------------------------------------------------------------
+
+dot1qLearningConstraintsTable OBJECT-TYPE
+    ::= { dot1qVlan 8 }
+
+dot1qLearningConstraintsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME dot1qConstraintStatus
+    ::= { dot1qLearningConstraintsTable 1 }
+
+dot1qConstraintSetDefault OBJECT-TYPE
+    ::= { dot1qVlan 9 }
+
+dot1qConstraintTypeDefault OBJECT-TYPE
+    ::= { dot1qVlan 10 }
+
+-- -------------------------------------------------------------
+-- dot1vProtocol group
+-- -------------------------------------------------------------
+
+dot1vProtocolGroupTable OBJECT-TYPE
+    ::= { dot1vProtocol 1 }
+
+dot1vProtocolGroupEntry OBJECT-TYPE
+     ROW-STATUS-TYPE v2-status-field
+     STATUS-FIELD-NAME dot1vProtocolGroupRowStatus
+    ::= { dot1vProtocolGroupTable 1 }
+
+dot1vProtocolPortTable OBJECT-TYPE
+    ::= { dot1vProtocol 2 }
+
+dot1vProtocolPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME dot1vProtocolPortRowStatus
+    ::= { dot1vProtocolPortTable 1 }
+
+
+END

@@ -1,0 +1,72 @@
+-- Copyright Evertz Microsystems Ltd.
+-- 07/09/2005
+-- Confidential
+
+-- Internal MIBs in development
+-- All MIBs are preliminary and subject to change without notice
+
+EVERTZ-MINI-DEVELOPMENT-NODE DEFINITIONS ::= BEGIN
+
+IMPORTS 
+	evtzMiniDevelopment
+		FROM EVERTZ-ROOT;
+
+--Node Definitions	
+
+	minidevFC3000		OBJECT IDENTIFIER ::= { evtzMiniDevelopment 1  }
+	minidevOV           OBJECT IDENTIFIER ::= { evtzMiniDevelopment 2  }
+    minidevFC500        OBJECT IDENTIFIER ::= { evtzMiniDevelopment 3  }
+    minidevDAHD         OBJECT IDENTIFIER ::= { evtzMiniDevelopment 4  }
+    minidevHD9625SW     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 5  }
+    minidevDA           OBJECT IDENTIFIER ::= { evtzMiniDevelopment 6  }
+    minidevADA          OBJECT IDENTIFIER ::= { evtzMiniDevelopment 7  }
+    minidevADAEQ        OBJECT IDENTIFIER ::= { evtzMiniDevelopment 8  }
+    minidevDA2QAESU     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 9  }
+    minidevDAAESU       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 10 }
+    minidevNCP          OBJECT IDENTIFIER ::= { evtzMiniDevelopment 11 }
+    minidevKEYER        OBJECT IDENTIFIER ::= { evtzMiniDevelopment 12 }
+    minidevDCDAHD       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 13 }
+    minidevAMDAAESU     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 14 }
+    minidevGI           OBJECT IDENTIFIER ::= { evtzMiniDevelopment 15 }
+    minidevGLINKROUTER  OBJECT IDENTIFIER ::= { evtzMiniDevelopment 16 }
+    minidevAC02HDSD     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 17 }
+    minidevACO25600     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 18 }
+    minidevMVPD         OBJECT IDENTIFIER ::= { evtzMiniDevelopment 19 }
+    minidevVMDA         OBJECT IDENTIFIER ::= { evtzMiniDevelopment 20 }
+    minidevDA2QREVA     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 21 }
+    minidevDA2QREVB     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 22 }
+    minidevDA2QHD       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 23 }
+    minidevAD4HD520     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 24 }
+    minidevAD4DDHD520   OBJECT IDENTIFIER ::= { evtzMiniDevelopment 25 }
+    minidevVIP          OBJECT IDENTIFIER ::= { evtzMiniDevelopment 26 }
+    minidevPTXRTR       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 27 }
+    minidevECA          OBJECT IDENTIFIER ::= { evtzMiniDevelopment 28 }
+    minidevX0401        OBJECT IDENTIFIER ::= { evtzMiniDevelopment 29 }
+    minidevPTXTPS       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 30 }
+    minidevMSC5600      OBJECT IDENTIFIER ::= { evtzMiniDevelopment 31 }
+    minidevOE3000       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 32 }
+    minidevEO3000       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 33 }
+    minidevLBANDRTR     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 34 }
+    minidevNGI          OBJECT IDENTIFIER ::= { evtzMiniDevelopment 35 }
+    minidevHDSD9545DLYPRO   OBJECT IDENTIFIER ::= { evtzMiniDevelopment 36 }
+    minidevDD1200       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 37 }
+    minidevDAHDL500     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 38 }
+    minidevADAEQL500    OBJECT IDENTIFIER ::= { evtzMiniDevelopment 39 }
+    minidevXRF1RTR      OBJECT IDENTIFIER ::= { evtzMiniDevelopment 40 }
+    minidevTSM7780      OBJECT IDENTIFIER ::= { evtzMiniDevelopment 41 }
+    minidevEQXINPUT     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 42 }
+    minidevEQXOUTPUT    OBJECT IDENTIFIER ::= { evtzMiniDevelopment 43 }
+    minidevEQXXPT       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 44 }
+    minidevRGBR2407     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 45 }
+    minidevRGBT2407     OBJECT IDENTIFIER ::= { evtzMiniDevelopment 46 }
+    minidevDCDA2HD500   OBJECT IDENTIFIER ::= { evtzMiniDevelopment 47 }
+    minidevVI3500       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 48 }
+    minidevGI3500       OBJECT IDENTIFIER ::= { evtzMiniDevelopment 49 }
+    minidevTPI7700      OBJECT IDENTIFIER ::= { evtzMiniDevelopment 50 }
+    minidevXENONOUTPUT3G      OBJECT IDENTIFIER ::= { evtzMiniDevelopment 51 }
+    minidevDCDAHD510    OBJECT IDENTIFIER ::= { evtzMiniDevelopment 52 }
+    minidevVIPPRO7767   OBJECT IDENTIFIER ::= { evtzMiniDevelopment 53 }
+    minidevEQXMONITOR   OBJECT IDENTIFIER ::= { evtzMiniDevelopment 54 }
+
+
+END

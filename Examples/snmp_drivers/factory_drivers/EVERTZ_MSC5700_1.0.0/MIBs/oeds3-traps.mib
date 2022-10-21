@@ -1,0 +1,57 @@
+-- Copyright Evertz Microsystems Ltd.
+
+OEDS3-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	oeds3Instance, oeds3Traps
+		FROM OEDS3-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { oeds3Traps 1 }
+
+-- beginning of signalNotPresent  trap
+
+	faultsignalNotPresentFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ oeds3Instance }
+		DESCRIPTION
+			"
+            Signal Present
+			"
+	::= 1000
+
+	faultsignalNotPresentTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ oeds3Instance }
+		DESCRIPTION
+			"
+            Signal Not Present
+			"
+	::= 1001
+
+-- end of signalNotPresent  trap
+-- beginning of driverFault  trap
+
+	faultdriverFaultFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ oeds3Instance }
+		DESCRIPTION
+			"
+            Driver Ok
+			"
+	::= 1002
+
+	faultdriverFaultTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ oeds3Instance }
+		DESCRIPTION
+			"
+            Driver Not Ok
+			"
+	::= 1003
+
+-- end of driverFault  trap
+
+
+END

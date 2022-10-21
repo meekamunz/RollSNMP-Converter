@@ -1,0 +1,66 @@
+--
+-- from draft-ietf-hubmib-etherif-mib-v3-00.txt
+--
+   EtherLike-MIB-A DEFINITIONS ::= BEGIN
+
+       IMPORTS
+           MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+           Counter32, Counter64, mib-2, transmission
+               FROM SNMPv2-SMI
+           MODULE-COMPLIANCE, OBJECT-GROUP
+               FROM SNMPv2-CONF
+           TruthValue
+               FROM SNMPv2-TC
+           ifIndex, InterfaceIndex
+               FROM IF-MIB
+           etherMIB FROM  EtherLike-MIB;
+
+    
+       etherMIBObjects OBJECT IDENTIFIER ::= { etherMIB 1 }
+
+       dot3    OBJECT IDENTIFIER ::= { transmission 7 }
+
+       -- the Ethernet-like Statistics group
+
+       dot3StatsTable OBJECT-TYPE
+           ::= { dot3 2 }
+
+       dot3StatsEntry OBJECT-TYPE
+           ROW-STATUS-TYPE no-status-field
+           ::= { dot3StatsTable 1 }
+
+       -- the Ethernet-like Collision Statistics group
+
+       -- Implementation of this group is optional; it is appropriate
+       -- for all systems which have the necessary metering
+
+       dot3CollTable OBJECT-TYPE
+           ::= { dot3 5 }
+
+
+       dot3CollEntry OBJECT-TYPE
+           ROW-STATUS-TYPE no-status-field
+           ::= { dot3CollTable 1 }
+
+       dot3ControlTable OBJECT-TYPE
+           ::= { dot3 9 }
+
+       dot3ControlEntry OBJECT-TYPE
+           ROW-STATUS-TYPE no-status-field
+           ::= { dot3ControlTable 1 }
+
+       dot3PauseTable OBJECT-TYPE
+           ::= { dot3 10 }
+
+       dot3PauseEntry OBJECT-TYPE
+           ROW-STATUS-TYPE no-status-field
+           ::= { dot3PauseTable 1 }
+
+       dot3HCStatsTable OBJECT-TYPE
+           ::= { dot3 11 }
+
+       dot3HCStatsEntry OBJECT-TYPE
+           ROW-STATUS-TYPE no-status-field
+           ::= { dot3HCStatsTable 1 }
+
+   END

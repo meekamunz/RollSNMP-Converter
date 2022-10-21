@@ -1,0 +1,179 @@
+     RFC1315-MIB-A DEFINITIONS ::= BEGIN
+
+     IMPORTS
+             OBJECT-TYPE
+                     FROM RFC-1212
+             transmission
+                     FROM RFC1213-MIB
+             TimeTicks, Counter
+                     FROM RFC1155-SMI
+             TRAP-TYPE
+                     FROM RFC-1215;
+
+
+     frame-relay     OBJECT IDENTIFIER ::= { transmission 32 }
+
+     frDlcmiTable OBJECT-TYPE
+         ::= { frame-relay 1 }
+
+     frDlcmiEntry OBJECT-TYPE
+       ROW-STATUS-TYPE no-status-field
+       APP-FILENAME    l2\auto\ifentry.dtd
+            ::= { frDlcmiTable 1 }
+
+         frDlcmiIfIndex OBJECT-TYPE
+            ::= { frDlcmiEntry 1 }
+
+         frDlcmiState OBJECT-TYPE
+           ::= { frDlcmiEntry 2 }
+
+         frDlcmiAddress OBJECT-TYPE
+            ::= { frDlcmiEntry 3 }
+
+
+         frDlcmiAddressLen OBJECT-TYPE
+            ::= { frDlcmiEntry 4 }
+
+
+
+         frDlcmiPollingInterval OBJECT-TYPE
+           ::= { frDlcmiEntry 5 }
+
+
+         frDlcmiFullEnquiryInterval OBJECT-TYPE
+           ::= { frDlcmiEntry 6 }
+
+
+
+         frDlcmiErrorThreshold OBJECT-TYPE
+           ::= { frDlcmiEntry 7 }
+
+         frDlcmiMonitoredEvents OBJECT-TYPE
+           ::= { frDlcmiEntry 8 }
+
+
+
+         frDlcmiMaxSupportedVCs OBJECT-TYPE
+            ::= { frDlcmiEntry 9 }
+
+
+         frDlcmiMulticast OBJECT-TYPE
+            ::= { frDlcmiEntry 10 }
+
+     frCircuitTable OBJECT-TYPE
+         ::= { frame-relay 2 }
+
+     frCircuitEntry OBJECT-TYPE
+         ROW-STATUS-TYPE v1-status-field
+         STATUS-FIELD-NAME frCircuitState
+         DELETE-VALUE      invalid
+            ::= { frCircuitTable 1 }
+
+         frCircuitIfIndex OBJECT-TYPE
+            ::= { frCircuitEntry 1 }
+
+
+         frCircuitDlci OBJECT-TYPE
+           ::= { frCircuitEntry 2 }
+
+
+         frCircuitState OBJECT-TYPE
+            ::= { frCircuitEntry 3 }
+
+
+         frCircuitReceivedFECNs OBJECT-TYPE
+           ::= { frCircuitEntry 4 }
+
+
+
+         frCircuitReceivedBECNs OBJECT-TYPE
+           ::= { frCircuitEntry 5 }
+
+         frCircuitSentFrames OBJECT-TYPE
+            ::= { frCircuitEntry 6 }
+
+
+
+         frCircuitSentOctets OBJECT-TYPE
+            ::= { frCircuitEntry 7 }
+
+
+
+         frCircuitReceivedFrames OBJECT-TYPE
+            ::= { frCircuitEntry 8 }
+
+
+
+         frCircuitReceivedOctets OBJECT-TYPE
+            ::= { frCircuitEntry 9 }
+
+         frCircuitCreationTime OBJECT-TYPE
+            ::= { frCircuitEntry 10 }
+
+
+
+         frCircuitLastTimeChange OBJECT-TYPE
+            ::= { frCircuitEntry 11 }
+
+
+
+         frCircuitCommittedBurst OBJECT-TYPE
+           ::= { frCircuitEntry 12 }
+
+
+
+         frCircuitExcessBurst OBJECT-TYPE
+                   ::= { frCircuitEntry 13 }
+         frCircuitThroughput OBJECT-TYPE
+           ::= { frCircuitEntry 14 }
+
+
+     --  Error Table
+
+     -- The table describing errors encountered on each Frame
+     -- Relay Interface.
+
+     frErrTable OBJECT-TYPE
+         ::= { frame-relay 3 }
+
+     frErrEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+        APP-FILENAME    l2\auto\ifentry.dtd
+            ::= { frErrTable 1 }
+
+
+         frErrIfIndex OBJECT-TYPE
+            ::= { frErrEntry 1 }
+
+
+
+         frErrType OBJECT-TYPE
+            ::= { frErrEntry 2 }
+
+
+
+         frErrData OBJECT-TYPE
+            ::= { frErrEntry 3 }
+
+
+
+         frErrTime OBJECT-TYPE
+            ::= { frErrEntry 4 }
+
+
+         -- Frame Relay Globals
+
+         frame-relay-globals OBJECT IDENTIFIER ::= { frame-relay 4 }
+
+         frTrapState OBJECT-TYPE
+            ::= { frame-relay-globals 1 }
+
+
+         frDLCIStatusChange TRAP-TYPE
+             ENTERPRISE frame-relay
+             ERRCODE     RSG_ErrMsg_code_frDLCIStatusChange_E
+             SEVERITY    WARNING
+             ::= 1
+
+     END
+

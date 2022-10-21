@@ -1,0 +1,57 @@
+-- Copyright Evertz Microsystems Ltd.
+
+EODS3-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	eods3Instance, eods3Traps
+		FROM EODS3-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { eods3Traps 1 }
+
+-- beginning of signalNotPresent  trap
+
+	faultsignalNotPresentFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ eods3Instance }
+		DESCRIPTION
+			"
+            Signal Present
+			"
+	::= 1000
+
+	faultsignalNotPresentTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ eods3Instance }
+		DESCRIPTION
+			"
+            Signal Not Present
+			"
+	::= 1001
+
+-- end of signalNotPresent  trap
+-- beginning of laserFault  trap
+
+	faultlaserFaultFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ eods3Instance }
+		DESCRIPTION
+			"
+            Laser Ok
+			"
+	::= 1002
+
+	faultlaserFaultTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ eods3Instance }
+		DESCRIPTION
+			"
+            Laser Not Ok
+			"
+	::= 1003
+
+-- end of laserFault  trap
+
+
+END

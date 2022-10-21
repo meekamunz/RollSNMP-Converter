@@ -1,0 +1,3996 @@
+#sysdesc =  
+-- Copyright 2014 Evertz Microsystems Ltd.
+-- Fri Apr 04 18:59:08 2014
+-- Confidential
+VIPPRO-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprVIPPRO
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+    UTF8String ::= OCTET STRING (SIZE(0..255))
+      
+    vipproMonitor OBJECT IDENTIFIER ::= { miniexprVIPPRO 2}
+    vipproControl OBJECT IDENTIFIER ::= { miniexprVIPPRO 3}
+    vipproNotify OBJECT IDENTIFIER ::= { miniexprVIPPRO 4}
+    vipproTraps OBJECT IDENTIFIER ::= { miniexprVIPPRO 5}
+
+
+        
+-- Beginning of videoInputMonitorTable
+    videoInputMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF VideoInputMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The videoInputMonitor table. "
+    ::= { vipproMonitor 1 }
+
+    videoInputMonitorEntry OBJECT-TYPE
+      SYNTAX VideoInputMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { videoInputMonitorTable 1 }
+
+    VideoInputMonitorEntry ::= SEQUENCE {
+        videoInputIdx     INTEGER,
+        videoStandard     OCTET STRING,
+        programRating     OCTET STRING,
+        vitcData     OCTET STRING,
+        sidData     OCTET STRING,
+        aspectDecode     OCTET STRING
+    }
+
+
+    
+    videoInputIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            videoInput01(1),
+            videoInput02(2),
+            videoInput03(3),
+            videoInput04(4),
+            videoInput05(5),
+            videoInput06(6),
+            videoInput07(7),
+            videoInput08(8),
+            videoInput09(9),
+            videoInput10(10),
+            videoInput11(11),
+            videoInput12(12),
+            videoInput13(13),
+            videoInput14(14),
+            videoInput15(15),
+            videoInput16(16),
+            videoInput17(17),
+            videoInput18(18),
+            videoInput19(19),
+            videoInput20(20),
+            videoInput21(21),
+            videoInput22(22),
+            videoInput23(23),
+            videoInput24(24),
+            videoInput25(25),
+            videoInput26(26),
+            videoInput27(27),
+            videoInput28(28),
+            videoInput29(29),
+            videoInput30(30),
+            videoInput31(31),
+            videoInput32(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index different
+                  video inputs.  The actual number of inputs available for
+                  a particular device depends on the cardType variable. "
+    ::= { videoInputMonitorEntry 1 }
+
+    
+    videoStandard OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current video standard for
+                  an input. "
+    ::= { videoInputMonitorEntry 2 }
+
+    
+    programRating OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current program rating for 
+                  an input. "
+    ::= { videoInputMonitorEntry 3 }
+
+    
+    vitcData OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current vitc data time
+                   stamp for an input. "
+    ::= { videoInputMonitorEntry 4 }
+
+    
+    sidData OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current source id data for
+                   an input. "
+    ::= { videoInputMonitorEntry 5 }
+
+    
+    aspectDecode OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current decoded
+                   aspect ratio string from one of the selected aspect
+                   control modes. "
+    ::= { videoInputMonitorEntry 6 }
+
+-- End of videoInputMonitorTable
+
+
+        
+-- Beginning of audioGroupMonitorTable
+    audioGroupMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioGroupMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioGroupMonitor table. "
+    ::= { vipproMonitor 2 }
+
+    audioGroupMonitorEntry OBJECT-TYPE
+      SYNTAX AudioGroupMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioGroupIdx, videoInputIdx }
+    ::= { audioGroupMonitorTable 1 }
+
+    AudioGroupMonitorEntry ::= SEQUENCE {
+        audioGroupIdx     INTEGER
+    }
+
+
+    
+    audioGroupIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioGroup1(1),
+            audioGroup2(2),
+            audioGroup3(3),
+            audioGroup4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index different
+                  audio groups.
+                  audioGroups 3-4 added for VIPM family of cards only in firmware 2.0 "
+    ::= { audioGroupMonitorEntry 1 }
+
+-- End of audioGroupMonitorTable
+
+
+        
+-- Beginning of audioPairMonitorTable
+    audioPairMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioPairMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioPairMonitor table. "
+    ::= { vipproMonitor 3 }
+
+    audioPairMonitorEntry OBJECT-TYPE
+      SYNTAX AudioPairMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioPairIdx, videoInputIdx }
+    ::= { audioPairMonitorTable 1 }
+
+    AudioPairMonitorEntry ::= SEQUENCE {
+        audioPairIdx     INTEGER,
+        audioNonPCMType     OCTET STRING
+    }
+
+
+    
+    audioPairIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioPair12(1),
+            audioPair34(2),
+            audioPair56(3),
+            audioPair78(4),
+            audioPair0910(5),
+            audioPair1112(6),
+            audioPair1314(7),
+            audioPair1516(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index different
+                  audio pairs.
+                  audioPairs 0910-1516 added for VIPM family of cards only in firmware 2.0 "
+    ::= { audioPairMonitorEntry 1 }
+
+    
+    audioNonPCMType OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(16) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This read-only parameter returns the  
+                           audio pair non-pcm type string.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { audioPairMonitorEntry 2 }
+
+-- End of audioPairMonitorTable
+
+
+        
+-- Beginning of audioChannelMonitorTable
+    audioChannelMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioChannelMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioChannelMonitor table. "
+    ::= { vipproMonitor 4 }
+
+    audioChannelMonitorEntry OBJECT-TYPE
+      SYNTAX AudioChannelMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioChannelIdx, videoInputIdx }
+    ::= { audioChannelMonitorTable 1 }
+
+    AudioChannelMonitorEntry ::= SEQUENCE {
+        audioChannelIdx     INTEGER
+    }
+
+
+    
+    audioChannelIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioChannel1(1),
+            audioChannel2(2),
+            audioChannel3(3),
+            audioChannel4(4),
+            audioChannel5(5),
+            audioChannel6(6),
+            audioChannel7(7),
+            audioChannel8(8),
+            audioChannel9(9),
+            audioChannel10(10),
+            audioChannel11(11),
+            audioChannel12(12),
+            audioChannel13(13),
+            audioChannel14(14),
+            audioChannel15(15),
+            audioChannel16(16)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index different 
+                  audio channels. 
+                  audioChannels 9-16 added for VIPM family of cards only in firmware 2.0 "
+    ::= { audioChannelMonitorEntry 1 }
+
+-- End of audioChannelMonitorTable
+
+
+        
+    numVideoInputs OBJECT-TYPE
+      SYNTAX INTEGER ( 1..32 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " The number of supported video inputs. "
+    ::= { vipproMonitor 5 }
+
+        
+    cardType OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will hold the card type string.  Possible
+                 strings include: 
+                        7767VIPA12-HSN,
+                        7767VIPA8-DUO-HS,
+                        7767VIPA8-DUO-3GHS,
+                        7767VIPA16-DUO-HS,
+                        7767VIPA16-DUO-3GHS,
+                        7767VIPX8X2,
+                        7767VIPX16X2, 
+                        7767VIPX32X2,
+                        7867VIPA12-HSN,
+                        7867VIPA8-DUO-HS,
+                        7867VIPA8-DUO-3GHS,
+                        7867VIPA16-DUO-HS,
+                        7867VIPA16-DUO-3GHS,
+                        7867VIPA18-DUO-HS,
+                        7867VIPA18-DUO-3GHS,
+                        7867VIPA24-DUO-HS,
+                        7867VIPA24-DUO-3GHS,
+                        7867VIPA32-DUO-HS,
+                        7867VIPA32-DUO-3GHS,
+                        7867VIPX8X2,
+                        7867VIPX16X2,
+                        7867VIPX32X2,
+                        7867VIPA8-DUO-HS+CSX,
+                        7867VIPA8-DUO-3GHS+CSX,
+                        7867VIPA16-DUO-HS+CSX,
+                        7867VIPA16-DUO-3GHS+CSX,
+                        7867VIPA18-DUO-HS+CSX,
+                        7867VIPA18-DUO-3GHS+CSX,
+                        7867VIPA24-DUO-HS+CSX,
+                        7867VIPA24-DUO-3GHS+CSX,
+                        7867VIPA32-DUO-HS+CSX,
+                        7867VIPA32-DUO-3GHS+CSX,
+                        7867VIPX8X2+CSX,
+                        7867VIPX16X2+CSX, 
+                        7867VIPX32X2+CSX,
+                        7867VIPXM8X2,
+                        7867VIPXM16X2,
+                        7867VIPM8-DUO-HS,
+                        7867VIPM16-DUO-HS,
+                        7867VIPM8-DUO-3GHS,
+                        7867VIPM16-DUO-3GHS,
+                        7867VIPM18-DUO-HS,
+                        7867VIPM18-DUO-3GHS,
+                      7867 and 7767 are two different aliases for the same thing.  
+                      The HSN represents a HD/SD/Composite model, the HS represents
+                      a HD/SD model, and the 3GHS represents a 3Gig/HD/SD model.  
+                      The number contained within the card type string indicates 
+                      the number of active inputs.  For example, the 7767VIPA12-HSN 
+                      has 12 active inputs, the 7767VIPX8X2 has 8 active inputs, 
+                      etc.
+                      Throughout this document, VIPA refers to: 
+                        7767VIPA12-HSN
+                        7867VIPA12-HSN
+                      VIPA-DUO refers to:
+                        7767VIPA8-DUO-HS,
+                        7767VIPA8-DUO-3GHS,
+                        7767VIPA16-DUO-HS,
+                        7767VIPA16-DUO-3GHS,
+                        7767VIPA32-DUO-HS,
+                        7767VIPA32-DUO-3GHS,
+                        7867VIPA8-DUO-HS,
+                        7867VIPA8-DUO-3GHS,
+                        7867VIPA16-DUO-HS,
+                        7867VIPA16-DUO-3GHS,
+                        7867VIPA18-DUO-HS,
+                        7867VIPA18-DUO-3GHS,
+                        7867VIPA24-DUO-HS,
+                        7867VIPA24-DUO-3GHS,
+                        7867VIPA32-DUO-HS,
+                        7867VIPA32-DUO-3GHS,
+                        7867VIPA8-DUO-HS+CSX,
+                        7867VIPA8-DUO-3GHS+CSX,
+                        7867VIPA16-DUO-HS+CSX,
+                        7867VIPA16-DUO-3GHS+CSX,
+                        7867VIPA18-DUO-HS+CSX,
+                        7867VIPA18-DUO-3GHS+CSX,
+                        7867VIPA24-DUO-HS+CSX,
+                        7867VIPA24-DUO-3GHS+CSX,
+                        7867VIPA32-DUO-HS+CSX,
+                        7867VIPA32-DUO-3GHS+CSX,
+                      VIPX refers to:
+                        7767VIPX8X2,
+                        7767VIPX16X2,
+                        7767VIPX32X2,
+                        7867VIPX8X2,
+                        7867VIPX16X2,
+                        7867VIPX32X2,
+                        7867VIPX8X2+CSX,
+                        7867VIPX16X2+CSX,
+                        7867VIPX32X2+CSX,
+                      VIPM refers to:
+                        7867VIPM8-DUO-HS,
+                        7867VIPM16-DUO-HS,
+                        7867VIPM8-DUO-3GHS,
+                        7867VIPM16-DUO-3GHS,
+                        7867VIPM18-DUO-HS,
+                        7867VIPM18-DUO-3GHS,
+                      VIPXM refers to:
+                        7867VIPXM8X2,
+                        7867VIPXM16X2,
+                         "
+    ::= { vipproMonitor 6 }
+
+        
+-- Beginning of gpiMonitorTable
+    gpiMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GpiMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The gpiMonitor table. "
+    ::= { vipproMonitor 7 }
+
+    gpiMonitorEntry OBJECT-TYPE
+      SYNTAX GpiMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpiIndex }
+    ::= { gpiMonitorTable 1 }
+
+    GpiMonitorEntry ::= SEQUENCE {
+        gpiIndex     INTEGER,
+        gpiState     INTEGER
+    }
+
+
+    
+    gpiIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            gpi01(1),
+            gpi02(2),
+            gpi03(3),
+            gpi04(4),
+            gpi05(5),
+            gpi06(6),
+            gpi07(7),
+            gpi08(8),
+            gpi09(9),
+            gpi10(10)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to index GPIs.
+                  Note:  The VIPA card type has 10 GPIs available.
+                  VIPX and VIPA-DUO card types have 4 GPIs available.
+                  This feature is only available in firmware 1.4.1 and greater.
+                   "
+    ::= { gpiMonitorEntry 1 }
+
+    
+    gpiState OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter will return the current state of a
+                           GPI.  A value of 1 means the GPI is on.  A value
+                           of 0 means the GPI is off.
+                           This feature is only available in firmware 1.4.1 and greater.
+                            "
+    ::= { gpiMonitorEntry 2 }
+
+-- End of gpiMonitorTable
+
+
+        
+-- Beginning of audioLoudnessTable
+    audioLoudnessTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioLoudnessEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioLoudness table. "
+    ::= { vipproMonitor 8 }
+
+    audioLoudnessEntry OBJECT-TYPE
+      SYNTAX AudioLoudnessEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioProgram, videoInputIdx }
+    ::= { audioLoudnessTable 1 }
+
+    AudioLoudnessEntry ::= SEQUENCE {
+        audioProgram     INTEGER,
+        loudnessMeasure     OCTET STRING
+    }
+
+
+    
+    audioProgram OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioProgram1(1),
+            audioProgram2(2),
+            audioProgram3(3),
+            audioProgram4(4),
+            audioProgram5(5),
+            audioProgram6(6),
+            audioProgram7(7),
+            audioProgram8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the audioLoudnessMonitoringControl table.  It can have
+                    input values from 1 to 8
+        Note: This only applies to 7867VIPM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { audioLoudnessEntry 1 }
+
+    
+    loudnessMeasure OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(16) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This read-only parameter returns the value for  
+                           audio loudness measure in LKFS units.
+        Note: This only applies to 7867VIPM card types,
+        Note: This was added in firmware version 2.0.
+                            "
+    ::= { audioLoudnessEntry 2 }
+
+-- End of audioLoudnessTable
+
+
+        
+-- Beginning of videoInputPropertiesControlTable
+    videoInputPropertiesControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF VideoInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The videoInputPropertiesControl table. "
+    ::= { vipproControl 1 }
+
+    videoInputPropertiesControlEntry OBJECT-TYPE
+      SYNTAX VideoInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { videoInputPropertiesControlTable 1 }
+
+    VideoInputPropertiesControlEntry ::= SEQUENCE {
+        vitcLinePosition     INTEGER,
+        ccLinePosition     INTEGER,
+        hideCCLine     INTEGER,
+        ccChannelDecoder     INTEGER,
+        aspectRatioControl     INTEGER,
+        wssLinePosition     INTEGER,
+        wssType     INTEGER,
+        palMode     INTEGER,
+        wstPageNumber     INTEGER
+    }
+
+
+    
+    vitcLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 6..32 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the VBI line number from which VITC is to be
+                  decoded. "
+    ::= { videoInputPropertiesControlEntry 1 }
+
+    
+    ccLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 11..25 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the VBI line number from which CC (EIA-608)
+                  is to be decoded. "
+    ::= { videoInputPropertiesControlEntry 2 }
+
+    
+    hideCCLine OBJECT-TYPE
+      SYNTAX INTEGER {
+            disable(1),
+            enable(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter will show (enable) or hide (disable) the CC 
+                   content in the video.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { videoInputPropertiesControlEntry 3 }
+
+    
+    ccChannelDecoder OBJECT-TYPE
+      SYNTAX INTEGER ( 0..9 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the CC Channel to be decoded.
+                   A value of 0 will shut the decoder off.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { videoInputPropertiesControlEntry 4 }
+
+    
+    aspectRatioControl OBJECT-TYPE
+      SYNTAX INTEGER {
+            disable(1),
+            followVideoInput(2),
+            followWSS(3),
+            followVideoIndex(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set which source
+                   will determine the behaviour of the aspect ratio
+                   control.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { videoInputPropertiesControlEntry 5 }
+
+    
+    wssLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 6..32 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the line
+                   position of the incoming WSS bitstream. "
+    ::= { videoInputPropertiesControlEntry 6 }
+
+    
+    wssType OBJECT-TYPE
+      SYNTAX INTEGER {
+            wssTypeOff(1),
+            wssTypeITV(2),
+            wssTypeITUR(3)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the type 
+                   of WSS to decode.  Either select from ITU-R which
+                   will decode the incoming WSS bitstream as per REC.
+                   ITU-R BT.1119-1, or ITV which will decode as per
+                   the Independant Television News (ITV).  Otherwise
+                   the decoder is off.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { videoInputPropertiesControlEntry 7 }
+
+    
+    palMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            ntscMpalBGHIN(1),
+            pal433ntsc433(2),
+            ntsc433combpalN(3),
+            palMntscN(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the PAL mode
+     	                    of operation.  The enumerated list should be
+ 	                    presented to the user as:
+ 	                    NTSC-M/PAL-BHGIN,
+ 	                    PAL 4.43/NTSC 4.43 50Hz,
+ 	                    NTSC 4.43 60Hz/Combination PAL-N,
+ 	                    PAL-M/NTSC-N. 
+             "
+    ::= { videoInputPropertiesControlEntry 8 }
+
+    
+    wstPageNumber OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2303 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the teletext
+                           page to listen to for caption data. 
+                           Show page number in hexadecimal format in VLPro.
+                           Note: This was added for CSX cardtypes in firmware 
+                           version 1.5 (VLPro ver 1.05)
+                            "
+    ::= { videoInputPropertiesControlEntry 9 }
+
+-- End of videoInputPropertiesControlTable
+
+
+        
+-- Beginning of audioInputPropertiesControlTable
+    audioInputPropertiesControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioInputPropertiesControl table. "
+    ::= { vipproControl 2 }
+
+    audioInputPropertiesControlEntry OBJECT-TYPE
+      SYNTAX AudioInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { audioInputPropertiesControlTable 1 }
+
+    AudioInputPropertiesControlEntry ::= SEQUENCE {
+        audioSource     INTEGER,
+        audioNumGroupsToProc     INTEGER
+    }
+
+
+    
+    audioSource OBJECT-TYPE
+      SYNTAX INTEGER {
+            embeddedAudio(1),
+            aesBalanceAudio(2),
+            analogBalanceAudio(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter sets which audio source is to be used.
+                  Note: aesBalanceAudio and analogBalanceAudio added in version 2.1 "
+    ::= { audioInputPropertiesControlEntry 1 }
+
+    
+    audioNumGroupsToProc OBJECT-TYPE
+      SYNTAX INTEGER {
+            process1AudioGroups(1),
+            process2AudioGroups(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of audio groups to process.
+                   Can process either 1 group or 2 groups of audio.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { audioInputPropertiesControlEntry 2 }
+
+-- End of audioInputPropertiesControlTable
+
+
+        
+-- Beginning of audioGroupPropertiesControlTable
+    audioGroupPropertiesControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioGroupPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioGroupPropertiesControl table. "
+    ::= { vipproControl 3 }
+
+    audioGroupPropertiesControlEntry OBJECT-TYPE
+      SYNTAX AudioGroupPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioGroupIdx, videoInputIdx }
+    ::= { audioGroupPropertiesControlTable 1 }
+
+    AudioGroupPropertiesControlEntry ::= SEQUENCE {
+        audioEmbeddedGroups     INTEGER
+    }
+
+
+    
+    audioEmbeddedGroups OBJECT-TYPE
+      SYNTAX INTEGER {
+            deEmbeddAudioGroup1(1),
+            deEmbeddAudioGroup2(2),
+            deEmbeddAudioGroup3(3),
+            deEmbeddAudioGroup4(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets which 2 of the possible 4 incoming audio
+                   groups is to be de-embedded.  Only allow control for the
+                   first de-embedder since only 1 group of embedded audio is
+                   currently supported.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { audioGroupPropertiesControlEntry 1 }
+
+-- End of audioGroupPropertiesControlTable
+
+
+        
+-- Beginning of levelBarPropertiesControlTable
+    levelBarPropertiesControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF LevelBarPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The levelBarPropertiesControl table. "
+    ::= { vipproControl 4 }
+
+    levelBarPropertiesControlEntry OBJECT-TYPE
+      SYNTAX LevelBarPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { levelBarPropertiesControlTable 1 }
+
+    LevelBarPropertiesControlEntry ::= SEQUENCE {
+        levelBarDigitalReferenceLevel     INTEGER,
+        levelBarDigitalErrorRegion     INTEGER,
+        levelBarDigitalBarType     INTEGER,
+        levelBarDigitalPPMMode     INTEGER,
+        levelBarAnalogReferenceLevel     INTEGER,
+        levelBarAnalogErrorRegion     INTEGER,
+        levelBarAnalogBarType     INTEGER,
+        levelBarAnalogPPMMode     INTEGER
+    }
+
+
+    
+    levelBarDigitalReferenceLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -40..-2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " AES reference level that represents the level down from 
+                   digital clipping.  This parameter should not exceed the 
+                   digital error region.  Units of measure are in dBFs.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 1 }
+
+    
+    levelBarDigitalErrorRegion OBJECT-TYPE
+      SYNTAX INTEGER ( -20..-1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " AES Error region that represents the level down from
+                   digital clipping.  This parameter should not drop below 
+                   the digital reference level.  Units of measure are in dBFs.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 2 }
+
+    
+    levelBarDigitalBarType OBJECT-TYPE
+      SYNTAX INTEGER {
+            vu(1),
+            ppm(2),
+            vuppm(3)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Represents the level bar graph type.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 3 }
+
+    
+    levelBarDigitalPPMMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            aesebu(1),
+            bbc(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Represents the level bar graph ppm mode of ballistics.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 4 }
+
+    
+    levelBarAnalogReferenceLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -10..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Analog reference level.  Units of measure are in dBu.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 5 }
+
+    
+    levelBarAnalogErrorRegion OBJECT-TYPE
+      SYNTAX INTEGER ( 0..20 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Analog error region.  Units of measure are in dBr.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 6 }
+
+    
+    levelBarAnalogBarType OBJECT-TYPE
+      SYNTAX INTEGER {
+            vu(1),
+            ppm(2),
+            vuppm(3)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Represents the level bar graph type.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 7 }
+
+    
+    levelBarAnalogPPMMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            default(1),
+            bbc(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Represents the level bar graph ppm mode of ballistics.
+                   
+                   This control should not appear in VLPro.  It is a configuration
+                   parameter that gets overridden by the MVP server.  It should never
+                   have been added to the MIB. "
+    ::= { levelBarPropertiesControlEntry 8 }
+
+-- End of levelBarPropertiesControlTable
+
+
+        
+-- Beginning of videoInputMonitoringControlTable
+    videoInputMonitoringControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF VideoInputMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The videoInputMonitoringControl table. "
+    ::= { vipproControl 5 }
+
+    videoInputMonitoringControlEntry OBJECT-TYPE
+      SYNTAX VideoInputMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { videoInputMonitoringControlTable 1 }
+
+    VideoInputMonitoringControlEntry ::= SEQUENCE {
+        videoLossDuration     INTEGER,
+        videoLossDurationReset     INTEGER,
+        vitcWaveformLossDuration     INTEGER,
+        vitcWaveformLossDurationReset     INTEGER,
+        vitcDataLossDuration     INTEGER,
+        vitcDataLossDurationReset     INTEGER,
+        sidDataLossDuration     INTEGER,
+        sidDataLossDurationReset     INTEGER,
+        prLossDuration     INTEGER,
+        prLossDurationReset     INTEGER,
+        ccWaveformLossDuration     INTEGER,
+        ccWaveformLossDurationReset     INTEGER,
+        cc1LossDuration     INTEGER,
+        cc1LossDurationReset     INTEGER,
+        cc2LossDuration     INTEGER,
+        cc2LossDurationReset     INTEGER,
+        cc3LossDuration     INTEGER,
+        cc3LossDurationReset     INTEGER,
+        cc4LossDuration     INTEGER,
+        cc4LossDurationReset     INTEGER,
+        xdsLossDuration     INTEGER,
+        xdsLossDurationReset     INTEGER,
+        txt1LossDuration     INTEGER,
+        txt1LossDurationReset     INTEGER,
+        txt2LossDuration     INTEGER,
+        txt2LossDurationReset     INTEGER,
+        txt3LossDuration     INTEGER,
+        txt3LossDurationReset     INTEGER,
+        txt4LossDuration     INTEGER,
+        txt4LossDurationReset     INTEGER,
+        noiseLevel     INTEGER,
+        freezemotionDuration     INTEGER,
+        freezeDurationReset     INTEGER,
+        motionDurationReset     INTEGER,
+        blackDuration     INTEGER,
+        blackDurationReset     INTEGER,
+        vidstdChangeDuration     INTEGER,
+        vidstdChangeDurationReset     INTEGER,
+        maxAPLLevel     INTEGER,
+        maxAPLDuration     INTEGER,
+        maxAPLDurationReset     INTEGER,
+        minAPLLevel     INTEGER,
+        minAPLDuration     INTEGER,
+        minAPLDurationReset     INTEGER,
+        teletextDuration     INTEGER,
+        teletextDurationReset     INTEGER,
+        wssLossDuration     INTEGER,
+        wssLossDurationReset     INTEGER,
+        naesSourceLossDuration     INTEGER,
+        naesSourceLossDurationReset     INTEGER,
+        naesDataLossDuration     INTEGER,
+        naesDataLossDurationReset     INTEGER,
+        amolSourceLossDuration     INTEGER,
+        amolSourceLossDurationReset     INTEGER,
+        amolDataLossDuration     INTEGER,
+        amolDataLossDurationReset     INTEGER,
+        xlinkSwitchDuration     INTEGER,
+        smpteAfdLossDuration     INTEGER,
+        smpteAfdLossDurationReset     INTEGER,
+        smpteAfdChangeDurationReset     INTEGER,
+        videoIndexLossDuration     INTEGER,
+        videoIndexLossDurationReset     INTEGER,
+        programRatingChangeDurationReset     INTEGER,
+        videoIndexChangeDurationReset     INTEGER,
+        macroBlkDetectErrDuration     INTEGER,
+        macroBlkDetectErrDurationReset     INTEGER,
+        macroBlkDetectThresh     INTEGER,
+        vidSrcChangeDurationReset     INTEGER,
+        nlsnWatermarkLossDuration     INTEGER,
+        nlsnWatermarkLossDurationReset     INTEGER,
+        naesMismatchDuration     INTEGER,
+        naesMismatchDurationReset     INTEGER,
+        amolMismatchDuration     INTEGER,
+        amolMismatchDurationReset     INTEGER,
+        nlsnWatermarkMismatchDuration     INTEGER,
+        nlsnWatermarkMismatchDurationReset     INTEGER,
+        videoTypeMismatchDuration     INTEGER,
+        videoTypeMismatchDurationReset     INTEGER
+    }
+
+
+    
+    videoLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of frames to pass with video
+                  missing before a fault is triggered. 
+                  Note: Th highbound was increased from 900 frames to 3600 frames in 
+                  firmware version 2.0.
+                   "
+    ::= { videoInputMonitoringControlEntry 1 }
+
+    
+    videoLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with video
+                  corrected before a fault is cleared.  "
+    ::= { videoInputMonitoringControlEntry 2 }
+
+    
+    vitcWaveformLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with vitc
+                  waveform missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 3 }
+
+    
+    vitcWaveformLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with vitc
+                  waveform corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 4 }
+
+    
+    vitcDataLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with vitc
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 5 }
+
+    
+    vitcDataLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with vitc
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 6 }
+
+    
+    sidDataLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with sid
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 7 }
+
+    
+    sidDataLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with sid
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 8 }
+
+    
+    prLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with
+                  program rating missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 9 }
+
+    
+    prLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with
+                  program rating corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 10 }
+
+    
+    ccWaveformLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with the CC
+                  waveform missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 11 }
+
+    
+    ccWaveformLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with the CC 
+                  waveform corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 12 }
+
+    
+    cc1LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC1
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 13 }
+
+    
+    cc1LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC1 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 14 }
+
+    
+    cc2LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC2
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 15 }
+
+    
+    cc2LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC2 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 16 }
+
+    
+    cc3LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC3
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 17 }
+
+    
+    cc3LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC3 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 18 }
+
+    
+    cc4LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC4
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 19 }
+
+    
+    cc4LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with CC4 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 20 }
+
+    
+    xdsLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with XDS
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 21 }
+
+    
+    xdsLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with XDS 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 22 }
+
+    
+    txt1LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT1 
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 23 }
+
+    
+    txt1LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT1 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 24 }
+
+    
+    txt2LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT2 
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 25 }
+
+    
+    txt2LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT2 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 26 }
+
+    
+    txt3LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT3 
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 27 }
+
+    
+    txt3LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT3 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 28 }
+
+    
+    txt4LossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT4 
+                  data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 29 }
+
+    
+    txt4LossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with TXT4 
+                  data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 30 }
+
+    
+    noiseLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 0..9 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the noise level. 0 = digital freeze,
+                  9 = very high (about 40dB SNR). Represent this as 1 to 10
+                  but send the data as 0 to 9. "
+    ::= { videoInputMonitoringControlEntry 31 }
+
+    
+    freezemotionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..139 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+                  video is frozen or there is motion before a fault occurs.
+                  It can have a range from 0 to 139.
+                  Note: the range in the card is from 6 to 9000 and is 
+                  incremented nonlinearly.  From 0 to 36, the card 
+                  increments its value by 4, from 36 to 91, the card increments
+                  its value by 30 and from 91 to 139, the card increments its 
+                  value by 150. "
+    ::= { videoInputMonitoringControlEntry 32 }
+
+    
+    freezeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the
+                  trigger will remain active after the video is not considered
+                  to be frozen. "
+    ::= { videoInputMonitoringControlEntry 33 }
+
+    
+    motionDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the
+                  trigger will remain active after the video is not considered
+                  to have motion. "
+    ::= { videoInputMonitoringControlEntry 34 }
+
+    
+    blackDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..139 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+                  video is black or there is motion before a fault occurs.
+                  It can have a range from 0 to 139.  Note: the range in the 
+                  card is from 6 to 9000 and is incremented nonlinearly.  From
+                  0 to 36, the card increments its value by 4, from 36 to 91,
+                  the card increments its value by 30 and from 91 to 139, the 
+                  card increments its value by 150. "
+    ::= { videoInputMonitoringControlEntry 35 }
+
+    
+    blackDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the 
+                  trigger will remain active after the video is not considered
+                  to be black. "
+    ::= { videoInputMonitoringControlEntry 36 }
+
+    
+    vidstdChangeDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..900 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of frames after the
+                  video standard has changed before a fault occurs.
+                  It can have a range from 0 to 900 frames. "
+    ::= { videoInputMonitoringControlEntry 37 }
+
+    
+    vidstdChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the
+                  video standard change fault will remain active after the video is 
+                  not considered to be changed. "
+    ::= { videoInputMonitoringControlEntry 38 }
+
+    
+    maxAPLLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 60..108 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to set the maximum (peak) luma 
+                  threshold.  If this level is exceeded a fault alert is 
+                  triggered (if enabled).  It has a range from 60 to 108 %IRE. "
+    ::= { videoInputMonitoringControlEntry 39 }
+
+    
+    maxAPLDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..900 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the duration for which maximum luma level
+                  is exceeded before reporting a fault alert.  It has a range 
+                  from 0 to 900 frames. "
+    ::= { videoInputMonitoringControlEntry 40 }
+
+    
+    maxAPLDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the 
+                  trigger will remain active after the luma has not exceeded 
+                  the threshold. "
+    ::= { videoInputMonitoringControlEntry 41 }
+
+    
+    minAPLLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 0..40 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to set the minimum (peak) luma 
+                  threshold.  If this level is exceeded, a fault alert is
+                  triggered (if enabled).  It has a range from 0 to 40 %IRE. "
+    ::= { videoInputMonitoringControlEntry 42 }
+
+    
+    minAPLDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..900 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the duration for which minimum luma level
+                  is exceeded before reporting a fault alert.  It has a range 
+                  from 0 to 900 frames. "
+    ::= { videoInputMonitoringControlEntry 43 }
+
+    
+    minAPLDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of seconds the 
+                  trigger will remain active after the luma has not exceeded 
+                  the threshold. "
+    ::= { videoInputMonitoringControlEntry 44 }
+
+    
+    teletextDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with
+                  teletext data missing before a fault is triggered. "
+    ::= { videoInputMonitoringControlEntry 45 }
+
+    
+    teletextDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with
+                  teletext data corrected before a fault is cleared. "
+    ::= { videoInputMonitoringControlEntry 46 }
+
+    
+    wssLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                   with the WSS signal missing before a fault is
+                   triggered. "
+    ::= { videoInputMonitoringControlEntry 47 }
+
+    
+    wssLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                   with the WSS signal corrected before a fault is
+                   cleared. "
+    ::= { videoInputMonitoringControlEntry 48 }
+
+    
+    naesSourceLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           without receiving any NAES data before a fault is
+                           triggered. "
+    ::= { videoInputMonitoringControlEntry 49 }
+
+    
+    naesSourceLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with consistent incoming NAES data before a fault is
+                           cleared.  This does not indicate that the NAES data
+                           is valid.  It merely indicates that there is data
+                           being received by the VIP device from the Nielsen
+                           decoder. "
+    ::= { videoInputMonitoringControlEntry 50 }
+
+    
+    naesDataLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving invalid NAES data before a fault is
+                           triggered.  NAES data is still being received, but
+                           it is invalid. "
+    ::= { videoInputMonitoringControlEntry 51 }
+
+    
+    naesDataLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving valid NAES data before a fault is
+                           cleared. "
+    ::= { videoInputMonitoringControlEntry 52 }
+
+    
+    amolSourceLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           without receiving any AMOL data before a fault is
+                           triggered. "
+    ::= { videoInputMonitoringControlEntry 53 }
+
+    
+    amolSourceLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with consistent incoming AMOL data before a fault is
+                           cleared.  This does not indicate that the AMOL data
+                           is valid.  It merely indicates that there is data
+                           being received by the VIP device from the Nielsen
+                           decoder. "
+    ::= { videoInputMonitoringControlEntry 54 }
+
+    
+    amolDataLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving invalid AMOL data before a fault is
+                           triggered.  AMOL data is still being received, but
+                           it is invalid. "
+    ::= { videoInputMonitoringControlEntry 55 }
+
+    
+    amolDataLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving valid AMOL data before a fault is
+                           cleared. "
+    ::= { videoInputMonitoringControlEntry 56 }
+
+    
+    xlinkSwitchDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter represents sets number 
+               of seconds to pass before xlink main switches to 
+               xlink redundant, when in AUTO xlink mode.
+               It has values in range of 1 to 60 secs.
+               Note: This was added in firmware version 1.4(VLPro ver 1.04), 
+               for card types VIPX and VIPXM.
+             "
+    ::= { videoInputMonitoringControlEntry 57 }
+
+    
+    smpteAfdLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the smpteAFD signal missing before a fault is
+                           triggered. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 58 }
+
+    
+    smpteAfdLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the smpteAFD signal corrected before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 59 }
+
+    
+    smpteAfdChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the smpteAFDChange before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 60 }
+
+    
+    videoIndexLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the VideoIndex signal missing before a fault is
+                           triggered. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 61 }
+
+    
+    videoIndexLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the VideoIndex signal corrected before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 62 }
+
+    
+    programRatingChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the XDS Program Rating Change before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 63 }
+
+    
+    videoIndexChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the Video Index Change before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { videoInputMonitoringControlEntry 64 }
+
+    
+    macroBlkDetectErrDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1800 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control sets the number of frames to pass while 
+        detecting macroblock error before a fault is triggered.
+        It has a range from 0 to 1800 frames.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { videoInputMonitoringControlEntry 65 }
+
+    
+    macroBlkDetectErrDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the macroblock error is cleared.  
+        It has a range from 0 to 120 in the card, however show range from 0
+        to 60 seconds in VLPro.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { videoInputMonitoringControlEntry 66 }
+
+    
+    macroBlkDetectThresh OBJECT-TYPE
+      SYNTAX INTEGER ( 0..14 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the threshold level for 
+                           macroblock detection in a video.
+                           It has a range between 0 to 14.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 67 }
+
+    
+    vidSrcChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the video source changed before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 2.0 "
+    ::= { videoInputMonitoringControlEntry 68 }
+
+    
+    nlsnWatermarkLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving invalid Watermark data before a fault is
+                           triggered.  Nielsen  data may still be received, but
+                           it is invalid.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 69 }
+
+    
+    nlsnWatermarkLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving valid Watermark Data before a fault is
+                           cleared.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 70 }
+
+    
+    naesMismatchDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving NAES data mismatched before a fault is
+                           triggered.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 71 }
+
+    
+    naesMismatchDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving matched NAES Data before a fault is
+                           cleared.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 72 }
+
+    
+    amolMismatchDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving AMOL data mismatched before a fault is
+                           triggered.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 73 }
+
+    
+    amolMismatchDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving matched AMOL Data before a fault is
+                           cleared.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 74 }
+
+    
+    nlsnWatermarkMismatchDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving NIelsen Watermark data mismatched 
+                           before a fault is triggered.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 75 }
+
+    
+    nlsnWatermarkMismatchDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving matched Nielsen Watermark Data before 
+                           a fault is cleared.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 76 }
+
+    
+    videoTypeMismatchDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving Video Type mismatched 
+                           before a fault is triggered.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 77 }
+
+    
+    videoTypeMismatchDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           while receiving video type(standard) match before 
+                           a fault is cleared.
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { videoInputMonitoringControlEntry 78 }
+
+-- End of videoInputMonitoringControlTable
+
+
+        
+-- Beginning of audioPairMonitoringControlTable
+    audioPairMonitoringControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioPairMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioPairMonitoringControl table. "
+    ::= { vipproControl 6 }
+
+    audioPairMonitoringControlEntry OBJECT-TYPE
+      SYNTAX AudioPairMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioPairIdx, videoInputIdx }
+    ::= { audioPairMonitoringControlTable 1 }
+
+    AudioPairMonitoringControlEntry ::= SEQUENCE {
+        audioPhaseReversalLevel     INTEGER,
+        audioPhaseReversalDuration     INTEGER,
+        audioPhaseReversalDurationReset     INTEGER,
+        audioMonoLevel     INTEGER,
+        audioMonoDuration     INTEGER,
+        audioMonoDurationReset     INTEGER,
+        audioNonPCMLossDuration     INTEGER,
+        audioNonPCMLossDurationReset     INTEGER,
+        audioNonPCMChangeDurationReset     INTEGER
+    }
+
+
+    
+    audioPhaseReversalLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 50..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Level of audio that is phase reveresed that is considered
+                  a fault.  The range on the card is (0.5 to 1.0) and steps
+                  in .01 increments. "
+    ::= { audioPairMonitoringControlEntry 1 }
+
+    
+    audioPhaseReversalDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..127 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio that is phase reversed which is
+                  considered a fault.  Represents the number of seconds the
+                  audio has to be phase reversed. "
+    ::= { audioPairMonitoringControlEntry 2 }
+
+    
+    audioPhaseReversalDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+                  trigger will remain active after the fault has been 
+                  corrected. "
+    ::= { audioPairMonitoringControlEntry 3 }
+
+    
+    audioMonoLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 20..50 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Level of audio that is mono which is considered a fault.
+                  The range on the card is (0.2 to 0.5) and steps in .01 
+                  increments. "
+    ::= { audioPairMonitoringControlEntry 4 }
+
+    
+    audioMonoDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..127 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio that is mono which is considered a fault.
+                  Represents the number of seconds the audio has to be mono. "
+    ::= { audioPairMonitoringControlEntry 5 }
+
+    
+    audioMonoDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time 
+                  the trigger will remain active after the fault has been 
+                  corrected. "
+    ::= { audioPairMonitoringControlEntry 6 }
+
+    
+    audioNonPCMLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..300 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio that is missing Non-PCM data which is
+                  considered a fault.  Represents the number of seconds the
+                  audio has to be missing non-PCM data. "
+    ::= { audioPairMonitoringControlEntry 7 }
+
+    
+    audioNonPCMLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+                  trigger will remain active after the fault has been 
+                  corrected. "
+    ::= { audioPairMonitoringControlEntry 8 }
+
+    
+    audioNonPCMChangeDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass
+                           with the audio non-pcm type change before a fault is
+                           cleared. 
+                           Note: This was added in firmware version 1.5 (VLPro ver 1.05) "
+    ::= { audioPairMonitoringControlEntry 9 }
+
+-- End of audioPairMonitoringControlTable
+
+
+        
+-- Beginning of audioChannelMonitoringControlTable
+    audioChannelMonitoringControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioChannelMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioChannelMonitoringControl table. "
+    ::= { vipproControl 7 }
+
+    audioChannelMonitoringControlEntry OBJECT-TYPE
+      SYNTAX AudioChannelMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioChannelIdx, videoInputIdx }
+    ::= { audioChannelMonitoringControlTable 1 }
+
+    AudioChannelMonitoringControlEntry ::= SEQUENCE {
+        audioLossDuration     INTEGER,
+        audioLossDurationReset     INTEGER,
+        audioSilenceDigitalLevel     INTEGER,
+        audioSilenceAnalogLevel     INTEGER,
+        audioSilenceDuration     INTEGER,
+        audioSilenceDurationReset     INTEGER,
+        audioOverDigitalLevel     INTEGER,
+        audioOverAnalogLevel     INTEGER,
+        audioOverDuration     INTEGER,
+        audioOverDurationReset     INTEGER,
+        audioOverRatio     INTEGER
+    }
+
+
+    
+    audioLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..300 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with audio 
+                  missing on a given channel before a fault is triggered. "
+    ::= { audioChannelMonitoringControlEntry 1 }
+
+    
+    audioLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+                  trigger will remain active after the audio has corrected. "
+    ::= { audioChannelMonitoringControlEntry 2 }
+
+    
+    audioSilenceDigitalLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -96..-20 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the digital audio level 
+                  under which it is considered to be silent.  This value is 
+                  expressed in dBFs.  This object can have a value of -96 
+                  to -20. "
+    ::= { audioChannelMonitoringControlEntry 3 }
+
+    
+    audioSilenceAnalogLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -60..0 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the analog audio level 
+                  under which it is considered to be silent.  This value is 
+                  expressed in dBr.  This object can have a value of -60 to 0.
+                  Note:  This is supported for VIPM cards only in version 2.1 "
+    ::= { audioChannelMonitoringControlEntry 4 }
+
+    
+    audioSilenceDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..300 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+                  audio is silent in seconds before a fault occurs.  This 
+                  control can have a value of 1 to 300 in 1 increments. "
+    ::= { audioChannelMonitoringControlEntry 5 }
+
+    
+    audioSilenceDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+                  trigger will remain active after the audio silence has 
+                  corrected. "
+    ::= { audioChannelMonitoringControlEntry 6 }
+
+    
+    audioOverDigitalLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -30..0 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the digital audio level 
+                  over which is considered to be over level.  This value is 
+                  expressed in dBFs and can even be used to detect digital 
+                  clipping. "
+    ::= { audioChannelMonitoringControlEntry 7 }
+
+    
+    audioOverAnalogLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 0..20 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the analog audio level 
+                  over which is considered to be over level.  This value is 
+                  expressed in dBr.
+                  Note:  This is currently not supported.  Please do not 
+                  show this in VLPro. "
+    ::= { audioChannelMonitoringControlEntry 8 }
+
+    
+    audioOverDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control is used to set the window of time used to 
+                  measure the ratio (or percentage) of over samples.  Upto 1 
+                  hour is allowed as a maximum sample window. "
+    ::= { audioChannelMonitoringControlEntry 9 }
+
+    
+    audioOverDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+                  trigger will remain active after the audio over has 
+                  corrected. "
+    ::= { audioChannelMonitoringControlEntry 10 }
+
+    
+    audioOverRatio OBJECT-TYPE
+      SYNTAX INTEGER ( 1..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control is used to set the percentage of samples that
+                  are considered over the defined threshold for a set duration.
+                  The range represents 1 to 100 percent of samples over. "
+    ::= { audioChannelMonitoringControlEntry 11 }
+
+-- End of audioChannelMonitoringControlTable
+
+
+        
+-- Beginning of sdiOutputControlTable
+    sdiOutputControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF SdiOutputControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The sdiOutputControl table. "
+    ::= { vipproControl 8 }
+
+    sdiOutputControlEntry OBJECT-TYPE
+      SYNTAX SdiOutputControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { sdiOutputIdx }
+    ::= { sdiOutputControlTable 1 }
+
+    SdiOutputControlEntry ::= SEQUENCE {
+        sdiOutputIdx     INTEGER,
+        sdiOutputMode     INTEGER,
+        sdiOutputRoute     INTEGER
+    }
+
+
+    
+    sdiOutputIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            sdiOutput01(1),
+            sdiOutput02(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index 
+                  different SDI outputs.  
+                  Note:  The VIPA card type has 1 SDI output available.  The 
+                  VIPX and VIPA-DUO card types have 2 SDI outputs available.
+                  Note: Currently in firmware, sdiOutputMode and sdiOutputRoute 
+                  for all the sdiOutputIdx have same value, so VLPro shows 
+                  only one value for sdiOutputMode and one value for sdiOutputRoute.
+                   "
+    ::= { sdiOutputControlEntry 1 }
+
+    
+    sdiOutputMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            display(1),
+            router(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " The SDI output mode.  When in display mode, the SDI
+        output will mirror the DVI output image.  When in router mode,
+        the SDI output will transmit one of the video inputs (see
+        sdiOutputRoute control).
+
+        Note: Router mode is not available for VIPX32X2, VIPA32-DUO-HS 
+        VIPA32-DUO-3GHS, VIPX32X2+CSX, VIPA32-DUO-HS+CSX and 
+        VIPA32-DUO-3GHS+CSX, VIPA18-DUO, VIPA24-DUO, 
+        VIPXM16, VIPM16-DUO and VIPM18-DUO card types.
+        (Only display mode available for these card types). "
+    ::= { sdiOutputControlEntry 2 }
+
+    
+    sdiOutputRoute OBJECT-TYPE
+      SYNTAX INTEGER {
+            videoInput01(1),
+            videoInput02(2),
+            videoInput03(3),
+            videoInput04(4),
+            videoInput05(5),
+            videoInput06(6),
+            videoInput07(7),
+            videoInput08(8),
+            videoInput09(9),
+            videoInput10(10),
+            videoInput11(11),
+            videoInput12(12),
+            videoInput13(13),
+            videoInput14(14),
+            videoInput15(15),
+            videoInput16(16),
+            videoInput17(17),
+            videoInput18(18),
+            videoInput19(19),
+            videoInput20(20),
+            videoInput21(21),
+            videoInput22(22),
+            videoInput23(23),
+            videoInput24(24),
+            videoInput25(25),
+            videoInput26(26),
+            videoInput27(27),
+            videoInput28(28),
+            videoInput29(29),
+            videoInput30(30),
+            videoInput31(31),
+            videoInput32(32)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The video input that is transmitted via the SDI output.
+        sdiOutputMode must be set to router in order for this to work.
+        This controls should only be shown in VLPRo when sdiOutputMode is set to router.
+        Refer to videoInputIdx for how many video inputs are available for
+        each card type. "
+    ::= { sdiOutputControlEntry 3 }
+
+-- End of sdiOutputControlTable
+
+
+        
+-- Beginning of thumbnailInputPropertiesControlTable
+    thumbnailInputPropertiesControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF ThumbnailInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The thumbnailInputPropertiesControl table. "
+    ::= { vipproControl 9 }
+
+    thumbnailInputPropertiesControlEntry OBJECT-TYPE
+      SYNTAX ThumbnailInputPropertiesControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { thumbnailInputPropertiesControlTable 1 }
+
+    ThumbnailInputPropertiesControlEntry ::= SEQUENCE {
+        thumbnailEnable     INTEGER,
+        thumbnailSize     INTEGER
+    }
+
+
+    
+    thumbnailEnable OBJECT-TYPE
+      SYNTAX INTEGER {
+            disable(1),
+            enable(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Turns the thumbnail engine on or off for each input
+                  individually. "
+    ::= { thumbnailInputPropertiesControlEntry 1 }
+
+    
+    thumbnailSize OBJECT-TYPE
+      SYNTAX INTEGER {
+            s90x60(1),
+            s120x90(2),
+            s150x110(3),
+            s180x135(4),
+            s200x150(5),
+            s240x180(6),
+            s280x210(7),
+            s320x240(8),
+            s400x300(9),
+            s520x390(10),
+            s640x480(11)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Size index into a dimensions table that lives on the card.
+                  Is to be set for each input individually. "
+    ::= { thumbnailInputPropertiesControlEntry 2 }
+
+-- End of thumbnailInputPropertiesControlTable
+
+
+        
+    thumbnailServerIpAddress OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " IP address of the thumbnail server. "
+    ::= { vipproControl 10 }
+
+        
+    thumbnailServerPortNumber OBJECT-TYPE
+      SYNTAX INTEGER ( 1..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Port number to use when sending data.  Do not represent
+                  this component as a slider bar.  It should be displayed
+                  as a text box where the user can enter in the port number. "
+    ::= { vipproControl 11 }
+
+        
+    thumbnailServerUsername OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(40) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Username of the thumbnail server.  This field may not need
+                  to be filled by the user. "
+    ::= { vipproControl 12 }
+
+        
+    thumbnailServerPassword OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(40) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Password of the thumbnail server.  This field may not need
+                  to be filled by the user. "
+    ::= { vipproControl 13 }
+
+        
+    thumbnailInterval OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The number of seconds to pass between thumbnailed image
+                  trnasfers.  Lowbound of 1 second, Highbound of 3600 seconds
+                  (1 hour).  The calculated time should also be displayed to 
+                  the user as number of minutes and seconds. "
+    ::= { vipproControl 14 }
+
+        
+-- Beginning of eia708InputMonitoringControlTable
+    eia708InputMonitoringControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF Eia708InputMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The eia708InputMonitoringControl table. "
+    ::= { vipproControl 15 }
+
+    eia708InputMonitoringControlEntry OBJECT-TYPE
+      SYNTAX Eia708InputMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { eia708SvcIdx, videoInputIdx }
+    ::= { eia708InputMonitoringControlTable 1 }
+
+    Eia708InputMonitoringControlEntry ::= SEQUENCE {
+        eia708SvcIdx     INTEGER,
+        eia708SvcLossDuration     INTEGER,
+        eia708SvcLossDurationReset     INTEGER
+    }
+
+
+    
+    eia708SvcIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            eia708Svc1(1),
+            eia708Svc2(2),
+            eia708Svc3(3),
+            eia708Svc4(4),
+            eia708Svc5(5),
+            eia708Svc6(6),
+            eia708Svc7(7),
+            eia708Svc8(8),
+            eia708Svc9(9),
+            eia708Svc10(10),
+            eia708Svc11(11),
+            eia708Svc12(12),
+            eia708Svc13(13),
+            eia708Svc14(14),
+            eia708Svc15(15),
+            eia708Svc16(16)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the EIA708 Service Number in 
+                   EIA708InputMonitoringControl table.  
+                   It can have input values from 1 to 16  "
+    ::= { eia708InputMonitoringControlEntry 1 }
+
+    
+    eia708SvcLossDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with 
+                   EIA-708 Service data missing before a fault is triggered. "
+    ::= { eia708InputMonitoringControlEntry 2 }
+
+    
+    eia708SvcLossDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the number of seconds to pass with 
+                  EIA-708 Service data corrected before a fault is cleared. "
+    ::= { eia708InputMonitoringControlEntry 3 }
+
+-- End of eia708InputMonitoringControlTable
+
+
+        
+    serverEnabled OBJECT-TYPE
+      SYNTAX INTEGER {
+            disable(1),
+            enable(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter returns whether the onboard server
+        is enabled. "
+    ::= { vipproControl 16 }
+
+        
+    symphonyCommand OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(1024) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Any fully-framed symphony command sent to this OID
+        will be executed via the onboard server.  Fully-framed means
+        that the command must include the STX, ETX, version, and sequence
+        number characters (see the Symphony protocol document).
+        Note:  this control is available only if the onboard server is
+        enabled (see serverEnabled control). "
+    ::= { vipproControl 17 }
+
+        
+    nextLayoutScriptName OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(128) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " A GET operation on this parameter will return the next 
+        script in the MVP server's scripts directory.  An empty string is 
+        returned when the end of the directory is reached.  The next get 
+        will return the first script in the directory.
+        Note:  this control is available only if the onboard server is
+        enabled (see serverEnabled control). "
+    ::= { vipproControl 18 }
+
+        
+-- Beginning of monitoringBehaviorControlTable
+    monitoringBehaviorControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MonitoringBehaviorControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The monitoringBehaviorControl table. "
+    ::= { vipproControl 19 }
+
+    monitoringBehaviorControlEntry OBJECT-TYPE
+      SYNTAX MonitoringBehaviorControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { monitoringBehaviorControlTable 1 }
+
+    MonitoringBehaviorControlEntry ::= SEQUENCE {
+        startMonitoring     INTEGER,
+        stopMonitoring     INTEGER,
+        resetMonitoring     INTEGER,
+        enableMonitoring     INTEGER,
+        disableMonitoring     INTEGER,
+        resetAndEnableMonitoring     INTEGER,
+        trapsNotify     INTEGER,
+        trapTag     UTF8String,
+        trapTagSelect     INTEGER,
+        sourceName     UTF8String
+    }
+
+
+    
+    startMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Resumes all monitoring / 
+            reporting of faults. 
+            NOTE: currently not implemented 
+             "
+    ::= { monitoringBehaviorControlEntry 1 }
+
+    
+    stopMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Stops all monitoring / 
+            reporting of faults.
+            NOTE: currently not implemented 
+             "
+    ::= { monitoringBehaviorControlEntry 2 }
+
+    
+    resetMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Resets all fault conditions 
+            to not present and disable all faults.
+             "
+    ::= { monitoringBehaviorControlEntry 3 }
+
+    
+    enableMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Resumes SNMP traps for the 
+            selected input.
+            Current traps state is shown by trapsNotify read-only control.
+             "
+    ::= { monitoringBehaviorControlEntry 4 }
+
+    
+    disableMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Disables SNMP traps for the 
+            selected input.
+            Current traps state is shown by trapsNotify read-only control.
+             "
+    ::= { monitoringBehaviorControlEntry 5 }
+
+    
+    resetAndEnableMonitoring OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Resets all fault conditions and 
+            Enables SNMP traps for the selected input.
+             "
+    ::= { monitoringBehaviorControlEntry 6 }
+
+    
+    trapsNotify OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Shows the current state of the traps Notify.
+            Possible values are enabled (when traps are sent),
+            and disabled (when traps are blocked from sending). 
+            Its state is set through enableMonitoring (to enable), 
+            and disableMonitoring to (disable).
+             "
+    ::= { monitoringBehaviorControlEntry 7 }
+
+    
+    trapTag OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+            given input which will be assigned to the traps.  This is encoded 
+            as an octet string using the UTF-8 character encoding scheme.  The
+            maximum length of the octet string is 256 characters.
+                   "
+    ::= { monitoringBehaviorControlEntry 8 }
+
+    
+    trapTagSelect OBJECT-TYPE
+      SYNTAX INTEGER {
+            userSelect(1),
+            sourceName(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the users to select trap tag 
+                    as either user_select or source_name, that is sent 
+                    along with faults. It can have input values as:
+                    1 = user_select,   2 = source name.
+                    Note: This was added in firmware version 1.5 (VLPro ver 1.05)
+                   "
+    ::= { monitoringBehaviorControlEntry 9 }
+
+    
+    sourceName OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter gets an alpha numeric name to a 
+            given source which can be assigned to the traps.  This is encoded 
+            as an octet string using the UTF-8 character encoding scheme.  The
+            maximum length of the octet string is 256 characters.
+                   "
+    ::= { monitoringBehaviorControlEntry 10 }
+
+-- End of monitoringBehaviorControlTable
+
+
+        
+    xlinkSwitchAllInputs OBJECT-TYPE
+      SYNTAX INTEGER {
+            main(1),
+            redundant(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Switch all inputs between main xlink and redundant xlink.
+                 This was added for card types VIPX and VIPXM
+                 "
+    ::= { vipproControl 20 }
+
+        
+-- Beginning of xlinkSwitchIndividualInputTable
+    xlinkSwitchIndividualInputTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF XlinkSwitchIndividualInputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The xlinkSwitchIndividualInput table. "
+    ::= { vipproControl 21 }
+
+    xlinkSwitchIndividualInputEntry OBJECT-TYPE
+      SYNTAX XlinkSwitchIndividualInputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { xlinkSwitchIndividualInputTable 1 }
+
+    XlinkSwitchIndividualInputEntry ::= SEQUENCE {
+        switchInput     INTEGER
+    }
+
+
+    
+    switchInput OBJECT-TYPE
+      SYNTAX INTEGER {
+            main(1),
+            redundant(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Switch a single input between main xlink and redundant xlink.
+             "
+    ::= { xlinkSwitchIndividualInputEntry 1 }
+
+-- End of xlinkSwitchIndividualInputTable
+
+
+        
+-- Beginning of rgbColourCorrectionTable
+    rgbColourCorrectionTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF RgbColourCorrectionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The rgbColourCorrection table. "
+    ::= { vipproControl 22 }
+
+    rgbColourCorrectionEntry OBJECT-TYPE
+      SYNTAX RgbColourCorrectionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { outputDisplayIdx, rgbChannel }
+    ::= { rgbColourCorrectionTable 1 }
+
+    RgbColourCorrectionEntry ::= SEQUENCE {
+        outputDisplayIdx     INTEGER,
+        rgbChannel     INTEGER,
+        rgbGain     INTEGER,
+        rgbBlackLevel     INTEGER,
+        rgbGamma     INTEGER
+    }
+
+
+    
+    outputDisplayIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            display1(1),
+            display2(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is index for number of 
+                       DVI Output Displays available. 
+                       Note:  The VIPA card type has 1 DVI output 
+                       display available. The VIPX and VIPA-DUO 
+                       card types have 2 DVI output displays available.
+             "
+    ::= { rgbColourCorrectionEntry 1 }
+
+    
+    rgbChannel OBJECT-TYPE
+      SYNTAX INTEGER {
+            red(1),
+            green(2),
+            blue(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the channel for RGB colour 
+                    correction to select. Its values are 
+                    1. Red
+                    2. Green
+                    3. Blue
+             "
+    ::= { rgbColourCorrectionEntry 2 }
+
+    
+    rgbGain OBJECT-TYPE
+      SYNTAX INTEGER ( -600..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " sets the gain value for the RGB-Color region, 
+                          depending on RGB channel selected. 
+                          The represented value should be divided by 100.
+                          In other words the user should see a range swing 
+                          of -6 to +6 incrementing or decrementing in steps
+                          of 0.01.  The units for this control is in dB. 
+             "
+    ::= { rgbColourCorrectionEntry 3 }
+
+    
+    rgbBlackLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -500..500 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " sets the black level value for the RGB-Color region, 
+                          depending on RGB channel selected. 
+                          The represented value should be divided by 10.
+                          In other words the user should see a range swing 
+                          of -50 to +50 incrementing or decrementing in steps
+                          of 0.1.  The units for this control is in %. 
+             "
+    ::= { rgbColourCorrectionEntry 4 }
+
+    
+    rgbGamma OBJECT-TYPE
+      SYNTAX INTEGER ( 30..300 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " sets the gamma value for the RGB-Color region,
+                          depending on RGB channel selected. 
+                          The represented value should be divided by 100.
+                          In other words the user should see a range swing 
+                          of -0.3 to +3.00 incrementing or decrementing in steps
+                          of 0.01.  There are no units for this control. 
+             "
+    ::= { rgbColourCorrectionEntry 5 }
+
+-- End of rgbColourCorrectionTable
+
+
+        
+    resetColorCorrection OBJECT-TYPE
+      SYNTAX INTEGER {
+            doNothing(1),
+            reset(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This is a reset control for the Color 
+                  Correction Control Parameters.  It is used to 
+                  reset all color correction parameters back to 
+                  the factory default.  It is to be  implemented 
+                  as a push button.  When the push-button is pressed 
+                  a value of 2 is to be sent to the card.  This will
+                  instruct the card to factory reset the color correction
+                  controls.  A refresh of all the color correction controls
+                  in then required.  If a value other than 2 is sent, it will
+                  be ignored. A get on this parameter is useless.  Note that
+                  sending a value of 1 to the card will have no effect 
+             "
+    ::= { vipproControl 23 }
+
+        
+-- Beginning of mvpIdDefinitionTable
+    mvpIdDefinitionTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mvpIdDefinition table. "
+    ::= { vipproControl 24 }
+
+    mvpIdDefinitionEntry OBJECT-TYPE
+      SYNTAX MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mvpIdIdx, videoInputIdx }
+    ::= { mvpIdDefinitionTable 1 }
+
+    MvpIdDefinitionEntry ::= SEQUENCE {
+        mvpIdIdx     INTEGER,
+        mvpIdValue     UTF8String
+    }
+
+
+    
+    mvpIdIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            mvpId1(1),
+            mvpId2(2),
+            mvpId3(3),
+            mvpId4(4),
+            mvpId5(5),
+            mvpId6(6),
+            mvpId7(7),
+            mvpId8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is an index for 
+               mvpIdDefinitionTable. It represents number of  
+               mvpid's for each input. It can have input 
+               values from 1 to 8.
+               Note: This was added in firmware version 1.3(VLPro ver 1.03).
+             "
+    ::= { mvpIdDefinitionEntry 1 }
+
+    
+    mvpIdValue OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric 
+                tag to a given input which will be assigned to the mvpid.
+                This is encoded as an octet string using the UTF-8 
+                character encoding scheme.  The maximum length of the 
+                octet string is 256 characters.
+                Note: This was added in firmware version 1.3(VLPro ver 1.03).
+               "
+    ::= { mvpIdDefinitionEntry 2 }
+
+-- End of mvpIdDefinitionTable
+
+
+        
+    xlinkModeSelect OBJECT-TYPE
+      SYNTAX INTEGER {
+            manual(1),
+            auto(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter selects xlink switching mode
+               to switch between main and redundant xlinks.
+               It has values as either manual or auto.
+               Note: This was added in firmware version 1.4(VLPro ver 1.04), 
+               for card types VIPX and VIPXM.
+                   "
+    ::= { vipproControl 25 }
+
+        
+-- Beginning of inputSettingsControlTable
+    inputSettingsControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF InputSettingsControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The inputSettingsControl table. "
+    ::= { vipproControl 26 }
+
+    inputSettingsControlEntry OBJECT-TYPE
+      SYNTAX InputSettingsControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { inputSettingsControlTable 1 }
+
+    InputSettingsControlEntry ::= SEQUENCE {
+        audioLoudIntegTime     INTEGER,
+        desiredVideoType     INTEGER,
+        scte104GpiTriggerType     INTEGER
+    }
+
+
+    
+    audioLoudIntegTime OBJECT-TYPE
+      SYNTAX INTEGER ( 1..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter selects the audio loudness 
+            integration time for audio loudness silence/over detection 
+            in integrating mode (I-Mode).
+            It has a range from 1 to 10, the units are seconds.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { inputSettingsControlEntry 1 }
+
+    
+    desiredVideoType OBJECT-TYPE
+      SYNTAX INTEGER {
+            stdNtsc(1),
+            stdPal(2),
+            std525i5994(3),
+            std625i50(4),
+            std1080i5994(5),
+            std1080i60(6),
+            std720p5994(7),
+            std720p60(8),
+            std1080i50(9),
+            std1080p2398sf(10),
+            std1080p24sf(11),
+            std720p50(12),
+            std1080p30(13),
+            std1080p2997(14),
+            std1080p25(15),
+            std1080p60(16),
+            std1080p5994(17),
+            std1080p50(18),
+            std1080p60b(19),
+            std1080p5994b(20),
+            std1080p50b(21)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Desired video standard/type used to calculate 
+                           video type mismatch fault. 
+                           Note: stdNtsc and stdPal are not supported yet(for future use).
+                           Note: This was added in firmware version 2.0.
+                            "
+    ::= { inputSettingsControlEntry 2 }
+
+    
+    scte104GpiTriggerType OBJECT-TYPE
+      SYNTAX INTEGER {
+            static(1),
+            trigAsIndex(2),
+            trigDpiPidIndex(3),
+            trigUniqueProdId(4),
+            trigAvailNum(5),
+            trigAvailExpected(6),
+            trigTimeType(7),
+            trigSpliceIncType(8)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the 
+                           trigger type for scte104 GPIs.
+                           Note: This was added in firmware version 2.1, for card types VIPM and VIPXM.
+                            "
+    ::= { inputSettingsControlEntry 3 }
+
+-- End of inputSettingsControlTable
+
+
+        
+-- Beginning of audioLoudnessMonitoringControlTable
+    audioLoudnessMonitoringControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioLoudnessMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioLoudnessMonitoringControl table. "
+    ::= { vipproControl 27 }
+
+    audioLoudnessMonitoringControlEntry OBJECT-TYPE
+      SYNTAX AudioLoudnessMonitoringControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { audioLoudnessMonitoringControlTable 1 }
+
+    AudioLoudnessMonitoringControlEntry ::= SEQUENCE {
+        audioLoudOverDuration     INTEGER,
+        audioLoudOverDurationReset     INTEGER,
+        audioLoudOverThresh     INTEGER,
+        audioLoudSilenceDuration     INTEGER,
+        audioLoudSilenceDurationReset     INTEGER,
+        audioLoudSilenceThresh     INTEGER
+    }
+
+
+    
+    audioLoudOverDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of audio Loudness Over fault.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { audioLoudnessMonitoringControlEntry 1 }
+
+    
+    audioLoudOverDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the audio Loud Over is not considered to
+        have an error.  It has a range from 0 to 120 in the card, however 
+        show range from 0 to 60 seconds in VLPro.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { audioLoudnessMonitoringControlEntry 2 }
+
+    
+    audioLoudOverThresh OBJECT-TYPE
+      SYNTAX INTEGER ( -35..-10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the upper threshold level for 
+                           audio loudness. If the audio loudness value
+                           exceed this level, a fault alert is triggered 
+                           (if enabled)
+                           It has a range from -35 to -10, the units are dB.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                            "
+    ::= { audioLoudnessMonitoringControlEntry 3 }
+
+    
+    audioLoudSilenceDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of audio Loudness Silence fault.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { audioLoudnessMonitoringControlEntry 4 }
+
+    
+    audioLoudSilenceDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the audio Loud Silence is not considered to
+        have an error.  It has a range from 0 to 120 in the card, however show 
+        range from 0 to 60 seconds in VLPro.
+        Note: This only applies to 7VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                           "
+    ::= { audioLoudnessMonitoringControlEntry 5 }
+
+    
+    audioLoudSilenceThresh OBJECT-TYPE
+      SYNTAX INTEGER ( -80..-44 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the lower threshold level for 
+                           audio loudness. If the audio loudness value
+                           is below this level, a fault alert is triggered 
+                           (if enabled)
+                           It has a range from -80 to -44, the units are dB.
+        Note: This only applies to VIPM/VIPXM card types,
+        Note: This was added in firmware version 2.0.
+                            "
+    ::= { audioLoudnessMonitoringControlEntry 6 }
+
+-- End of audioLoudnessMonitoringControlTable
+
+
+        
+-- Beginning of nielsenSettingsControlTable
+    nielsenSettingsControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF NielsenSettingsControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The nielsenSettingsControl table. "
+    ::= { vipproControl 28 }
+
+    nielsenSettingsControlEntry OBJECT-TYPE
+      SYNTAX NielsenSettingsControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInputIdx }
+    ::= { nielsenSettingsControlTable 1 }
+
+    NielsenSettingsControlEntry ::= SEQUENCE {
+        nielsenIpAddress     OCTET STRING,
+        nielsenAudioChan     INTEGER,
+        nielsenType     INTEGER
+    }
+
+
+    
+    nielsenIpAddress OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " IP address of the Nielsen Decoder. 
+            The card will accept value for this control when 
+            followVLPro is enabled on the card.
+            This is added in firmware version 1.5.3
+             "
+    ::= { nielsenSettingsControlEntry 1 }
+
+    
+    nielsenAudioChan OBJECT-TYPE
+      SYNTAX INTEGER ( 0..8 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Audio Channel select for NAES. 
+            The card will accept value for this control when 
+            followVLPro is enabled on the card.
+            This is added in firmware version 1.5.3
+             "
+    ::= { nielsenSettingsControlEntry 2 }
+
+    
+    nielsenType OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            naes(2),
+            amol(3),
+            naesAmol(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Nielsen Type selection. 
+            The card will accept value for this control when 
+            followVLPro is enabled on the card.
+            This is added in firmware version 1.5.3
+             "
+    ::= { nielsenSettingsControlEntry 3 }
+
+-- End of nielsenSettingsControlTable
+
+
+        
+-- Beginning of scte104GpiTable
+    scte104GpiTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF Scte104GpiEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The scte104Gpi table. "
+    ::= { vipproControl 29 }
+
+    scte104GpiEntry OBJECT-TYPE
+      SYNTAX Scte104GpiEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { scte104GpiIndex, videoInputIdx }
+    ::= { scte104GpiTable 1 }
+
+    Scte104GpiEntry ::= SEQUENCE {
+        scte104GpiIndex     INTEGER,
+        scte104GpiDurationReset     INTEGER
+    }
+
+
+    
+    scte104GpiIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            scte104Gpi1(1),
+            scte104Gpi2(2),
+            scte104Gpi3(3),
+            scte104Gpi4(4),
+            scte104Gpi5(5),
+            scte104Gpi6(6)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the faultDefinitionScte104Gpi table.  It can have
+                    input values from 1 to 6
+                    Note: This was added in firmware version 2.1, for card types VIPM and VIPXM.
+                           "
+    ::= { scte104GpiEntry 1 }
+
+    
+    scte104GpiDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the SCTE104 GPI is not present. 
+        It has a range from 0 to 60 seconds.
+        Note: This was added in firmware version 2.1, for card types VIPM and VIPXM.
+                           "
+    ::= { scte104GpiEntry 2 }
+
+-- End of scte104GpiTable
+
+
+        
+-- Beginning of timecodeRctlGpiTable
+    timecodeRctlGpiTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TimecodeRctlGpiEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The timecodeRctlGpi table. "
+    ::= { vipproControl 30 }
+
+    timecodeRctlGpiEntry OBJECT-TYPE
+      SYNTAX TimecodeRctlGpiEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { timecodeRctlGpiIndex, videoInputIdx }
+    ::= { timecodeRctlGpiTable 1 }
+
+    TimecodeRctlGpiEntry ::= SEQUENCE {
+        timecodeRctlGpiIndex     INTEGER,
+        timecodeRctlGpiPresDuration     INTEGER,
+        timecodeRctlGpiPresDurationReset     INTEGER
+    }
+
+
+    
+    timecodeRctlGpiIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            timecodeRctlGpi1(1),
+            timecodeRctlGpi2(2),
+            timecodeRctlGpi3(3),
+            timecodeRctlGpi4(4),
+            timecodeRctlGpi5(5),
+            timecodeRctlGpi6(6)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the faultDefinitionTimecodeRctlGpi table.  It can have
+                    input values from 1 to 6
+                    Note: This was added in firmware version 2.2, for card types VIPM and VIPXM.
+                           "
+    ::= { timecodeRctlGpiEntry 1 }
+
+    
+    timecodeRctlGpiPresDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of RCTL GPI. 
+                           It has a range from 0 to 60 seconds.
+                           Note: This was added in firmware version 2.2, for card types VIPM and VIPXM.
+                           "
+    ::= { timecodeRctlGpiEntry 2 }
+
+    
+    timecodeRctlGpiPresDurationReset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..60 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the Timecode GPI is not present. 
+        It has a range from 0 to 60 seconds.
+        Note: This was added in firmware version 2.2, for card types VIPM and VIPXM.
+                           "
+    ::= { timecodeRctlGpiEntry 3 }
+
+-- End of timecodeRctlGpiTable
+
+
+        
+-- Beginning of mgmtFaultVideoTable
+    mgmtFaultVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultVideo table. "
+    ::= { vipproNotify 1 }
+
+    mgmtFaultVideoEntry OBJECT-TYPE
+      SYNTAX MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoFaultNameIndex }
+    ::= { mgmtFaultVideoTable 1 }
+
+    MgmtFaultVideoEntry ::= SEQUENCE {
+        videoFaultNameIndex     INTEGER,
+        faultPresentVideo     INTEGER
+    }
+
+
+    
+    videoFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            videoSyncLoss(1),
+            videoBurstLoss(2),
+            videoLoss(3),
+            aplMax(4),
+            aplMin(5),
+            videoTypeChange(6),
+            videoSrcChanged(7),
+            videoAPFrozen(8),
+            videoREGFrozen(9),
+            videoAPMotion(10),
+            videoREGMotion(11),
+            videoAPBlack(12),
+            videoREGBlack(13),
+            vitcInvalid(14),
+            sidInvalid(15),
+            programRatingInvalid(16),
+            cc1Invalid(17),
+            cc2Invalid(18),
+            cc3Invalid(19),
+            cc4Invalid(20),
+            txt1Invalid(21),
+            txt2Invalid(22),
+            txt3Invalid(23),
+            txt4Invalid(24),
+            xdsInvalid(25),
+            ccWaveformInvalid(26),
+            vitcWaveformInvalid(27),
+            prChanged(28),
+            teletextLoss(29),
+            wssLoss(30),
+            eia708Svc1Invalid(31),
+            eia708Svc2Invalid(32),
+            eia708Svc3Invalid(33),
+            eia708Svc4Invalid(34),
+            eia708Svc5Invalid(35),
+            eia708Svc6Invalid(36),
+            eia708Svc7Invalid(37),
+            eia708Svc8Invalid(38),
+            eia708Svc9Invalid(39),
+            eia708Svc10Invalid(40),
+            eia708Svc11Invalid(41),
+            eia708Svc12Invalid(42),
+            eia708Svc13Invalid(43),
+            eia708Svc14Invalid(44),
+            eia708Svc15Invalid(45),
+            eia708Svc16Invalid(46),
+            naesSourceLoss(47),
+            naesDataLoss(48),
+            amolSourceLoss(49),
+            amolDataLoss(50)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Video Fault Index.
+        The following indexes should not be shown in VLPro:
+            videoSyncLoss,
+            videoBurstLoss,
+            videoREGMotion,
+            videoREGBlack,
+            videoREGFrozen "
+    ::= { mgmtFaultVideoEntry 1 }
+
+    
+    faultPresentVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s).  This is a logical 'OR' of all the
+                  inputs for a given fault.  For example, if a get is done on
+                  the videoLoss fault, then the returned value is the videoLoss
+                  status of all the inputs 'ORed' together. "
+    ::= { mgmtFaultVideoEntry 2 }
+
+-- End of mgmtFaultVideoTable
+
+
+        
+-- Beginning of mgmtFaultAudioTable
+    mgmtFaultAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAudio table. "
+    ::= { vipproNotify 2 }
+
+    mgmtFaultAudioEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioFaultNameIndex }
+    ::= { mgmtFaultAudioTable 1 }
+
+    MgmtFaultAudioEntry ::= SEQUENCE {
+        audioFaultNameIndex     INTEGER,
+        faultPresentAudio     INTEGER
+    }
+
+
+    
+    audioFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioChannel1Loss(1),
+            audioChannel2Loss(2),
+            audioChannel3Loss(3),
+            audioChannel4Loss(4),
+            audioChannel5Loss(5),
+            audioChannel6Loss(6),
+            audioChannel7Loss(7),
+            audioChannel8Loss(8),
+            audioChannel1Silent(9),
+            audioChannel2Silent(10),
+            audioChannel3Silent(11),
+            audioChannel4Silent(12),
+            audioChannel5Silent(13),
+            audioChannel6Silent(14),
+            audioChannel7Silent(15),
+            audioChannel8Silent(16),
+            audioChannel1Over(17),
+            audioChannel2Over(18),
+            audioChannel3Over(19),
+            audioChannel4Over(20),
+            audioChannel5Over(21),
+            audioChannel6Over(22),
+            audioChannel7Over(23),
+            audioChannel8Over(24),
+            audioPair12PhaseReversed(25),
+            audioPair34PhaseReversed(26),
+            audioPair56PhaseReversed(27),
+            audioPair78PhaseReversed(28),
+            audioPair12Mono(29),
+            audioPair34Mono(30),
+            audioPair56Mono(31),
+            audioPair78Mono(32),
+            audio12NonPCMInvalid(33),
+            audio34NonPCMInvalid(34),
+            audio56NonPCMInvalid(35),
+            audio78NonPCMInvalid(36)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Audio Fault Index "
+    ::= { mgmtFaultAudioEntry 1 }
+
+    
+    faultPresentAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s).  This is a logical 'OR' of all the
+                  inputs for a given fault.  For example, if a get is done on
+                  the audioLoss fault, then the returned value is the audioLoss
+                  status of all the inputs 'ORed' together. "
+    ::= { mgmtFaultAudioEntry 2 }
+
+-- End of mgmtFaultAudioTable
+
+
+        
+-- Beginning of faultStatusVideoTable
+    faultStatusVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultStatusVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultStatusVideo table. "
+    ::= { vipproNotify 3 }
+
+    faultStatusVideoEntry OBJECT-TYPE
+      SYNTAX FaultStatusVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoFaultNameIndex, videoInputIdx }
+    ::= { faultStatusVideoTable 1 }
+
+    FaultStatusVideoEntry ::= SEQUENCE {
+        videoFaultStatus     INTEGER,
+        sendTrapVideo     INTEGER
+    }
+
+
+    
+    videoFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of video fault(s).  Indexed by fault name and
+                  by input index. "
+    ::= { faultStatusVideoEntry 1 }
+
+    
+    sendTrapVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to Turn Traps On and Off.  Indexed by faultname and by
+                   input index. "
+    ::= { faultStatusVideoEntry 2 }
+
+-- End of faultStatusVideoTable
+
+
+        
+-- Beginning of faultStatusAudioTable
+    faultStatusAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultStatusAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultStatusAudio table. "
+    ::= { vipproNotify 4 }
+
+    faultStatusAudioEntry OBJECT-TYPE
+      SYNTAX FaultStatusAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioFaultNameIndex, videoInputIdx }
+    ::= { faultStatusAudioTable 1 }
+
+    FaultStatusAudioEntry ::= SEQUENCE {
+        audioFaultStatus     INTEGER,
+        sendTrapAudio     INTEGER
+    }
+
+
+    
+    audioFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of audio fault(s).  Indexed by fault name and
+                  by input index. "
+    ::= { faultStatusAudioEntry 1 }
+
+    
+    sendTrapAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to Turn Traps On and Off.  Indexed by faultname and by
+                   input index. "
+    ::= { faultStatusAudioEntry 2 }
+
+-- End of faultStatusAudioTable
+
+
+        
+-- Beginning of mgmtFaultExtendedTable
+    mgmtFaultExtendedTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultExtendedEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultExtended table. "
+    ::= { vipproNotify 5 }
+
+    mgmtFaultExtendedEntry OBJECT-TYPE
+      SYNTAX MgmtFaultExtendedEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { extendedFaultNameIndex }
+    ::= { mgmtFaultExtendedTable 1 }
+
+    MgmtFaultExtendedEntry ::= SEQUENCE {
+        extendedFaultNameIndex     INTEGER,
+        faultPresentExtended     INTEGER
+    }
+
+
+    
+    extendedFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            xlinkRedundant(1),
+            smpteAfdLoss(2),
+            smpteAfdTypeChange(3),
+            videoIndexLoss(4),
+            audio12NonPCMTypeChange(5),
+            audio34NonPCMTypeChange(6),
+            audio56NonPCMTypeChange(7),
+            audio78NonPCMTypeChange(8),
+            videoIndexChange(9),
+            macroBlkDetect(10),
+            audioChannel9Loss(11),
+            audioChannel10Loss(12),
+            audioChannel11Loss(13),
+            audioChannel12Loss(14),
+            audioChannel13Loss(15),
+            audioChannel14Loss(16),
+            audioChannel15Loss(17),
+            audioChannel16Loss(18),
+            audioChannel9Silent(19),
+            audioChannel10Silent(20),
+            audioChannel11Silent(21),
+            audioChannel12Silent(22),
+            audioChannel13Silent(23),
+            audioChannel14Silent(24),
+            audioChannel15Silent(25),
+            audioChannel16Silent(26),
+            audioChannel9Over(27),
+            audioChannel10Over(28),
+            audioChannel11Over(29),
+            audioChannel12Over(30),
+            audioChannel13Over(31),
+            audioChannel14Over(32),
+            audioChannel15Over(33),
+            audioChannel16Over(34),
+            audioPair0910PhaseReversed(35),
+            audioPair1112PhaseReversed(36),
+            audioPair1314PhaseReversed(37),
+            audioPair1516PhaseReversed(38),
+            audioPair0910Mono(39),
+            audioPair1112Mono(40),
+            audioPair1314Mono(41),
+            audioPair1516Mono(42),
+            audio0910NonPCMInvalid(43),
+            audio1112NonPCMInvalid(44),
+            audio1314NonPCMInvalid(45),
+            audio1516NonPCMInvalid(46),
+            audio0910NonPCMTypeChange(47),
+            audio1112NonPCMTypeChange(48),
+            audio1314NonPCMTypeChange(49),
+            audio1516NonPCMTypeChange(50),
+            audLoudOver1(51),
+            audLoudOver2(52),
+            audLoudOver3(53),
+            audLoudOver4(54),
+            audLoudOver5(55),
+            audLoudOver6(56),
+            audLoudOver7(57),
+            audLoudOver8(58),
+            audLoudLow1(59),
+            audLoudLow2(60),
+            audLoudLow3(61),
+            audLoudLow4(62),
+            audLoudLow5(63),
+            audLoudLow6(64),
+            audLoudLow7(65),
+            audLoudLow8(66),
+            nlsnWatermarkLoss(67),
+            naesMismatch(68),
+            amolMismatch(69),
+            nlsnWatermarkMismatch(70),
+            videoTypeMismatch(71),
+            scte104Gpi01Pres(72),
+            scte104Gpi02Pres(73),
+            scte104Gpi03Pres(74),
+            scte104Gpi04Pres(75),
+            scte104Gpi05Pres(76),
+            scte104Gpi06Pres(77),
+            hdcpEncryptPres(78),
+            timecodeRctlGpi01Pres(79),
+            timecodeRctlGpi02Pres(80),
+            timecodeRctlGpi03Pres(81),
+            timecodeRctlGpi04Pres(82),
+            timecodeRctlGpi05Pres(83),
+            timecodeRctlGpi06Pres(84),
+            extendedFutureUse85(85),
+            extendedFutureUse86(86),
+            extendedFutureUse87(87),
+            extendedFutureUse88(88),
+            extendedFutureUse89(89),
+            extendedFutureUse90(90),
+            extendedFutureUse91(91),
+            extendedFutureUse92(92),
+            extendedFutureUse93(93),
+            extendedFutureUse94(94),
+            extendedFutureUse95(95),
+            extendedFutureUse96(96),
+            extendedFutureUse97(97),
+            extendedFutureUse98(98),
+            extendedFutureUse99(99),
+            extendedFutureUse100(100)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Extended Fault Index.
+              - XlinkRedundant index added in firmware version 1.4(VLPro ver 1.04) 
+                for card types VIPX and VIPXM.
+              - smpteAfdLoss, smpteAfdTypeChange, videoIndexLoss index added 
+                in firmware version 1.5 (VLPro ver 1.05).
+              - videoIndexChange index added in firmware version 1.5 (VLPro ver 1.05).
+              - macroBlkDetect index added in firmware version 2.0.
+              - audioChannelXXLoss index 9-16 added in firmware version 2.0.
+              - audioChannelXXSilent index 9-16 added in firmware version 2.0.
+              - audioChannelXXOver index 9-16 added in firmware version 2.0.
+              - audioPairXXPhaseReversed index 0910-1516 added in firmware version 2.0.
+              - audioPairXXMono index 0910-1516 added in firmware version 2.0.
+              - audioXXNonPCMInvalid index 0910-1516 added in firmware version 2.0.
+              - audLoudOverXX index 1-8 added in firmware version 2.0.
+              - audLoudLowXX index 1-8 added in firmware version 2.0.
+              - nlsnWatermarkLoss added in firmware version 2.0.
+              - naesMismatch added in firmware version 2.0.
+              - amolMismatch added in firmware version 2.0.
+              - nlsnWatermarkMismatch added in firmware version 2.0.
+              - videoTypeMismatch added in firmware version 2.0.
+              - scte104GpiPresXX added in firmware version 2.1.
+              - hdcpEncryptPres added in firmware version 2.2.
+              - timecodeRctlGpiPresXX added in firmware version 2.2.
+         "
+    ::= { mgmtFaultExtendedEntry 1 }
+
+    
+    faultPresentExtended OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s).  This is a logical 'OR' of all the
+                  inputs for a given fault.  For example, if a get is done on
+                  the videoLoss fault, then the returned value is the videoLoss
+                  status of all the inputs 'ORed' together. "
+    ::= { mgmtFaultExtendedEntry 2 }
+
+-- End of mgmtFaultExtendedTable
+
+
+        
+-- Beginning of faultStatusExtendedTable
+    faultStatusExtendedTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultStatusExtendedEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultStatusExtended table. "
+    ::= { vipproNotify 6 }
+
+    faultStatusExtendedEntry OBJECT-TYPE
+      SYNTAX FaultStatusExtendedEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { extendedFaultNameIndex, videoInputIdx }
+    ::= { faultStatusExtendedTable 1 }
+
+    FaultStatusExtendedEntry ::= SEQUENCE {
+        extendedFaultStatus     INTEGER,
+        sendTrapExtended     INTEGER
+    }
+
+
+    
+    extendedFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of extended fault(s).  Indexed by fault name and
+                  by input index. "
+    ::= { faultStatusExtendedEntry 1 }
+
+    
+    sendTrapExtended OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to Turn Traps On and Off.  Indexed by faultname and by
+                           input index. "
+    ::= { faultStatusExtendedEntry 2 }
+
+-- End of faultStatusExtendedTable
+
+
+        
+-- Beginning of mgmtFaultGPITable
+    mgmtFaultGPITable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultGPIEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultGPI table. "
+    ::= { vipproNotify 7 }
+
+    mgmtFaultGPIEntry OBJECT-TYPE
+      SYNTAX MgmtFaultGPIEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpiFaultNameIndex }
+    ::= { mgmtFaultGPITable 1 }
+
+    MgmtFaultGPIEntry ::= SEQUENCE {
+        gpiFaultNameIndex     INTEGER
+    }
+
+
+    
+    gpiFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            gpiFault01(1),
+            gpiFault02(2),
+            gpiFault03(3),
+            gpiFault04(4),
+            gpiFault05(5),
+            gpiFault06(6),
+            gpiFault07(7),
+            gpiFault08(8),
+            gpiFault09(9),
+            gpiFault10(10)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to index GPIs.
+                  Note:  The VIPA card type has 10 GPIs available.
+                  VIPX and VIPA-DUO card types have 4 GPIs available.
+                  This feature is only available in firmware 1.4.1 and greater.
+                   "
+    ::= { mgmtFaultGPIEntry 1 }
+
+-- End of mgmtFaultGPITable
+
+
+        
+-- Beginning of faultStatusGPITable
+    faultStatusGPITable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultStatusGPIEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultStatusGPI table. "
+    ::= { vipproNotify 8 }
+
+    faultStatusGPIEntry OBJECT-TYPE
+      SYNTAX FaultStatusGPIEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpiFaultNameIndex }
+    ::= { faultStatusGPITable 1 }
+
+    FaultStatusGPIEntry ::= SEQUENCE {
+        gpiFaultStatus     INTEGER,
+        sendTrapGPI     INTEGER
+    }
+
+
+    
+    gpiFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of gpi fault(s).  Indexed by gpi fault index.
+                           This feature is only available in firmware 1.4.1 and greater.
+             "
+    ::= { faultStatusGPIEntry 1 }
+
+    
+    sendTrapGPI OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn traps on and off.  Indexed by faultname.
+                           This feature is only available in firmware 1.4.1 and greater.
+             "
+    ::= { faultStatusGPIEntry 2 }
+
+-- End of faultStatusGPITable
+
+
+
+END

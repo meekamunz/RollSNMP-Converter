@@ -1,0 +1,44 @@
+ENTITY-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, mib-2, NOTIFICATION-TYPE
+        FROM SNMPv2-SMI
+    TDomain, TAddress, TEXTUAL-CONVENTION,
+    AutonomousType, RowPointer, TimeStamp, TruthValue
+        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+    DisplayString
+        FROM SNMPv2-TC-v1
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    entityMIB
+        FROM ENTITY-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+
+entityMIBObjects OBJECT IDENTIFIER ::= { entityMIB 1 }
+
+-- MIB contains four groups
+entityPhysical OBJECT IDENTIFIER ::= { entityMIBObjects 1 }
+entityLogical  OBJECT IDENTIFIER ::= { entityMIBObjects 2 }
+entityMapping  OBJECT IDENTIFIER ::= { entityMIBObjects 3 }
+entityGeneral  OBJECT IDENTIFIER ::= { entityMIBObjects 4 }
+
+
+-- Entity MIB Trap Definitions
+entityMIBTraps      OBJECT IDENTIFIER ::= { entityMIB 2 }
+entityMIBTrapPrefix OBJECT IDENTIFIER ::= { entityMIBTraps 0 }
+
+entConfigChange TRAP-TYPE --NOTIFICATION-TYPE
+      ENTERPRISE  entityMIBTrapPrefix
+      ERRCODE     RSG_ErrMsg_code_entConfigChange_E
+      SEVERITY    INFO
+   ::= 1
+
+-- conformance information
+
+-- compliance statements
+END
+

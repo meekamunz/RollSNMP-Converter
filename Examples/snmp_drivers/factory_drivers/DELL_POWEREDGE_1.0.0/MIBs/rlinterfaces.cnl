@@ -1,0 +1,54 @@
+RADLAN-rlInterfaces-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN Switch Interfaces Private
+-- Version:    7.45
+-- Date:       07 May 2006
+
+IMPORTS
+    swInterfaces, rlIfInterfaces                            FROM RADLAN-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rlIfMibVersion OBJECT-TYPE
+    ::= { rlIfInterfaces 1 }
+
+rlIfNumOfPhPorts OBJECT-TYPE
+    ::= { rlIfInterfaces 2 }
+
+rlIfMapOfOnPhPorts OBJECT-TYPE
+    ::= { rlIfInterfaces 3 }
+
+rlIfClearPortMibCounters OBJECT-TYPE
+    ::= { rlIfInterfaces 4 }
+
+rlIfNumOfUserDefinedPorts OBJECT-TYPE
+    ::= { rlIfInterfaces 5 }
+
+rlIfFirstOutOfBandIfIndex OBJECT-TYPE
+    ::= { rlIfInterfaces 6 }
+
+rlIfNumOfLoopbackPorts OBJECT-TYPE
+    ::= { rlIfInterfaces 7 }
+
+rlIfFirstLoopbackIfIndex OBJECT-TYPE
+    ::= { rlIfInterfaces 8 }
+
+rlIfExistingPortList OBJECT-TYPE
+    ::= { rlIfInterfaces 9 }
+
+rlIfBaseMACAddressPerIfIndex OBJECT-TYPE
+    ::= { rlIfInterfaces 10 }
+
+rlFlowControlCascadeMode OBJECT-TYPE
+    ::= { rlIfInterfaces 11 }
+
+rlFlowControlCascadeType OBJECT-TYPE
+    ::= { rlIfInterfaces 12 }
+
+rlFlowControlRxPerSystem OBJECT-TYPE
+    ::= { rlIfInterfaces 13 }
+
+rlCascadePortProtectionAction OBJECT-TYPE
+    ::= { rlIfInterfaces 14 }
+
+END

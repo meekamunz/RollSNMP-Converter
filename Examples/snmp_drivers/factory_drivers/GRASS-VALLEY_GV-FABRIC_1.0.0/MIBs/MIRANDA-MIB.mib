@@ -1,0 +1,1259 @@
+
+-- ***************************************************************************
+-- *     Copyright (c) 2003  Miranda Technologies Inc.
+-- *     All rights reserved.
+-- *
+-- *     This is the common MIB for Miranda definitions
+-- ***************************************************************************
+
+    MIRANDA-MIB
+
+    --EXCLUDE snmpV2
+    --EXCLUDE mgmt
+    --EXCLUDE security
+    --EXCLUDE experimental
+    --EXCLUDE directory
+
+    DEFINITIONS ::= BEGIN
+
+    IMPORTS
+      MODULE-IDENTITY, OBJECT-IDENTITY
+	FROM SNMPv2-SMI
+      TEXTUAL-CONVENTION
+        FROM SNMPv2-TC
+       enterprises
+          FROM RFC1155-SMI;
+
+    miranda  MODULE-IDENTITY
+      LAST-UPDATED "201207240000Z"
+      ORGANIZATION "Miranda Technologies Inc."
+      CONTACT-INFO "Contact:"
+      DESCRIPTION  "Common Miranda MIB"
+      REVISION     "200304281200Z"
+        DESCRIPTION  "First Definitions"
+      REVISION  "201104080000Z"
+        DESCRIPTION  "New state definition for alarms (as part of the full agent support): AlarmState."
+	  REVISION  "201207240000Z"
+        DESCRIPTION  "Added solutions branch"
+	  ::= {enterprises 3872}
+
+-- **********************************************
+-- Module ID Definition
+-- **********************************************
+
+-- Each Miranda "Frame" or service must a unique ID 
+-- specifying its MIB branch after the Miranda
+-- enterprise OID
+-- Each individual MIB should redeclare this OID in there
+-- MODULE-IDENTITY declaration.
+
+stellar OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies a Stellar
+	frame branch"
+      ::= { miranda 1 }
+
+-- Branch number 2 is reserved for LDAP OIDs.
+-- Since this is not used in an SNMP context it is just put here
+-- as a comment to reserve the number.
+
+densite OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies a Densite
+	 frame branch"
+      ::= { miranda 8 }
+
+kaleidoK2 OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies a Kaleido K2
+	 frame branch"
+      ::= { miranda 9 }
+
+appserver OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies an iControl
+	application server branch"
+      ::= { miranda 10 }
+
+
+gsm OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies an iControl
+	GSM server branch"
+      ::= { miranda 11 }
+
+
+mediaNetworks OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This reserved unique value identifies a Miranda
+	Media Networks branch"
+      ::= { miranda 20 }
+
+
+kaleidoK3 OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies a Kaleido K3
+	 frame branch"
+      ::= { miranda 21 }
+
+kaleidoAltoQuad OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies a Kaleido AltoQuad
+	 frame branch"
+      ::= { miranda 22 }
+
+imagestore OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies the imagestore
+	 product branch"
+      ::= { miranda 23 }
+
+solutions OBJECT-IDENTITY
+    STATUS current
+    DESCRIPTION 
+	"This unique value identifies the Miranda Solutions
+	 branch"
+      ::= { miranda 100 }
+      
+-- **********************************************
+-- Textual Conventions Definitions
+-- **********************************************
+
+
+-- **********************************************
+-- Source Type Enumerations
+-- **********************************************
+
+MTAudioSourceType ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"Source Type Enumeration.
+         Used as an index in a status table"
+    SYNTAX INTEGER { na(0),
+                     audioCard(1),
+		     audioEmbedded(2)
+		   }
+
+MTVBISourceType ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"Source Type Enumeration.
+         Used as an index in a status table"
+    SYNTAX INTEGER { na(0),
+		     cc1(1),
+		     cc2(2),
+		     cc3(3),
+		     cc4(4),
+		     text1(5),
+		     text2(6),
+		     text3(7),
+		     text4(8),
+		     vChip(9),
+		     teleText1(10),
+		     teleText2(11),
+		     teleText3(12),
+		     teleText4(13)
+		   }
+
+-- **********************************************
+-- Audio Channel Enumeration
+-- **********************************************
+
+MTAudioChannelType ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"Audio Channel Type Enumeration.
+         Used as an index in a status table"
+    SYNTAX INTEGER { left(1), 
+                     right(2),
+                     stereo(3)    
+		   }
+
+
+-- **********************************************
+-- Specific Status Definition
+-- **********************************************
+
+MTAudioStatusType ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"Audio Status Type Enumeration.
+         Used as an index in a status table"
+    SYNTAX INTEGER { na(0),
+                     overall(1), 
+		     silent(2),
+		     overload(3),
+		     monoDetected(4),
+		     outOfPhase(5),
+                     signalLoss(6)
+		   }
+
+MTVideoStatusType ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"Video Status Type Enumeration.
+         Used as an index in a status table"
+    SYNTAX INTEGER { na(0),
+                     overall(1), 
+		     signalLoss(2),
+		     lumaHeight(3),
+		     presence(4),
+		     freeze(5),
+		     black(6)
+		   }
+
+-- **********************************************
+-- Overall Status Definition
+-- **********************************************
+
+MTOverallStatus ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION "Overall Status Value Enumeration"
+    SYNTAX INTEGER { disabled(0), 
+                     ok(1), 
+                     warning(2),
+                     error(3)
+                   }
+
+
+MTOnOffStatus ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION "Overall Binary Status Value Enumeration"
+    SYNTAX INTEGER { off(0), 
+                     on(1) 
+                   }
+
+
+-- ************************************************
+-- GSM Alarm State Definition
+-- (see com.miranda.icontrol.gsm.server.Alarm.java)
+-- Since 4.20, using alarm severity values as is.
+-- ************************************************
+AlarmState ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION "GSM alarm state value enumeration"
+    SYNTAX INTEGER { 
+                     pending(-4),
+                     nonExistent(-3),
+                     disabled(-1),
+                     normal(10),
+                     minor(20),
+                     major(25),
+                     critical(30),
+                     unknown(40)
+                   }
+
+-- ************************************************
+-- GSM Status Definition
+-- (see com.miranda.icontrol.gsm.server.Alarm.java)
+-- Note: Outback MIB compiler doesn't like negatives
+-- and will silently convert to absolute values.
+-- ************************************************
+GsmStatus ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION "GSM Status Value Enumeration
+                 (deprecated - use AlarmState instead)"
+    SYNTAX INTEGER { 
+                     disabled(-1), 
+                     normal(10000), 
+                     warning(20000),
+                     error(30000),
+                     unknown(40000)
+                  }
+
+-- ************************************************
+-- GSM Status Definition - Version 2
+--   This version uses new severity mappings:
+--   MINOR (was WARNING), MAJOR, CRITICAL (was ERROR)
+-- ************************************************
+GsmStatusV2 ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION "GSM Status Value Enumeration"
+    SYNTAX INTEGER { 
+                     disabled(-1), 
+                     normal(10000), 
+                     minor(20000),
+                     major(25000),
+                     critical(30000),
+                     unknown(40000)
+                  }
+
+-- ************************************************
+-- GPI state definition
+-- ************************************************                  
+GPIStateEnum ::= TEXTUAL-CONVENTION 
+	DISPLAY-HINT	""
+	STATUS			current
+	DESCRIPTION
+		"GPI State Enumeration"
+	SYNTAX 			INTEGER  { open ( 0 ) , close ( 1 ) } 
+	
+-- ************************************************
+-- GPI direction definition
+-- ************************************************   	
+GPIDirectionEnum ::= TEXTUAL-CONVENTION 
+	DISPLAY-HINT	""
+	STATUS			current
+	DESCRIPTION
+		"GPI Direction Enumeration"
+	SYNTAX 			INTEGER  { in ( 0 ) , out ( 1 ) } 	                  
+
+-- ************************************************
+-- GSM Traps Enumeration
+-- ************************************************
+
+GsmTraps ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION 
+	"GSM Alarm ID Value Enumeration.
+	Values 1-99999 are reserved for user defined
+        virtual alarms and for 3rd-party SNMP devices.
+        Values from 100000 and up are iControl alarms
+        and are defined in the following enumeration"
+    SYNTAX INTEGER {
+        aNoLockInAES1(100000),
+        aOverloadIn1R(100001),
+        aOverloadIn1L(100002),
+        aOverloadIn2L(100003),
+        aOverloadIn2R(100004),
+        aOverloadOut1L(100005),
+        aOverloadOut1R(100006),
+        aOverloadOut2L(100007),
+        aOverloadOut2R(100008),
+        aTestAES1(100009),
+        aTestAES2(100010),
+        avRefStatus(100011),
+        aNoLockInAES2(100012),
+        aNoSignalIn1L(100013),
+        aNoSignalIn1R(100014),
+        aNoSignalIn2L(100015),
+        aNoSignalIn2R(100016),
+        aMuteOut1L(100017),
+        aMuteOut1R(100018),
+        aMuteOut2L(100019),
+        aMuteOut2R(100020),
+        avRefExtType(100021),
+        dEDHLatch(100022),
+        vFrzManual(100023),
+        vTestMode(100024),
+        vTest(100025),
+        avErrorIn(100026),
+        dLocalConfig(100027),
+        avRefMis(100028),
+        dEDHStatus(100029),
+        avCarrierDetect(100030),
+        avRefPres(100031),
+        dATCValidIn(100032),
+        dGpiStatus(100033),
+        umidPresence(100034),
+        aDetectGrp1(100035),
+        aDetectGrp2(100036),
+        aDetectGrp3(100037),
+        aDetectGrp4(100038),
+        vTestCh1(100039),
+        vTestCh2(100040),
+        vTestCh3(100041),
+        vTestCh4(100042),
+        avErrorInCh1(100043),
+        avErrorInCh2(100044),
+        avErrorInCh3(100045),
+        avErrorInCh4(100046),
+        aErrorOutAES1(100047),
+        aErrorOutAES2(100048),
+        dPSErrorL(100049),
+        dPSErrorR(100050),
+        dFPCommError(100051),
+        dDoorOpen(100052),
+        dTempSensor1V(100053),
+        dTempSensor2V(100054),
+        aStatusAES1_A(100055),
+        aStatusAES2_A(100056),
+        aStatusAES1(100057),
+        aStatusAES2(100058),
+        aAsyncVideo(100059),
+        vPresIn(100060),
+        vERROR_422(100061),
+        avExternalRefDefault(100062),
+        vError(100063),
+        avWarning(100064),
+        aAbusRefDef(100065),
+        avTest(100066),
+        aTest(100067),
+        avError(100068),
+        vErrorTiming(100070),
+        avPLLIn1(100071),
+        avPLLIn2(100072),
+        vCCPresAlarm(100074),
+        vFreezeDet_ST(100075),
+        vChromaMax_ST(100076),
+        vAplMax_ST(100077),
+        vAplMin_ST(100078),
+        vLumaMax_ST(100079),
+        vLumaMin_ST(100080),
+        vWhiteLimitMax_ST(100081),
+        vBlackLimitMin_ST(100082),
+        vEDH_Det_ST(100083),
+        vAP_Det_ST(100084),
+        vFF_Det_ST(100085),
+        vTRS_ST(100086),
+        vSigPres_ST(100087),
+        vBlackDet_ST(100088),
+        vCompLimitMax_ST(100089),
+        vCompLimitMin_ST(100090),
+        vBurstLimitMax_ST(100091),
+        vBurstLimitMin_ST(100092),
+        vSyncNoise_ST(100093),
+        vSyncLimitMax_ST(100094),
+        vSyncLimitMin_ST(100095),
+        aChan1_sil_ST(100096),
+        aChan2_sil_ST(100097),
+        aChan1_mxLvl_ST(100098),
+        aChan2_mxLvl_ST(100099),
+        aChan1_mnLvl_ST(100100),
+        aChan2_mnLvl_ST(100101),
+        aChan1_ovld_ST(100102),
+        aChan2_ovld_ST(100103),
+        aPhase_ST(100104),
+        aStWidth_ST(100105),
+        aChan1_mnDyna_ST(100106),
+        aChan2_mnDyna_ST(100107),
+        aChan1_slicing_ST(100108),
+        aChan2_slicing_ST(100109),
+        aImbalance_ST(100110),
+        aOvldMntr1(100111),
+        aOvldMntr2(100112),
+        aOvldAdjIn1L(100113),
+        aOvldAdjIn1R(100114),
+        aOvldAdjIn2L(100115),
+        aOvldAdjIn2R(100116),
+        aOvldAdjOut1L(100117),
+        aOvldAdjOut1R(100118),
+        aOvldAdjOut2L(100119),
+        aOvldAdjOut2R(100120),
+        overall_status(100121),
+        avStatusIn(100122),
+        vYOnly(100123),
+        aMuteOut1(100124),
+        aMuteOut2(100125),
+		aMuteOutAll(100126),
+        aDistMode(100127),
+        aSwap1LR(100128),
+        aSwap2LR(100129),
+        vFormatIn(100130),
+        aFormatIn(100131),
+        ccGlobalStatus(100132),
+        isVideoPresent(100133),
+        statusCcOddPresent(100134),
+        statusCcOddError(100135),
+        statusCcEvenPresent(100136),
+        statusCcEvenError(100137),
+        processCpuLoad(100138),
+        hostCpuLoad(100139),
+        processMemoryLoad(100140),
+        hostMemoryLoad(100141),
+        encoderRunning(100142),
+        commStatus(100143),
+        tapeStatus(100144),
+        dCardLedKey(100145),
+        vaNoLock(100146),
+        avStatusIn1(100147),
+        avStatusIn2(100148),
+        avStatusIn3(100149),
+        avStatusIn4(100150),
+        avStatusIn5(100151),        
+        vYOnly1(100152),
+        vYOnly2(100153),
+        vYOnly3(100154),
+        vYOnly4(100155),
+        vYOnly5(100156),
+        vTest1(100157),
+        vTest2(100158),
+        vTest3(100159),
+        vTest4(100160),
+        vTest5(100161),
+        dFrameRefError(100162),
+        aBiphaseErr(100163),
+        aParityErr(100164),
+        aCRCCErr(100165),
+		aConfidence(100166),
+		aInvalid(100167),
+		aNonAudio(100168),
+		aBiphaseErr_2(100169),
+		aParityErr_2(100170),
+		aCRCCErr_2(100171),
+		aConfidence_2(100172),
+		aInvalid_2(100173),
+		aNonAudio_2(100174),
+        aTestAes1(100175),
+        aTestAes2(100176),
+        aPresAes1(100177),
+        aPresAes2(100178),
+        aMuteAES1(100179),
+        aMuteAES2(100180),
+        dLTCMonitoring(100181),
+        dSmpldLtcMntr(100182),
+        aTestAes3(100183),
+        aTestAes4(100184),
+        aTestAes5(100185),
+        aTestAes6(100186),
+        aTestAes7(100187),
+        aTestAes8(100188),
+        aPresAes3(100189),
+        aPresAes4(100190),
+        aPresAes5(100191),
+        aPresAes6(100192),
+        aPresAes7(100193),
+        aPresAes8(100194),
+		aMuteAES3(100195),
+		aMuteAES4(100196),
+		aMuteAES5(100197),
+		aMuteAES6(100198),
+		aMuteAES7(100199),
+		aMuteAES8(100200),
+        dSmpldAtcMntr(100201),
+		vInput1(100202),
+		vInput2(100203),
+        vOutput1(100204),
+        vOutput2(100205),
+		vCCValidity(100206),
+		aAES1Pres(100207),
+		aAES2Pres(100208),
+		aAES3Pres(100209),
+		aAES4Pres(100210),
+		aAES5Pres(100211),
+		aAES6Pres(100212),
+		aAES7Pres(100213),
+		aAES8Pres(100214),
+		dAesSelErr(100215),
+		vChip(100216),
+		wssAspectRatio(100217),
+		aEmbGpi1(100218),
+		aEmbGpi2(100219),
+		aEmbRS422(100220),
+		aAesCarrier_ST(100221),
+        aChan1_status_ST(100222),
+        aChan2_status_ST(100223),
+        dSlot0(100224),
+        dSlot1(100225),
+        dSlot2(100226),
+        dSlot3(100227),
+        dSlot4(100228),
+        dSlot5(100229),
+        dSlot6(100230),
+        dSlot7(100231),
+        dSlot8(100232),
+        dSlot9(100233),
+        dSlot10(100234),
+        dSlot11(100235),
+        dSlot12(100236),
+        dSlot13(100237),
+        dSlot14(100238),        
+        dSlot15(100239),
+        dSlot16(100240),
+        dSlot17(100241),
+        dSlot18(100242),
+        dSlot19(100243),
+        dAbusRefError(100244),
+        vAbusDetOut(100245),
+        aNoSigCh1(100246),
+        aNoSigCh2(100247),
+        aNoSigCh3(100248),
+        aNoSigCh4(100249),
+        aNoSigCh5(100250),
+        aNoSigCh6(100251),
+        aNoSigCh7(100252),
+        aNoSigCh8(100253),
+        aNoSigCh9(100254),
+        aNoSigCh10(100255),
+        aNoSigCh11(100256),
+        aNoSigCh12(100257),
+        aNoSigCh13(100258),
+        aNoSigCh14(100259),
+        aNoSigCh15(100260),
+        aNoSigCh16(100261),
+        aMuteCH1(100262),
+        aMuteCH2(100263),
+        aMuteCH3(100264),
+        aMuteCH4(100265),
+        aMuteCH5(100266),
+        aMuteCH6(100267),
+        aMuteCH7(100268),
+        aMuteCH8(100269),
+        aMuteCH9(100270),
+        aMuteCH10(100271),
+        aMuteCH11(100272),
+        aMuteCH12(100273),
+        aMuteCH13(100274),
+        aMuteCH14(100275),
+        aMuteCH15(100276),
+        aMuteCH16(100277),
+        aOvldCh1(100278),
+        aOvldCh2(100279),
+        aOvldCh3(100280),
+        aOvldCh4(100281),
+        aOvldCh5(100282),
+        aOvldCh6(100283),
+        aOvldCh7(100284),
+        aOvldCh8(100285),
+        aOvldCh9(100286),
+        aOvldCh10(100287),
+        aOvldCh11(100288),
+        aOvldCh12(100289),
+        aOvldCh13(100290),
+        aOvldCh14(100291),
+        aOvldCh15(100292),
+        aOvldCh16(100293),
+        aTestANALOG1(100294),
+        aTestANALOG2(100295),
+        aMuteMixCh1(100296),
+        aMuteMixCh2(100297),
+        aMuteMixCh3(100298),
+        aMuteMixCh4(100299),
+        aMuteMixCh5(100300),
+        aMuteMixCh6(100301),
+        aMuteMixCh7(100302),
+        aMuteMixCh8(100303),
+        aMuteMixCh9(100304),
+        aMuteMixCh10(100305),
+        aMuteMixCh11(100306),
+        aMuteMixCh12(100307),
+        aMuteMixCh13(100308),
+        aMuteMixCh14(100309),
+        aMuteMixCh15(100310),
+        aMuteMixCh16(100311),
+        aOvldOUT_Ch1(100312),
+        aOvldOUT_Ch2(100313),
+        aOvldOUT_Ch3(100314),
+        aOvldOUT_Ch4(100315),
+        aOvldOUT_Ch5(100316),
+        aOvldOUT_Ch6(100317),
+        aOvldOUT_Ch7(100318),
+        aOvldOUT_Ch8(100319),
+		dCardSystemConfig(100320),
+		aAbusDetExternal(100321),
+		vAbusDetOut2(100322),
+		dCardSystemStatus(100323),
+		dAbusA1Pres(100324),
+		dAbusA2Pres(100325),
+		vDAOnly(100326),
+		dCCPresence(100327),
+		dTCValid(100328),
+		vVideoDetError(100329),
+		aTestAES3(100330),
+		aTestAES4(100331),
+		aGrpToDeMux1(100332),
+		aGrpToDeMux2(100333),
+        aAudioOverload(100334),
+        aCh1St(100335),
+        aCh2St(100336),
+        aCh3St(100337),
+        aCh4St(100338),
+        aCh5St(100339),
+        aCh6St(100340),
+        aCh7St(100341),
+        aCh8St(100342),
+        aCh9St(100353),
+        aCh10St(100344),
+        aCh11St(100345),
+        aCh12St(100346),
+        aCh13St(100347),
+        aCh14St(100348),
+        aCh15St(100349),
+        aCh16St(100350),
+        aChan3_ovld_ST(100351),
+		aChan4_ovld_ST(100352),
+		aChan5_ovld_ST(100353),
+		aChan6_ovld_ST(100354),
+		aChan7_ovld_ST(100355),
+		aChan8_ovld_ST(100356),
+		aChan9_ovld_ST(100357),
+		aChan10_ovld_ST(100358),
+		aChan11_ovld_ST(100359),
+		aChan12_ovld_ST(100360),
+		aChan13_ovld_ST(100361),
+		aChan14_ovld_ST(100362),
+		aChan15_ovld_ST(100363),
+		aChan16_ovld_ST(100364),
+		aChan3_sil_ST(100365),
+		aChan4_sil_ST(100366),
+		aChan5_sil_ST(100367),
+		aChan6_sil_ST(100368),
+		aChan7_sil_ST(100369),
+		aChan8_sil_ST(100370),
+		aChan9_sil_ST(100371),
+		aChan10_sil_ST(100372),
+		aChan11_sil_ST(100373),
+		aChan12_sil_ST(100374),
+		aChan13_sil_ST(100375),
+		aChan14_sil_ST(100376),
+		aChan15_sil_ST(100377),
+		aChan16_sil_ST(100378),
+		aChan3_mnLvl_ST(100379),
+		aChan4_mnLvl_ST(100380),
+		aChan5_mnLvl_ST(100381),
+        aChan6_mnLvl_ST(100382),
+        aChan7_mnLvl_ST(100383),
+        aChan8_mnLvl_ST(100384),
+        aChan9_mnLvl_ST(100385),
+        aChan10_mnLvl_ST(100386),
+        aChan11_mnLvl_ST(100387),
+        aChan12_mnLvl_ST(100388),
+        aChan13_mnLvl_ST(100389),
+        aChan14_mnLvl_ST(100390),
+        aChan15_mnLvl_ST(100391),
+        aChan16_mnLvl_ST(100392),
+		aChan3_mxLvl_ST(100393),
+		aChan4_mxLvl_ST(100394),
+		aChan5_mxLvl_ST(100395),
+		aChan6_mxLvl_ST(100396),
+		aChan7_mxLvl_ST(100397),
+		aChan8_mxLvl_ST(100398),
+		aChan9_mxLvl_ST(100399),
+		aChan10_mxLvl_ST(100400),
+		aChan11_mxLvl_ST(100401),
+		aChan12_mxLvl_ST(100402),
+		aChan13_mxLvl_ST(100403),
+		aChan14_mxLvl_ST(100404),
+		aChan15_mxLvl_ST(100405),
+		aChan16_mxLvl_ST(100406),
+		dVidAudTest(100407),
+        aChan3_mnDyna_ST(100408),
+        aChan4_mnDyna_ST(100409),
+        aChan5_mnDyna_ST(100410),
+        aChan6_mnDyna_ST(100411),
+        aChan7_mnDyna_ST(100412),
+        aChan8_mnDyna_ST(100413),
+        aChan9_mnDyna_ST(100414),
+        aChan10_mnDyna_ST(100415),
+        aChan11_mnDyna_ST(100416),
+        aChan12_mnDyna_ST(100417),
+        aChan13_mnDyna_ST(100418),
+        aChan14_mnDyna_ST(100419),
+        aChan15_mnDyna_ST(100420),
+        aChan16_mnDyna_ST(100421),
+        aChan1_2_phase_ST(100422),
+        aChan3_4_phase_ST(100423),        
+        aChan5_6_phase_ST(100424),
+    	aChan7_8_phase_ST(100425),
+    	aChan9_10_phase_ST(100426),
+    	aChan11_12_phase_ST(100427),
+    	aChan13_14_phase_ST(100428),
+    	aChan15_16_phase_ST(100429),
+    	aChan1_2_stwidth_ST(100430),
+    	aChan3_4_stwidth_ST(100431),
+    	aChan5_6_stwidth_ST(100432),
+    	aChan7_8_stwidth_ST(100433),
+    	aChan9_10_stwidth_ST(100434),
+    	aChan11_12_stwidth_ST(100435),
+    	aChan13_14_stwidth_ST(100436),
+    	aChan15_16_stwidth_ST(100437),    	
+    	aChan1_2_imbalance_ST(100438),
+    	aChan3_4_imbalance_ST(100439),
+    	aChan5_6_imbalance_ST(100440),
+    	aChan7_8_imbalance_ST(100441),
+    	aChan9_10_imbalance_ST(100442),
+    	aChan11_12_imbalance_ST(100443),
+    	aChan13_14_imbalance_ST(100444),
+    	aChan15_16_imbalance_ST(100445),
+		vFreezeDet1_ST(100446),
+		vFreezeDet2_ST(100447),
+		vFreezeDet3_ST(100448),
+		vFreezeDet4_ST(100449),
+		vBlackDet1_ST(100450),
+		vBlackDet2_ST(100451),
+		vBlackDet3_ST(100452),
+		vBlackDet4_ST(100453),
+		vVLIPres(100454),
+		vWSSPres(100455),
+		vAFDPres(100456),
+		dAFDValue(100457),
+		vVITCPres(100458),
+		vDOLBYPres(100459),
+		vCCService1Pres(100460),
+    	vCCService2Pres(100461),
+    	vCCService3Pres(100462),
+    	vCCService4Pres(100463),
+    	vCCService5Pres(100464),
+    	vCCService6Pres(100465),
+    	vWST_A_Pres(100466),
+    	vWST_B_Pres(100467),
+    	vWST_C_Pres(100468),
+    	vWST_D_Pres(100469),
+    	vWST_ST_A_Pres(100470),
+    	vWST_ST_B_Pres(100471),
+    	vWST_ST_C_Pres(100472),
+    	vWST_ST_D_Pres(100473),
+    	dAFDStatus(100474),
+    	dPs1Status(100475),
+    	dPs2Status(100476),
+    	dFanPs1Status(100477),
+    	dFanPs2Status(100478),
+    	dFan1Status(100479),
+    	dFan2Status(100480),
+    	dCPUStatus(100481),
+    	input1_vSigPres_ST(100482),
+    	input1_vCRCCheckAlarm_ST(100483),
+    	input1_dFormatMismatch_ST(100484),
+    	input1_vTimingError_ST(100485),
+    	input1_dRefMismatch_ST(100486),
+    	input1_vBlackDet_ST(100487),
+    	input1_vFreezeDet_ST(100488),
+    	input1_aDetectGrp1ST(100489),
+    	input1_aDetectGrp2ST(100490),
+    	input1_aDetectGrp3ST(100491),
+    	input1_aDetectGrp4ST(100492),
+    	input1_aChan1_sil_ST(100493),
+    	input1_aChan2_sil_ST(100494),
+    	input1_aChan3_sil_ST(100495),
+    	input1_aChan4_sil_ST(100496),
+    	input1_aChan5_sil_ST(100497),
+    	input1_aChan6_sil_ST(100498),
+    	input1_aChan7_sil_ST(100499),
+    	input1_aChan8_sil_ST(100500),
+    	input1_aChan9_sil_ST(100501),
+    	input1_aChan10_sil_ST(100502),
+    	input1_aChan11_sil_ST(100503),
+    	input1_aChan12_sil_ST(100504),
+    	input1_aChan13_sil_ST(100505),
+    	input1_aChan14_sil_ST(100506),
+    	input1_aChan15_sil_ST(100507),
+    	input1_aChan16_sil_ST(100508),    	
+    	input2_vSigPres_ST(100509),
+    	input2_vCRCCheckAlarm_ST(100510),
+    	input2_dFormatMismatch_ST(100511),
+    	input2_vTimingError_ST(100512),
+    	input2_dRefMismatch_ST(100513),
+    	input2_vBlackDet_ST(100514),
+    	input2_vFreezeDet_ST(100515),
+    	input2_aDetectGrp1ST(100516),
+    	input2_aDetectGrp2ST(100517),
+    	input2_aDetectGrp3ST(100518),
+    	input2_aDetectGrp4ST(100519),
+    	input2_aChan1_sil_ST(100520),
+    	input2_aChan2_sil_ST(100521),
+    	input2_aChan3_sil_ST(100522),
+    	input2_aChan4_sil_ST(100523),
+    	input2_aChan5_sil_ST(100524),
+    	input2_aChan6_sil_ST(100525),
+    	input2_aChan7_sil_ST(100526),
+    	input2_aChan8_sil_ST(100527),
+    	input2_aChan9_sil_ST(100528),
+    	input2_aChan10_sil_ST(100529),
+    	input2_aChan11_sil_ST(100530),
+    	input2_aChan12_sil_ST(100531),
+    	input2_aChan13_sil_ST(100532),
+    	input2_aChan14_sil_ST(100533),
+    	input2_aChan15_sil_ST(100534),
+    	input2_aChan16_sil_ST(100535),
+    	dRefPresence_ST(100536),
+    	dBackupInput_ST(100537),
+    	dBypassMode_ST(100538),
+    	dGPIPowerBox_ST(100539),
+    	dAudioChangeOver_ST(100540),
+    	dCardFan_ST(100541),
+    	vPayLoad(100542),
+    	vInputStatus1(100543),
+    	vInputStatus2(100544),
+    	vInputStatus3(100545),
+    	vInputStatus4(100546),
+    	vInputStatus5(100547),
+    	vInputStatus6(100548),
+    	vInputStatus7(100549),
+    	vInputStatus8(100550),
+    	vInputStatus9(100551),
+    	vInputStatus10(100552),
+    	vInputStatus11(100553),
+    	vInputStatus12(100554),
+    	vInputStatus13(100555),
+    	vInputStatus14(100556),
+    	vInputStatus15(100557),
+    	vInputStatus16(100558),    	
+    	vInputStatus17(100559),
+    	vInputStatus18(100560),
+    	vInputStatus19(100561),
+    	vInputStatus20(100562),
+    	vInputStatus21(100563),
+    	vInputStatus22(100564),
+    	vInputStatus23(100565),
+    	vInputStatus24(100566),
+    	vInputStatus25(100567),
+    	vInputStatus26(100568),
+    	vInputStatus27(100569),
+    	vInputStatus28(100570),
+    	vInputStatus29(100571),
+    	vInputStatus30(100572),
+    	vInputStatus31(100573),
+    	vInputStatus32(100574),
+    	vInputStatus33(100575),
+    	vInputStatus34(100576),
+    	vInputStatus35(100577),
+    	vInputStatus36(100578),
+    	vInputStatus37(100579),
+    	vInputStatus38(100580),
+    	vInputStatus39(100581),
+    	vInputStatus40(100582),
+    	vOutputStatus1(100583),
+    	vOutputStatus2(100584),
+    	vOutputStatus3(100585),
+    	vOutputStatus4(100586),
+    	aNoLockInAES3(100587),
+    	aNoLockInAES4(100588),
+    	aOverloadIn1(100589),
+    	aOverloadIn2(100590),
+    	aMuteIn1(100591),
+    	aMuteIn2(100592),
+    	aFreqInOutOfRange1(100593),
+    	aFreqInOutOfRange2(100594),
+    	avTestStatus(100595),
+    	vStatus422In(100596),
+    	vCVBSValidIn(100597),
+    	dGPSValidIn(100598),
+    	dLTCValidIn(100599),
+    	dVITCValidIn(100600),
+    	dDVITCValidIn(100601),    	
+    	dErrNoTRSA(100602),
+    	dErrNoTRSB(100603),
+    	avRefLock(100604),
+    	dErrANCDiffAB(100605),
+    	dErrSTDDiffAB(100606),
+    	aNoSignalInAES1L(100607),
+    	aNoSignalInAES1R(100608),
+    	aNoSignalInAES2L(100609),
+    	aNoSignalInAES2R(100610),
+    	avRefAsync(100611),
+    	vCC(100612),
+    	vCCPres(100613),
+	   	vCD2(100615),
+    	vCD1(100616),
+    	dInput1Selected(100617),
+    	dInput2Selected(100618),
+    	aMonitAlarmEnable(100619),
+    	dFailOver(100620),
+    	vSdiTimecode(100621),
+    	aMuteMixCh1_HD(100622),
+        aMuteMixCh2_HD(100623),
+        aMuteMixCh3_HD(100624),
+        aMuteMixCh4_HD(100625),
+        aMuteMixCh5_HD(100626),
+        aMuteMixCh6_HD(100627),
+        aMuteMixCh7_HD(100628),
+        aMuteMixCh8_HD(100629),
+        aMuteMixCh9_HD(100630),
+        aMuteMixCh10_HD(100631),
+        aMuteMixCh11_HD(100632),
+        aMuteMixCh12_HD(100633),
+        aMuteMixCh13_HD(100634),
+        aMuteMixCh14_HD(100635),
+        aMuteMixCh15_HD(100636),
+        aMuteMixCh16_HD(100637),
+        aMuteMixCh1_SD(100638),
+        aMuteMixCh2_SD(100639),
+        aMuteMixCh3_SD(100640),
+        aMuteMixCh4_SD(100641),
+        aMuteMixCh5_SD(100642),
+        aMuteMixCh6_SD(100643),
+        aMuteMixCh7_SD(100644),
+        aMuteMixCh8_SD(100645),
+        aMuteMixCh9_SD(100646),
+        aMuteMixCh10_SD(100647),
+        aMuteMixCh11_SD(100648),
+        aMuteMixCh12_SD(100649),
+        aMuteMixCh13_SD(100650),
+        aMuteMixCh14_SD(100651),
+        aMuteMixCh15_SD(100652),
+        aMuteMixCh16_SD(100653),
+    	inFormat(100654),
+    	aStatusAES3(100655),
+    	aStatusAES4(100656),
+    	aOvldOUT_Ch9(100657),
+    	aOvldOUT_Ch10(100658),
+    	aOvldOUT_Ch11(100659),
+    	aOvldOUT_Ch12(100660),
+    	aOvldOUT_Ch13(100661),
+    	aOvldOUT_Ch14(100662),
+    	aOvldOUT_Ch15(100663),
+    	aOvldOUT_Ch16(100664),    	
+    	aDolbyCardStatus(100665),
+    	vAbusDetDolby(100666),
+    	aPCMStatus_CH1(100667),
+    	aPCMStatus_CH2(100668),
+    	aPCMStatus_CH3(100669),
+    	aPCMStatus_CH4(100670),
+    	aPCMStatus_CH5(100671),
+    	aPCMStatus_CH6(100672),
+    	aPCMStatus_CH7(100673),
+    	aPCMStatus_CH8(100674),
+    	aPCMStatus_CH9(100675),
+    	aPCMStatus_CH10(100676),
+    	aPCMStatus_CH11(100677),
+    	aPCMStatus_CH12(100678),
+    	aPCMStatus_CH13(100679),
+    	aPCMStatus_CH14(100680),
+    	aPCMStatus_CH15(100681),
+    	aPCMStatus_CH16(100682),
+		dPcmStatusOut1(100683),
+		dPcmStatusOut2(100684),
+		dPcmStatusOut3(100685),
+		dPcmStatusOut4(100686),
+		dPcmStatusOut5(100687),
+		dPcmStatusOut6(100688),
+		dPcmStatusOut7(100689),
+		dPcmStatusOut8(100690),
+    	dBitStreamFormat(100691),
+    	dProgramConfig(100692),
+    	ddChAssignments(100693),
+    	dAFDInsertion_HD(100694),
+    	dAFDInsertion_SD(100695),
+    	vHDOutFormat(100696),
+    	dAbusE1Pres(100697),
+    	dAbusE2Pres(100698),
+    	aOvldOUT_Ch1_A(100699),
+    	aOvldOUT_Ch2_A(100700),
+    	aOvldOUT_Ch3_A(100701),
+    	aOvldOUT_Ch4_A(100702),
+    	aOvldOUT_Ch5_A(100703),
+    	aOvldOUT_Ch6_A(100704),
+    	aOvldOUT_Ch7_A(100705),
+    	aOvldOUT_Ch8_A(100706),
+    	aOvldOUT_Ch9_A(100707),
+    	aOvldOUT_Ch10_A(100708),
+    	aOvldOUT_Ch11_A(100709),
+    	aOvldOUT_Ch12_A(100710),
+    	aOvldOUT_Ch13_A(100711),
+    	aOvldOUT_Ch14_A(100712),
+    	aOvldOUT_Ch15_A(100713),
+    	aOvldOUT_Ch16_A(100714),
+    	aOvldOUT_Ch1_B(100715),
+    	aOvldOUT_Ch2_B(100716),
+    	aOvldOUT_Ch3_B(100717),
+    	aOvldOUT_Ch4_B(100718),
+    	aOvldOUT_Ch5_B(100719),
+    	aOvldOUT_Ch6_B(100720),
+    	aOvldOUT_Ch7_B(100721),
+    	aOvldOUT_Ch8_B(100722),
+    	aOvldOUT_Ch9_B(100723),
+    	aOvldOUT_Ch10_B(100724),
+    	aOvldOUT_Ch11_B(100725),
+    	aOvldOUT_Ch12_B(100726),
+    	aOvldOUT_Ch13_B(100727),
+    	aOvldOUT_Ch14_B(100728),
+    	aOvldOUT_Ch15_B(100729),
+    	aOvldOUT_Ch16_B(100730),
+    	dHardwareFailure(100731),
+    	dFan1(100732),
+		dFan2(100733),
+		dFPGA1(100734),
+		dFPGA2(100735),
+		dDataFlash(100736),
+		dAES1Receiver(100737),
+		dAES2Receiver(100738),
+		dAES3Receiver(100739),
+		dAES4Receiver(100740),
+		dRearType(100741),
+		dIn2FormatMismatch(100742),
+		vCD2Keyer(100743),
+		vCD2Failover(100744),
+		dNameDropInsertion(100745),
+		dNameDropGPI1(100746),
+		slot1(100747),
+		slot2(100748),
+		slot3(100749),
+		slot4(100750),
+		slot5(100751),
+		slot6(100752),
+		slot7(100753),
+		slot8(100754),
+		slot9(100755),
+		slot10(100756),
+		slot11(100757),
+		slot12(100758),
+		slot13(100759),
+		slot14(100760),
+		slot15(100761),
+		slot16(100762),
+		slot17(100763),
+		slot18(100764),
+		slot19(100765),
+		slot20(100766),
+		dTCValidV(100767),
+		vInputFormat1(100768),
+    	vInputFormat2(100769),
+    	vInputFormat3(100770),
+    	vInputFormat4(100771),
+    	vInputFormat5(100772),
+    	vInputFormat6(100773),
+    	vInputFormat7(100774),
+    	vInputFormat8(100775),
+    	vInputFormat9(100776),
+    	vInputFormat10(100777),
+    	vInputFormat11(100778),
+    	vInputFormat12(100779),
+    	vInputFormat13(100780),
+    	vInputFormat14(100781),
+    	vInputFormat15(100782),
+    	vInputFormat16(100783),
+    	vInputFormat17(100784),
+    	vInputFormat18(100785),
+    	vInputFormat19(100786),
+    	vInputFormat20(100787),
+    	vInputFormat21(100788),
+    	vInputFormat22(100789),
+    	vInputFormat23(100790),
+    	vInputFormat24(100791),
+    	vInputFormat25(100792),
+    	vInputFormat26(100793),
+    	vInputFormat27(100794),
+    	vInputFormat28(100795),
+    	vInputFormat29(100796),
+    	vInputFormat30(100797),
+    	vInputFormat31(100798),
+    	vInputFormat32(100799),
+    	vInputFormat33(100800),
+    	vInputFormat34(100801),
+    	vInputFormat35(100802),
+    	vInputFormat36(100803),
+    	vInputFormat37(100804),
+    	vInputFormat38(100805),
+    	vInputFormat39(100806),
+    	vInputFormat40(100807),
+    	dInputAFDDetected(100808),
+    	dOutputAFDInserted(100809),
+    	avRefFormat(100810),
+    	refUsed(100811),
+    	vCardHealth(100812),
+    	dEthConnectionStatus(100813),
+    	aNoSigCh17(100814),
+    	aNoSigCh18(100815),
+    	aNoSigCh19(100816),
+    	aNoSigCh20(100817),
+    	aNoSigCh21(100818),
+    	aNoSigCh22(100819),
+    	aNoSigCh23(100820),
+    	aNoSigCh24(100821),
+    	aNoSigCh25(100822),
+    	aNoSigCh26(100823),
+    	aNoSigCh27(100824),
+    	aNoSigCh28(100825),
+    	aNoSigCh29(100826),
+    	aNoSigCh30(100827),
+    	aNoSigCh31(100828),
+    	aNoSigCh32(100829),
+    	dFiberSelError(100830),
+    	dOutputAFDInserted_HD(100831),
+    	dOutputAFDInserted_SD(100832),
+    	vOutFormat(100833),
+    	dTSPresence(100834),
+    	dAudioPresence(100835),
+    	dMpegSynchro(100836),
+    	dTSLimitErr(100837),
+    	mTSSyncLossST(100838),
+    	mSyncByteErrorST(100839),
+    	mPATTableTimeoutST(100840),
+    	mPATBadTable1p3aST(100841),
+    	mPATScrambled1p3bST(100842),
+        mContinuityCountErrorST(100843),
+        mPMTTableTimeoutST(100844),
+        mPMTScrambled1p5bST(100845),
+        mPIDTimeoutST(100846),
+        mTransportErrorST(100847),
+        mTableCRCErrorST(100848),
+        mPCRRepetitionErrorST(100849),
+        mPCRDiscontinuityIndicatorErrorST(100850),
+        mPCRAccuracyErrorST(100851),
+        mPTSTimeoutST(100852),
+        mCATMissingST(100853),
+        mCATBadTableST(100854),        
+		dMSGDEBUG(100855),
+		dTSEncryption(100856),
+		aSelSudType(100857),
+		aSyncStatus(100858),
+		dEthPortStatus2(100859),
+		vClipState(100860),
+		dLipsyncVidDelay(100861),
+		dLipsyncVidStatus(100862),
+		dLipsyncAud1Status(100863),
+ 	    dLipsyncAud2Status(100864),
+ 	    dLipsyncAud3Status(100865),
+ 	    dLipsyncAud4Status(100866),
+ 	    dLipsyncAud5Status(100867),
+ 	    dLipsyncAud6Status(100868),
+ 	    dLipsyncAud7Status(100869),
+ 	    dLipsyncAud8Status(100870),
+ 	    dLipsyncAud9Status(100871),
+ 	    dLipsyncAud10Status(100872),
+ 	    dLipsyncAud11Status(100873),
+ 	    dLipsyncAud12Status(100874),
+ 	    dLipsyncAud13Status(100875),
+ 	    dLipsyncAud14Status(100876),
+ 	    dLipsyncAud15Status(100877),
+ 	    dLipsyncAud16Status(100878),
+ 	    dLipsyncAud1QualityStatus(100879),
+ 	    dLipsyncAud2QualityStatus(100880),
+ 	    dLipsyncAud3QualityStatus(100881),
+ 	    dLipsyncAud4QualityStatus(100882),
+ 	    dLipsyncAud5QualityStatus(100883),
+ 	    dLipsyncAud6QualityStatus(100884),
+ 	    dLipsyncAud7QualityStatus(100885),
+ 	    dLipsyncAud8QualityStatus(100886),
+ 	    dLipsyncAud9QualityStatus(100887),
+	    dLipsyncAud10QualityStatus(100888),
+	    dLipsyncAud11QualityStatus(100889),
+	    dLipsyncAud12QualityStatus(100890),
+	    dLipsyncAud13QualityStatus(100891),
+	    dLipsyncAud14QualityStatus(100892),
+	    dLipsyncAud15QualityStatus(100893),
+	    dLipsyncAud16QualityStatus(100894),
+	    dLipsyncAud1Delay(100895),
+ 	    dLipsyncAud2Delay(100896),
+ 	    dLipsyncAud3Delay(100897),
+ 	    dLipsyncAud4Delay(100898),
+ 	    dLipsyncAud5Delay(100899),
+ 	    dLipsyncAud6Delay(100900),
+ 	    dLipsyncAud7Delay(100901),
+ 	    dLipsyncAud8Delay(100902),
+ 	    dLipsyncAud9Delay(100903),
+	    dLipsyncAud10Delay(100904),
+	    dLipsyncAud11Delay(100905),
+	    dLipsyncAud12Delay(100906),
+	    dLipsyncAud13Delay(100907),
+	    dLipsyncAud14Delay(100908),
+	    dLipsyncAud15Delay(100909),
+	    dLipsyncAud16Delay(100910),
+	    dLipsyncAudioLGrpAAlarm(100911),
+	    dLipsyncAudioLGrpBAlarm(100912),
+        inLoss(100913),
+        lowMem(100914),
+        outOfMem(100915),
+        vNameDropperPres(100916),
+        inputFormat(100917),
+        vOutFormatStr(100918),
+        dOutputVLIInsertedSD(100919),
+        dOutputWSSInsertedSD(100920),
+        dInstantLoudnessInPGM1(100921),
+        dInstantLoudnessInPGM2(100922),
+        dInstantLoudnessInPGM3(100923),
+        dInstantLoudnessInPGM4(100924),
+        dInstantLoudnessInPGM5(100925),
+        dInstantLoudnessInPGM6(100926),
+        dInstantLoudnessInPGM7(100927),
+        dInstantLoudnessInPGM8(100928),
+        dInstantLoudnessOutPGM1(100929),
+        dInstantLoudnessOutPGM2(100930),
+        dInstantLoudnessOutPGM3(100931),
+        dInstantLoudnessOutPGM4(100932),
+        dInstantLoudnessOutPGM5(100933),
+        dInstantLoudnessOutPGM6(100934),
+        dInstantLoudnessOutPGM7(100935),
+        dInstantLoudnessOutPGM8(100936)
+    }
+
+END

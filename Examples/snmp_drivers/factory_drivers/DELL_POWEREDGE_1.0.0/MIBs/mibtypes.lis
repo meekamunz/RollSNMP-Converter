@@ -1,0 +1,42 @@
+  INTEGER                   UINT_32                None      4
+  BIT STRING                MIB_OctetString_STC    None    162
+  OCTET STRING              MIB_OctetString_STC    None    162
+  OBJECT IDENTIFIER         MIB_ObjectId_STC       None    122
+  NetworkAddress            MIB_OctetString_STC    None    162
+  IpAddress                 RSG_ip_addr_TYP        None      4
+  Counter                   UINT_32                None      4
+  Gauge                     UINT_32                None      4
+  TimeTicks                 UINT_32                None      4
+  Opaque                    MIB_OctetString_STC    None    162
+  NsapAddress               MIB_OctetString_STC    None    162
+  Counter64                 MIB_Counter64_TYP      None      8
+  UInteger32                UINT_32                None      4
+  RowStatus                 MIB_RowStatus_TYP      None      4
+  TruthValue                MIB_TruthValue_TYP     None      4
+  MacAddress                RSG_mac_addr_TYP       mac     162
+  InterfaceIndex            UINT_32                None      4
+  DisplayString             MIB_OctetString_STC    ascii   162
+  Counter32                 UINT_32                None      4
+  Integer32                 UINT_32                None      4
+  Gauge32                   UINT_32                None      4
+  PhysAddress               MIB_OctetString_STC    mac     162
+  AutonomousType            MIB_ObjectId_STC       None    122
+  TestAndIncr               UINT_32                None      4
+  OwnerString               MIB_OctetString_STC    None    162
+  IANAifType                UINT_32                None      4
+  RouteTag                  MIB_ObjectId_STC       None    122
+  NetNumber                 MIB_OctetString_STC    None    162
+  RsIfType                  UINT_32                None      4
+  AreaID                    RSG_ip_addr_TYP        None      4
+  RouterID                  RSG_ip_addr_TYP        None      4
+  Metric                    UINT_32                None      4
+  BigMetric                 UINT_32                None      4
+  Status                    UINT_32                None      4
+  PositiveInteger           UINT_32                None      4
+  HelloRange                UINT_32                None      4
+  UpToMaxAge                UINT_32                None      4
+  InterfaceIndex            UINT_32                None      4
+  DesignatedRouterPriority  UINT_32                None      4
+  TOSType                   UINT_32                None      4
+  OwnerString               MIB_OctetString_STC    None    122
+  EntryStatus               UINT_32                None      4

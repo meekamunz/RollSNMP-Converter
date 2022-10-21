@@ -1,0 +1,39 @@
+IP-FORWARD-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, IpAddress, Integer32, Gauge32
+        FROM SNMPv2-SMI
+    RowStatus
+        FROM SNMPv2-TC
+    ip
+        FROM RFC1213-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP
+        FROM SNMPv2-CONF
+    ipForward
+        FROM IP-FORWARD-MIB;
+
+ipCidrRouteNumber OBJECT-TYPE
+    ::= { ipForward 3 }
+
+--  IP CIDR Route Table
+
+--  The IP CIDR Route Table obsoletes and replaces the ipRoute
+--  Table current in MIB-I and MIB-II and the IP Forwarding Table.
+--  It adds knowledge of the autonomous system of the next hop,
+--  multiple next hops, and policy routing, and Classless
+--  Inter-Domain Routing.
+
+ipCidrRouteTable OBJECT-TYPE
+    ::= { ipForward 4 }
+
+ipCidrRouteEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME ipCidrRouteStatus
+    ::= { ipCidrRouteTable 1 }
+
+-- Obsoleted Definitions - Objects
+
+ipForwardNumber OBJECT-TYPE
+    ::= { ipForward 1 }
+
+END

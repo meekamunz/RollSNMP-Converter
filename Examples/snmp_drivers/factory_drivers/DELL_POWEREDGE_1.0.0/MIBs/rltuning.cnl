@@ -1,0 +1,486 @@
+RADLAN-Tuning-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN Tuning Private Extension
+-- Version:    7.40
+-- Date:       05 Jul 2005
+
+IMPORTS
+    rsTunning                                               FROM RADLAN-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+
+rsHighPriority OBJECT-TYPE
+    ::= { rsTunning 1 }
+
+rsLowPriority OBJECT-TYPE
+    ::= { rsTunning 2 }
+
+rsDbgLevel OBJECT-TYPE
+    ::= { rsTunning 3 }
+
+rsConfirmMessagTab OBJECT-TYPE
+    ::= { rsTunning 5 }
+
+eventMessageTable OBJECT-TYPE
+    ::= { rsTunning 6 }
+
+eventMessageEntry OBJECT-TYPE
+    ::= { eventMessageTable 1 }
+
+reaTunning OBJECT IDENTIFIER
+    ::= { rsTunning 7 }
+
+reaIpForwardEnable OBJECT-TYPE
+    ::= { reaTunning 4 }
+
+reaIpxForwardEnable OBJECT-TYPE
+    ::= { reaTunning 5 }
+
+rsMaxEntriesTuning OBJECT IDENTIFIER ::= { rsTunning 8 }
+
+rsMaxBridgeForwardingEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 1}
+
+rsMaxBrgFrwEntries OBJECT-TYPE
+    ::=  { rsMaxBridgeForwardingEntriesTuning 1 }
+
+rsMaxBrgFrwEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxBridgeForwardingEntriesTuning 2 }
+
+rsMaxIpForwardingEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 2}
+
+rsMaxIpFrwEntries OBJECT-TYPE
+    ::=  { rsMaxIpForwardingEntriesTuning 1 }
+
+rsMaxIpFrwEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpForwardingEntriesTuning 2 }
+
+rsMaxArpEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 3}
+
+rsMaxArpEntries OBJECT-TYPE
+    ::=  { rsMaxArpEntriesTuning 1 }
+
+rsMaxArpEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxArpEntriesTuning 2 }
+
+rsMaxIpxForwardingEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 4}
+
+rsMaxIpxFrwEntries OBJECT-TYPE
+    ::=  { rsMaxIpxForwardingEntriesTuning 1 }
+
+rsMaxIpxFrwEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpxForwardingEntriesTuning 2 }
+
+rsMaxIpxSapEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 5}
+
+rsMaxIpxSapEntries OBJECT-TYPE
+    ::=  { rsMaxIpxSapEntriesTuning 1 }
+
+rsMaxIpxSapEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpxSapEntriesTuning 2 }
+
+rsMaxDspClntEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 6}
+
+rsMaxDspClntEntries OBJECT-TYPE
+    ::=  { rsMaxDspClntEntriesTuning 1 }
+
+rsMaxDspClntEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxDspClntEntriesTuning 2 }
+
+rsMaxIpFftEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 9}
+
+rsMaxIpSFftEntries OBJECT-TYPE
+    ::= { rsMaxIpFftEntriesTuning 1 }
+
+rsMaxIpSFftEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 2 }
+
+rsMaxIpNFftEntries OBJECT-TYPE
+    ::= { rsMaxIpFftEntriesTuning 3 }
+
+rsMaxIpNFftEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 4 }
+
+rsMaxIpSFftSysEntries OBJECT-TYPE
+    ::= { rsMaxIpFftEntriesTuning 5 }
+
+rsMaxIpSFftSysEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 6 }
+
+rsMaxIpNFftSysEntries OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 7 }
+
+rsMaxIpNFftSysEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 8 }
+
+rsMaxIpNextHopEntries OBJECT-TYPE
+    ::= { rsMaxIpFftEntriesTuning 9 }
+
+rsMaxIpNextHopEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpFftEntriesTuning 10 }
+
+rsMaxIpxFftEntriesTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 10}
+
+rsMaxIpxSFftEntries OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 1 }
+
+rsMaxIpxSFftEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 2 }
+
+rsMaxIpxNFftEntries OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 3 }
+
+rsMaxIpxNFftEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 4 }
+
+rsMaxIpxSFftSysEntries OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 5 }
+
+rsMaxIpxSFftSysEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 6 }
+
+rsMaxIpxNFftSysEntries OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 7 }
+
+rsMaxIpxNFftSysEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpxFftEntriesTuning 8 }
+
+rsMaxDhcpTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 11}
+
+rsMaxDhcpConns OBJECT-TYPE
+    ::= { rsMaxDhcpTuning 1 }
+
+rsMaxDhcpConnsAfterReset OBJECT-TYPE
+    ::= { rsMaxDhcpTuning 2 }
+
+rsMaxIpmTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 12}
+
+rsMaxIpmFftEntriesTuning OBJECT IDENTIFIER ::= { rsMaxIpmTuning 1}
+
+rsMaxIpmFftEntries OBJECT-TYPE
+   ::= { rsMaxIpmFftEntriesTuning 1 }
+
+rsMaxIpmFftEntriesAfterReset OBJECT-TYPE
+   ::= { rsMaxIpmFftEntriesTuning 2 }
+
+rsIpmFftAging OBJECT-TYPE
+   ::= { rsMaxIpmFftEntriesTuning 3 }
+
+rsMaxIgmpTuning OBJECT IDENTIFIER ::= { rsMaxIpmTuning 2}
+
+rsMaxIgmpInterfaceEntries OBJECT-TYPE
+    ::=  { rsMaxIgmpTuning 1 }
+
+rsMaxIgmpInterfaceEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIgmpTuning 2 }
+
+rsMaxIgmpCacheEntries OBJECT-TYPE
+    ::=  { rsMaxIgmpTuning 3 }
+
+rsMaxIgmpCacheEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIgmpTuning 4 }
+
+rsMaxPimTuning OBJECT IDENTIFIER ::= { rsMaxIpmTuning 3}
+
+rsMaxPimNeighborEntries OBJECT-TYPE
+    ::=  { rsMaxPimTuning 1 }
+
+rsMaxPimNeighborEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPimTuning 2 }
+
+rsMaxPimRouteEntries OBJECT-TYPE
+    ::=  { rsMaxPimTuning 3 }
+
+rsMaxPimRouteEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPimTuning 4 }
+
+rsMaxPimRouteNextHopEntries OBJECT-TYPE
+    ::=  { rsMaxPimTuning 5 }
+
+rsMaxPimRouteNextHopEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPimTuning 6 }
+
+rsMaxPimInterfaceEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPimTuning 7 }
+
+rsMaxPimInterfaceEntries OBJECT-TYPE
+    ::=  { rsMaxPimTuning 8 }
+
+rsMaxDvmrpTuning OBJECT IDENTIFIER ::= { rsMaxIpmTuning 4 }
+
+rsMaxDvmrpNeighborEntries OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 1 }
+
+rsMaxDvmrpNeighborEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 2 }
+
+rsMaxDvmrpRouteEntries OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 3 }
+
+rsMaxDvmrpRouteEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 4 }
+
+rsMaxDvmrpMRouteEntries OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 5 }
+
+rsMaxDvmrpMRouteEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 6 }
+
+rsMaxDvmrpInterfaceEntries OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 7 }
+
+rsMaxDvmrpInterfaceEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxDvmrpTuning 8 }
+
+rsMaxPigmpTuning OBJECT IDENTIFIER ::= { rsMaxIpmTuning 5}
+
+rsMaxPigmpRouteEntries OBJECT-TYPE
+    ::=  { rsMaxPigmpTuning 1 }
+
+rsMaxPigmpRouteEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPigmpTuning 2 }
+
+rsMaxRmonTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 13}
+
+rsMaxRmonLogEntries OBJECT-TYPE
+    ::=  { rsMaxRmonTuning 1 }
+
+rsMaxRmonLogEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxRmonTuning 2 }
+
+rsMaxRmonEtherHistoryEntries OBJECT-TYPE
+    ::=  { rsMaxRmonTuning 3 }
+
+rsMaxRmonEtherHistoryEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxRmonTuning 4 }
+
+rsMaxIgmpSnoopTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 14}
+
+rsMaxIgmpSnoopGroupEntries OBJECT-TYPE
+    ::= { rsMaxIgmpSnoopTuning  1 }
+
+rsMaxIgmpSnoopGroupEntriesAfterReset OBJECT-TYPE
+    ::= { rsMaxIgmpSnoopTuning  2 }
+
+rsMaxVlansTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 15}
+
+rsMaxVlansEntries OBJECT-TYPE
+    ::= { rsMaxVlansTuning  1 }
+
+rsMaxVlansEntriesAfterReset OBJECT-TYPE
+    ::= { rsMaxVlansTuning  2 }
+
+rsMaxPolicyTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 16 }
+
+rsMaxPolicyMaxRulesEntries OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 1 }
+
+rsMaxPolicyMaxRulesEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 2 }
+
+rsMaxPolicySimpleMibMaxRulesEntries OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 3 }
+
+rsMaxPolicySimpleMibMaxRulesEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 4 }
+
+rsMaxPolicySimpleMibMaxProfilesEntries OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 5 }
+
+rsMaxPolicySimpleMibMaxProfilesEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxPolicyTuning 6 }
+
+rsMaxGvrpVlansTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 17}
+
+rsMaxGvrpVlans OBJECT-TYPE
+    ::= { rsMaxGvrpVlansTuning  1 }
+
+rsMaxGvrpVlansAfterReset OBJECT-TYPE
+    ::= { rsMaxGvrpVlansTuning  2 }
+
+rsMaxTraceRouteTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 18 }
+
+rsMaxTraceRouteControlEntries OBJECT-TYPE
+    ::=  { rsMaxTraceRouteTuning 1 }
+
+rsMaxTraceRouteControEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxTraceRouteTuning 2 }
+
+rsMaxTraceRouteProbeHistoryEntries OBJECT-TYPE
+    ::=  { rsMaxTraceRouteTuning 3 }
+
+rsMaxTraceRouteProbeHistoryEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxTraceRouteTuning 4 }
+
+rsMaxSocketTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 20}
+
+rsMaxNumberOfSockets OBJECT-TYPE
+    ::= { rsMaxSocketTuning  1 }
+
+rsMaxNumberOfSocketsAfterReset OBJECT-TYPE
+    ::= { rsMaxSocketTuning  2 }
+
+rsMaxSizeOfSocketDataPool OBJECT-TYPE
+    ::= { rsMaxSocketTuning  3 }
+
+rsMaxSizeOfSocketDataPoolAfterReset OBJECT-TYPE
+    ::= { rsMaxSocketTuning  4 }
+
+rsMaxIpRouteTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 21 }
+
+rsMaxIpPrefixes OBJECT-TYPE
+    ::=  { rsMaxIpRouteTuning 1 }
+
+rsMaxIpPrefixesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpRouteTuning 2 }
+
+rsMaxIpNextHopSetTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 22 }
+
+rsMaxIpNextHopSetEntries OBJECT-TYPE
+    ::=  { rsMaxIpNextHopSetTuning 1 }
+
+rsMaxIpNextHopSetEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpNextHopSetTuning 2 }
+
+rsMaxIpEcmpTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 23}
+
+rsMaxIpEcmpEntrySize OBJECT-TYPE
+    ::=  { rsMaxIpEcmpTuning 1 }
+
+rsMaxIpEcmpEntrySizeAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpEcmpTuning 2 }
+
+rsMaxdot1xEapRequestTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 24}
+
+rsMaxdot1xEapRequestEntries OBJECT-TYPE
+    ::=  { rsMaxdot1xEapRequestTuning 1 }
+
+rsMaxdot1xEapRequestEntriesAfterReset OBJECT-TYPE
+    ::=  { rsMaxdot1xEapRequestTuning 2 }
+
+rsMaxIpInterfaceTuning OBJECT IDENTIFIER ::= { rsMaxEntriesTuning 25}
+
+rsMaxIpInterfaces OBJECT-TYPE
+    ::=  { rsMaxIpInterfaceTuning 1 }
+
+rsMaxIpInterfacesAfterReset OBJECT-TYPE
+    ::=  { rsMaxIpInterfaceTuning 2 }
+
+rsTcpTuning OBJECT IDENTIFIER ::= { rsTunning 11 }
+
+rsTcpMemoryPoolSizeAfterReset OBJECT-TYPE
+    ::= { rsTcpTuning 1 }
+
+rsTcpMemoryPoolSize OBJECT-TYPE
+    ::= { rsTcpTuning 2 }
+
+rsRadiusTuning OBJECT IDENTIFIER ::= { rsTunning 12 }
+
+rsRadiusMemoryPoolSizeAfterReset OBJECT-TYPE
+    ::= { rsRadiusTuning 1 }
+
+rsRadiusMemoryPoolSize OBJECT-TYPE
+    ::= { rsRadiusTuning  2 }
+
+rlMngInfTuning OBJECT IDENTIFIER ::= { rsTunning 14 }
+
+rlMaxNumberOfAccessRules OBJECT-TYPE
+    ::= { rlMngInfTuning 1}
+
+rlMaxNumberOfAccessRulesAfterReset OBJECT-TYPE
+    ::= { rlMngInfTuning 2}
+
+rlDnsClTuning OBJECT IDENTIFIER ::= { rsTunning 18 }
+
+rlMaxDnsClCacheRREntries OBJECT-TYPE
+    ::= { rlDnsClTuning 1 }
+
+rlMaxDnsClCacheRREntriesAfterReset OBJECT-TYPE
+    ::= { rlDnsClTuning 2 }
+
+rlMaxDnsClNCacheErrEntries OBJECT-TYPE
+    ::= { rlDnsClTuning 3 }
+
+rlMaxDnsClNCacheErrEntriesAfterReset OBJECT-TYPE
+    ::= { rlDnsClTuning 4 }
+
+rlMaxDnsClNamesEntries OBJECT-TYPE
+    ::= { rlDnsClTuning 5 }
+
+rlMaxDnsClNamesEntriesAfterReset OBJECT-TYPE
+    ::= { rlDnsClTuning 6 }
+
+
+-- table to show tuning : limits curent and after reset values
+rlTuningParamsTable    OBJECT-TYPE
+   ::=  { rsTunning 19 }
+
+rlTuningParamsEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+   ::=  { rlTuningParamsTable 1 }
+
+rlHostParamTable    OBJECT-TYPE
+   ::=  { rsTunning 20}
+
+rlHostParamEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+   ::=  { rlHostParamTable 1 }
+
+-- OSPF Tuning
+
+rlOspfTuning OBJECT IDENTIFIER ::= { rsTunning 21 }
+
+rlMaxOspfInterfaces OBJECT-TYPE
+    ::= { rlOspfTuning 1 }
+
+rlMaxOspfInterfacesAfterReset OBJECT-TYPE
+    ::= { rlOspfTuning 2 }
+
+rlMaxOspfAreas OBJECT-TYPE
+    ::= { rlOspfTuning 3 }
+
+rlMaxOspfAreasAfterReset OBJECT-TYPE
+    ::= { rlOspfTuning 4 }
+
+rlMaxOspfNeighbors OBJECT-TYPE
+    ::= { rlOspfTuning 5 }
+
+rlMaxOspfNeighborsAfterReset OBJECT-TYPE
+    ::= { rlOspfTuning 6 }
+
+rlMaxOspfAbrPerArea OBJECT-TYPE
+    ::= { rlOspfTuning 7 }
+
+rlMaxOspfAbrPerAreaAfterReset OBJECT-TYPE
+    ::= { rlOspfTuning 8 }
+
+rlMaxOspfNetsInAs OBJECT-TYPE
+    ::= { rlOspfTuning 9 }
+
+rlMaxOspfNetsInAsAfterReset OBJECT-TYPE
+    ::= { rlOspfTuning 10 }
+
+rlVlanTuning OBJECT IDENTIFIER ::= { rsTunning 22 }
+
+rlVlanDefaultVID OBJECT-TYPE
+    ::= { rlVlanTuning 1 }
+
+rlVlanDefaultVIDAfterReset OBJECT-TYPE
+    ::= { rlVlanTuning 2 }
+rlDependendFeaturesEnableTuning OBJECT IDENTIFIER ::= { rsTunning 23 }
+rlDependendFeaturesEnabled OBJECT-TYPE
+    ::= { rlDependendFeaturesEnableTuning 1 }
+
+rlDependendFeaturesEnabledAfterReset OBJECT-TYPE
+    ::= { rlDependendFeaturesEnableTuning 2 }
+
+rlIpDhcpSnoopingTuning OBJECT IDENTIFIER ::= { rsTunning 24 }
+
+rlMaxIpDhcpSnoopingEntries OBJECT-TYPE
+    ::= { rlIpDhcpSnoopingTuning 1 }
+
+rlMaxIpDhcpSnoopingEntriesAfterReset OBJECT-TYPE
+    ::= { rlIpDhcpSnoopingTuning 2 }
+
+
+END

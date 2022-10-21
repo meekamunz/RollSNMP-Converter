@@ -1,0 +1,9 @@
+{
+  "includes": ["Arista 7500 Switch Linecard.rsnmp"],
+  "driverName": "7500-linecard",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Arista",
+  "deviceName": "Arista 7500 Linecard",
+  "extra_params": ["slot"],
+  "factory": true
+}

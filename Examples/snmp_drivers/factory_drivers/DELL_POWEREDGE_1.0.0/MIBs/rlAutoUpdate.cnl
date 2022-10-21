@@ -1,0 +1,30 @@
+RADLAN-AUTOUPDATE-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE   FROM SNMPv2-SMI
+    DisplayString, TruthValue      FROM SNMPv2-TC
+    rlAutoUpdate                   FROM RADLAN-AUTOUPDATE-MIB
+    ;
+
+
+rlAutoUpdateEnable OBJECT-TYPE
+    ::= { rlAutoUpdate 1 }
+
+rlAutoUpdateFilesBoot OBJECT-TYPE
+    ::= { rlAutoUpdate 2 }
+
+rlAutoUpdateFilesImage OBJECT-TYPE
+    ::= { rlAutoUpdate 3 }
+
+rlAutoUpdateFilesConf OBJECT-TYPE
+    ::= { rlAutoUpdate 4 }
+
+rlAutoUpdateCopyEnable OBJECT-TYPE
+    ::= { rlAutoUpdate 5 }
+
+rlAutoUpdatePreserveIP OBJECT-TYPE
+    ::= { rlAutoUpdate 6 }
+
+
+END
+

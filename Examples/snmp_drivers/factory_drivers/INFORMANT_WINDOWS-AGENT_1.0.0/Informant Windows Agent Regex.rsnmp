@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id: $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitor
+	Morpheus server processes.
+
+	It requires SNMP Informant Advanced to be running on each target server.
+
+	N.B. Not all processes will run on each Morpheus server
+-->
+
+<DefinitionGroup>
+
+	<!-- Morpheus Process OIDs-->
+
+	<MIBSource href="drivers/INFORMANT_WINDOWS-AGENT_1.0.0/MIBs"/>
+
+	<OIDAlias id="INFORMANT" oid=".iso.org.dod.internet.private.enterprises.wtcs.informant.advanced" >
+		<OIDAlias id="INFORMANT PROCESS TABLE" oid=".processTable.processEntry" >
+			<OIDAlias id="INFORMANT PROCESS ID" oid=".processIDProcess" />
+			<OIDAlias id="INFORMANT PROCESS NAME" oid=".processInstance" />
+			<OIDAlias id="INFORMANT PROCESS CPU" oid=".processPercentProcessorTime" >
+				<OIDAlias id="INFORMANT PROCESS CPU TOTAL" oid=".6.95.84.111.116.97.108" /> <!-- ._Total -->
+			</OIDAlias>
+			<OIDAlias id="INFORMANT PROCESS VIRTUAL RAM" oid=".processVirtualMBytes" />
+			<OIDAlias id="INFORMANT PROCESS PHYSICAL RAM" oid=".processWorkingSetMBytes" />
+			<OIDAlias id="INFORMANT PROCESS IO" oid=".processIODataBytesPerSec" />
+		</OIDAlias>
+		<OIDAlias id="INFORMANT PROCESSOR TABLE" oid=".processorTable.processorEntry" >
+			<OIDAlias id="INFORMANT PROCESSOR TIME" oid=".cpuPercentProcessorTime" >
+				<OIDAlias id="INFORMANT PROCESSOR TIME TOTAL" oid=".6.95.84.111.116.97.108" /> <!-- ._Total -->
+			</OIDAlias>
+		</OIDAlias>
+	</OIDAlias>
+
+
+	<UnitTypeDef typeName="INFORMANT_WINDOWS-AGENT_1.0.0" >
+
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>CVS $Id:  $</StaticString>
+		</StaticDef>
+		<!-- HP DL360 Server definintions -->
+
+		<!-- These fields reference some of the global MIB-2 translations.
+		     They are all available from any Microsoft PC running SNMP agent services. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+		<TranslationDef link="TCP CURR ESTAB" />
+		<TranslationDef link="SYS DATE" />
+
+
+<!-- PROCESS MONITORING -->
+
+	<OIDList id="PROCESS">
+		<StringOID tag="#301">#302</StringOID>
+		<StringOID tag="#303">#304</StringOID>
+		<StringOID tag="#305">#306</StringOID>
+		<StringOID tag="#307">#308</StringOID>
+		<StringOID tag="#309">#310</StringOID>
+		<StringOID tag="#311">#312</StringOID>
+		<StringOID tag="#313">#314</StringOID>
+		<StringOID tag="#315">#316</StringOID>
+		<StringOID tag="#317">#318</StringOID>
+		<StringOID tag="#319">#320</StringOID>
+		<StringOID tag="#321">#322</StringOID>
+		<StringOID tag="#323">#324</StringOID>
+		<StringOID tag="#325">#326</StringOID>
+		<StringOID tag="#327">#328</StringOID>
+		<StringOID tag="#329">#330</StringOID>
+		<StringOID tag="#331">#332</StringOID>
+		<StringOID tag="#333">#334</StringOID>
+		<StringOID tag="#335">#336</StringOID>
+		<StringOID tag="#337">#338</StringOID>
+		<StringOID tag="#339">#340</StringOID>
+		<StringOID tag="#341">#342</StringOID>
+		<StringOID tag="#343">#344</StringOID>
+		<StringOID tag="#345">#346</StringOID>
+		<StringOID tag="#347">#348</StringOID>
+		<StringOID tag="#349">#350</StringOID>
+
+	</OIDList>
+		<TranslationDef rcLogField="PROCESS_%d_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.#I</OID>
+			<Array list="PROCESS"/>
+			<StringRule />
+		<ConstRule format="WARN:Unknown?" />
+		<ErrorRule format="N/A" />
+		</TranslationDef>
+		<TranslationDef rcLogField="PROCESS_%d_NAME" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.#I</OID>
+			<Array list="PROCESS"/>
+		<ConstRule format="#T" />
+		<ErrorRule format="N/A" />
+		</TranslationDef>
+		<TranslationDef rcLogField="PROCESS_%d_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.#I</OID>
+			<Array list="PROCESS"/>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+		<TranslationDef rcLogField="PROCESS_%d_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.#I</OID>
+			<Array list="PROCESS"/>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+		<TranslationDef rcLogField="PROCESS_%d_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.#I</ExpOID>
+			<Array list="PROCESS"/>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+		<TranslationDef rcLogField="PROCESS_%d_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.#I</ExpOID>
+			<Array list="PROCESS"/>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+
+
+
+	</UnitTypeDef>
+</DefinitionGroup>
+

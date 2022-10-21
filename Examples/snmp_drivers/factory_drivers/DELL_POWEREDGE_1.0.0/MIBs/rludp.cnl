@@ -1,0 +1,24 @@
+RADLAN-UDP-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN UDP Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rsUDP                                                   FROM RADLAN-UDP
+    ipAddrEntry                                             FROM IP-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rsUdpRelayTable  OBJECT-TYPE
+    ::=  { rsUDP 1 }
+
+rsUdpRelayEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rsUdpRelayStatus
+    ::=  { rsUdpRelayTable 1 }
+
+rsUdpRelayMibVersion  OBJECT-TYPE
+   ::= {rsUDP 2}
+
+END

@@ -1,0 +1,508 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Fri Nov 09 11:42:10 2007
+-- Confidential
+EQXXPT-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprEQXXPT
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+      
+    monitoring OBJECT IDENTIFIER ::= { miniexprEQXXPT 3}
+    comms OBJECT IDENTIFIER ::= { miniexprEQXXPT 4}
+    eqxXptSnmpControl OBJECT IDENTIFIER ::= { miniexprEQXXPT 5}
+    eqxXptNotify OBJECT IDENTIFIER ::= { miniexprEQXXPT 6}
+    eqxXptTraps OBJECT IDENTIFIER ::= { miniexprEQXXPT 7}
+
+
+        
+    lmTemperature OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor the front-card temperature (in Celcius). "
+    ::= { monitoring 1 }
+
+        
+    adTemperature OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor the mid-card temperature (in Celcius). "
+    ::= { monitoring 2 }
+
+        
+-- Beginning of xptTemperaturesTable
+    xptTemperaturesTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF XptTemperaturesEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The xptTemperatures table. "
+    ::= { monitoring 3 }
+
+    xptTemperaturesEntry OBJECT-TYPE
+      SYNTAX XptTemperaturesEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { xptChip }
+    ::= { xptTemperaturesTable 1 }
+
+    XptTemperaturesEntry ::= SEQUENCE {
+        xptChip     INTEGER,
+        xptTemperature     INTEGER
+    }
+
+
+    
+    xptChip OBJECT-TYPE
+      SYNTAX INTEGER {
+            xpt1(1),
+            xpt2(2),
+            xpt3(3),
+            xpt4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the xpt index, which is used to index various tables. "
+    ::= { xptTemperaturesEntry 1 }
+
+    
+    xptTemperature OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor crosspoint chip temperatures (in Celcius). "
+    ::= { xptTemperaturesEntry 2 }
+
+-- End of xptTemperaturesTable
+
+
+        
+-- Beginning of fanSpeedsTable
+    fanSpeedsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FanSpeedsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The fanSpeeds table. "
+    ::= { monitoring 4 }
+
+    fanSpeedsEntry OBJECT-TYPE
+      SYNTAX FanSpeedsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { fan }
+    ::= { fanSpeedsTable 1 }
+
+    FanSpeedsEntry ::= SEQUENCE {
+        fan     INTEGER,
+        fanSpeed     INTEGER
+    }
+
+
+    
+    fan OBJECT-TYPE
+      SYNTAX INTEGER {
+            fan1(1),
+            fan2(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the fan index, which is used to index various tables. "
+    ::= { fanSpeedsEntry 1 }
+
+    
+    fanSpeed OBJECT-TYPE
+      SYNTAX INTEGER ( 0..8000 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor crosspoint fan speeds (in RPM). "
+    ::= { fanSpeedsEntry 2 }
+
+-- End of fanSpeedsTable
+
+
+        
+-- Beginning of voltagesTable
+    voltagesTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF VoltagesEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The voltages table. "
+    ::= { monitoring 5 }
+
+    voltagesEntry OBJECT-TYPE
+      SYNTAX VoltagesEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { voltage }
+    ::= { voltagesTable 1 }
+
+    VoltagesEntry ::= SEQUENCE {
+        voltage     INTEGER,
+        voltageRead     INTEGER
+    }
+
+
+    
+    voltage OBJECT-TYPE
+      SYNTAX INTEGER {
+            voltage1V2(1),
+            voltage2V5(2),
+            voltage3V3(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the voltage index, which is used to index various tables. "
+    ::= { voltagesEntry 1 }
+
+    
+    voltageRead OBJECT-TYPE
+      SYNTAX INTEGER ( 0..5000 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor crosspoint voltages (in mV). "
+    ::= { voltagesEntry 2 }
+
+-- End of voltagesTable
+
+
+        
+-- Beginning of routeStatusTable
+    routeStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF RouteStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The routeStatus table. "
+    ::= { monitoring 6 }
+
+    routeStatusEntry OBJECT-TYPE
+      SYNTAX RouteStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { output }
+    ::= { routeStatusTable 1 }
+
+    RouteStatusEntry ::= SEQUENCE {
+        output     INTEGER,
+        routedInput     INTEGER,
+        timingPlaneSelected     INTEGER
+    }
+
+
+    
+    output OBJECT-TYPE
+      SYNTAX INTEGER ( 1..288 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the output index, which is used to index various tables. "
+    ::= { routeStatusEntry 1 }
+
+    
+    routedInput OBJECT-TYPE
+      SYNTAX INTEGER ( 1..576 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor the input routed to an output. "
+    ::= { routeStatusEntry 2 }
+
+    
+    timingPlaneSelected OBJECT-TYPE
+      SYNTAX INTEGER {
+            plane1(1),
+            plane2(2),
+            plane3(3),
+            plane4(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the timing plane in use for this monitoring output. "
+    ::= { routeStatusEntry 3 }
+
+-- End of routeStatusTable
+
+
+        
+-- Beginning of timingPlaneStatusTable
+    timingPlaneStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TimingPlaneStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The timingPlaneStatus table. "
+    ::= { monitoring 7 }
+
+    timingPlaneStatusEntry OBJECT-TYPE
+      SYNTAX TimingPlaneStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { timingPlane }
+    ::= { timingPlaneStatusTable 1 }
+
+    TimingPlaneStatusEntry ::= SEQUENCE {
+        timingPlane     INTEGER,
+        reference     INTEGER,
+        switchPoint     INTEGER,
+        offset     INTEGER,
+        manualOffset     INTEGER
+    }
+
+
+    
+    timingPlane OBJECT-TYPE
+      SYNTAX INTEGER {
+            timingPlane1(1),
+            timingPlane2(2),
+            timingPlane3(3),
+            timingPlane4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the timing plane index, which is used to index various tables. "
+    ::= { timingPlaneStatusEntry 1 }
+
+    
+    reference OBJECT-TYPE
+      SYNTAX INTEGER {
+            ref625(1),
+            ref525(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the reference in use on this timing plane. "
+    ::= { timingPlaneStatusEntry 2 }
+
+    
+    switchPoint OBJECT-TYPE
+      SYNTAX INTEGER {
+            frame(1),
+            field(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the switch-point in use on this timing plane. "
+    ::= { timingPlaneStatusEntry 3 }
+
+    
+    offset OBJECT-TYPE
+      SYNTAX INTEGER {
+            offset625(1),
+            offset525(2),
+            offset1080i50(3),
+            offset1080i5994(4),
+            offset720p50(5),
+            offset720p5994(6),
+            manual(7)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the video format type use. "
+    ::= { timingPlaneStatusEntry 4 }
+
+    
+    manualOffset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..100000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the offset value in use. "
+    ::= { timingPlaneStatusEntry 5 }
+
+-- End of timingPlaneStatusTable
+
+
+        
+-- Beginning of flinkStatusTable
+    flinkStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FlinkStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The flinkStatus table. "
+    ::= { comms 1 }
+
+    flinkStatusEntry OBJECT-TYPE
+      SYNTAX FlinkStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { flinkBus }
+    ::= { flinkStatusTable 1 }
+
+    FlinkStatusEntry ::= SEQUENCE {
+        flinkBus     INTEGER,
+        flinkAddress     INTEGER,
+        flinkRxErrorCount     INTEGER,
+        flinkRxFifoWaterMark     INTEGER,
+        flinkTxFifoWaterMark     INTEGER
+    }
+
+
+    
+    flinkBus OBJECT-TYPE
+      SYNTAX INTEGER {
+            flinkControlBus(1),
+            flinkStatusBus(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the F-Link Bus index, which is used to index various tables. "
+    ::= { flinkStatusEntry 1 }
+
+    
+    flinkAddress OBJECT-TYPE
+      SYNTAX INTEGER ( 0..127 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view this cards F-Link address. "
+    ::= { flinkStatusEntry 2 }
+
+    
+    flinkRxErrorCount OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link receive error count. "
+    ::= { flinkStatusEntry 3 }
+
+    
+    flinkRxFifoWaterMark OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2048 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link receive FIFO high watermark (FIFO Length = 2048). "
+    ::= { flinkStatusEntry 4 }
+
+    
+    flinkTxFifoWaterMark OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2048 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link transmit FIFO high watermark (FIFO Length = 2048). "
+    ::= { flinkStatusEntry 5 }
+
+-- End of flinkStatusTable
+
+
+        
+    enableSNMPControl OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user enable or disable control via SNMP. The user may wish to disable SNMP
+	control if controlling the card via F-Link. "
+    ::= { eqxXptSnmpControl 1 }
+
+        
+-- Beginning of mgmtFaultTable
+    mgmtFaultTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFault table. "
+    ::= { eqxXptNotify 1 }
+
+    mgmtFaultEntry OBJECT-TYPE
+      SYNTAX MgmtFaultEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameIndex }
+    ::= { mgmtFaultTable 1 }
+
+    MgmtFaultEntry ::= SEQUENCE {
+        faultNameIndex     INTEGER,
+        faultStatus     INTEGER,
+        sendTrap     INTEGER
+    }
+
+
+    
+    faultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            frontCardOverTemperature(1),
+            midCardOverTemperature(2),
+            xptOverTemperature(3),
+            fanFailure(4),
+            voltage1V2Error(5),
+            voltage2V5Error(6),
+            voltage3V3Error(7),
+            rxErrorFlinkControlBus(8),
+            rxOverrunFlinkControlBus(9),
+            txOverrunFlinkControlBus(10),
+            commsQuietFlinkControlBus(11),
+            rxErrorFlinkStatusBus(12),
+            rxOverrunFlinkStatusBus(13),
+            txOverrunFlinkStatusBus(14),
+            commsQuietFlinkStatusBus(15),
+            primaryEthernetLinkDown(16),
+            secondaryEthernetLinkDown(17),
+            fvh50Missing(18),
+            fvh60Missing(19)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index. "
+    ::= { mgmtFaultEntry 1 }
+
+    
+    faultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s). Indexed by faultNameIndex. "
+    ::= { mgmtFaultEntry 2 }
+
+    
+    sendTrap OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault(s) should generate Trap(s) and which ones should be ignored. Indexed by faultNameIndex. "
+    ::= { mgmtFaultEntry 3 }
+
+-- End of mgmtFaultTable
+
+
+
+END

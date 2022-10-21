@@ -1,0 +1,80 @@
+-- Copyright (c) Quantel 2003
+--
+-- Title: Quantel MIB
+-- Issue: 1.01
+-- Date:  05/10/2005 IdR
+--
+
+QUANTEL-MIB
+
+DEFINITIONS ::= BEGIN
+
+IMPORTS
+  MODULE-IDENTITY,
+    OBJECT-TYPE,
+    enterprises FROM SNMPv2-SMI
+    DisplayString FROM SNMPv2-TC
+    TimeTicks FROM SNMPv2-SMI
+    ;
+
+-- Module Identification Definition
+
+quantel MODULE-IDENTITY
+  LAST-UPDATED "200510050000Z"
+  ORGANIZATION "Quantel"
+  CONTACT-INFO "Turnpike Road
+                Newbury
+                Berkshre RG14 2NE
+                Tel   : +44(0)1635 48222
+                Fax   : +44(0)1635 521258
+                Web   : www.quantel.com
+                E-mail: support@quantel.com"
+  DESCRIPTION "This is the Quantel MIB"
+  ::= { enterprises 15248 }
+
+-- Groups defined in this MIB
+quantelAgent   OBJECT IDENTIFIER ::= { quantel 1 }
+quantelProduct OBJECT IDENTIFIER ::= { quantel 2 }
+
+-- System Configuration Group
+
+sysName OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (0..255))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION "The Quantel product name."
+  ::= { quantelAgent 1 }
+
+sysVersion OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (0..255))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION "The Quantel software version running."
+  ::= { quantelAgent 2 }
+
+sysStatus OBJECT-TYPE
+  SYNTAX DisplayString (SIZE (0..255))
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION "Brief descriptive text of the overall Quantel system status."
+  ::= { quantelAgent 3 }
+
+sysObjectID OBJECT-TYPE
+  SYNTAX OBJECT IDENTIFIER
+  MAX-ACCESS read-only
+  STATUS current
+  DESCRIPTION "Identification of the Quantel product subtree to provide an
+               easy and unambiguous means for determining which Quantel product
+               is being managed."
+  ::= { quantelAgent 4 }
+
+sysUpTime OBJECT-TYPE
+  SYNTAX  TimeTicks
+  MAX-ACCESS  read-only
+  STATUS current
+  DESCRIPTION  "The time (in hundredths of a second) since the
+                Quantel portion of the system was last re-initialized."
+  ::= { quantelAgent 5 }
+
+END
+

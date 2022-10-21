@@ -1,0 +1,8 @@
+{
+  "includes": ["eco8000.rsnmp"],
+  "driverName": "ECO-8000",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Tektronix",
+  "deviceName": "Tek ECO 8000",
+  "factory": true
+}

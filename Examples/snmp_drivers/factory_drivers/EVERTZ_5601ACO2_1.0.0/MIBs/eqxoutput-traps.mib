@@ -1,0 +1,515 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Fri Nov 09 11:41:13 2007
+-- Confidential
+
+EQXOUTPUT-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    eqxOutputTraps
+        FROM EQXOUTPUT-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { eqxOutputTraps 1 }
+
+
+-- beginning of videoLossOutput VideoOutput1 trap
+
+    faultvideoLossOutputVideoOutput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput1"
+    ::= 1000
+    
+    faultvideoLossOutputVideoOutput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput1"
+    ::= 1001
+
+-- end of videoLossOutput VideoOutput1 trap
+
+-- beginning of videoLossOutput VideoOutput2 trap
+
+    faultvideoLossOutputVideoOutput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput2"
+    ::= 1002
+    
+    faultvideoLossOutputVideoOutput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput2"
+    ::= 1003
+
+-- end of videoLossOutput VideoOutput2 trap
+
+-- beginning of videoLossOutput VideoOutput3 trap
+
+    faultvideoLossOutputVideoOutput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput3"
+    ::= 1004
+    
+    faultvideoLossOutputVideoOutput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput3"
+    ::= 1005
+
+-- end of videoLossOutput VideoOutput3 trap
+
+-- beginning of videoLossOutput VideoOutput4 trap
+
+    faultvideoLossOutputVideoOutput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput4"
+    ::= 1006
+    
+    faultvideoLossOutputVideoOutput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput4"
+    ::= 1007
+
+-- end of videoLossOutput VideoOutput4 trap
+
+-- beginning of videoLossOutput VideoOutput5 trap
+
+    faultvideoLossOutputVideoOutput5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput5"
+    ::= 1008
+    
+    faultvideoLossOutputVideoOutput5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput5"
+    ::= 1009
+
+-- end of videoLossOutput VideoOutput5 trap
+
+-- beginning of videoLossOutput VideoOutput6 trap
+
+    faultvideoLossOutputVideoOutput6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput6"
+    ::= 1010
+    
+    faultvideoLossOutputVideoOutput6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput6"
+    ::= 1011
+
+-- end of videoLossOutput VideoOutput6 trap
+
+-- beginning of videoLossOutput VideoOutput7 trap
+
+    faultvideoLossOutputVideoOutput7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput7"
+    ::= 1012
+    
+    faultvideoLossOutputVideoOutput7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput7"
+    ::= 1013
+
+-- end of videoLossOutput VideoOutput7 trap
+
+-- beginning of videoLossOutput VideoOutput8 trap
+
+    faultvideoLossOutputVideoOutput8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput8"
+    ::= 1014
+    
+    faultvideoLossOutputVideoOutput8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput8"
+    ::= 1015
+
+-- end of videoLossOutput VideoOutput8 trap
+
+-- beginning of videoLossOutput VideoOutput9 trap
+
+    faultvideoLossOutputVideoOutput9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput9"
+    ::= 1016
+    
+    faultvideoLossOutputVideoOutput9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput9"
+    ::= 1017
+
+-- end of videoLossOutput VideoOutput9 trap
+
+-- beginning of videoLossOutput VideoOutput10 trap
+
+    faultvideoLossOutputVideoOutput10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput10"
+    ::= 1018
+    
+    faultvideoLossOutputVideoOutput10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput10"
+    ::= 1019
+
+-- end of videoLossOutput VideoOutput10 trap
+
+-- beginning of videoLossOutput VideoOutput11 trap
+
+    faultvideoLossOutputVideoOutput11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput11"
+    ::= 1020
+    
+    faultvideoLossOutputVideoOutput11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput11"
+    ::= 1021
+
+-- end of videoLossOutput VideoOutput11 trap
+
+-- beginning of videoLossOutput VideoOutput12 trap
+
+    faultvideoLossOutputVideoOutput12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput12"
+    ::= 1022
+    
+    faultvideoLossOutputVideoOutput12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput12"
+    ::= 1023
+
+-- end of videoLossOutput VideoOutput12 trap
+
+-- beginning of videoLossOutput VideoOutput13 trap
+
+    faultvideoLossOutputVideoOutput13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput13"
+    ::= 1024
+    
+    faultvideoLossOutputVideoOutput13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput13"
+    ::= 1025
+
+-- end of videoLossOutput VideoOutput13 trap
+
+-- beginning of videoLossOutput VideoOutput14 trap
+
+    faultvideoLossOutputVideoOutput14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput14"
+    ::= 1026
+    
+    faultvideoLossOutputVideoOutput14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput14"
+    ::= 1027
+
+-- end of videoLossOutput VideoOutput14 trap
+
+-- beginning of videoLossOutput VideoOutput15 trap
+
+    faultvideoLossOutputVideoOutput15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput15"
+    ::= 1028
+    
+    faultvideoLossOutputVideoOutput15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput15"
+    ::= 1029
+
+-- end of videoLossOutput VideoOutput15 trap
+
+-- beginning of videoLossOutput VideoOutput16 trap
+
+    faultvideoLossOutputVideoOutput16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput16"
+    ::= 1030
+    
+    faultvideoLossOutputVideoOutput16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput16"
+    ::= 1031
+
+-- end of videoLossOutput VideoOutput16 trap
+
+-- beginning of videoLossOutput VideoOutput17 trap
+
+    faultvideoLossOutputVideoOutput17False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput17"
+    ::= 1032
+    
+    faultvideoLossOutputVideoOutput17True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput17"
+    ::= 1033
+
+-- end of videoLossOutput VideoOutput17 trap
+
+-- beginning of videoLossOutput VideoOutput18 trap
+
+    faultvideoLossOutputVideoOutput18False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Present on VideoOutput18"
+    ::= 1034
+    
+    faultvideoLossOutputVideoOutput18True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Video Missing on VideoOutput18"
+    ::= 1035
+
+-- end of videoLossOutput VideoOutput18 trap
+
+-- beginning of cardOverTemperature trap
+
+    faultcardOverTemperatureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Card Over Temperature Cleared"
+    ::= 1036
+    
+    faultcardOverTemperatureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Card Over Temperature Alert"
+    ::= 1037
+
+-- end of cardOverTemperature trap
+
+-- beginning of rxErrorFlinkControlBus trap
+
+    faultrxErrorFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Error Cleared"
+    ::= 1038
+    
+    faultrxErrorFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Error Alert"
+    ::= 1039
+
+-- end of rxErrorFlinkControlBus trap
+
+-- beginning of rxOverrunFlinkControlBus trap
+
+    faultrxOverrunFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Rx FIFO Overrun Error Cleared"
+    ::= 1040
+    
+    faultrxOverrunFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Rx FIFO Overrun Error Alert"
+    ::= 1041
+
+-- end of rxOverrunFlinkControlBus trap
+
+-- beginning of txOverrunFlinkControlBus trap
+
+    faulttxOverrunFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Tx FIFO Overrun Error Cleared"
+    ::= 1042
+    
+    faulttxOverrunFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Tx FIFO Overrun Error Alert"
+    ::= 1043
+
+-- end of txOverrunFlinkControlBus trap
+
+-- beginning of commsQuietFlinkControlBus trap
+
+    faultcommsQuietFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Comms Quiet Error Cleared"
+    ::= 1044
+    
+    faultcommsQuietFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Comms Quiet Error Alert"
+    ::= 1045
+
+-- end of commsQuietFlinkControlBus trap
+
+-- beginning of rxErrorFlinkStatusBus trap
+
+    faultrxErrorFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Error Cleared"
+    ::= 1046
+    
+    faultrxErrorFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Error Alert"
+    ::= 1047
+
+-- end of rxErrorFlinkStatusBus trap
+
+-- beginning of rxOverrunFlinkStatusBus trap
+
+    faultrxOverrunFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Rx FIFO Overrun Error Cleared"
+    ::= 1048
+    
+    faultrxOverrunFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Rx FIFO Overrun Error Alert"
+    ::= 1049
+
+-- end of rxOverrunFlinkStatusBus trap
+
+-- beginning of txOverrunFlinkStatusBus trap
+
+    faulttxOverrunFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Tx FIFO Overrun Error Cleared"
+    ::= 1050
+    
+    faulttxOverrunFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Tx FIFO Overrun Error Alert"
+    ::= 1051
+
+-- end of txOverrunFlinkStatusBus trap
+
+-- beginning of commsQuietFlinkStatusBus trap
+
+    faultcommsQuietFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Comms Quiet Error Cleared"
+    ::= 1052
+    
+    faultcommsQuietFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Comms Quiet Error Alert"
+    ::= 1053
+
+-- end of commsQuietFlinkStatusBus trap
+
+-- beginning of primaryEthernetLinkDown trap
+
+    faultprimaryEthernetLinkDownFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Primary Ethernet Link Down Error Cleared"
+    ::= 1054
+    
+    faultprimaryEthernetLinkDownTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Primary Ethernet Link Down Error Alert"
+    ::= 1055
+
+-- end of primaryEthernetLinkDown trap
+
+-- beginning of secondaryEthernetLinkDown trap
+
+    faultsecondaryEthernetLinkDownFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Secondary Ethernet Link Down Error Cleared"
+    ::= 1056
+    
+    faultsecondaryEthernetLinkDownTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Secondary Ethernet Link Down Error Alert"
+    ::= 1057
+
+-- end of secondaryEthernetLinkDown trap
+
+-- beginning of fvh50Missing trap
+
+    faultfvh50MissingFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 50Hz Reference Missing Cleared"
+    ::= 1058
+    
+    faultfvh50MissingTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 50Hz Reference Missing Alert"
+    ::= 1059
+
+-- end of fvh50Missing trap
+
+-- beginning of fvh60Missing trap
+
+    faultfvh60MissingFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 60Hz Reference Missing Cleared"
+    ::= 1060
+    
+    faultfvh60MissingTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 60Hz Reference Missing Alert"
+    ::= 1061
+
+-- end of fvh60Missing trap
+
+
+
+
+END

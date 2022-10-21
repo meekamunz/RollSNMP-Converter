@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id:  $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitor
+	Morpheus server processes.
+
+	It requires SNMP Informant Advanced to be running on each target server.
+
+	N.B. Not all processes will run on each Morpheus server
+-->
+
+<DefinitionGroup>
+
+
+	<UnitTypeDef typeName="MICROSOFT_WINDOWS-PC_1.0.0" >
+
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>CVS $Id: $</StaticString>
+		</StaticDef>
+		<!-- HP DL360 Server definintions -->
+
+		<!-- These fields reference some of the global MIB-2 translations.
+		     They are all available from any Microsoft PC running SNMP agent services. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+		<TranslationDef link="SYS DATE" />
+		<TranslationDef link="TCP CURR ESTAB" />
+		<!-- cannot parse OID, why?
+		<TranslationDef link="PC_DESCRIPTION" /> -->
+		<TranslationDef link="USERS" />
+		<TranslationDef link="PROCESSES" />
+		<TranslationDef link="RAM" />
+		<TranslationDef link="CPU ARRAY">
+				<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+	<!-- Standard Windows fields -->
+
+		<OIDFilter id="PORT" dynamic="true">
+			<OID alias="PORT NAME ARRAY">.#I</OID>
+			<OIDFilterRule regex="^(HP Ethernet 1Gb 4-port 331FLR Adapter)( #)?[0-9]*?"/>
+			<OIDFilterRule regex="^(HP Ethernet 1Gb 4-port 331i Adapter)( #)?[0-9]*?"/>
+			<!-- can the previous two lines be combined somehow? -->
+			<OIDFilterRule regex="^(Intel\(R\) I350 Gigabit Network Connection)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(TEAM)[ ]?[: ][A-Z|0-9| ]*$"/>
+			<OIDFilterRule regex="^(Intel\(R\) Ethernet Connection \([0-9]\) I219-LM)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Intel\(R\) Ethernet Connection I217-LM)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Intel\(R\) 82599 10 Gigabit Dual Port Network Connection)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Mellanox ConnectX-3 Pro Ethernet Adapter)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Intel\(R\) Ethernet Server Adapter X520-2)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Broadcom NetXtreme Gigabit Ethernet)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Intel\(R\) PRO/1000 MT Desktop Adapter)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(vmxnet3 Ethernet Adapter)( #)?[0-9]*?$"/>
+		</OIDFilter>
+		
+		<TranslationDef link="PORT NAME ALIAS ARRAY"> <!-- "LAN_PORT_%d_NAME" = "local area connection X" -->
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<!--TranslationDef link="PORT INT ARRAY"--> <!-- "LAN_PORT_%d_INT" = HP, Intel, broadcom etc -->
+			<!--Array filter="PORT"/>
+		</TranslationDef-->
+		<TranslationDef link="PORT NAME TYPE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT ADMIN STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="LAN PORT ERRORS">
+			<Array filter="PORT"/>
+		</TranslationDef>
+	
+		<OIDFilter id="PARTITION" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageFixedDisk)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.4)$"/>
+		</OIDFilter>
+		
+		<TranslationDef link="PARTITION NAME ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION SIZE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FULL ERRORS ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>		
+			
+			
+			
+		<OIDFilter id="VIRT MEM" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageVirtualMemory)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.3)$"/>
+		</OIDFilter>
+			
+		<TranslationDef link="VIRT MEM SIZE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FULL ERRORS ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>		
+			
+		<OIDFilter id="PHY MEM" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageRam)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.2)$"/>
+		</OIDFilter>
+			
+		<TranslationDef link="PHY MEM SIZE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FULL ERRORS ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>			
+
+	</UnitTypeDef>
+</DefinitionGroup>
+

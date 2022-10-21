@@ -1,0 +1,8 @@
+{
+  "includes": ["SPG8000A.rsnmp"],
+  "driverName": "SPG-8000A",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Tektronix",
+  "deviceName": "Tek SPG 8000A",
+  "factory": true
+}

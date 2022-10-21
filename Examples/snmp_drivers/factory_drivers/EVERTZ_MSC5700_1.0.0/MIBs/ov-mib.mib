@@ -1,0 +1,1823 @@
+-- Copyright 2005 Evertz Microsystems Ltd.
+-- Thu Aug 25 12:55:44 2005
+-- Confidential
+OV-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprOV
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+    UTF8String ::= OCTET STRING (SIZE(0..255))
+      
+    ovControl OBJECT IDENTIFIER ::= { miniexprOV 3}
+    ovNotification OBJECT IDENTIFIER ::= { miniexprOV 4}
+    ovTraps OBJECT IDENTIFIER ::= { miniexprOV 5}
+    ovAudioControl OBJECT IDENTIFIER ::= { miniexprOV 6}
+
+
+        
+-- Beginning of faultDefinitionVideoTable
+    faultDefinitionVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionVideo table. "
+    ::= { ovControl 1 }
+
+    faultDefinitionVideoEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { faultDefinitionVideoTable 1 }
+
+    FaultDefinitionVideoEntry ::= SEQUENCE {
+        inputIndex     INTEGER,
+        videoMissingErrorDuration     INTEGER,
+        videoMissingErrorOnTime     INTEGER,
+        videoFreezeMotionDuration     INTEGER,
+        videoFreezeOnTime     INTEGER,
+        videoMotionOnTime     INTEGER,
+        videoBlackDetectionDuration     INTEGER,
+        videoBlackDetectionOnTime     INTEGER,
+        videoStdChangeDetectionDuration     INTEGER,
+        videoStdChangeDetectionOnTime     INTEGER,
+        pictureNoiseLevel     INTEGER,
+        apEDHErrorDuration     INTEGER,
+        apEDHErrorOnTime     INTEGER,
+        ffEDHErrorDuration     INTEGER,
+        ffEDHErrorOnTime     INTEGER,
+        vitcLinePosition     INTEGER,
+        ccLinePosition     INTEGER,
+        maxAPLLevel     INTEGER,
+        maxAPLDuration     INTEGER,
+        maxAPLOnTime     INTEGER,
+        minAPLLevel     INTEGER,
+        minAPLDuration     INTEGER,
+        minAPLOnTime     INTEGER,
+        vitcErrorDuration     INTEGER,
+        vitcErrorOnTime     INTEGER,
+        sidErrorDuration     INTEGER,
+        sidErrorOnTime     INTEGER,
+        vitcLinePosition2     INTEGER,
+        wstLinePosition     INTEGER,
+        wssLinePosition     INTEGER
+    }
+
+
+    
+    inputIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            input1(1),
+            input2(2),
+            input3(3),
+            input4(4),
+            input5(5),
+            input6(6),
+            input7(7),
+            input8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 8.
+           "
+    ::= { faultDefinitionVideoEntry 1 }
+
+    
+    videoMissingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..30 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            video is missing or there is an error before a fault occurs.
+            It can have a range from 0 to 30 frames.
+           "
+    ::= { faultDefinitionVideoEntry 2 }
+
+    
+    videoMissingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the video level is not missing.
+            It has a range from 0 to 120 and in the card from 0 to 60 
+            in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 3 }
+
+    
+    videoFreezeMotionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..139 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            video is frozen or there is motion before a fault occurs.
+            It can have a range from 0 to 139 frames.
+            Note: the range in the card is from 6 to 9000 and is incremented
+            nonlinearly.  From 0 to 36, the card increments its value by 4, 
+            from 36 to 91, the card increments its value by 30 and from 
+            91 to 139, the card increments its value by 150.
+           "
+    ::= { faultDefinitionVideoEntry 4 }
+
+    
+    videoFreezeOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the video is not considered
+            to be frozen.  It has a range from 0 to 120 and a card range
+            of 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 5 }
+
+    
+    videoMotionOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the video is not considered
+            to be in motion.  It has a range from 0 to 120 and a card range
+            of 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 6 }
+
+    
+    videoBlackDetectionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..139 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            video detected is black before a fault occurs.
+            It can have a range from 0 to 139 frames. 
+            Note: the range in the card is from 6 to 9000 and is incremented
+            nonlinearly.  From 0 to 36, the card increments its value by 4, 
+            from 36 to 91, the card increments its value by 30 and from 
+            91 to 139, the card increments its value by 150.
+           "
+    ::= { faultDefinitionVideoEntry 7 }
+
+    
+    videoBlackDetectionOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the video is not considered
+            to be black.  It has a range from 0 to 120 and a card range
+            of 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 8 }
+
+    
+    videoStdChangeDetectionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..30 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            video standard detected has changed before a fault occurs.
+            It can have a range from 0 to 30 frames.
+           "
+    ::= { faultDefinitionVideoEntry 9 }
+
+    
+    videoStdChangeDetectionOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+         trigger will remain active after the video standard is not considered
+         to be changed.  It has a range from 0 to 120 and a card range
+         of 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 10 }
+
+    
+    pictureNoiseLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 0..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the approximate level of noise 
+            expected in the video signal feed.  It is used by the freeze 
+            detect feature to distinguish motion from background noise on top
+            of a video feed.  This object has a range from 1 to 10.   
+           "
+    ::= { faultDefinitionVideoEntry 11 }
+
+    
+    apEDHErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..30 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time that
+            there is an active picture edh error before a fault occurs.
+            This control can have a range from 0 to 30 frames.
+           "
+    ::= { faultDefinitionVideoEntry 12 }
+
+    
+    apEDHErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the active picture edh 
+            is not considered to have an error.  It has a range from 
+            0 to 120 and in the card from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 13 }
+
+    
+    ffEDHErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..30 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time that
+            there is a full field edh error before a fault occurs.
+            This control can have a range from 0 to 30 frames.
+           "
+    ::= { faultDefinitionVideoEntry 14 }
+
+    
+    ffEDHErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the full field edh 
+            is not considered to have an error.  It has a range from 
+            0 to 120 and in the card from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 15 }
+
+    
+    vitcLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 8..20 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This control allows the user to set the vitc line position.
+            It has a range from 8 to 20 lines.
+            Note: This parameter has been deprecated and replaced with
+            vitcLinePosition2, which expands the range of the parameter.
+           "
+    ::= { faultDefinitionVideoEntry 16 }
+
+    
+    ccLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 10..25 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the closed caption line 
+            position and it has a range from 10 to 25 lines.
+           "
+    ::= { faultDefinitionVideoEntry 17 }
+
+    
+    maxAPLLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 60..108 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to set the maximum (peak) luma threshold
+          If this level is exceeded a fault alert is triggered (if enabled)
+          It has a range from 60 to 108 apls.
+           "
+    ::= { faultDefinitionVideoEntry 18 }
+
+    
+    maxAPLDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..900 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the duration for which maximum luma level
+           is exceeded before reporting a fault alert.  It has a range from
+           0 to 900 frames.
+           "
+    ::= { faultDefinitionVideoEntry 19 }
+
+    
+    maxAPLOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the luma has not exceeded the 
+            threshold.  It has a range from 0 to 120 and in the card from 
+            0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 20 }
+
+    
+    minAPLLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 0..40 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to set the minimum (peak) luma threshold.
+           If we drop below this level, a fault alert is triggered (if 
+           enabled).  It has a range from 0 to 40 apls. 
+           "
+    ::= { faultDefinitionVideoEntry 21 }
+
+    
+    minAPLDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..900 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter sets the duration for which are below our minimum
+          luma level before reporting a fault alert.  It has a range from 
+          0 to 900 frames.
+           "
+    ::= { faultDefinitionVideoEntry 22 }
+
+    
+    minAPLOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the luma has not dropped below the 
+            threshold.  It has a range from 0 to 120 and in the card from 
+            0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 23 }
+
+    
+    vitcErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the VITC 
+            should be invalid before the OV will trigger an alarm.
+            It has a range from 0 to 240 seconds.
+           "
+    ::= { faultDefinitionVideoEntry 24 }
+
+    
+    vitcErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to define how long the alarm is to be
+            valid after the triggers have cleared.  It has a range from 
+            0 to 120  and in the card from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 25 }
+
+    
+    sidErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the SID 
+            should be invalid before the OV will trigger an alarm.
+            It has a range from 0 to 240 seconds.
+           "
+    ::= { faultDefinitionVideoEntry 26 }
+
+    
+    sidErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to define how long the alarm is to be
+            valid after the triggers have cleared.  It has a range from 
+            0 to 120  and in the card from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 27 }
+
+    
+    vitcLinePosition2 OBJECT-TYPE
+      SYNTAX INTEGER ( 8..25 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the vitc line position.
+            It has a range from 8 to 25 lines.
+           "
+    ::= { faultDefinitionVideoEntry 28 }
+
+    
+    wstLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 7..22 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the world standard teletext
+            line position and it has a range from 7 to 22 lines.
+           "
+    ::= { faultDefinitionVideoEntry 29 }
+
+    
+    wssLinePosition OBJECT-TYPE
+      SYNTAX INTEGER ( 6..32 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the line
+                           position of the incoming WSS bitstream.
+                           Note: This was added in OV version 2.4
+                            "
+    ::= { faultDefinitionVideoEntry 30 }
+
+-- End of faultDefinitionVideoTable
+
+
+        
+-- Beginning of faultDefinitionVideoInfoTable
+    faultDefinitionVideoInfoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionVideoInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionVideoInfo table. "
+    ::= { ovControl 2 }
+
+    faultDefinitionVideoInfoEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionVideoInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { faultDefinitionVideoInfoTable 1 }
+
+    FaultDefinitionVideoInfoEntry ::= SEQUENCE {
+        ccWaveformMissingDuration     INTEGER,
+        ccWaveformMissingOnTime     INTEGER,
+        cc1ErrorDuration     INTEGER,
+        cc1ErrorOnTime     INTEGER,
+        cc2ErrorDuration     INTEGER,
+        cc2ErrorOnTime     INTEGER,
+        cc3ErrorDuration     INTEGER,
+        cc3ErrorOnTime     INTEGER,
+        cc4ErrorDuration     INTEGER,
+        cc4ErrorOnTime     INTEGER,
+        text1ErrorDuration     INTEGER,
+        text1ErrorOnTime     INTEGER,
+        text2ErrorDuration     INTEGER,
+        text2ErrorOnTime     INTEGER,
+        text3ErrorDuration     INTEGER,
+        text3ErrorOnTime     INTEGER,
+        text4ErrorDuration     INTEGER,
+        text4ErrorOnTime     INTEGER,
+        xdsErrorDuration     INTEGER,
+        xdsErrorOnTime     INTEGER,
+        vitcWaveformMissingErrorDuration     INTEGER,
+        vitcWaveformMissingErrorOnTime     INTEGER,
+        programRatingErrorDuration     INTEGER,
+        programRatingErrorOnTime     INTEGER,
+        newCC1ErrorDuration     INTEGER,
+        newCC2ErrorDuration     INTEGER,
+        newCC3ErrorDuration     INTEGER,
+        newCC4ErrorDuration     INTEGER,
+        newText1ErrorDuration     INTEGER,
+        newText2ErrorDuration     INTEGER,
+        newText3ErrorDuration     INTEGER,
+        newText4ErrorDuration     INTEGER,
+        newXDSErrorDuration     INTEGER,
+        wstErrorDuration     INTEGER,
+        wstErrorOnTime     INTEGER
+    }
+
+
+    
+    ccWaveformMissingDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing the closed caption 
+            waveform which is considered a fault.  It has a range from 
+            0 to 240 seconds.
+           "
+    ::= { faultDefinitionVideoInfoEntry 1 }
+
+    
+    ccWaveformMissingOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the cc waveform is not considered
+            to be missing.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 2 }
+
+    
+    cc1ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " The controls the duration of missing closed captions 1 which is 
+        considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newCC1ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 3 }
+
+    
+    cc1ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+        trigger will remain active after the cc1 is not considered
+        to have an error.  It has a range from 0 to 120 and in the card
+        from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 4 }
+
+    
+    cc2ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " The controls the duration of missing closed captions 1 which is 
+        considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newCC2ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 5 }
+
+    
+    cc2ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+        trigger will remain active after the cc2 is not considered
+        to have an error.  It has a range from 0 to 120 and in the card
+        from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 6 }
+
+    
+    cc3ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " The controls the duration of missing closed captions 1 which is 
+        considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newCC3ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 7 }
+
+    
+    cc3ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the cc3 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 8 }
+
+    
+    cc4ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " The controls the duration of missing closed captions 1 which is 
+        considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newCC4ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 9 }
+
+    
+    cc4ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the cc4 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 10 }
+
+    
+    text1ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This controls the duration of missing closed captions text 1 
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newText1ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 11 }
+
+    
+    text1ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the text1 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 12 }
+
+    
+    text2ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This controls the duration of missing closed captions text 1 
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newText2ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 13 }
+
+    
+    text2ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the text2 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 14 }
+
+    
+    text3ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This controls the duration of missing closed captions text 1 
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newText3ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 15 }
+
+    
+    text3ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the text3 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 16 }
+
+    
+    text4ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This controls the duration of missing closed captions text 1 
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will
+        be replaced by newText4ErrorDuration.
+           "
+    ::= { faultDefinitionVideoInfoEntry 17 }
+
+    
+    text4ErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the text4 is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 18 }
+
+    
+    xdsErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This controls the duration of missing extended data services 
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+        Note: This parameter has been deprecated as of June 8, 2004 and will be
+        replaced by the newXDSErrorDuration parameter.
+           "
+    ::= { faultDefinitionVideoInfoEntry 19 }
+
+    
+    xdsErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the xds is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 20 }
+
+    
+    vitcWaveformMissingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the VITC 
+            waveform should be missing before the OV will trigger an alarm.
+            It has a range from 0 to 240 seconds.
+           "
+    ::= { faultDefinitionVideoInfoEntry 21 }
+
+    
+    vitcWaveformMissingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to define how long the alarm is to be
+            valid after the triggers have cleared.  It has a range from 
+            0 to 120  and in the card from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 22 }
+
+    
+    programRatingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of the no of program ratings, in seconds,
+        which is considered a fault.  It has a range from 0 to 240 seconds.
+           "
+    ::= { faultDefinitionVideoInfoEntry 23 }
+
+    
+    programRatingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the pr rating is not considered
+            to have an error.  It has a range from 0 to 120 and in the card
+            from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 24 }
+
+    
+    newCC1ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of missing closed captions 1 which is 
+        considered a fault.  It has a mib range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter will replace the cc1ErrorDuration parameter.
+           "
+    ::= { faultDefinitionVideoInfoEntry 25 }
+
+    
+    newCC2ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of missing closed captions 2 which is 
+        considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter will replace the cc2ErrorDuration parameter.
+           "
+    ::= { faultDefinitionVideoInfoEntry 26 }
+
+    
+    newCC3ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of missing closed captions 3 which is 
+        considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter will replace the cc2ErrorDuration parameter.
+           "
+    ::= { faultDefinitionVideoInfoEntry 27 }
+
+    
+    newCC4ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of missing closed captions 4 which is 
+        considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter will replace the cc4ErrorDuration parameter.
+           "
+    ::= { faultDefinitionVideoInfoEntry 28 }
+
+    
+    newText1ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing closed captions text 1 
+        which is considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter replaces the text1ErrorDuration
+           "
+    ::= { faultDefinitionVideoInfoEntry 29 }
+
+    
+    newText2ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing closed captions text 2 
+        which is considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter replaces the text2ErrorDuration
+           "
+    ::= { faultDefinitionVideoInfoEntry 30 }
+
+    
+    newText3ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing closed captions text 3 
+        which is considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter replaces the text3ErrorDuration
+           "
+    ::= { faultDefinitionVideoInfoEntry 31 }
+
+    
+    newText4ErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing closed captions text 4 
+        which is considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter replaces the text4ErrorDuration
+           "
+    ::= { faultDefinitionVideoInfoEntry 32 }
+
+    
+    newXDSErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the duration of missing extended data services 
+        which is considered a fault.  It has a range from 0 to 3600 seconds.
+        However, the range in the card is from 0 to 600 seconds.
+        Note: This parameter replaces the xdsErrorDuration
+           "
+    ::= { faultDefinitionVideoInfoEntry 33 }
+
+    
+    wstErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The controls the duration of missing world standard teletext which is 
+        considered a fault.  It has a range from 0 to 3600 seconds.
+           "
+    ::= { faultDefinitionVideoInfoEntry 34 }
+
+    
+    wstErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+        trigger will remain active after WST is not considered
+        to have an error.  It has a range from 0 to 120 and in the card
+        from 0 to 60 with 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoInfoEntry 35 }
+
+-- End of faultDefinitionVideoInfoTable
+
+
+        
+-- Beginning of faultDefinitionAudioTable
+    faultDefinitionAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudio table. "
+    ::= { ovControl 3 }
+
+    faultDefinitionAudioEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { channelIndex, inputIndex }
+    ::= { faultDefinitionAudioTable 1 }
+
+    FaultDefinitionAudioEntry ::= SEQUENCE {
+        channelIndex     INTEGER,
+        audioMissingErrorDuration     INTEGER,
+        audioMissingErrorOnTime     INTEGER,
+        silenceLevel     INTEGER,
+        silenceDuration     INTEGER,
+        silenceOnTime     INTEGER,
+        overLevel     INTEGER,
+        overDuration     INTEGER,
+        overOnTime     INTEGER,
+        overRatio     INTEGER,
+        silenceLevel2     INTEGER,
+        overLevel2     INTEGER
+    }
+
+
+    
+    channelIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            channel1(1),
+            channel2(2),
+            channel3(3),
+            channel4(4),
+            channel5(5),
+            channel6(6),
+            channel7(7),
+            channel8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 8.
+           "
+    ::= { faultDefinitionAudioEntry 1 }
+
+    
+    audioMissingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..198 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls allows the user to set the amount of time the 
+            audio is missing in seconds before a fault occurs.  The control
+            can have a value from 0 to 198, however, in the card, the range
+            is from 0 to 99 in 0.5 second intervals.
+           "
+    ::= { faultDefinitionAudioEntry 2 }
+
+    
+    audioMissingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the audio is not considered missing. 
+            It has a range from 0 to 120 and a range in the card from 
+            0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionAudioEntry 3 }
+
+    
+    silenceLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -96..-20 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level under which
+            it is considered to be silent.  This value is expressed in dB FS.
+            This object can have a value of -96 to -20.
+           "
+    ::= { faultDefinitionAudioEntry 4 }
+
+    
+    silenceDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            audio is silent in seconds before a fault occurs.  This control
+            can have a value of 0.5 to 127 in 0.5 increments therefore this
+            object has a range of 1 to 254.
+           "
+    ::= { faultDefinitionAudioEntry 5 }
+
+    
+    silenceOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the audio level is not considered to 
+            be silent. 
+            It has a range from 0 to 120 and a range in the card from 
+            0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionAudioEntry 6 }
+
+    
+    overLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -120..0 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level over which
+            is considered to be over level.  This value is expressed in dB FS
+            and can even be used to detect digital clipping.  If set to 0 dB FS
+            then if 3 or more consecutive samples are at digital saturation, 
+            then the digital word length has been executed.  This object can
+            have a value of -30 to 0 in 1/4 increments, therefore this object 
+            has a range of -120 to 0.
+           "
+    ::= { faultDefinitionAudioEntry 7 }
+
+    
+    overDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the duration in number of 
+        consecutive samples that are at or above the over level before a 
+        fault condition exists.  The range of this object is from 0 to 240
+        seconds.
+       "
+    ::= { faultDefinitionAudioEntry 8 }
+
+    
+    overOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the audio is not considered over. 
+        It has a range from 0 to 120 and a range in the card from 
+        0 to 60 in 0.5 second increments.
+       "
+    ::= { faultDefinitionAudioEntry 9 }
+
+    
+    overRatio OBJECT-TYPE
+      SYNTAX INTEGER ( 10..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the Audio Over Ratio and its
+        range is from 10 to 100 and a range in the card from 0.1 to 1 in 
+        1 percent increments.
+       "
+    ::= { faultDefinitionAudioEntry 10 }
+
+    
+    silenceLevel2 OBJECT-TYPE
+      SYNTAX INTEGER ( -96..0 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level under which
+            it is considered to be silent.  
+            The range of this parameter is dependent on the value of audioMode.
+            If audioMode is 0, 2 or 3 the audio is digital and has a range of 
+            of -96 to -20 dB FS. If audioMode is 1 then the audio is analog and has
+            a range of -60 to 0 dBr.
+           "
+    ::= { faultDefinitionAudioEntry 11 }
+
+    
+    overLevel2 OBJECT-TYPE
+      SYNTAX INTEGER ( -120..80 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level over which
+            is considered to be over level.  
+            The range of this parameter is dependent on the value of audioMode.
+            If audioMode is 0, 2 or 3 the audio is digital and this object has a range 
+            of -30 to 0 dB FS in 1/4 increments.  If audioMode is 1 then the audio 
+            is analog and has a range of 0 to 20 dBr in 1/4 increments.
+            Therefore, this object has a range of -120 to 80.
+           "
+    ::= { faultDefinitionAudioEntry 12 }
+
+-- End of faultDefinitionAudioTable
+
+
+        
+-- Beginning of faultDefinitionAudioPairTable
+    faultDefinitionAudioPairTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioPairEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudioPair table. "
+    ::= { ovControl 4 }
+
+    faultDefinitionAudioPairEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioPairEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { pairIndex, inputIndex }
+    ::= { faultDefinitionAudioPairTable 1 }
+
+    FaultDefinitionAudioPairEntry ::= SEQUENCE {
+        pairIndex     INTEGER,
+        phaseReversalLevel     INTEGER,
+        phaseReversalDuration     INTEGER,
+        phaseReversalOnTime     INTEGER,
+        monoDetectionLevel     INTEGER,
+        monoDetectionDuration     INTEGER,
+        monoDetectionOnTime     INTEGER,
+        nonPCMMissingDuration     INTEGER,
+        nonPCMMissingOnTime     INTEGER
+    }
+
+
+    
+    pairIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioPair12(1),
+            audioPair34(2),
+            audioPair56(3),
+            audioPair78(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 4.
+           "
+    ::= { faultDefinitionAudioPairEntry 1 }
+
+    
+    phaseReversalLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 50..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio in seconds under the above level which is
+            considered a fault.  This value is 100 times larger than what the
+            OV actually uses.  The range on the OV is (0.5 to 1.0) and steps
+            in .01 increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 2 }
+
+    
+    phaseReversalDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio in seconds under the above level which is 
+            considered a fault.  The value is 2 times larger than that of the
+            OV.  The OV has a range of (0.5..127) with 0.5 increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 3 }
+
+    
+    phaseReversalOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the phase reversal level 
+            is not considered to be reversed.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 4 }
+
+    
+    monoDetectionLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 20..50 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the mono detection level
+            which is considered to be mono.  It has a range from 20 to 50
+            but in the card, the range is from 0.2 to 0.5 in 0.01 increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 5 }
+
+    
+    monoDetectionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This is the mono detection duration parameter and it has a range 
+            from 1 to 254.  This is the time until which the mono detection
+            is considered a fault based on the mono detection level.  The card
+            has a range from 0 to 127 in increments of 0.5 seconds.
+           "
+    ::= { faultDefinitionAudioPairEntry 6 }
+
+    
+    monoDetectionOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the mono level is  
+            is not considered to be mono.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 7 }
+
+    
+    nonPCMMissingDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..99 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This is the Loss of NON PCM Audio Duration and it has a range
+            from 0 to 99.  This is the time until which the NON-PCM Audio
+            is considered a fault.  
+           "
+    ::= { faultDefinitionAudioPairEntry 8 }
+
+    
+    nonPCMMissingOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the non pcm audio is  
+            is not considered to be lost.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+           "
+    ::= { faultDefinitionAudioPairEntry 9 }
+
+-- End of faultDefinitionAudioPairTable
+
+
+        
+-- Beginning of hardwareControlTable
+    hardwareControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF HardwareControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The hardwareControl table. "
+    ::= { ovControl 5 }
+
+    hardwareControlEntry OBJECT-TYPE
+      SYNTAX HardwareControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { hardwareControlTable 1 }
+
+    HardwareControlEntry ::= SEQUENCE {
+        systemStatusControl     INTEGER,
+        tagSelector     INTEGER,
+        inputTagA     UTF8String,
+        inputTagB     UTF8String,
+        trapTag     UTF8String,
+        videoType     UTF8String,
+        programRating     UTF8String
+    }
+
+
+    
+    systemStatusControl OBJECT-TYPE
+      SYNTAX INTEGER {
+            followMaestro(1),
+            followVLPRO(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter will allow the user to select whether the triggers
+            that are sent across PLINK follow Maestro or whether it follows 
+            VLPRO and is filtered according to the sendtrap values.
+           "
+    ::= { hardwareControlEntry 1 }
+
+    
+    tagSelector OBJECT-TYPE
+      SYNTAX INTEGER {
+            inputTagA(1),
+            inputTagB(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This parameter allows the user to select the active tag for a
+                particular input
+                Note: This parameter has been deprecated as of July 22nd, 2005
+                      OV version 2.4
+                 "
+    ::= { hardwareControlEntry 2 }
+
+    
+    inputTagA OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+                given input.  This is encoded as an octet string using
+                the UTF-8 character encoding scheme.  The maximum length of the
+                octet string is 256 characters.
+                Note: This parameter has been deprecated as of July 22nd, 2005
+                      OV version 2.4
+                 "
+    ::= { hardwareControlEntry 3 }
+
+    
+    inputTagB OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+                given input.  This is encoded as an octet string using
+                the UTF-8 character encoding scheme.  The maximum length of the
+                octet string is 256 characters.
+                Note: This parameter has been deprecated as of July 22nd, 2005
+                      OV version 2.4
+                 "
+    ::= { hardwareControlEntry 4 }
+
+    
+    trapTag OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+            given input which will be assigned to the traps.  This is encoded 
+            as an octet string using the UTF-8 character encoding scheme.  The
+            maximum length of the octet string is 256 characters.
+                   "
+    ::= { hardwareControlEntry 5 }
+
+    
+    videoType OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to get a UTF-8 coded string that
+            indicates the current video encoding type. 
+                   "
+    ::= { hardwareControlEntry 6 }
+
+    
+    programRating OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to get a UTF-8 coded string that
+            indicates the current program rating.
+                   "
+    ::= { hardwareControlEntry 7 }
+
+-- End of hardwareControlTable
+
+
+        
+    cardType OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(10) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the type of card and it can either be
+            the 3000OV-HSN or 3000OV-SN 
+           "
+    ::= { ovControl 6 }
+
+        
+-- Beginning of mvpIdDefinitionTable
+    mvpIdDefinitionTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mvpIdDefinition table. "
+    ::= { ovControl 7 }
+
+    mvpIdDefinitionEntry OBJECT-TYPE
+      SYNTAX MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mvpIdIndex, inputIndex }
+    ::= { mvpIdDefinitionTable 1 }
+
+    MvpIdDefinitionEntry ::= SEQUENCE {
+        mvpIdIndex     INTEGER,
+        mvpIdValue     UTF8String
+    }
+
+
+    
+    mvpIdIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            mvpId1(1),
+            mvpId2(2),
+            mvpId3(3),
+            mvpId4(4),
+            mvpId5(5),
+            mvpId6(6),
+            mvpId7(7),
+            mvpId8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the mvpIdDefinitionTable.  It can have
+                    input values from 1 to 8
+                    Note: This was added in OV version 2.4
+                           "
+    ::= { mvpIdDefinitionEntry 1 }
+
+    
+    mvpIdValue OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+                    given input and id slot.  This is encoded as an octet
+                    string using the UTF-8 character encoding scheme.  The
+                    maximum length of the octet string is 256 characters.
+                    Note: This was added in OV version 2.4
+                           "
+    ::= { mvpIdDefinitionEntry 2 }
+
+-- End of mvpIdDefinitionTable
+
+
+        
+-- Beginning of mgmtFaultVideoTable
+    mgmtFaultVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultVideo table. "
+    ::= { ovNotification 1 }
+
+    mgmtFaultVideoEntry OBJECT-TYPE
+      SYNTAX MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameVideo, inputIndex }
+    ::= { mgmtFaultVideoTable 1 }
+
+    MgmtFaultVideoEntry ::= SEQUENCE {
+        faultNameVideo     INTEGER,
+        sendTrapVideo     INTEGER,
+        faultPresentVideo     INTEGER
+    }
+
+
+    
+    faultNameVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            lossOfVideoSync(1),
+            lossOfVideoBurst(2),
+            lossOfVideo(3),
+            maxAPLError(4),
+            minAPLError(5),
+            apEDHError(6),
+            ffEDHError(7),
+            videoTypeChange(8),
+            videoSourceChange(9),
+            apPictureFreeze(10),
+            raPictureFreeze(11),
+            apPictureMotion(12),
+            raPictureMotion(13),
+            apPictureBlack(14),
+            raPictureBlack(15),
+            lossOfVITC(16),
+            lossOfSID(17),
+            lossOfPR(18),
+            lossOfCC1(19),
+            lossOfCC2(20),
+            lossOfCC3(21),
+            lossOfCC4(22),
+            lossOfText1(23),
+            lossOfText2(24),
+            lossOfText3(25),
+            lossOfText4(26),
+            lossOfXDS(27),
+            lossOfCCWaveform(28),
+            lossOfVITCWaveform(29),
+            changeOfPR(30),
+            lossOfWST(31),
+            futureUse3(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { mgmtFaultVideoEntry 1 }
+
+    
+    sendTrapVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+                 "
+    ::= { mgmtFaultVideoEntry 2 }
+
+    
+    faultPresentVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: For the 'futureUse#' faults, a value of false will be
+            returned.
+             "
+    ::= { mgmtFaultVideoEntry 3 }
+
+-- End of mgmtFaultVideoTable
+
+
+        
+-- Beginning of mgmtFaultAudioTable
+    mgmtFaultAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAudio table. "
+    ::= { ovNotification 2 }
+
+    mgmtFaultAudioEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameAudio, inputIndex }
+    ::= { mgmtFaultAudioTable 1 }
+
+    MgmtFaultAudioEntry ::= SEQUENCE {
+        faultNameAudio     INTEGER,
+        sendTrapAudio     INTEGER,
+        faultPresentAudio     INTEGER
+    }
+
+
+    
+    faultNameAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            lossOfAudioCH1(1),
+            lossOfAudioCH2(2),
+            lossOfAudioCH3(3),
+            lossOfAudioCH4(4),
+            lossOfAudioCH5(5),
+            lossOfAudioCH6(6),
+            lossOfAudioCH7(7),
+            lossOfAudioCH8(8),
+            audioCH1Silence(9),
+            audioCH2Silence(10),
+            audioCH3Silence(11),
+            audioCH4Silence(12),
+            audioCH5Silence(13),
+            audioCH6Silence(14),
+            audioCH7Silence(15),
+            audioCH8Silence(16),
+            audioCH1Over(17),
+            audioCH2Over(18),
+            audioCH3Over(19),
+            audioCH4Over(20),
+            audioCH5Over(21),
+            audioCH6Over(22),
+            audioCH7Over(23),
+            audioCH8Over(24),
+            phaseReversalLevel12(25),
+            phaseReversalLevel34(26),
+            phaseReversalLevel56(27),
+            phaseReversalLevel78(28),
+            audioMono12(29),
+            audioMono34(30),
+            audioMono56(31),
+            audioMono78(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { mgmtFaultAudioEntry 1 }
+
+    
+    sendTrapAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+             "
+    ::= { mgmtFaultAudioEntry 2 }
+
+    
+    faultPresentAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: For the 'futureUse#' faults, a value of false will be
+            returned.
+             "
+    ::= { mgmtFaultAudioEntry 3 }
+
+-- End of mgmtFaultAudioTable
+
+
+        
+-- Beginning of mgmtFaultAudVidTable
+    mgmtFaultAudVidTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAudVidEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAudVid table. "
+    ::= { ovNotification 3 }
+
+    mgmtFaultAudVidEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAudVidEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameAudVid, inputIndex }
+    ::= { mgmtFaultAudVidTable 1 }
+
+    MgmtFaultAudVidEntry ::= SEQUENCE {
+        faultNameAudVid     INTEGER,
+        sendTrapAudVid     INTEGER,
+        faultPresentAudVid     INTEGER
+    }
+
+
+    
+    faultNameAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            lossOfNonPCMAudio12(1),
+            lossOfNonPCMAudio34(2),
+            lossOfNonPCMAudio56(3),
+            lossOfNonPCMAudio78(4),
+            futureUse4(5),
+            futureUse5(6),
+            futureUse6(7),
+            futureUse7(8),
+            futureUse8(9),
+            futureUse9(10),
+            futureUse10(11),
+            futureUse11(12),
+            futureUse12(13),
+            futureUse13(14),
+            futureUse14(15),
+            futureUse15(16),
+            futureUse16(17),
+            futureUse17(18),
+            futureUse18(19),
+            futureUse19(20),
+            futureUse20(21),
+            futureUse21(22),
+            futureUse22(23),
+            futureUse23(24),
+            futureUse24(25),
+            futureUse25(26),
+            futureUse26(27),
+            futureUse27(28),
+            futureUse28(29),
+            futureUse29(30),
+            futureUse30(31),
+            futureUse31(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { mgmtFaultAudVidEntry 1 }
+
+    
+    sendTrapAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+             "
+    ::= { mgmtFaultAudVidEntry 2 }
+
+    
+    faultPresentAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: For the 'futureUse#' faults, a value of false will be
+            returned.
+             "
+    ::= { mgmtFaultAudVidEntry 3 }
+
+-- End of mgmtFaultAudVidTable
+
+
+        
+    faultAckOn OBJECT-TYPE
+      SYNTAX INTEGER ( 1000..2535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The value sets the acknowledgement for the trap number given.
+                   "
+    ::= { ovNotification 4 }
+
+        
+    faultAckOff OBJECT-TYPE
+      SYNTAX INTEGER ( 1000..2535 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The value unsets the acknowledgement for the trap number given.
+                   "
+    ::= { ovNotification 5 }
+
+        
+-- Beginning of faultDefinitionAudioInfoTable
+    faultDefinitionAudioInfoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudioInfo table. "
+    ::= { ovAudioControl 1 }
+
+    faultDefinitionAudioInfoEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { faultDefinitionAudioInfoTable 1 }
+
+    FaultDefinitionAudioInfoEntry ::= SEQUENCE {
+        audioMode     INTEGER
+    }
+
+
+    
+    audioMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            discreateUnbalancedAES(1),
+            discreateBalancedAnalog(2),
+            embeddedAES(3),
+            discreateBalancedAES(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the type of audio that is
+            being processed by the card.
+                   "
+    ::= { faultDefinitionAudioInfoEntry 1 }
+
+-- End of faultDefinitionAudioInfoTable
+
+
+
+END

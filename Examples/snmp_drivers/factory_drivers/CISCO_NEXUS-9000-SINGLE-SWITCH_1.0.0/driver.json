@@ -1,0 +1,11 @@
+{
+  "includes": [
+    "Definitions.rsnmp",
+    "Nexus_9000_Single_Switch_Regex.rsnmp"
+  ],
+  "driverName": "Nexus-9000-single-switch",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Cisco",
+  "deviceName": "Nexus 9k single switch",
+  "factory": true
+}

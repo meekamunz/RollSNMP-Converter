@@ -1,0 +1,6318 @@
+INFORMANT-HYPERV-PERF DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY, Gauge32
+        FROM SNMPv2-SMI
+    InstanceName, informant
+        FROM WTCS;
+
+informantHyperVPerf MODULE-IDENTITY
+    LAST-UPDATED "201304240429Z"
+    ORGANIZATION "Informant Systems, Inc."
+    CONTACT-INFO
+            "Garth Williams
+             11135-23A Ave
+             Edmonton, AB  T6J4W5  Canada
+             Tel: +1 780 434 4113
+             E-mail: garth.williams@wtcs.org"
+    DESCRIPTION
+            "The MIB module for SNMP Informant Hyper-V
+             performance counter entries."
+    REVISION      "201304240429Z"
+    DESCRIPTION
+            "Added additional entries which are available
+             in Windows Server 2012."
+    REVISION      "200912072108Z"
+    DESCRIPTION
+            "The initial revision of this MIB module."
+    ::= { informant 25 }
+
+hypervisor OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "Information on the hypervisor."
+    ::= { informantHyperVPerf 1 }
+
+hvLogicalProcessors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of logical processors present in
+	    the system."
+    ::= { hypervisor 1 }
+
+hvMonitoredNotifications OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of monitored notifications
+	    registered with the hypervisor."
+    ::= { hypervisor 2 }
+
+hvPartitions OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of partitions (virtual machines)
+	    present in the system."
+    ::= { hypervisor 3 }
+
+hvTotalPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of bootstrap and deposited pages in
+	    the hypervisor."
+    ::= { hypervisor 4 }
+
+hvVirtualProcessors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of virtual processors present in
+	    the partition."
+    ::= { hypervisor 5 }
+
+hypervisorLogicalProcessorTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HypervisorLogicalProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Information on logical processors."
+    ::= { informantHyperVPerf 2 }
+
+hypervisorLogicalProcessorEntry OBJECT-TYPE
+    SYNTAX     HypervisorLogicalProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Hypervisor Logical
+	    Processor' object."
+    INDEX      { hvlpInstance }
+    ::= { hypervisorLogicalProcessorTable 1 }
+
+HypervisorLogicalProcessorEntry ::= SEQUENCE {
+    hvlpInstance InstanceName,
+    hvlpPercentC1Time Gauge32,
+    hvlpPercentC2Time Gauge32,
+    hvlpPercentC3Time Gauge32,
+    hvlpPercentGuestRunTime Gauge32,
+    hvlpPercentHypervisorRunTime Gauge32,
+    hvlpPercentIdleTime Gauge32,
+    hvlpPercentTotalRunTime Gauge32,
+    hvlpC1TransitionsPerSec Gauge32,
+    hvlpC2TransitionsPerSec Gauge32,
+    hvlpC3TransitionsPerSec Gauge32,
+    hvlpContextSwitchesPerSec Gauge32,
+    hvlpHardwareInterruptsPerSec Gauge32,
+    hvlpInterProcessorIntrSentPerSec Gauge32,
+    hvlpInterProcessorInterrupPerSec Gauge32,
+    hvlpMonitorTransitionCost Gauge32,
+    hvlpSchedulerInterruptsPerSec Gauge32,
+    hvlpTimerInterruptsPerSec Gauge32,
+    hvlpTotalInterruptsPerSec Gauge32,
+    hvlpPercentOfMaxFrequency Gauge32,
+    hvlpFrequency Gauge32,
+    hvlpParkingStatus Gauge32,
+    hvlpProcessorStateFlags Gauge32,
+    hvlpRootVpIndex Gauge32
+}
+
+hvlpInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hypervisorLogicalProcessorEntry 1 }
+
+hvlpPercentC1Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "% C1 Time is the percentage of time the
+	    processor spends in the C1 low-power idle
+	    state. % C1 Time is a subset of the total
+	    processor idle time."
+    ::= { hypervisorLogicalProcessorEntry 2 }
+
+hvlpPercentC2Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "% C2 Time is the percentage of time the
+	    processor spends in the C2 low-power idle
+	    state. % C2 Time is a subset of the total
+	    processor idle time."
+    ::= { hypervisorLogicalProcessorEntry 3 }
+
+hvlpPercentC3Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "% C3 Time is the percentage of time the
+	    processor spends in the C3 low-power idle
+	    state. % C3 Time is a subset of the total
+	    processor idle time."
+    ::= { hypervisorLogicalProcessorEntry 4 }
+
+hvlpPercentGuestRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest code."
+    ::= { hypervisorLogicalProcessorEntry 5 }
+
+hvlpPercentHypervisorRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in hypervisor code."
+    ::= { hypervisorLogicalProcessorEntry 6 }
+
+hvlpPercentIdleTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the processor
+	    in an idle state."
+    ::= { hypervisorLogicalProcessorEntry 7 }
+
+hvlpPercentTotalRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest and hypervisor code."
+    ::= { hypervisorLogicalProcessorEntry 8 }
+
+hvlpC1TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "C1 Transitions/sec is the rate that CPU enters
+	    the C1 low-power idle state."
+    ::= { hypervisorLogicalProcessorEntry 9 }
+
+hvlpC2TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "C2 Transitions/sec is the rate that CPU enters
+	    the C2 low-power idle state."
+    ::= { hypervisorLogicalProcessorEntry 10 }
+
+hvlpC3TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "C3 Transitions/sec is the rate that CPU enters
+	    the C3 low-power idle state."
+    ::= { hypervisorLogicalProcessorEntry 11 }
+
+hvlpContextSwitchesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of virtual processor context switches
+	    on the processor."
+    ::= { hypervisorLogicalProcessorEntry 12 }
+
+hvlpHardwareInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hardware interrupts on the
+	    processor (excluding hypervisor interrupts)."
+    ::= { hypervisorLogicalProcessorEntry 13 }
+
+hvlpInterProcessorIntrSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor inter-processor
+	    interrupts sent by the processor."
+    ::= { hypervisorLogicalProcessorEntry 14 }
+
+hvlpInterProcessorInterrupPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor inter-processor
+	    interrupts delivered to the processor."
+    ::= { hypervisorLogicalProcessorEntry 15 }
+
+hvlpMonitorTransitionCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The hardware cost of transitions into the
+	    hypervisor."
+    ::= { hypervisorLogicalProcessorEntry 16 }
+
+hvlpSchedulerInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor scheduler interrupts on
+	    the processor."
+    ::= { hypervisorLogicalProcessorEntry 17 }
+
+hvlpTimerInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor timer interrupts on the
+	    processor."
+    ::= { hypervisorLogicalProcessorEntry 18 }
+
+hvlpTotalInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hardware and hypervisor
+	    interrupts."
+    ::= { hypervisorLogicalProcessorEntry 19 }
+
+hvlpPercentOfMaxFrequency OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "% of Maximum Frequency is the percentage of
+	    the current processor's maximum frequency."
+    ::= { hypervisorLogicalProcessorEntry 20 }
+
+hvlpFrequency OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Processor Frequency is the frequency of the
+	    current processor in megahertz."
+    ::= { hypervisorLogicalProcessorEntry 21 }
+
+hvlpParkingStatus OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Parking Status represents whether a processor
+	    is parked or not."
+    ::= { hypervisorLogicalProcessorEntry 22 }
+
+hvlpProcessorStateFlags OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Processor State Flags"
+    ::= { hypervisorLogicalProcessorEntry 23 }
+
+hvlpRootVpIndex OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Index of the root virtual processor that is
+	    affinity bound to this logical processor.  A
+	    value that is greater than the maximum possible
+	    root VP index indicates no binding."
+    ::= { hypervisorLogicalProcessorEntry 24 }
+
+hypervisorPartitionTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HypervisorPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Information on virtual machines"
+    ::= { informantHyperVPerf 3 }
+
+hypervisorPartitionEntry OBJECT-TYPE
+    SYNTAX     HypervisorPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Hypervisor Partition'
+	    object."
+    INDEX      { hvpInstance }
+    ::= { hypervisorPartitionTable 1 }
+
+HypervisorPartitionEntry ::= SEQUENCE {
+    hvpInstance InstanceName,
+    hvpAddressSpaces Gauge32,
+    hvpDepositedPages Gauge32,
+    hvpGPAPages Gauge32,
+    hvpGPASpaceModificationsPerSec Gauge32,
+    hvpVirtualProcessors Gauge32,
+    hvpVirtualTLBFlushEntiresPerSec Gauge32,
+    hvpVirtualTLBPages Gauge32,
+    hvp1GGPAPages Gauge32,
+    hvp2MGPAPages Gauge32,
+    hvp4KGPAPages Gauge32,
+    hvpRecommendedVirtualTLBSize Gauge32,
+    hvp1GDevicePages Gauge32,
+    hvp2MDevicePages Gauge32,
+    hvp4KDevicePages Gauge32,
+    hvpAttachedDevices Gauge32,
+    hvpDeviceDMAErrors Gauge32,
+    hvpDeviceInterruptErrors Gauge32,
+    hvpDeviceInterruptMappings Gauge32,
+    hvpDeviceInterruptThrottleEvents Gauge32,
+    hvpIPerOTLBFlushCost Gauge32,
+    hvpIPerOTLBFlushesPerSec Gauge32,
+    hvpSkippedTimerTicks Gauge32
+}
+
+hvpInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hypervisorPartitionEntry 1 }
+
+hvpAddressSpaces OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of address spaces in the virtual
+	    TLB of the partition."
+    ::= { hypervisorPartitionEntry 2 }
+
+hvpDepositedPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages deposited into the
+	    partition."
+    ::= { hypervisorPartitionEntry 3 }
+
+hvpGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages present in the GPA space
+	    of the partition (zero for root partition)."
+    ::= { hypervisorPartitionEntry 4 }
+
+hvpGPASpaceModificationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of modifications to the GPA space of
+	    the partition."
+    ::= { hypervisorPartitionEntry 5 }
+
+hvpVirtualProcessors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of virtual processors present in
+	    the partition."
+    ::= { hypervisorPartitionEntry 6 }
+
+hvpVirtualTLBFlushEntiresPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of flushes of the entire virtual
+	    TLB."
+    ::= { hypervisorPartitionEntry 7 }
+
+hvpVirtualTLBPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages used by the virtual TLB of
+	    the partition."
+    ::= { hypervisorPartitionEntry 8 }
+
+hvp1GGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 1G pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 9 }
+
+hvp2MGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 2M pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 10 }
+
+hvp4KGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 4K pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 11 }
+
+hvpRecommendedVirtualTLBSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The recommended number of pages to be
+	    deposited for the virtual TLB."
+    ::= { hypervisorPartitionEntry 12 }
+
+hvp1GDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 1G pages present in the device
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 13 }
+
+hvp2MDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 2M pages present in the device
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 14 }
+
+hvp4KDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 4K pages present in the device
+	    space of the partition."
+    ::= { hypervisorPartitionEntry 15 }
+
+hvpAttachedDevices OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of devices attached to the
+	    partition."
+    ::= { hypervisorPartitionEntry 16 }
+
+hvpDeviceDMAErrors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "An indicator of illegal DMA requests generated
+	    by all devices assigned to the partition."
+    ::= { hypervisorPartitionEntry 17 }
+
+hvpDeviceInterruptErrors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "An indicator of illegal interrupt requests
+	    generated by all devices assigned to the
+	    partition."
+    ::= { hypervisorPartitionEntry 18 }
+
+hvpDeviceInterruptMappings OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of device interrupt mappings used
+	    by the partition."
+    ::= { hypervisorPartitionEntry 19 }
+
+hvpDeviceInterruptThrottleEvents OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of times an interrupt from a device
+	    assigned to the partition was temporarily
+	    throttled because the device was generating too
+	    many interrupts."
+    ::= { hypervisorPartitionEntry 20 }
+
+hvpIPerOTLBFlushCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an I/O TLB flush."
+    ::= { hypervisorPartitionEntry 21 }
+
+hvpIPerOTLBFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of flushes of I/O TLBs of the
+	    partition."
+    ::= { hypervisorPartitionEntry 22 }
+
+hvpSkippedTimerTicks OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of timer interrupts skipped for the
+	    partition."
+    ::= { hypervisorPartitionEntry 23 }
+
+hypervisorRootPartitionTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HypervisorRootPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Information on virtual machines"
+    ::= { informantHyperVPerf 4 }
+
+hypervisorRootPartitionEntry OBJECT-TYPE
+    SYNTAX     HypervisorRootPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Hypervisor Root Partition'
+	    object."
+    INDEX      { hvrpInstance }
+    ::= { hypervisorRootPartitionTable 1 }
+
+HypervisorRootPartitionEntry ::= SEQUENCE {
+    hvrpInstance InstanceName,
+    hvrpAddressSpaces Gauge32,
+    hvrpDepositedPages Gauge32,
+    hvrpGPAPages Gauge32,
+    hvrpGPASpaceModificationsPerSec Gauge32,
+    hvrpVirtualProcessors Gauge32,
+    hvrpVirtualTLBFlushEntiresPerSec Gauge32,
+    hvrpVirtualTLBPages Gauge32,
+    hvrp1GGPAPages Gauge32,
+    hvrp2MGPAPages Gauge32,
+    hvrp4KGPAPages Gauge32,
+    hvrpRecommendedVirtualTLBSize Gauge32,
+    hvrp1GDevicePages Gauge32,
+    hvrp2MDevicePages Gauge32,
+    hvrp4KDevicePages Gauge32,
+    hvrpAttachedDevices Gauge32,
+    hvrpDeviceDMAErrors Gauge32,
+    hvrpDeviceInterruptErrors Gauge32,
+    hvrpDeviceInterruptMappings Gauge32,
+    hvrpDeviceInterruptThrottleEvent Gauge32,
+    hvrpIPerOTLBFlushCost Gauge32,
+    hvrpIPerOTLBFlushesPerSec Gauge32,
+    hvrpSkippedTimerTicks Gauge32
+}
+
+hvrpInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hypervisorRootPartitionEntry 1 }
+
+hvrpAddressSpaces OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of address spaces in the virtual
+	    TLB of the partition."
+    ::= { hypervisorRootPartitionEntry 2 }
+
+hvrpDepositedPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages deposited into the
+	    partition."
+    ::= { hypervisorRootPartitionEntry 3 }
+
+hvrpGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages present in the GPA space
+	    of the partition (zero for root partition)."
+    ::= { hypervisorRootPartitionEntry 4 }
+
+hvrpGPASpaceModificationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of modifications to the GPA space of
+	    the partition."
+    ::= { hypervisorRootPartitionEntry 5 }
+
+hvrpVirtualProcessors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of virtual processors present in
+	    the partition."
+    ::= { hypervisorRootPartitionEntry 6 }
+
+hvrpVirtualTLBFlushEntiresPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of flushes of the entire virtual
+	    TLB."
+    ::= { hypervisorRootPartitionEntry 7 }
+
+hvrpVirtualTLBPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages used by the virtual TLB of
+	    the partition."
+    ::= { hypervisorRootPartitionEntry 8 }
+
+hvrp1GGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 1G pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 9 }
+
+hvrp2MGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 2M pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 10 }
+
+hvrp4KGPAPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 4K pages present in the GPA
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 11 }
+
+hvrpRecommendedVirtualTLBSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The recommended number of pages to be
+	    deposited for the virtual TLB."
+    ::= { hypervisorRootPartitionEntry 12 }
+
+hvrp1GDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 1G pages present in the device
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 13 }
+
+hvrp2MDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 2M pages present in the device
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 14 }
+
+hvrp4KDevicePages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of 4K pages present in the device
+	    space of the partition."
+    ::= { hypervisorRootPartitionEntry 15 }
+
+hvrpAttachedDevices OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of devices attached to the
+	    partition."
+    ::= { hypervisorRootPartitionEntry 16 }
+
+hvrpDeviceDMAErrors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "An indicator of illegal DMA requests generated
+	    by all devices assigned to the partition."
+    ::= { hypervisorRootPartitionEntry 17 }
+
+hvrpDeviceInterruptErrors OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "An indicator of illegal interrupt requests
+	    generated by all devices assigned to the
+	    partition."
+    ::= { hypervisorRootPartitionEntry 18 }
+
+hvrpDeviceInterruptMappings OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of device interrupt mappings used
+	    by the partition."
+    ::= { hypervisorRootPartitionEntry 19 }
+
+hvrpDeviceInterruptThrottleEvent OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of times an interrupt from a device
+	    assigned to the partition was temporarily
+	    throttled because the device was generating too
+	    many interrupts."
+    ::= { hypervisorRootPartitionEntry 20 }
+
+hvrpIPerOTLBFlushCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an I/O TLB flush."
+    ::= { hypervisorRootPartitionEntry 21 }
+
+hvrpIPerOTLBFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of flushes of I/O TLBs of the
+	    partition."
+    ::= { hypervisorRootPartitionEntry 22 }
+
+hvrpSkippedTimerTicks OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of timer interrupts skipped for the
+	    partition."
+    ::= { hypervisorRootPartitionEntry 23 }
+
+hyperVRootVirtualProcessorTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVRootVirtualProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Information on virtual processors"
+    ::= { informantHyperVPerf 5 }
+
+hyperVRootVirtualProcessorEntry OBJECT-TYPE
+    SYNTAX     HyperVRootVirtualProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Hypervisor Root Virtual
+	    Processor' object."
+    INDEX      { hvrvpInstance }
+    ::= { hyperVRootVirtualProcessorTable 1 }
+
+HyperVRootVirtualProcessorEntry ::= SEQUENCE {
+    hvrvpInstance InstanceName,
+    hvrvpPercentGuestRunTime Gauge32,
+    hvrvpPercentHypervisorRunTime Gauge32,
+    hvrvpPercentTotalRunTime Gauge32,
+    hvrvpAPICEOIAccessesPerSec Gauge32,
+    hvrvpAPICIPIsSentPerSec Gauge32,
+    hvrvpAPICMMIOAccessesPerSec Gauge32,
+    hvrvpAPICSelfIPIsSentPerSec Gauge32,
+    hvrvpAPICTPRAccessesPerSec Gauge32,
+    hvrvpAddressDomainFlushesPerSec Gauge32,
+    hvrvpAddressSpaceEvictionsPerSec Gauge32,
+    hvrvpAddressSpaceFlushesPerSec Gauge32,
+    hvrvpAddressSpaceSwitchesPerSec Gauge32,
+    hvrvpCPUIDInstructionsCost Gauge32,
+    hvrvpCPUIDInstructionsPerSec Gauge32,
+    hvrvpControlRegisterAccessesCost Gauge32,
+    hvrvpControlRegisterAccessPerSec Gauge32,
+    hvrvpDebugRegisterAccessesCost Gauge32,
+    hvrvpDebugRegisterAccessesPerSec Gauge32,
+    hvrvpEmulatedInstructionsCost Gauge32,
+    hvrvpEmulatedInstructionsPerSec Gauge32,
+    hvrvpExternalInterruptsCost Gauge32,
+    hvrvpExternalInterruptsPerSec Gauge32,
+    hvrvpGPASpaceHypercallsPerSec Gauge32,
+    hvrvpGlobalGVARangeFlushesPerSec Gauge32,
+    hvrvpGuestPageTableMapsPerSec Gauge32,
+    hvrvpHLTInstructionsCost Gauge32,
+    hvrvpHLTInstructionsPerSec Gauge32,
+    hvrvpHypercallsCost Gauge32,
+    hvrvpHypercallsPerSec Gauge32,
+    hvrvpIOInstructionsCost Gauge32,
+    hvrvpIOInstructionsPerSec Gauge32,
+    hvrvpIOInterceptMessagesPerSec Gauge32,
+    hvrvpLargePageTLBFillsPerSec Gauge32,
+    hvrvpLocalFlushedGVARangesPerSec Gauge32,
+    hvrvpLogicalProcHypercallsPerSec Gauge32,
+    hvrvpLogicalProcMigrationsPerSec Gauge32,
+    hvrvpLongSpinWaitHypercallPerSec Gauge32,
+    hvrvpMSRAccessesCost Gauge32,
+    hvrvpMSRAccessesPerSec Gauge32,
+    hvrvpMWAITInstructionsCost Gauge32,
+    hvrvpMWAITInstructionsPerSec Gauge32,
+    hvrvpMemoryInterceptMsgsPerSec Gauge32,
+    hvrvpOtherHypercallsPerSec Gauge32,
+    hvrvpOtherInterceptsCost Gauge32,
+    hvrvpOtherInterceptsPerSec Gauge32,
+    hvrvpOtherMessagesPerSec Gauge32,
+    hvrvpPageFaultInterceptsCost Gauge32,
+    hvrvpPageFaultInterceptsPerSec Gauge32,
+    hvrvpPageInvalidationsCost Gauge32,
+    hvrvpPageInvalidationsPerSec Gauge32,
+    hvrvpPageTableAllocationsPerSec Gauge32,
+    hvrvpPageTableEvictionPerSecs Gauge32,
+    hvrvpPageTableReclamationsPerSec Gauge32,
+    hvrvpPageTableResetsPerSec Gauge32,
+    hvrvpPageTableValidationsPerSec Gauge32,
+    hvrvpPageTableWriteInterceptsSec Gauge32,
+    hvrvpPendingInterruptsCost Gauge32,
+    hvrvpPendingInterruptsPerSec Gauge32,
+    hvrvpReflectedGuestPageFaultsSec Gauge32,
+    hvrvpSmallPageTLBFillsPerSec Gauge32,
+    hvrvpSyntheticIntrptHypercallSec Gauge32,
+    hvrvpSyntheticInterruptsPerSec Gauge32,
+    hvrvpTotalInterceptsCost Gauge32,
+    hvrvpTotalInterceptsPerSec Gauge32,
+    hvrvpTotalMessagesPerSec Gauge32,
+    hvrvpVirtualIntrptHypercallsSec Gauge32,
+    hvrvpVirtualInterruptsPerSec Gauge32,
+    hvrvpVirtualMMUHypercallsPerSec Gauge32,
+    hvrvpVirtualProcHypercallsPerSec Gauge32,
+    hvrvpPercentRemoteRunTime Gauge32,
+    hvrvpCPUWaitTimePerDispatch Gauge32,
+    hvrvpHardwareInterruptsPerSec Gauge32,
+    hvrvpLogicalProcDispatchesPerSec Gauge32,
+    hvrvpNestPageFaultInterceptsCost Gauge32,
+    hvrvpNestedPageFaultInterPerSec Gauge32
+}
+
+hvrvpInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hyperVRootVirtualProcessorEntry 1 }
+
+hvrvpPercentGuestRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest code."
+    ::= { hyperVRootVirtualProcessorEntry 2 }
+
+hvrvpPercentHypervisorRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in hypervisor code."
+    ::= { hyperVRootVirtualProcessorEntry 3 }
+
+hvrvpPercentTotalRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest and hypervisor code."
+    ::= { hyperVRootVirtualProcessorEntry 4 }
+
+hvrvpAPICEOIAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC EOI register writes by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 5 }
+
+hvrvpAPICIPIsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC inter-processor interrupts
+	    (including to self) sent by the virtual
+	    processor."
+    ::= { hyperVRootVirtualProcessorEntry 6 }
+
+hvrvpAPICMMIOAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC MMIO register accesses by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 7 }
+
+hvrvpAPICSelfIPIsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC interrupts sent by the
+	    virtual processor to itself."
+    ::= { hyperVRootVirtualProcessorEntry 8 }
+
+hvrvpAPICTPRAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC TPR accesses by guest code on
+	    the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 9 }
+
+hvrvpAddressDomainFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of the virtual
+	    TLB by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 10 }
+
+hvrvpAddressSpaceEvictionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of address space evictions in the
+	    virtual TLB."
+    ::= { hyperVRootVirtualProcessorEntry 11 }
+
+hvrvpAddressSpaceFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of one address
+	    space by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 12 }
+
+hvrvpAddressSpaceSwitchesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of address space switches by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 13 }
+
+hvrvpCPUIDInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a CPUID instruction."
+    ::= { hyperVRootVirtualProcessorEntry 14 }
+
+hvrvpCPUIDInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of CPUID instructions executed by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 15 }
+
+hvrvpControlRegisterAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a control register access."
+    ::= { hyperVRootVirtualProcessorEntry 16 }
+
+hvrvpControlRegisterAccessPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of control register accesses by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 17 }
+
+hvrvpDebugRegisterAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    handling a debug register access."
+    ::= { hyperVRootVirtualProcessorEntry 18 }
+
+hvrvpDebugRegisterAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of debug register accesses by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 19 }
+
+hvrvpEmulatedInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    emulating an instruction."
+    ::= { hyperVRootVirtualProcessorEntry 20 }
+
+hvrvpEmulatedInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of emulated instructions while
+	    executing guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 21 }
+
+hvrvpExternalInterruptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an external interrupt."
+    ::= { hyperVRootVirtualProcessorEntry 22 }
+
+hvrvpExternalInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of external interrupts received by
+	    the hypervisor while executing guest code on
+	    the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 23 }
+
+hvrvpGPASpaceHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Guest Physical Address Space
+	    hypercalls made by guest code on the virtual
+	    processor."
+    ::= { hyperVRootVirtualProcessorEntry 24 }
+
+hvrvpGlobalGVARangeFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of a virtual
+	    address range in all address spaces by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 25 }
+
+hvrvpGuestPageTableMapsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of map operations for guest page
+	    table pages."
+    ::= { hyperVRootVirtualProcessorEntry 26 }
+
+hvrvpHLTInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a HLT instruction."
+    ::= { hyperVRootVirtualProcessorEntry 27 }
+
+hvrvpHLTInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of HLT instructions executed by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 28 }
+
+hvrvpHypercallsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a hypercall."
+    ::= { hyperVRootVirtualProcessorEntry 29 }
+
+hvrvpHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypercalls made by guest code on
+	    the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 30 }
+
+hvrvpIOInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an IO instruction."
+    ::= { hyperVRootVirtualProcessorEntry 31 }
+
+hvrvpIOInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of IO instructions executed by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 32 }
+
+hvrvpIOInterceptMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of IO intercept messages sent to the
+	    parent partition."
+    ::= { hyperVRootVirtualProcessorEntry 33 }
+
+hvrvpLargePageTLBFillsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of virtual TLB misses on large
+	    pages."
+    ::= { hyperVRootVirtualProcessorEntry 34 }
+
+hvrvpLocalFlushedGVARangesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of a virtual
+	    address range in one address space by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 35 }
+
+hvrvpLogicalProcHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Logical Processor hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 36 }
+
+hvrvpLogicalProcMigrationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of migrations by the virtual
+	    processor to a different logical processor."
+    ::= { hyperVRootVirtualProcessorEntry 37 }
+
+hvrvpLongSpinWaitHypercallPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Long Spin Wait hypercalls made by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 38 }
+
+hvrvpMSRAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an MSR instruction."
+    ::= { hyperVRootVirtualProcessorEntry 39 }
+
+hvrvpMSRAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of MSR instructions executed by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 40 }
+
+hvrvpMWAITInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an MWAIT instruction."
+    ::= { hyperVRootVirtualProcessorEntry 41 }
+
+hvrvpMWAITInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of MWAIT instructions executed by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 42 }
+
+hvrvpMemoryInterceptMsgsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of memory intercept messages sent to
+	    the parent partition."
+    ::= { hyperVRootVirtualProcessorEntry 43 }
+
+hvrvpOtherHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other hypercalls made by guest
+	    code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 44 }
+
+hvrvpOtherInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing other intercepts."
+    ::= { hyperVRootVirtualProcessorEntry 45 }
+
+hvrvpOtherInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other intercepts triggered by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 46 }
+
+hvrvpOtherMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other intercept messages sent to
+	    the parent partition."
+    ::= { hyperVRootVirtualProcessorEntry 47 }
+
+hvrvpPageFaultInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a page fault intercept."
+    ::= { hyperVRootVirtualProcessorEntry 48 }
+
+hvrvpPageFaultInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page fault exceptions intercepted
+	    by the hypervisor while executing guest code on
+	    the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 49 }
+
+hvrvpPageInvalidationsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an INVLPG instruction."
+    ::= { hyperVRootVirtualProcessorEntry 50 }
+
+hvrvpPageInvalidationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of INVLPG instructions executed by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 51 }
+
+hvrvpPageTableAllocationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table allocations in the
+	    virtual TLB."
+    ::= { hyperVRootVirtualProcessorEntry 52 }
+
+hvrvpPageTableEvictionPerSecs OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table evictions in the
+	    virtual TLB."
+    ::= { hyperVRootVirtualProcessorEntry 53 }
+
+hvrvpPageTableReclamationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of reclamations of unreferenced page
+	    tables in the virtual TLB."
+    ::= { hyperVRootVirtualProcessorEntry 54 }
+
+hvrvpPageTableResetsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table resets in the virtual
+	    TLB."
+    ::= { hyperVRootVirtualProcessorEntry 55 }
+
+hvrvpPageTableValidationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table validations to remove
+	    stale entries in the virtual TLB."
+    ::= { hyperVRootVirtualProcessorEntry 56 }
+
+hvrvpPageTableWriteInterceptsSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of write intercepts on guest page
+	    tables by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 57 }
+
+hvrvpPendingInterruptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a pending interrupt intercept."
+    ::= { hyperVRootVirtualProcessorEntry 58 }
+
+hvrvpPendingInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of intercepts due to a task priority
+	    (TPR) reduction by guest code on the virtual
+	    processor."
+    ::= { hyperVRootVirtualProcessorEntry 59 }
+
+hvrvpReflectedGuestPageFaultsSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page fault exceptions delivered to
+	    the guest."
+    ::= { hyperVRootVirtualProcessorEntry 60 }
+
+hvrvpSmallPageTLBFillsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of virtual TLB misses on 4K pages."
+    ::= { hyperVRootVirtualProcessorEntry 61 }
+
+hvrvpSyntheticIntrptHypercallSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Synthetic Interrupt hypercalls
+	    made by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 62 }
+
+hvrvpSyntheticInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of synthetic interrupts delivered to
+	    the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 63 }
+
+hvrvpTotalInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    handling a hypervisor intercept."
+    ::= { hyperVRootVirtualProcessorEntry 64 }
+
+hvrvpTotalInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor intercepts messages."
+    ::= { hyperVRootVirtualProcessorEntry 65 }
+
+hvrvpTotalMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of total messages sent to the parent
+	    partition."
+    ::= { hyperVRootVirtualProcessorEntry 66 }
+
+hvrvpVirtualIntrptHypercallsSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual Interrupt hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 67 }
+
+hvrvpVirtualInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of interrupts (including synthetic
+	    interrupts) delivered to the virtual
+	    processor."
+    ::= { hyperVRootVirtualProcessorEntry 68 }
+
+hvrvpVirtualMMUHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual MMU hypercalls made by
+	    guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 69 }
+
+hvrvpVirtualProcHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual Processor hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 70 }
+
+hvrvpPercentRemoteRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor running on a remote node."
+    ::= { hyperVRootVirtualProcessorEntry 71 }
+
+hvrvpCPUWaitTimePerDispatch OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    waiting for a virtual processor to be
+	    dispatched onto a logical processor."
+    ::= { hyperVRootVirtualProcessorEntry 72 }
+
+hvrvpHardwareInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hardware interrupts from attached
+	    devices on the virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 73 }
+
+hvrvpLogicalProcDispatchesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of dispatches of this virtual
+	    processor onto logical processors."
+    ::= { hyperVRootVirtualProcessorEntry 74 }
+
+hvrvpNestPageFaultInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a nested page fault intercept."
+    ::= { hyperVRootVirtualProcessorEntry 75 }
+
+hvrvpNestedPageFaultInterPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of nested page fault exceptions
+	    intercepted by the hypervisor while executing
+	    the guest virtual processor."
+    ::= { hyperVRootVirtualProcessorEntry 76 }
+
+hypervisorVirtualProcessorTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HypervisorVirtualProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Information on virtual processors"
+    ::= { informantHyperVPerf 6 }
+
+hypervisorVirtualProcessorEntry OBJECT-TYPE
+    SYNTAX     HypervisorVirtualProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Hypervisor Virtual
+	    Processor' object."
+    INDEX      { hvvpInstance }
+    ::= { hypervisorVirtualProcessorTable 1 }
+
+HypervisorVirtualProcessorEntry ::= SEQUENCE {
+    hvvpInstance InstanceName,
+    hvvpPercentGuestRunTime Gauge32,
+    hvvpPercentHypervisorRunTime Gauge32,
+    hvvpPercentTotalRunTime Gauge32,
+    hvvpAPICEOIAccessesPerSec Gauge32,
+    hvvpAPICIPIsSentPerSec Gauge32,
+    hvvpAPICMMIOAccessesPerSec Gauge32,
+    hvvpAPICSelfIPIsSentPerSec Gauge32,
+    hvvpAPICTPRAccessesPerSec Gauge32,
+    hvvpAddressDomainFlushesPerSec Gauge32,
+    hvvpAddressSpaceEvictionsPerSec Gauge32,
+    hvvpAddressSpaceFlushesPerSec Gauge32,
+    hvvpAddressSpaceSwitchesPerSec Gauge32,
+    hvvpCPUIDInstructionsCost Gauge32,
+    hvvpCPUIDInstructionsPerSec Gauge32,
+    hvvpControlRegisterAccessesCost Gauge32,
+    hvvpControlRegisterAccessPerSec Gauge32,
+    hvvpDebugRegisterAccessesCost Gauge32,
+    hvvpDebugRegisterAccessesPerSec Gauge32,
+    hvvpEmulatedInstructionsCost Gauge32,
+    hvvpEmulatedInstructionsPerSec Gauge32,
+    hvvpExternalInterruptsCost Gauge32,
+    hvvpExternalInterruptsPerSec Gauge32,
+    hvvpGPASpaceHypercallsPerSec Gauge32,
+    hvvpGlobalGVARangeFlushesPerSec Gauge32,
+    hvvpGuestPageTableMapsPerSec Gauge32,
+    hvvpHLTInstructionsCost Gauge32,
+    hvvpHLTInstructionsPerSec Gauge32,
+    hvvpHypercallsCost Gauge32,
+    hvvpHypercallsPerSec Gauge32,
+    hvvpIOInstructionsCost Gauge32,
+    hvvpIOInstructionsPerSec Gauge32,
+    hvvpIOInterceptMessagesPerSec Gauge32,
+    hvvpLargePageTLBFillsPerSec Gauge32,
+    hvvpLocalFlushedGVARangesPerSec Gauge32,
+    hvvpLogicalProcHypercallsPerSec Gauge32,
+    hvvpLogicalProcMigrationsPerSec Gauge32,
+    hvvpLongSpinWaitHypercallsPerSec Gauge32,
+    hvvpMSRAccessesCost Gauge32,
+    hvvpMSRAccessesPerSec Gauge32,
+    hvvpMWAITInstructionsCost Gauge32,
+    hvvpMWAITInstructionsPerSec Gauge32,
+    hvvpMemoryInterceptMessagePerSec Gauge32,
+    hvvpOtherHypercallsPerSec Gauge32,
+    hvvpOtherInterceptsCost Gauge32,
+    hvvpOtherInterceptsPerSec Gauge32,
+    hvvpOtherMessagesPerSec Gauge32,
+    hvvpPageFaultInterceptsCost Gauge32,
+    hvvpPageFaultInterceptsPerSec Gauge32,
+    hvvpPageInvalidationsCost Gauge32,
+    hvvpPageInvalidationsPerSec Gauge32,
+    hvvpPageTableAllocationsPerSec Gauge32,
+    hvvpPageTableEvictionPerSecs Gauge32,
+    hvvpPageTableReclamationsPerSec Gauge32,
+    hvvpPageTableResetsPerSec Gauge32,
+    hvvpPageTableValidationsPerSec Gauge32,
+    hvvpPageTableWriteIntrcptsPerSec Gauge32,
+    hvvpPendingInterruptsCost Gauge32,
+    hvvpPendingInterruptsPerSec Gauge32,
+    hvvpReflectGuestPageFaultsPerSec Gauge32,
+    hvvpSmallPageTLBFillsPerSec Gauge32,
+    hvvpSyntheticIntrptHypercallsSec Gauge32,
+    hvvpSyntheticInterruptsPerSec Gauge32,
+    hvvpTotalInterceptsCost Gauge32,
+    hvvpTotalInterceptsPerSec Gauge32,
+    hvvpTotalMessagesPerSec Gauge32,
+    hvvpVirtualInterruptHypercallSec Gauge32,
+    hvvpVirtualInterruptsPerSec Gauge32,
+    hvvpVirtualMMUHypercallsPerSec Gauge32,
+    hvvpVirtualProcessorHypercallSec Gauge32,
+    hvvpPercentRemoteRunTime Gauge32,
+    hvvpCPUWaitTimePerDispatch Gauge32,
+    hvvpHardwareInterruptsPerSec Gauge32,
+    hvvpLogicalProcDispatchesPerSec Gauge32,
+    hvvpNestedPageFaultInterceptCost Gauge32,
+    hvvpNestPageFaultInterceptPerSec Gauge32
+}
+
+hvvpInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hypervisorVirtualProcessorEntry 1 }
+
+hvvpPercentGuestRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest code."
+    ::= { hypervisorVirtualProcessorEntry 2 }
+
+hvvpPercentHypervisorRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in hypervisor code."
+    ::= { hypervisorVirtualProcessorEntry 3 }
+
+hvvpPercentTotalRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor in guest and hypervisor code."
+    ::= { hypervisorVirtualProcessorEntry 4 }
+
+hvvpAPICEOIAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC EOI register writes by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 5 }
+
+hvvpAPICIPIsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC inter-processor interrupts
+	    (including to self) sent by the virtual
+	    processor."
+    ::= { hypervisorVirtualProcessorEntry 6 }
+
+hvvpAPICMMIOAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC MMIO register accesses by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 7 }
+
+hvvpAPICSelfIPIsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC interrupts sent by the
+	    virtual processor to itself."
+    ::= { hypervisorVirtualProcessorEntry 8 }
+
+hvvpAPICTPRAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of APIC TPR accesses by guest code on
+	    the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 9 }
+
+hvvpAddressDomainFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of the virtual
+	    TLB by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 10 }
+
+hvvpAddressSpaceEvictionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of address space evictions in the
+	    virtual TLB."
+    ::= { hypervisorVirtualProcessorEntry 11 }
+
+hvvpAddressSpaceFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of one address
+	    space by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 12 }
+
+hvvpAddressSpaceSwitchesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of address space switches by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 13 }
+
+hvvpCPUIDInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a CPUID instruction."
+    ::= { hypervisorVirtualProcessorEntry 14 }
+
+hvvpCPUIDInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of CPUID instructions executed by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 15 }
+
+hvvpControlRegisterAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a control register access."
+    ::= { hypervisorVirtualProcessorEntry 16 }
+
+hvvpControlRegisterAccessPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of control register accesses by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 17 }
+
+hvvpDebugRegisterAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    handling a debug register access."
+    ::= { hypervisorVirtualProcessorEntry 18 }
+
+hvvpDebugRegisterAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of debug register accesses by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 19 }
+
+hvvpEmulatedInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    emulating an instruction."
+    ::= { hypervisorVirtualProcessorEntry 20 }
+
+hvvpEmulatedInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of emulated instructions while
+	    executing guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 21 }
+
+hvvpExternalInterruptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an external interrupt."
+    ::= { hypervisorVirtualProcessorEntry 22 }
+
+hvvpExternalInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of external interrupts received by
+	    the hypervisor while executing guest code on
+	    the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 23 }
+
+hvvpGPASpaceHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Guest Physical Address Space
+	    hypercalls made by guest code on the virtual
+	    processor."
+    ::= { hypervisorVirtualProcessorEntry 24 }
+
+hvvpGlobalGVARangeFlushesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of a virtual
+	    address range in all address spaces by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 25 }
+
+hvvpGuestPageTableMapsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of map operations for guest page
+	    table pages."
+    ::= { hypervisorVirtualProcessorEntry 26 }
+
+hvvpHLTInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a HLT instruction."
+    ::= { hypervisorVirtualProcessorEntry 27 }
+
+hvvpHLTInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of HLT instructions executed by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 28 }
+
+hvvpHypercallsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a hypercall."
+    ::= { hypervisorVirtualProcessorEntry 29 }
+
+hvvpHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypercalls made by guest code on
+	    the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 30 }
+
+hvvpIOInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an IO instruction."
+    ::= { hypervisorVirtualProcessorEntry 31 }
+
+hvvpIOInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of IO instructions executed by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 32 }
+
+hvvpIOInterceptMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of IO intercept messages sent to the
+	    parent partition."
+    ::= { hypervisorVirtualProcessorEntry 33 }
+
+hvvpLargePageTLBFillsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of virtual TLB misses on large
+	    pages."
+    ::= { hypervisorVirtualProcessorEntry 34 }
+
+hvvpLocalFlushedGVARangesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of explicit flushes of a virtual
+	    address range in one address space by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 35 }
+
+hvvpLogicalProcHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Logical Processor hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 36 }
+
+hvvpLogicalProcMigrationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of migrations by the virtual
+	    processor to a different logical processor."
+    ::= { hypervisorVirtualProcessorEntry 37 }
+
+hvvpLongSpinWaitHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Long Spin Wait hypercalls made by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 38 }
+
+hvvpMSRAccessesCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an MSR instruction."
+    ::= { hypervisorVirtualProcessorEntry 39 }
+
+hvvpMSRAccessesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of MSR instructions executed by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 40 }
+
+hvvpMWAITInstructionsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an MWAIT instruction."
+    ::= { hypervisorVirtualProcessorEntry 41 }
+
+hvvpMWAITInstructionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of MWAIT instructions executed by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 42 }
+
+hvvpMemoryInterceptMessagePerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of memory intercept messages sent to
+	    the parent partition."
+    ::= { hypervisorVirtualProcessorEntry 43 }
+
+hvvpOtherHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other hypercalls made by guest
+	    code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 44 }
+
+hvvpOtherInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing other intercepts."
+    ::= { hypervisorVirtualProcessorEntry 45 }
+
+hvvpOtherInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other intercepts triggered by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 46 }
+
+hvvpOtherMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of other intercept messages sent to
+	    the parent partition."
+    ::= { hypervisorVirtualProcessorEntry 47 }
+
+hvvpPageFaultInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a page fault intercept."
+    ::= { hypervisorVirtualProcessorEntry 48 }
+
+hvvpPageFaultInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page fault exceptions intercepted
+	    by the hypervisor while executing guest code on
+	    the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 49 }
+
+hvvpPageInvalidationsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing an INVLPG instruction."
+    ::= { hypervisorVirtualProcessorEntry 50 }
+
+hvvpPageInvalidationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of INVLPG instructions executed by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 51 }
+
+hvvpPageTableAllocationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table allocations in the
+	    virtual TLB."
+    ::= { hypervisorVirtualProcessorEntry 52 }
+
+hvvpPageTableEvictionPerSecs OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table evictions in the
+	    virtual TLB."
+    ::= { hypervisorVirtualProcessorEntry 53 }
+
+hvvpPageTableReclamationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of reclamations of unreferenced page
+	    tables in the virtual TLB."
+    ::= { hypervisorVirtualProcessorEntry 54 }
+
+hvvpPageTableResetsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table resets in the virtual
+	    TLB."
+    ::= { hypervisorVirtualProcessorEntry 55 }
+
+hvvpPageTableValidationsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page table validations to remove
+	    stale entries in the virtual TLB."
+    ::= { hypervisorVirtualProcessorEntry 56 }
+
+hvvpPageTableWriteIntrcptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of write intercepts on guest page
+	    tables by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 57 }
+
+hvvpPendingInterruptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a pending interrupt intercept."
+    ::= { hypervisorVirtualProcessorEntry 58 }
+
+hvvpPendingInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of intercepts due to a task priority
+	    (TPR) reduction by guest code on the virtual
+	    processor."
+    ::= { hypervisorVirtualProcessorEntry 59 }
+
+hvvpReflectGuestPageFaultsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of page fault exceptions delivered to
+	    the guest."
+    ::= { hypervisorVirtualProcessorEntry 60 }
+
+hvvpSmallPageTLBFillsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of virtual TLB misses on 4K pages."
+    ::= { hypervisorVirtualProcessorEntry 61 }
+
+hvvpSyntheticIntrptHypercallsSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Synthetic Interrupt hypercalls
+	    made by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 62 }
+
+hvvpSyntheticInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of synthetic interrupts delivered to
+	    the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 63 }
+
+hvvpTotalInterceptsCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    handling a hypervisor intercept."
+    ::= { hypervisorVirtualProcessorEntry 64 }
+
+hvvpTotalInterceptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hypervisor intercepts messages."
+    ::= { hypervisorVirtualProcessorEntry 65 }
+
+hvvpTotalMessagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of total messages sent to the parent
+	    partition."
+    ::= { hypervisorVirtualProcessorEntry 66 }
+
+hvvpVirtualInterruptHypercallSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual Interrupt hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 67 }
+
+hvvpVirtualInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of interrupts (including synthetic
+	    interrupts) delivered to the virtual
+	    processor."
+    ::= { hypervisorVirtualProcessorEntry 68 }
+
+hvvpVirtualMMUHypercallsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual MMU hypercalls made by
+	    guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 69 }
+
+hvvpVirtualProcessorHypercallSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of Virtual Processor hypercalls made
+	    by guest code on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 70 }
+
+hvvpPercentRemoteRunTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The percentage of time spent by the virtual
+	    processor running on a remote node."
+    ::= { hypervisorVirtualProcessorEntry 71 }
+
+hvvpCPUWaitTimePerDispatch OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    waiting for a virtual processor to be
+	    dispatched onto a logical processor."
+    ::= { hypervisorVirtualProcessorEntry 72 }
+
+hvvpHardwareInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of hardware interrupts from attached
+	    devices on the virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 73 }
+
+hvvpLogicalProcDispatchesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of dispatches of this virtual
+	    processor onto logical processors."
+    ::= { hypervisorVirtualProcessorEntry 74 }
+
+hvvpNestedPageFaultInterceptCost OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The average time (in nanoseconds) spent
+	    processing a nested page fault intercept."
+    ::= { hypervisorVirtualProcessorEntry 75 }
+
+hvvpNestPageFaultInterceptPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The rate of nested page fault exceptions
+	    intercepted by the hypervisor while executing
+	    the guest virtual processor."
+    ::= { hypervisorVirtualProcessorEntry 76 }
+
+hvLegacyNetworkAdapterTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVLegacyNetworkAdapterEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    Ethernet controller."
+    ::= { informantHyperVPerf 7 }
+
+hvLegacyNetworkAdapterEntry OBJECT-TYPE
+    SYNTAX     HyperVLegacyNetworkAdapterEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Legacy Network Adapter'
+	    object."
+    INDEX      { hvlnaInstance }
+    ::= { hvLegacyNetworkAdapterTable 1 }
+
+HyperVLegacyNetworkAdapterEntry ::= SEQUENCE {
+    hvlnaInstance InstanceName,
+    hvlnaBytesDropped Gauge32,
+    hvlnaBytesReceivedPerSec Gauge32,
+    hvlnaBytesSentPerSec Gauge32,
+    hvlnaFramesDropped Gauge32,
+    hvlnaFramesReceivedPerSec Gauge32,
+    hvlnaFramesSentPerSec Gauge32
+}
+
+hvlnaInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvLegacyNetworkAdapterEntry 1 }
+
+hvlnaBytesDropped OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Bytes Dropped is the number of bytes dropped
+	    on the network adapter."
+    ::= { hvLegacyNetworkAdapterEntry 2 }
+
+hvlnaBytesReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes received per second"
+    ::= { hvLegacyNetworkAdapterEntry 3 }
+
+hvlnaBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes sent per second"
+    ::= { hvLegacyNetworkAdapterEntry 4 }
+
+hvlnaFramesDropped OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Frames Dropped is the number of frames dropped
+	    on the network adapter."
+    ::= { hvLegacyNetworkAdapterEntry 5 }
+
+hvlnaFramesReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Frames Received/sec is the number of frames
+	    received per second on the network adapter."
+    ::= { hvLegacyNetworkAdapterEntry 6 }
+
+hvlnaFramesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Frames Sent/sec is the number of frames sent
+	    per second over the network adapter."
+    ::= { hvLegacyNetworkAdapterEntry 7 }
+
+hvTaskManagerDetail OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the summary
+	    statistics for the Virtual Machine Management
+	    Service's Task Manager."
+    ::= { informantHyperVPerf 8 }
+
+hvtmdAddResourcesVMTasksComplete OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 1 }
+
+hvtmdAddResourceVMTaskRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 2 }
+
+hvtmdAddResourceVMTaskInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 3 }
+
+hvtmdApplySnapshotVMTaskComplete OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 4 }
+
+hvtmdApplySnpshtVMTaskRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 5 }
+
+hvtmdApplySnpshtVMTaskInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 6 }
+
+hvtmdCloneVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 7 }
+
+hvtmdCloneVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 8 }
+
+hvtmdCloneVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 9 }
+
+hvtmdCreateVSSSnpshtSetTaskCmplt OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 10 }
+
+hvtmdCreateVSSSnpshtTaskRecentTm OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 11 }
+
+hvtmdCreateVSSSnpshtTaskProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 12 }
+
+hvtmdDefineVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 13 }
+
+hvtmdDefineVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 14 }
+
+hvtmdDefineVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 15 }
+
+hvtmdDestroySnpshtVMTaskComplete OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 16 }
+
+hvtmdDestroySnpshtTaskRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 17 }
+
+hvtmdDestroySnpshtVMTaskProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 18 }
+
+hvtmdDestroyVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 19 }
+
+hvtmdDestroyVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 20 }
+
+hvtmdDestroyVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 21 }
+
+hvtmdExportVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 22 }
+
+hvtmdExportVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 23 }
+
+hvtmdExportVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 24 }
+
+hvtmdImportVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 25 }
+
+hvtmdImportVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 26 }
+
+hvtmdImportVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 27 }
+
+hvtmdMergeDiskTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 28 }
+
+hvtmdMergeDiskTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 29 }
+
+hvtmdMergeDiskTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 30 }
+
+hvtmdMigrateVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 31 }
+
+hvtmdMigrateVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 32 }
+
+hvtmdMigrateVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 33 }
+
+hvtmdModifyRsrcsVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 34 }
+
+hvtmdModifyRsrcVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 35 }
+
+hvtmdModifyRsrcVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 36 }
+
+hvtmdModifySvcSetTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 37 }
+
+hvtmdModifySvcSetTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 38 }
+
+hvtmdModifySvcSetTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 39 }
+
+hvtmdModifyVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 40 }
+
+hvtmdModifyVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 41 }
+
+hvtmdModifyVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 42 }
+
+hvtmdPauseVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 43 }
+
+hvtmdPauseVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 44 }
+
+hvtmdPauseVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 45 }
+
+hvtmdRemoveRsrcsVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 46 }
+
+hvtmdRemoveRsrcVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 47 }
+
+hvtmdRemoveRsrcVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 48 }
+
+hvtmdResetVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 49 }
+
+hvtmdResetVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 50 }
+
+hvtmdResetVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 51 }
+
+hvtmdRestoreVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 52 }
+
+hvtmdRestoreVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 53 }
+
+hvtmdRestoreVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 54 }
+
+hvtmdResumeVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 55 }
+
+hvtmdResumeVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 56 }
+
+hvtmdResumeVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 57 }
+
+hvtmdSaveVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 58 }
+
+hvtmdSaveVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 59 }
+
+hvtmdSaveVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 60 }
+
+hvtmdShutdownVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 61 }
+
+hvtmdShutdownVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 62 }
+
+hvtmdShutdownVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 63 }
+
+hvtmdSnapshotVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 64 }
+
+hvtmdSnapshotVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 65 }
+
+hvtmdSnapshotVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 66 }
+
+hvtmdStartVMTasksCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 67 }
+
+hvtmdStartVMTasksRecentTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 68 }
+
+hvtmdStartVMTasksInProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 69 }
+
+hvtmdWaitingStartVMTaskCompleted OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    tasks completed."
+    ::= { hvTaskManagerDetail 70 }
+
+hvtmdWaitingStartVMTasksRecentTm OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the recent time spent
+	    to execute tasks in 100ns units."
+    ::= { hvTaskManagerDetail 71 }
+
+hvtmdWaitingStartVMTasksProgress OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of tasks
+	    that are in progress."
+    ::= { hvTaskManagerDetail 72 }
+
+hvVMIOAPICTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVMIOAPICEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    I/O APIC device."
+    ::= { informantHyperVPerf 9 }
+
+hvVMIOAPICEntry OBJECT-TYPE
+    SYNTAX     HyperVVMIOAPICEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM IO APIC' object."
+    INDEX      { hvVMIOAPICInstance }
+    ::= { hvVMIOAPICTable 1 }
+
+HyperVVMIOAPICEntry ::= SEQUENCE {
+    hvVMIOAPICInstance InstanceName,
+    hvVMIOAPICAssertions Gauge32
+}
+
+hvVMIOAPICInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMIOAPICEntry 1 }
+
+hvVMIOAPICAssertions OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Assertions are the number of interrupt
+	    assertions the I/O Apic device sent to the
+	    Virtual Machine."
+    ::= { hvVMIOAPICEntry 2 }
+
+hvVMRemotingTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVMRemotingEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    remoting system."
+    ::= { informantHyperVPerf 10 }
+
+hvVMRemotingEntry OBJECT-TYPE
+    SYNTAX     HyperVVMRemotingEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Remoting' object."
+    INDEX      { hvVMRemotingInstance }
+    ::= { hvVMRemotingTable 1 }
+
+HyperVVMRemotingEntry ::= SEQUENCE {
+    hvVMRemotingInstance InstanceName,
+    hvVMRemotingConnectedClients Gauge32,
+    hvVMRemotingUpdatedPixelsPerSec Gauge32
+}
+
+hvVMRemotingInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMRemotingEntry 1 }
+
+hvVMRemotingConnectedClients OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Connected Clients"
+    ::= { hvVMRemotingEntry 2 }
+
+hvVMRemotingUpdatedPixelsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Updated Pixels/sec"
+    ::= { hvVMRemotingEntry 3 }
+
+hvVMSaveSnapshotAndRestoreTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HVVMSaveSnapshotAndRestoreEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    save and snapshot systems."
+    ::= { informantHyperVPerf 11 }
+
+hvVMSaveSnapshotAndRestoreEntry OBJECT-TYPE
+    SYNTAX     HVVMSaveSnapshotAndRestoreEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Save, Snapshot, and
+	    Restore' object."
+    INDEX      { hvssrInstance }
+    ::= { hvVMSaveSnapshotAndRestoreTable 1 }
+
+HVVMSaveSnapshotAndRestoreEntry ::= SEQUENCE {
+    hvssrInstance InstanceName,
+    hvssrBuffersCompressedOnIOThread Gauge32,
+    hvssrBuffersSaved Gauge32,
+    hvssrRestoreTime Gauge32,
+    hvssrSaveTime Gauge32,
+    hvssrSnapshotBufferCopyIntercept Gauge32,
+    hvssrSnapshotTime Gauge32,
+    hvssrOperationTime Gauge32,
+    hvssrRequestsActive Gauge32,
+    hvssrRequestsDispatched Gauge32,
+    hvssrRequestsHighPriority Gauge32,
+    hvssrRequestsProcessed Gauge32,
+    hvssrThreadsSpawned Gauge32
+}
+
+hvssrInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMSaveSnapshotAndRestoreEntry 1 }
+
+hvssrBuffersCompressedOnIOThread OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of RAM buffers compressed on the
+	    disk I/O thread"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 2 }
+
+hvssrBuffersSaved OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of RAM buffers processed
+	    during a save or Snapshot operation"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 3 }
+
+hvssrRestoreTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The time it takes to complete a Restore
+	    operation (in ms)"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 4 }
+
+hvssrSaveTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The time it takes to complete a Save operation
+	    (in ms)"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 5 }
+
+hvssrSnapshotBufferCopyIntercept OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of RAM buffers copied as a result
+	    of guest accesses during an ongoing Snapshot"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 6 }
+
+hvssrSnapshotTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The time it takes to complete a Snapshot
+	    operation (in ms)"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 7 }
+
+hvssrOperationTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The time taken to complete a GMO operation (in
+	    ms)"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 8 }
+
+hvssrRequestsActive OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of requests currently being
+	    processed"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 9 }
+
+hvssrRequestsDispatched OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of requests that have been
+	    dispatched"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 10 }
+
+hvssrRequestsHighPriority OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of high priority requests"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 11 }
+
+hvssrRequestsProcessed OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of requests that have been
+	    processed"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 12 }
+
+hvssrThreadsSpawned OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of threads currently spawned"
+    ::= { hvVMSaveSnapshotAndRestoreEntry 13 }
+
+hvVMVidDriver OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "These are the perf counters for the VID root
+	    level."
+    ::= { informantHyperVPerf 12 }
+
+hvvdChildGpaLockRequests OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of child-originated requests
+	    to lock GPAs."
+    ::= { hvVMVidDriver 1 }
+
+hvvdClientNotifyMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block notifications
+	    installed."
+    ::= { hvVMVidDriver 2 }
+
+hvvdCurrentWorkingSetSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total working set size for all memory
+	    blocks in the system."
+    ::= { hvVMVidDriver 3 }
+
+hvvdInterceptsAPICEOI OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of APIC EOI intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 4 }
+
+hvvdInterceptsCPUID OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of CPUID intercepts received
+	    from the hypervisor."
+    ::= { hvVMVidDriver 5 }
+
+hvvdInterceptsException OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of exception intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 6 }
+
+hvvdInterceptsIOPortRead OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of I/O port read intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 7 }
+
+hvvdInterceptsIOPortWrite OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of I/O port write intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 8 }
+
+hvvdInterceptsMSRRead OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of MSR read intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 9 }
+
+hvvdInterceptsMSRWrite OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of MSR write intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidDriver 10 }
+
+hvvdLegacyFpErrorIntercepts OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of legacy floating point
+	    intercepts received from the hypervisor."
+    ::= { hvVMVidDriver 11 }
+
+hvvdLockedMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of locked pages in the
+	    system."
+    ::= { hvVMVidDriver 12 }
+
+hvvdMbBackedGpaPageRanges OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA ranges that are backed
+	    by memory blocks."
+    ::= { hvVMVidDriver 13 }
+
+hvvdMbBackedGpaPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA pages that are backed
+	    by memory blocks."
+    ::= { hvVMVidDriver 14 }
+
+hvvdMbBackedGpaRomPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of ROM GPA pages that are
+	    backed by memory blocks."
+    ::= { hvVMVidDriver 15 }
+
+hvvdMbpFaultCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block page faults
+	    encountered."
+    ::= { hvVMVidDriver 16 }
+
+hvvdMbpRangeReads OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of user-mode memory block
+	    read requests processed."
+    ::= { hvVMVidDriver 17 }
+
+hvvdMbpRangeWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of user-mode memory block
+	    write requests processed."
+    ::= { hvVMVidDriver 18 }
+
+hvvdMbpReadNotifications OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block read
+	    notifications sent to user mode."
+    ::= { hvVMVidDriver 19 }
+
+hvvdMbpWriteNotifications OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block write
+	    notifications sent to user mode."
+    ::= { hvVMVidDriver 20 }
+
+hvvdMemoryBlockPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of pages allocated for all
+	    memory blocks in the system."
+    ::= { hvVMVidDriver 21 }
+
+hvvdMemoryBlocks OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory blocks allocated in
+	    the system."
+    ::= { hvVMVidDriver 22 }
+
+hvvdMemoryIntercepts OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory intercepts received
+	    from the hypervisor."
+    ::= { hvVMVidDriver 23 }
+
+hvvdMessageQueues OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of active message queues."
+    ::= { hvVMVidDriver 24 }
+
+hvvdMmioGpaPageRanges OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA ranges that are backed
+	    by MMIO regions."
+    ::= { hvVMVidDriver 25 }
+
+hvvdMmioGpaPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA pages that are backed
+	    by MMIO regions."
+    ::= { hvVMVidDriver 26 }
+
+hvvdMmioReads OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA reads that accessed
+	    MMIO regions."
+    ::= { hvVMVidDriver 27 }
+
+hvvdMmioWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA writes that accessed
+	    MMIO regions."
+    ::= { hvVMVidDriver 28 }
+
+hvvdOverheadBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total bytes of allocated memory for all
+	    partitions (not including memory block
+	    allocations)."
+    ::= { hvVMVidDriver 29 }
+
+hvvdPageCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages detected on this
+	    NUMA node."
+    ::= { hvVMVidDriver 30 }
+
+hvvdPagesInUse OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages currently in use
+	    by partitions on this NUMA node."
+    ::= { hvVMVidDriver 31 }
+
+hvvdParentPartitionMappings OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of active parent partition
+	    mappings."
+    ::= { hvVMVidDriver 32 }
+
+hvvdProcessorCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of logical processors detected on
+	    this NUMA node."
+    ::= { hvVMVidDriver 33 }
+
+hvvdReadMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block pages read
+	    from user mode."
+    ::= { hvVMVidDriver 34 }
+
+hvvdRemoteMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory blocks that contain
+	    pages from a non-local NUMA node."
+    ::= { hvVMVidDriver 35 }
+
+hvvdRomMbpWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA writes that accessed
+	    ROM regions."
+    ::= { hvVMVidDriver 36 }
+
+hvvdUnpopulatedGpaAccesses OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA reads or writes that
+	    accessed unpopulated memory."
+    ::= { hvVMVidDriver 37 }
+
+hvvdVidPartitions OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of active partitions."
+    ::= { hvVMVidDriver 38 }
+
+hvvdWriteMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block pages written
+	    from user mode."
+    ::= { hvVMVidDriver 39 }
+
+hvVMVidMessageQueueTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVMVidMessageQueueEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "These are the perf counters for a VID message
+	    queue object."
+    ::= { informantHyperVPerf 13 }
+
+hvVMVidMessageQueueEntry OBJECT-TYPE
+    SYNTAX     HyperVVMVidMessageQueueEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Vid Message Queue'
+	    object."
+    INDEX      { hvvmqInstance }
+    ::= { hvVMVidMessageQueueTable 1 }
+
+HyperVVMVidMessageQueueEntry ::= SEQUENCE {
+    hvvmqInstance InstanceName,
+    hvvmqClientsWaiting Gauge32,
+    hvvmqHandlersRegistered Gauge32,
+    hvvmqHandlersCPUID Gauge32,
+    hvvmqHandlersException Gauge32,
+    hvvmqHandlersIOPort Gauge32,
+    hvvmqHandlersMSR Gauge32,
+    hvvmqMessagesDispatched Gauge32,
+    hvvmqMessagesHandled Gauge32
+}
+
+hvvmqInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMVidMessageQueueEntry 1 }
+
+hvvmqClientsWaiting OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of clients currently waiting on
+	    this message queue."
+    ::= { hvVMVidMessageQueueEntry 2 }
+
+hvvmqHandlersRegistered OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of message handlers registered on
+	    this message queue."
+    ::= { hvVMVidMessageQueueEntry 3 }
+
+hvvmqHandlersCPUID OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of CPUID message handlers
+	    registered on this message queue."
+    ::= { hvVMVidMessageQueueEntry 4 }
+
+hvvmqHandlersException OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of exception message handlers
+	    registered on this message queue."
+    ::= { hvVMVidMessageQueueEntry 5 }
+
+hvvmqHandlersIOPort OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of I/O port message handlers
+	    registered on this message queue."
+    ::= { hvVMVidMessageQueueEntry 6 }
+
+hvvmqHandlersMSR OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of MSR message handlers registered
+	    on this message queue."
+    ::= { hvVMVidMessageQueueEntry 7 }
+
+hvvmqMessagesDispatched OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of messages dispatched on this
+	    message queue."
+    ::= { hvVMVidMessageQueueEntry 8 }
+
+hvvmqMessagesHandled OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of messages handled on this message
+	    queue."
+    ::= { hvVMVidMessageQueueEntry 9 }
+
+hvVMVidNumaNodeTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVMVidNumaNodeEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "These are the perf counters for a numa node."
+    ::= { informantHyperVPerf 14 }
+
+hvVMVidNumaNodeEntry OBJECT-TYPE
+    SYNTAX     HyperVVMVidNumaNodeEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Vid Numa Node' object."
+    INDEX      { hvvnnInstance }
+    ::= { hvVMVidNumaNodeTable 1 }
+
+HyperVVMVidNumaNodeEntry ::= SEQUENCE {
+    hvvnnInstance InstanceName,
+    hvvnnPageCount Gauge32,
+    hvvnnPagesInUse Gauge32,
+    hvvnnProcessorCount Gauge32
+}
+
+hvvnnInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMVidNumaNodeEntry 1 }
+
+hvvnnPageCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages detected on this
+	    NUMA node."
+    ::= { hvVMVidNumaNodeEntry 2 }
+
+hvvnnPagesInUse OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages currently in use
+	    by partitions on this NUMA node."
+    ::= { hvVMVidNumaNodeEntry 3 }
+
+hvvnnProcessorCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of logical processors detected on
+	    this NUMA node."
+    ::= { hvVMVidNumaNodeEntry 4 }
+
+hvVMVidPartitionTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVMVidPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "These are the perf counters for a VID
+	    partition object."
+    ::= { informantHyperVPerf 15 }
+
+hvVMVidPartitionEntry OBJECT-TYPE
+    SYNTAX     HyperVVMVidPartitionEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Vid Partition' object."
+    INDEX      { hvvdInstance }
+    ::= { hvVMVidPartitionTable 1 }
+
+HyperVVMVidPartitionEntry ::= SEQUENCE {
+    hvvdInstance InstanceName,
+    hvvpChildGpaLockRequests Gauge32,
+    hvvpClientHandles Gauge32,
+    hvvpClientNotifyMbps Gauge32,
+    hvvpCurrentWorkingSetSize Gauge32,
+    hvvpHandlersRegistered Gauge32,
+    hvvpHandlersCPUID Gauge32,
+    hvvpHandlersException Gauge32,
+    hvvpHandlersIOPort Gauge32,
+    hvvpHandlersMSR Gauge32,
+    hvvpInterceptsAPICEOI Gauge32,
+    hvvpInterceptsCPUID Gauge32,
+    hvvpInterceptsException Gauge32,
+    hvvpInterceptsIOPortRead Gauge32,
+    hvvpInterceptsIOPortWrite Gauge32,
+    hvvpInterceptsMSRRead Gauge32,
+    hvvpInterceptsMSRWrite Gauge32,
+    hvvpKmMemoryBlockPages Gauge32,
+    hvvpLargeMbpCount Gauge32,
+    hvvpLegacyFpErrorIntercepts Gauge32,
+    hvvpLockedMbps Gauge32,
+    hvvpMappedMbps Gauge32,
+    hvvpMbBackedGpaPageRanges Gauge32,
+    hvvpMbBackedGpaPages Gauge32,
+    hvvpMbBackedGpaRomPages Gauge32,
+    hvvpMbpFaultCount Gauge32,
+    hvvpMbpForkCount Gauge32,
+    hvvpMbpRangeReads Gauge32,
+    hvvpMbpRangeWrites Gauge32,
+    hvvpMbpReadNotifications Gauge32,
+    hvvpMbpWriteNotifications Gauge32,
+    hvvpMemoryBlockPages Gauge32,
+    hvvpMemoryBlocks Gauge32,
+    hvvpMemoryIntercepts Gauge32,
+    hvvpMessageQueues Gauge32,
+    hvvpMinWorkingSetSize Gauge32,
+    hvvpMmioGpaPageRanges Gauge32,
+    hvvpMmioGpaPages Gauge32,
+    hvvpMmioReads Gauge32,
+    hvvpMmioWrites Gauge32,
+    hvvpNumaNodeIndex Gauge32,
+    hvvpOverheadBytes Gauge32,
+    hvvpPagedOutMbpCount Gauge32,
+    hvvpParentPartitionMappings Gauge32,
+    hvvpReadMbpCount Gauge32,
+    hvvpReclaimableMbps Gauge32,
+    hvvpRemoteMbps Gauge32,
+    hvvpRomMbpWrites Gauge32,
+    hvvpSharedMbps Gauge32,
+    hvvpTrimmableMbps Gauge32,
+    hvvpUnpopulatedGpaAccesses Gauge32,
+    hvvpWriteMbpCount Gauge32,
+    hvvpPhysicalPagesAllocated Gauge32,
+    hvvpPreferredNUMANodeIndex Gauge32,
+    hvvpRemotePhysicalPages Gauge32
+}
+
+hvvdInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMVidPartitionEntry 1 }
+
+hvvpChildGpaLockRequests OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of child-originated requests
+	    to lock GPAs."
+    ::= { hvVMVidPartitionEntry 2 }
+
+hvvpClientHandles OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of handles open to this
+	    partition."
+    ::= { hvVMVidPartitionEntry 3 }
+
+hvvpClientNotifyMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block notifications
+	    installed."
+    ::= { hvVMVidPartitionEntry 4 }
+
+hvvpCurrentWorkingSetSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total working set size for all memory
+	    blocks in the system."
+    ::= { hvVMVidPartitionEntry 5 }
+
+hvvpHandlersRegistered OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of message handlers registered on
+	    this message queue."
+    ::= { hvVMVidPartitionEntry 6 }
+
+hvvpHandlersCPUID OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of CPUID message handlers
+	    registered on this message queue."
+    ::= { hvVMVidPartitionEntry 7 }
+
+hvvpHandlersException OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of exception message handlers
+	    registered on this message queue."
+    ::= { hvVMVidPartitionEntry 8 }
+
+hvvpHandlersIOPort OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of I/O port message handlers
+	    registered on this message queue."
+    ::= { hvVMVidPartitionEntry 9 }
+
+hvvpHandlersMSR OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of MSR message handlers registered
+	    on this message queue."
+    ::= { hvVMVidPartitionEntry 10 }
+
+hvvpInterceptsAPICEOI OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of APIC EOI intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 11 }
+
+hvvpInterceptsCPUID OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of CPUID intercepts received
+	    from the hypervisor."
+    ::= { hvVMVidPartitionEntry 12 }
+
+hvvpInterceptsException OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of exception intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 13 }
+
+hvvpInterceptsIOPortRead OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of I/O port read intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 14 }
+
+hvvpInterceptsIOPortWrite OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of I/O port write intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 15 }
+
+hvvpInterceptsMSRRead OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of MSR read intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 16 }
+
+hvvpInterceptsMSRWrite OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of MSR write intercepts
+	    received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 17 }
+
+hvvpKmMemoryBlockPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of pages referenced by all kernel
+	    mode memory blocks in this partition."
+    ::= { hvVMVidPartitionEntry 18 }
+
+hvvpLargeMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of memory blocks that contain large
+	    pages in this partition."
+    ::= { hvVMVidPartitionEntry 19 }
+
+hvvpLegacyFpErrorIntercepts OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of legacy floating point
+	    intercepts received from the hypervisor."
+    ::= { hvVMVidPartitionEntry 20 }
+
+hvvpLockedMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of locked pages in the
+	    system."
+    ::= { hvVMVidPartitionEntry 21 }
+
+hvvpMappedMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of mapped memory block pages for
+	    this partition."
+    ::= { hvVMVidPartitionEntry 22 }
+
+hvvpMbBackedGpaPageRanges OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA ranges that are backed
+	    by memory blocks."
+    ::= { hvVMVidPartitionEntry 23 }
+
+hvvpMbBackedGpaPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA pages that are backed
+	    by memory blocks."
+    ::= { hvVMVidPartitionEntry 24 }
+
+hvvpMbBackedGpaRomPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of ROM GPA pages that are
+	    backed by memory blocks."
+    ::= { hvVMVidPartitionEntry 25 }
+
+hvvpMbpFaultCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block page faults
+	    encountered."
+    ::= { hvVMVidPartitionEntry 26 }
+
+hvvpMbpForkCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of shared pages that have been
+	    subsequently forked in this partition."
+    ::= { hvVMVidPartitionEntry 27 }
+
+hvvpMbpRangeReads OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of user-mode memory block
+	    read requests processed."
+    ::= { hvVMVidPartitionEntry 28 }
+
+hvvpMbpRangeWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of user-mode memory block
+	    write requests processed."
+    ::= { hvVMVidPartitionEntry 29 }
+
+hvvpMbpReadNotifications OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block read
+	    notifications sent to user mode."
+    ::= { hvVMVidPartitionEntry 30 }
+
+hvvpMbpWriteNotifications OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block write
+	    notifications sent to user mode."
+    ::= { hvVMVidPartitionEntry 31 }
+
+hvvpMemoryBlockPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of pages allocated for all
+	    memory blocks in the system."
+    ::= { hvVMVidPartitionEntry 32 }
+
+hvvpMemoryBlocks OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory blocks allocated in
+	    the system."
+    ::= { hvVMVidPartitionEntry 33 }
+
+hvvpMemoryIntercepts OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory intercepts received
+	    from the hypervisor."
+    ::= { hvVMVidPartitionEntry 34 }
+
+hvvpMessageQueues OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of active message queues."
+    ::= { hvVMVidPartitionEntry 35 }
+
+hvvpMinWorkingSetSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The minimum working set size for all memory
+	    blocks in this partition."
+    ::= { hvVMVidPartitionEntry 36 }
+
+hvvpMmioGpaPageRanges OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA ranges that are backed
+	    by MMIO regions."
+    ::= { hvVMVidPartitionEntry 37 }
+
+hvvpMmioGpaPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA pages that are backed
+	    by MMIO regions."
+    ::= { hvVMVidPartitionEntry 38 }
+
+hvvpMmioReads OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA reads that accessed
+	    MMIO regions."
+    ::= { hvVMVidPartitionEntry 39 }
+
+hvvpMmioWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA writes that accessed
+	    MMIO regions."
+    ::= { hvVMVidPartitionEntry 40 }
+
+hvvpNumaNodeIndex OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The NUMA node index associated with this
+	    partition."
+    ::= { hvVMVidPartitionEntry 41 }
+
+hvvpOverheadBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total bytes of allocated memory for all
+	    partitions (not including memory block
+	    allocations)."
+    ::= { hvVMVidPartitionEntry 42 }
+
+hvvpPagedOutMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of memory block pages that are
+	    currently paged out in this partition."
+    ::= { hvVMVidPartitionEntry 43 }
+
+hvvpParentPartitionMappings OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of active parent partition
+	    mappings."
+    ::= { hvVMVidPartitionEntry 44 }
+
+hvvpReadMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block pages read
+	    from user mode."
+    ::= { hvVMVidPartitionEntry 45 }
+
+hvvpReclaimableMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of memory block pages that are
+	    reclaimable in this partition."
+    ::= { hvVMVidPartitionEntry 46 }
+
+hvvpRemoteMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory blocks that contain
+	    pages from a non-local NUMA node."
+    ::= { hvVMVidPartitionEntry 47 }
+
+hvvpRomMbpWrites OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA writes that accessed
+	    ROM regions."
+    ::= { hvVMVidPartitionEntry 48 }
+
+hvvpSharedMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of shared pages in this partition."
+    ::= { hvVMVidPartitionEntry 49 }
+
+hvvpTrimmableMbps OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of trimmable pages in all memory
+	    blocks in this partition."
+    ::= { hvVMVidPartitionEntry 50 }
+
+hvvpUnpopulatedGpaAccesses OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of GPA reads or writes that
+	    accessed unpopulated memory."
+    ::= { hvVMVidPartitionEntry 51 }
+
+hvvpWriteMbpCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory block pages written
+	    from user mode."
+    ::= { hvVMVidPartitionEntry 52 }
+
+hvvpPhysicalPagesAllocated OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages allocated."
+    ::= { hvVMVidPartitionEntry 53 }
+
+hvvpPreferredNUMANodeIndex OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The preferred NUMA node index associated with
+	    this partition."
+    ::= { hvVMVidPartitionEntry 54 }
+
+hvvpRemotePhysicalPages OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of physical pages not allocated
+	    from the preferred NUMA node."
+    ::= { hvVMVidPartitionEntry 55 }
+
+hvVMWorkerProcessMemoryMgrTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HVVMWorkerProcessMemoryMgrEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a worker process
+	    memory manager."
+    ::= { informantHyperVPerf 16 }
+
+hvVMWorkerProcessMemoryMgrEntry OBJECT-TYPE
+    SYNTAX     HVVMWorkerProcessMemoryMgrEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V VM Worker Process Memory
+	    Manager' object."
+    INDEX      { hvwpmmInstance }
+    ::= { hvVMWorkerProcessMemoryMgrTable 1 }
+
+HVVMWorkerProcessMemoryMgrEntry ::= SEQUENCE {
+    hvwpmmInstance InstanceName,
+    hvwpmmApertureCacheEvictionCount Gauge32,
+    hvwpmmApertureCacheSize Gauge32,
+    hvwpmmApertureCleanupTimerPeriod Gauge32,
+    hvwpmmFreeApertureListSize Gauge32,
+    hvwpmmMemBlockApertureCacheHit Gauge32,
+    hvwpmmMemBlockApertureCacheMiss Gauge32,
+    hvwpmmMemoryBlockCount Gauge32,
+    hvwpmmRAMApertureCacheHit Gauge32,
+    hvwpmmRAMApertureCacheMiss Gauge32,
+    hvwpmmRAMMemoryBlockCount Gauge32,
+    hvwpmmStaleApertureListSize Gauge32,
+    hvwpmmTotalMemoryBlockCount Gauge32
+}
+
+hvwpmmInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVMWorkerProcessMemoryMgrEntry 1 }
+
+hvwpmmApertureCacheEvictionCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of apertures evicted from the
+	    cache"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 2 }
+
+hvwpmmApertureCacheSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of active apertures in the
+	    system"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 3 }
+
+hvwpmmApertureCleanupTimerPeriod OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The periodic timer period used for stale
+	    aperture cleanups"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 4 }
+
+hvwpmmFreeApertureListSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of apertures ready for re-use"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 5 }
+
+hvwpmmMemBlockApertureCacheHit OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of aperture cache hits for non-RAM
+	    pages"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 6 }
+
+hvwpmmMemBlockApertureCacheMiss OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of aperture cache miss for non-RAM
+	    pages"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 7 }
+
+hvwpmmMemoryBlockCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of non-RAM memory blocks"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 8 }
+
+hvwpmmRAMApertureCacheHit OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of aperture cache hits for RAM
+	    pages"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 9 }
+
+hvwpmmRAMApertureCacheMiss OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of aperture cache miss for RAM
+	    pages"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 10 }
+
+hvwpmmRAMMemoryBlockCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of RAM memory blocks"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 11 }
+
+hvwpmmStaleApertureListSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of apertures ready for cleanup"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 12 }
+
+hvwpmmTotalMemoryBlockCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The total number of memory blocks"
+    ::= { hvVMWorkerProcessMemoryMgrEntry 13 }
+
+hvVirtualIDEControllerTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualIDEControllerEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    IDE Controller."
+    ::= { informantHyperVPerf 17 }
+
+hvVirtualIDEControllerEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualIDEControllerEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual IDE Controller'
+	    object."
+    INDEX      { hvideInstance }
+    ::= { hvVirtualIDEControllerTable 1 }
+
+HyperVVirtualIDEControllerEntry ::= SEQUENCE {
+    hvideInstance InstanceName,
+    hvideReadBytesPerSec Gauge32,
+    hvideReadSectorsPerSec Gauge32,
+    hvideWriteBytesPerSec Gauge32,
+    hvideWrittenSectorsPerSec Gauge32
+}
+
+hvideInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualIDEControllerEntry 1 }
+
+hvideReadBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been read per second on this
+	    virtual device."
+    ::= { hvVirtualIDEControllerEntry 2 }
+
+hvideReadSectorsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Read Sectors/sec is the number of sectors read
+	    per second from the disks attached to the IDE
+	    controller."
+    ::= { hvVirtualIDEControllerEntry 3 }
+
+hvideWriteBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been written per second on this
+	    virtual device."
+    ::= { hvVirtualIDEControllerEntry 4 }
+
+hvideWrittenSectorsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Written Sectors/sec is the number of sectors
+	    written per second to the disks attached to the
+	    IDE controller."
+    ::= { hvVirtualIDEControllerEntry 5 }
+
+hvVirtualMachineBus OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the virtual machine bus."
+    ::= { informantHyperVPerf 18 }
+
+hvvmbInterruptsReceived OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    interrupts received."
+    ::= { hvVirtualMachineBus 1 }
+
+hvvmbInterruptsSent OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    interrupts sent."
+    ::= { hvVirtualMachineBus 2 }
+
+hvvmbThrottleEvents OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    times that any partition has been throttled,
+	    which is to say that its interrupts were
+	    disabled."
+    ::= { hvVirtualMachineBus 3 }
+
+hvVirtualMachineHealthSummary OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the health summary
+	    statistics for the Virtual Machine Management
+	    Service."
+    ::= { informantHyperVPerf 19 }
+
+hvvmhsHealthCritical OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that with critical health."
+    ::= { hvVirtualMachineHealthSummary 1 }
+
+hvvmhsHealthOk OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that with ok health."
+    ::= { hvVirtualMachineHealthSummary 2 }
+
+hvVirtualMachineSummary OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the summary
+	    statistics for the Virtual Machine Management
+	    Service."
+    ::= { informantHyperVPerf 20 }
+
+hvvmsApplyingSnapshot OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are applying a snapshot."
+    ::= { hvVirtualMachineSummary 1 }
+
+hvvmsDeleting OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are being deleted."
+    ::= { hvVirtualMachineSummary 2 }
+
+hvvmsDeletingSavedState OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are deleting a saved state."
+    ::= { hvVirtualMachineSummary 3 }
+
+hvvmsDeletingSnapshot OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are deleting a snapshot."
+    ::= { hvVirtualMachineSummary 4 }
+
+hvvmsExporting OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are exporting."
+    ::= { hvVirtualMachineSummary 5 }
+
+hvvmsMergingDisks OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are merging disks."
+    ::= { hvVirtualMachineSummary 6 }
+
+hvvmsPaused OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are paused."
+    ::= { hvVirtualMachineSummary 7 }
+
+hvvmsPausing OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are pausing."
+    ::= { hvVirtualMachineSummary 8 }
+
+hvvmsResetting OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are resetting."
+    ::= { hvVirtualMachineSummary 9 }
+
+hvvmsResuming OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are resuming."
+    ::= { hvVirtualMachineSummary 10 }
+
+hvvmsRunning OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The number of replication agents currently
+	    running."
+    ::= { hvVirtualMachineSummary 11 }
+
+hvvmsSaved OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are saved."
+    ::= { hvVirtualMachineSummary 12 }
+
+hvvmsSaving OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are saving."
+    ::= { hvVirtualMachineSummary 13 }
+
+hvvmsStarting OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are starting."
+    ::= { hvVirtualMachineSummary 14 }
+
+hvvmsStopping OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are stopping."
+    ::= { hvVirtualMachineSummary 15 }
+
+hvvmsTakingSnapshot OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are taking snapshots."
+    ::= { hvVirtualMachineSummary 16 }
+
+hvvmsTurnedOff OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are turned off."
+    ::= { hvVirtualMachineSummary 17 }
+
+hvvmsWaitingToStart OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of virtual
+	    machine's that are waiting to start."
+    ::= { hvVirtualMachineSummary 18 }
+
+hvVirtualNetworkAdapterTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualNetworkAdapterEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the Hyper-V network adapter."
+    ::= { informantHyperVPerf 21 }
+
+hvVirtualNetworkAdapterEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualNetworkAdapterEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual Network Adapter'
+	    object."
+    INDEX      { hvvnaInstance }
+    ::= { hvVirtualNetworkAdapterTable 1 }
+
+HyperVVirtualNetworkAdapterEntry ::= SEQUENCE {
+    hvvnaInstance InstanceName,
+    hvvnaBroadcastPacketsRcvdPerSec Gauge32,
+    hvvnaBroadcastPacketsSentPerSec Gauge32,
+    hvvnaBytesReceivedPerSec Gauge32,
+    hvvnaBytesSentPerSec Gauge32,
+    hvvnaBytesPerSec Gauge32,
+    hvvnaDirectedPacketsRcvdPerSec Gauge32,
+    hvvnaDirectedPacketsSentPerSec Gauge32,
+    hvvnaMulticastPacketsRcvdPerSec Gauge32,
+    hvvnaMulticastPacketsSentPerSec Gauge32,
+    hvvnaPacketsReceivedPerSec Gauge32,
+    hvvnaPacketsSentPerSec Gauge32,
+    hvvnaPacketsPerSec Gauge32,
+    hvvnaDroppedPacketIncomingPerSec Gauge32,
+    hvvnaDroppedPacketOutgoingPerSec Gauge32,
+    hvvnaExtensionDropPacketInPerSec Gauge32,
+    hvvnaExtensionDropPcktOutPerSec Gauge32,
+    hvvnaIPsecOffloadBytesRcvPerSec Gauge32,
+    hvvnaIPsecOffloadBytesSentPerSec Gauge32
+}
+
+hvvnaInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualNetworkAdapterEntry 1 }
+
+hvvnaBroadcastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received by the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 2 }
+
+hvvnaBroadcastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received per second by the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 3 }
+
+hvvnaBytesReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes received per second"
+    ::= { hvVirtualNetworkAdapterEntry 4 }
+
+hvvnaBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes sent per second"
+    ::= { hvVirtualNetworkAdapterEntry 5 }
+
+hvvnaBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have traversed the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 6 }
+
+hvvnaDirectedPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent by the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 7 }
+
+hvvnaDirectedPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent per second by the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 8 }
+
+hvvnaMulticastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets that have traversed the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 9 }
+
+hvvnaMulticastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets per second traversing the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 10 }
+
+hvvnaPacketsReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent from the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 11 }
+
+hvvnaPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent per second by the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 12 }
+
+hvvnaPacketsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes received per second by the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 13 }
+
+hvvnaDroppedPacketIncomingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the incoming
+	    direction of the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 14 }
+
+hvvnaDroppedPacketOutgoingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the outgoing
+	    direction of the network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 15 }
+
+hvvnaExtensionDropPacketInPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the incoming direction of the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 16 }
+
+hvvnaExtensionDropPcktOutPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the outgoing direction of the network
+	    adapter."
+    ::= { hvVirtualNetworkAdapterEntry 17 }
+
+hvvnaIPsecOffloadBytesRcvPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    Psec offload bytes received per second by the
+	    network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 18 }
+
+hvvnaIPsecOffloadBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    Psec offload bytes sent per second by the
+	    network adapter."
+    ::= { hvVirtualNetworkAdapterEntry 19 }
+
+hvVirtualStorageDeviceTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualStorageDeviceEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    a virtual storage device."
+    ::= { informantHyperVPerf 22 }
+
+hvVirtualStorageDeviceEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualStorageDeviceEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual Storage Device'
+	    object."
+    INDEX      { hvvsdInstance }
+    ::= { hvVirtualStorageDeviceTable 1 }
+
+HyperVVirtualStorageDeviceEntry ::= SEQUENCE {
+    hvvsdInstance InstanceName,
+    hvvsdErrorCount Gauge32,
+    hvvsdFlushCount Gauge32,
+    hvvsdReadBytesPerSec Gauge32,
+    hvvsdReadCount Gauge32,
+    hvvsdWriteBytesPerSec Gauge32,
+    hvvsdWriteCount Gauge32
+}
+
+hvvsdInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualStorageDeviceEntry 1 }
+
+hvvsdErrorCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    errors that have occured on this virtual
+	    device."
+    ::= { hvVirtualStorageDeviceEntry 2 }
+
+hvvsdFlushCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    flush operations that have occured on this
+	    virtual device."
+    ::= { hvVirtualStorageDeviceEntry 3 }
+
+hvvsdReadBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been read per second on this
+	    virtual device."
+    ::= { hvVirtualStorageDeviceEntry 4 }
+
+hvvsdReadCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    read operations that have occured on this
+	    virtual device."
+    ::= { hvVirtualStorageDeviceEntry 5 }
+
+hvvsdWriteBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been written per second on this
+	    virtual device."
+    ::= { hvVirtualStorageDeviceEntry 6 }
+
+hvvsdWriteCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    write operations that have occured on this
+	    virtual device."
+    ::= { hvVirtualStorageDeviceEntry 7 }
+
+hvVirtualSwitchTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualSwitchEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the Hyper-V switch."
+    ::= { informantHyperVPerf 23 }
+
+hvVirtualSwitchEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualSwitchEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual Switch' object."
+    INDEX      { hvvsInstance }
+    ::= { hvVirtualSwitchTable 1 }
+
+HyperVVirtualSwitchEntry ::= SEQUENCE {
+    hvvsInstance InstanceName,
+    hvvsBroadcastPacketsRcvdPerSec Gauge32,
+    hvvsBroadcastPacketsSentPerSec Gauge32,
+    hvvsBytesReceivedPerSec Gauge32,
+    hvvsBytesSentPerSec Gauge32,
+    hvvsBytesPerSec Gauge32,
+    hvvsDirectedPacketsRcvdPerSec Gauge32,
+    hvvsDirectedPacketsSentPerSec Gauge32,
+    hvvsLearnedMacAddresses Gauge32,
+    hvvsLearnedMacAddressesPerSec Gauge32,
+    hvvsMulticastPacketsRcvdPerSec Gauge32,
+    hvvsMulticastPacketsSentPerSec Gauge32,
+    hvvsPacketsFlooded Gauge32,
+    hvvsPacketsFloodedPerSec Gauge32,
+    hvvsPacketsReceivedPerSec Gauge32,
+    hvvsPacketsSentPerSec Gauge32,
+    hvvsPacketsPerSec Gauge32,
+    hvvsPurgedMacAddresses Gauge32,
+    hvvsPurgedMacAddressesPerSec Gauge32,
+    hvvsDroppedPacketsIncomingPerSec Gauge32,
+    hvvsDroppedPacketsOutgoingPerSec Gauge32,
+    hvvsExtensionsDropPacketInPerSec Gauge32,
+    hvvsExtensionDropPacketOutPerSec Gauge32,
+    hvvsNumberSendChannelMovesPerSec Gauge32,
+    hvvsNumberOfVMQMovesPerSec Gauge32
+}
+
+hvvsInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualSwitchEntry 1 }
+
+hvvsBroadcastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received by the network adapter."
+    ::= { hvVirtualSwitchEntry 2 }
+
+hvvsBroadcastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 3 }
+
+hvvsBytesReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes received per second"
+    ::= { hvVirtualSwitchEntry 4 }
+
+hvvsBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes sent per second"
+    ::= { hvVirtualSwitchEntry 5 }
+
+hvvsBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have traversed the network adapter."
+    ::= { hvVirtualSwitchEntry 6 }
+
+hvvsDirectedPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent by the network adapter."
+    ::= { hvVirtualSwitchEntry 7 }
+
+hvvsDirectedPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 8 }
+
+hvvsLearnedMacAddresses OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    learned MAC addresses of the virtual switch."
+    ::= { hvVirtualSwitchEntry 9 }
+
+hvvsLearnedMacAddressesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number MAC
+	    addresses learned per second by the virtual
+	    switch."
+    ::= { hvVirtualSwitchEntry 10 }
+
+hvvsMulticastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets that have traversed the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 11 }
+
+hvvsMulticastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets per second traversing the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 12 }
+
+hvvsPacketsFlooded OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets flooded by the virtual switch."
+    ::= { hvVirtualSwitchEntry 13 }
+
+hvvsPacketsFloodedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets flooded per second by the virtual
+	    switch."
+    ::= { hvVirtualSwitchEntry 14 }
+
+hvvsPacketsReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent from the network adapter."
+    ::= { hvVirtualSwitchEntry 15 }
+
+hvvsPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent per second by the network adapter."
+    ::= { hvVirtualSwitchEntry 16 }
+
+hvvsPacketsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes received per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 17 }
+
+hvvsPurgedMacAddresses OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    purged MAC addresses of the virtual switch."
+    ::= { hvVirtualSwitchEntry 18 }
+
+hvvsPurgedMacAddressesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number MAC
+	    addresses purged per second by the virtual
+	    switch."
+    ::= { hvVirtualSwitchEntry 19 }
+
+hvvsDroppedPacketsIncomingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the incoming
+	    direction of the network adapter."
+    ::= { hvVirtualSwitchEntry 20 }
+
+hvvsDroppedPacketsOutgoingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the outgoing
+	    direction of the network adapter."
+    ::= { hvVirtualSwitchEntry 21 }
+
+hvvsExtensionsDropPacketInPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the incoming direction of the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 22 }
+
+hvvsExtensionDropPacketOutPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the outgoing direction of the network
+	    adapter."
+    ::= { hvVirtualSwitchEntry 23 }
+
+hvvsNumberSendChannelMovesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    send channel moves per second on this virtual
+	    switch."
+    ::= { hvVirtualSwitchEntry 24 }
+
+hvvsNumberOfVMQMovesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    VMQ moves per second on this virtual switch."
+    ::= { hvVirtualSwitchEntry 25 }
+
+hvVirtualSwitchPortTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualSwitchPortEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the Hyper-V switch port."
+    ::= { informantHyperVPerf 24 }
+
+hvVirtualSwitchPortEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualSwitchPortEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual Switch Port'
+	    object."
+    INDEX      { hvvspInstance }
+    ::= { hvVirtualSwitchPortTable 1 }
+
+HyperVVirtualSwitchPortEntry ::= SEQUENCE {
+    hvvspInstance InstanceName,
+    hvvspBroadcastPacketsRcvdPerSec Gauge32,
+    hvvspBroadcastPacketsSentPerSec Gauge32,
+    hvvspBytesReceivedPerSec Gauge32,
+    hvvspBytesSentPerSec Gauge32,
+    hvvspBytesPerSec Gauge32,
+    hvvspDirectedPacketsRcvdPerSec Gauge32,
+    hvvspDirectedPacketsSentPerSec Gauge32,
+    hvvspMulticastPacketsRcvdPerSec Gauge32,
+    hvvspMulticastPacketsSentPerSec Gauge32,
+    hvvspPacketsReceivedPerSec Gauge32,
+    hvvspPacketsSentPerSec Gauge32,
+    hvvspPacketsPerSec Gauge32,
+    hvvspDroppedPacketIncomingPerSec Gauge32,
+    hvvspDroppedPacketOutgoingPerSec Gauge32,
+    hvvspExtensionDropPacketInPerSec Gauge32,
+    hvvspExtensionDropPcktOutPerSec Gauge32,
+    hvvspIPsecOffloadBytesRcvPerSec Gauge32,
+    hvvspIPsecOffloadBytesSentPerSec Gauge32,
+    hvvspIPsecSAsOffloaded Gauge32
+}
+
+hvvspInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualSwitchPortEntry 1 }
+
+hvvspBroadcastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received by the network adapter."
+    ::= { hvVirtualSwitchPortEntry 2 }
+
+hvvspBroadcastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets received per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 3 }
+
+hvvspBytesReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes received per second"
+    ::= { hvVirtualSwitchPortEntry 4 }
+
+hvvspBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Number of bytes sent per second"
+    ::= { hvVirtualSwitchPortEntry 5 }
+
+hvvspBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have traversed the network adapter."
+    ::= { hvVirtualSwitchPortEntry 6 }
+
+hvvspDirectedPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent by the network adapter."
+    ::= { hvVirtualSwitchPortEntry 7 }
+
+hvvspDirectedPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets sent per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 8 }
+
+hvvspMulticastPacketsRcvdPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets that have traversed the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 9 }
+
+hvvspMulticastPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    packets per second traversing the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 10 }
+
+hvvspPacketsReceivedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent from the network adapter."
+    ::= { hvVirtualSwitchPortEntry 11 }
+
+hvvspPacketsSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes sent per second by the network adapter."
+    ::= { hvVirtualSwitchPortEntry 12 }
+
+hvvspPacketsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes received per second by the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 13 }
+
+hvvspDroppedPacketIncomingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the incoming
+	    direction of the network adapter."
+    ::= { hvVirtualSwitchPortEntry 14 }
+
+hvvspDroppedPacketOutgoingPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second in the outgoing
+	    direction of the network adapter."
+    ::= { hvVirtualSwitchPortEntry 15 }
+
+hvvspExtensionDropPacketInPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the incoming direction of the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 16 }
+
+hvvspExtensionDropPcktOutPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    dropped packets per second by switch extensions
+	    in the outgoing direction of the network
+	    adapter."
+    ::= { hvVirtualSwitchPortEntry 17 }
+
+hvvspIPsecOffloadBytesRcvPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    Psec offload bytes received per second by the
+	    network adapter."
+    ::= { hvVirtualSwitchPortEntry 18 }
+
+hvvspIPsecOffloadBytesSentPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    Psec offload bytes sent per second by the
+	    network adapter."
+    ::= { hvVirtualSwitchPortEntry 19 }
+
+hvvspIPsecSAsOffloaded OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    IPsec Security Associations currently offloaded
+	    by the virtual switch port."
+    ::= { hvVirtualSwitchPortEntry 20 }
+
+hvDynamicMemoryBalancerTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVDynamicMemoryBalancerEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the Microsoft Dynamic Memory Balancer."
+    ::= { informantHyperVPerf 25 }
+
+hvDynamicMemoryBalancerEntry OBJECT-TYPE
+    SYNTAX     HyperVDynamicMemoryBalancerEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Dynamic Memory Balancer'
+	    object."
+    INDEX      { hvdmbInstance }
+    ::= { hvDynamicMemoryBalancerTable 1 }
+
+HyperVDynamicMemoryBalancerEntry ::= SEQUENCE {
+    hvdmbInstance InstanceName,
+    hvdmbAddedMemory Gauge32,
+    hvdmbAvailableMemory Gauge32,
+    hvdmbAveragePressure Gauge32,
+    hvdmbMemoryAddOperations Gauge32,
+    hvdmbMemoryRemoveOperations Gauge32,
+    hvdmbRemovedMemory Gauge32
+}
+
+hvdmbInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvDynamicMemoryBalancerEntry 1 }
+
+hvdmbAddedMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the cummulative amount
+	    of memory added to the VM."
+    ::= { hvDynamicMemoryBalancerEntry 2 }
+
+hvdmbAvailableMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the amount of memory
+	    left on the node."
+    ::= { hvDynamicMemoryBalancerEntry 3 }
+
+hvdmbAveragePressure OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the average pressure
+	    in the VM."
+    ::= { hvDynamicMemoryBalancerEntry 4 }
+
+hvdmbMemoryAddOperations OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    add operations for the VM."
+    ::= { hvDynamicMemoryBalancerEntry 5 }
+
+hvdmbMemoryRemoveOperations OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    remove operations for the VM."
+    ::= { hvDynamicMemoryBalancerEntry 6 }
+
+hvdmbRemovedMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the cummulative amount
+	    of memory removed from the VM."
+    ::= { hvDynamicMemoryBalancerEntry 7 }
+
+hvDynamicMemoryVMTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVDynamicMemoryVMEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the memory
+	    statistics for a Virtual Machine."
+    ::= { informantHyperVPerf 26 }
+
+hvDynamicMemoryVMEntry OBJECT-TYPE
+    SYNTAX     HyperVDynamicMemoryVMEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Dynamic Memory VM'
+	    object."
+    INDEX      { hvdmvmInstance }
+    ::= { hvDynamicMemoryVMTable 1 }
+
+HyperVDynamicMemoryVMEntry ::= SEQUENCE {
+    hvdmvmInstance InstanceName,
+    hvdmvmAddedMemory Gauge32,
+    hvdmvmAveragePressure Gauge32,
+    hvdmvmCurrentPressure Gauge32,
+    hvdmvmGuestVisiblePhysicalMemory Gauge32,
+    hvdmvmMaximumPressure Gauge32,
+    hvdmvmMemoryAddOperations Gauge32,
+    hvdmvmMemoryRemoveOperations Gauge32,
+    hvdmvmMinimumPressure Gauge32,
+    hvdmvmPhysicalMemory Gauge32,
+    hvdmvmRemovedMemory Gauge32,
+    hvdmvmSmartPagingWorkingSetSize Gauge32
+}
+
+hvdmvmInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvDynamicMemoryVMEntry 1 }
+
+hvdmvmAddedMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the cummulative amount
+	    of memory added to the VM."
+    ::= { hvDynamicMemoryVMEntry 2 }
+
+hvdmvmAveragePressure OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the average pressure
+	    in the VM."
+    ::= { hvDynamicMemoryVMEntry 3 }
+
+hvdmvmCurrentPressure OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the current pressure
+	    in the VM."
+    ::= { hvDynamicMemoryVMEntry 4 }
+
+hvdmvmGuestVisiblePhysicalMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the amount of memory
+	    visible in the VM."
+    ::= { hvDynamicMemoryVMEntry 5 }
+
+hvdmvmMaximumPressure OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the maximum pressure
+	    band in the VM."
+    ::= { hvDynamicMemoryVMEntry 6 }
+
+hvdmvmMemoryAddOperations OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    add operations for the VM."
+    ::= { hvDynamicMemoryVMEntry 7 }
+
+hvdmvmMemoryRemoveOperations OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    remove operations for the VM."
+    ::= { hvDynamicMemoryVMEntry 8 }
+
+hvdmvmMinimumPressure OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the minmum pressure
+	    band in the VM."
+    ::= { hvDynamicMemoryVMEntry 9 }
+
+hvdmvmPhysicalMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the current amount of
+	    memory in the VM."
+    ::= { hvDynamicMemoryVMEntry 10 }
+
+hvdmvmRemovedMemory OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the cummulative amount
+	    of memory removed from the VM."
+    ::= { hvDynamicMemoryVMEntry 11 }
+
+hvdmvmSmartPagingWorkingSetSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Size of memory backed by Smart Paging in
+	    Mbytes."
+    ::= { hvDynamicMemoryVMEntry 12 }
+
+hvReplicaVMTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVReplicaVMEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the Hyper-V
+	    Replica statistics for a virtual machine."
+    ::= { informantHyperVPerf 27 }
+
+hvReplicaVMEntry OBJECT-TYPE
+    SYNTAX     HyperVReplicaVMEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Replica VM' object."
+    INDEX      { hvrInstance }
+    ::= { hvReplicaVMTable 1 }
+
+HyperVReplicaVMEntry ::= SEQUENCE {
+    hvrInstance InstanceName,
+    hvrAverageReplicationLatency Gauge32,
+    hvrAverageReplicationSize Gauge32,
+    hvrCompressionEfficiency Gauge32,
+    hvrLastReplicationSize Gauge32,
+    hvrNetworkBytesRecv Gauge32,
+    hvrNetworkBytesSent Gauge32,
+    hvrReplicationCount Gauge32,
+    hvrReplicationLatency Gauge32,
+    hvrResynchronizedBytes Gauge32
+}
+
+hvrInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvReplicaVMEntry 1 }
+
+hvrAverageReplicationLatency OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the average
+	    replication latency in seconds."
+    ::= { hvReplicaVMEntry 2 }
+
+hvrAverageReplicationSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the average
+	    replication size in bytes."
+    ::= { hvReplicaVMEntry 3 }
+
+hvrCompressionEfficiency OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the compression
+	    efficiency for the files that has been
+	    transferred over the network."
+    ::= { hvReplicaVMEntry 4 }
+
+hvrLastReplicationSize OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the last replication
+	    size in bytes."
+    ::= { hvReplicaVMEntry 5 }
+
+hvrNetworkBytesRecv OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total bytes
+	    received over the network for the virtual
+	    machine since the virtual machine management
+	    service was started."
+    ::= { hvReplicaVMEntry 6 }
+
+hvrNetworkBytesSent OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total bytes sent
+	    over the network for the virtual machine since
+	    the virtual machine management service was
+	    started."
+    ::= { hvReplicaVMEntry 7 }
+
+hvrReplicationCount OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the replication count
+	    since the virtual machine management service
+	    was started."
+    ::= { hvReplicaVMEntry 8 }
+
+hvrReplicationLatency OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the last replication
+	    latency in seconds. It is the time taken for
+	    the delta to be applied on the recovery since
+	    it was snapped."
+    ::= { hvReplicaVMEntry 9 }
+
+hvrResynchronizedBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total bytes sent
+	    and received over the network for the virtual
+	    machine during the resynchronize operation
+	    since the virtual machine management service
+	    was started."
+    ::= { hvReplicaVMEntry 10 }
+
+hvVirtualIDEControlEmulatedTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualIDEControllerEmulatedEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance counters for a virtual machine's
+	    IDE Controller."
+    ::= { informantHyperVPerf 28 }
+
+hvVirtualIDEControlEmulatedEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualIDEControllerEmulatedEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual IDE Controller
+	    (Emulated)' object."
+    INDEX      { hvviceInstance }
+    ::= { hvVirtualIDEControlEmulatedTable 1 }
+
+HyperVVirtualIDEControllerEmulatedEntry ::= SEQUENCE {
+    hvviceInstance InstanceName,
+    hvviceReadBytesPerSec Gauge32,
+    hvviceReadSectorsPerSec Gauge32,
+    hvviceWriteBytesPerSec Gauge32,
+    hvviceWrittenSectorsPerSec Gauge32
+}
+
+hvviceInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualIDEControlEmulatedEntry 1 }
+
+hvviceReadBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been read per second on this
+	    virtual device."
+    ::= { hvVirtualIDEControlEmulatedEntry 2 }
+
+hvviceReadSectorsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Read Sectors/sec is the number of sectors read
+	    per second from the disks attached to the IDE
+	    controller."
+    ::= { hvVirtualIDEControlEmulatedEntry 3 }
+
+hvviceWriteBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the total number of
+	    bytes that have been written per second on this
+	    virtual device."
+    ::= { hvVirtualIDEControlEmulatedEntry 4 }
+
+hvviceWrittenSectorsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Written Sectors/sec is the number of sectors
+	    written per second to the disks attached to the
+	    IDE controller."
+    ::= { hvVirtualIDEControlEmulatedEntry 5 }
+
+hvVirtualSwitchProcessorTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF HyperVVirtualSwitchProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "This counter set represents the statistics for
+	    the Microsoft Hyper-V switch processor."
+    ::= { informantHyperVPerf 29 }
+
+hvVirtualSwitchProcessorEntry OBJECT-TYPE
+    SYNTAX     HyperVVirtualSwitchProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+	    "Performance information for one particular
+	    instance of 'Hyper-V Virtual Switch Processor'
+	    object."
+    INDEX      { hvvswInstance }
+    ::= { hvVirtualSwitchProcessorTable 1 }
+
+HyperVVirtualSwitchProcessorEntry ::= SEQUENCE {
+    hvvswInstance InstanceName,
+    hvvswNumberOfSendChannels Gauge32,
+    hvvswNumberOfVMQs Gauge32
+}
+
+hvvswInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Instance name."
+    ::= { hvVirtualSwitchProcessorEntry 1 }
+
+hvvswNumberOfSendChannels OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of send
+	    interrupt channels targeting on the virtual
+	    switch processor."
+    ::= { hvVirtualSwitchProcessorEntry 2 }
+
+hvvswNumberOfVMQs OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "This counter represents the number of VMQs
+	    targeting on the virtual switch processor."
+    ::= { hvVirtualSwitchProcessorEntry 3 }
+
+siHyperVPerformanceVersion OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Designates the version of this SNMP Informant
+	    agent."
+    ::= { informantHyperVPerf 999 }
+
+END

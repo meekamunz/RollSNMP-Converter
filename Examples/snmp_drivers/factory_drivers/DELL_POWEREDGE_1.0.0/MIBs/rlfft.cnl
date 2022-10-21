@@ -1,0 +1,205 @@
+RADLAN-rlFft-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN FFT Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rlFFT                                                   FROM RADLAN-rlFft
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rlIpFFT      OBJECT IDENTIFIER ::= { rlFFT 1 }
+
+rlIpFftMibVersion OBJECT-TYPE
+    ::= { rlIpFFT 1 }
+
+rlIpMaxFftNumber OBJECT-TYPE
+    ::= { rlIpFFT 2 }
+
+rlIpFftDynamicSupported OBJECT-TYPE
+    ::= { rlIpFFT 3 }
+
+rlIpFftSubnetSupported OBJECT-TYPE
+    ::= { rlIpFFT 4 }
+
+rlIpFftUnknownAddrMsgUsed OBJECT-TYPE
+    ::= { rlIpFFT 5 }
+
+rlIpFftAgingTimeSupported OBJECT-TYPE
+    ::= { rlIpFFT 6 }
+
+rlIpFftSrcAddrSupported OBJECT-TYPE
+    ::= { rlIpFFT 7 }
+
+rlIpFftAgingTimeout OBJECT-TYPE
+    ::= { rlIpFFT 8 }
+
+rlIpFftRedBoundary OBJECT-TYPE
+    ::= { rlIpFFT 9 }
+
+rlIpFftYellowBoundary OBJECT-TYPE
+    ::= { rlIpFFT 10 }
+
+--rlIpFftPollingInterval OBJECT-TYPE
+--    ::= { rlIpFFT 11 }
+
+rlIpFftNumTable OBJECT-TYPE
+    ::= { rlIpFFT 12 }
+
+rlIpFftNumEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftNumTable 1 }
+
+rlIpFftStnTable OBJECT-TYPE
+    ::= { rlIpFFT 13 }
+
+rlIpFftStnEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftStnTable 1 }
+
+rlIpFftSubTable OBJECT-TYPE
+    ::= { rlIpFFT 14 }
+
+rlIpFftSubEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftSubTable 1 }
+
+rlIpFftCountersTable OBJECT-TYPE
+    ::= { rlIpFFT 15 }
+
+rlIpFftCountersEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftCountersTable 1 }
+
+rlIpFftNextHopTable OBJECT-TYPE
+    ::= { rlIpFFT 16 }
+
+rlIpFftNextHopEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftNextHopTable 1 }
+
+rlIpFftL2InfoTable OBJECT-TYPE
+    ::= { rlIpFFT 17 }
+
+rlIpFftL2InfoEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpFftL2InfoTable 1 }
+
+rlIpxFFT      OBJECT IDENTIFIER ::= { rlFFT 2 }
+
+rlIpxFftMibVersion OBJECT-TYPE
+    ::= { rlIpxFFT 1 }
+
+rlIpxMaxFftNumber OBJECT-TYPE
+    ::= { rlIpxFFT 2 }
+
+rlIpxFftDynamicSupported OBJECT-TYPE
+    ::= { rlIpxFFT 3 }
+
+rlIpxFftNetworkSupported OBJECT-TYPE
+    ::= { rlIpxFFT 4 }
+
+rlIpxFftUnknownAddrMsgUsed OBJECT-TYPE
+    ::= { rlIpxFFT 5 }
+
+rlIpxFftAgingTimeSupported OBJECT-TYPE
+    ::= { rlIpxFFT 6 }
+
+rlIpxFftSrcAddrSupported OBJECT-TYPE
+    ::= { rlIpxFFT 7 }
+
+rlIpxFftAgingTimeout OBJECT-TYPE
+    ::= { rlIpxFFT 8 }
+
+rlIpxFftRedBoundary OBJECT-TYPE
+    ::= { rlIpxFFT 9 }
+
+rlIpxFftYellowBoundary OBJECT-TYPE
+    ::= { rlIpxFFT 10 }
+
+--rlIpxFftPollingInterval OBJECT-TYPE
+--    ::= { rlIpxFFT 11 }
+
+rlIpxFftNumTable OBJECT-TYPE
+    ::= { rlIpxFFT 12 }
+
+rlIpxFftNumEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpxFftNumTable 1 }
+
+rlIpxFftStnTable OBJECT-TYPE
+    ::= { rlIpxFFT 13 }
+
+rlIpxFftStnEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpxFftStnTable 1 }
+
+rlIpxFftSubTable OBJECT-TYPE
+    ::= { rlIpxFFT 14 }
+
+rlIpxFftSubEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpxFftSubTable 1 }
+
+rlIpxFftCountersTable OBJECT-TYPE
+    ::= { rlIpxFFT 15 }
+
+rlIpxFftCountersEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpxFftCountersTable 1 }
+
+rlIpmFFT    OBJECT IDENTIFIER ::= { rlFFT 3 }
+
+rlIpmFftMibVersion OBJECT-TYPE
+    ::= { rlIpmFFT 1 }
+
+rlIpmMaxFftNumber OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpmFFT 2 }
+
+rlIpmFftDynamicSupported OBJECT-TYPE
+    ::= { rlIpmFFT 3 }
+
+
+rlIpmFftUnknownAddrMsgUsed OBJECT-TYPE
+    ::= { rlIpmFFT 4 }
+
+rlIpmFftUserAgingTimeout OBJECT-TYPE
+    ::= { rlIpmFFT 5 }
+
+rlIpmFftRouterAgingTimeout OBJECT-TYPE
+    ::= { rlIpmFFT 6 }
+
+--rlIpmFftPollingInterval OBJECT-TYPE
+--    ::= { rlIpmFFT 7 }
+
+rlIpmFftNumTable OBJECT-TYPE
+    ::= { rlIpmFFT 8 }
+
+rlIpmFftNumEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+  ::= { rlIpmFftNumTable 1 }
+
+rlIpmFftTable OBJECT-TYPE
+    ::= { rlIpmFFT 9 }
+
+rlIpmFftEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpmFftTable 1 }
+
+rlIpmFftPortTagTable OBJECT-TYPE
+    ::= { rlIpmFFT 10 }
+
+rlIpmFftPortTagEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpmFftPortTagTable 1 }
+
+rlIpmFftCountersTable OBJECT-TYPE
+    ::= { rlIpmFFT 11 }
+
+rlIpmFftCountersEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIpmFftCountersTable 1 }
+
+END

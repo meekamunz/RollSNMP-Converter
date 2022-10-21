@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on Tektronix SPG8000A at SLP on 11/01/2019.
+	This unit is configured with SNMPv2c, so this config is for V2c SNMP units.  It hasn't been tested
+	with, and may not work with units configured for SNMPv1.	
+-->
+
+<DefinitionGroup>
+	
+	<MIBSource href="drivers/TEKTRONIX_ECO-8000_1.0.0/MIBs"/>
+	
+	<OIDAlias id="ECO8000" oid=".iso.org.dod.internet.private.enterprises.tek.tvt.tvtproducts.eco8000" >
+		<OIDAlias id="STATUS" oid=".status" >
+			<OIDAlias id="STATUS FAULT" oid=".statusFault" />
+			<OIDAlias id="FIRMWARE VERSION" oid=".versionInfoFwStatus" />
+			<OIDAlias id="DHCP" oid=".dhcpEnable" />
+			<OIDAlias id="TEMP" oid=".temperatureStatus" />
+			<OIDAlias id="BATTERY" oid=".batteryStatus" />
+			<OIDAlias id="FAN" oid=".fanStatus" />
+			<OIDAlias id="PSU HOURS" oid=".powerSupplyHourStatus" />
+			<OIDAlias id="12V" oid=".powerSupplyTwelveVoltStatus" />
+			<OIDAlias id="CHANNELS" oid=".numberOfChannels" />
+			<OIDAlias id="ECO AUTO" oid=".ecoAutoManual" />
+			<OIDAlias id="WEB UI" oid=".webUIState" />
+			<OIDAlias id="IO SELECT" oid=".inputSourceSelect" />
+			<OIDAlias id="POWER ON TEST" oid=".powerOnSelfTestResult" />
+			<OIDAlias id="AC 1" oid=".acInput1Status" />
+			<OIDAlias id="AC 2" oid=".acInput2Status" />
+			<OIDAlias id="DC 1" oid=".dcInput1Status" />
+			<OIDAlias id="DC 2" oid=".dcInput2Status" />
+			<OIDAlias id="SUBNET" oid=".subnetMask" />
+			<OIDAlias id="IP GATEWAY" oid=".gatewayAddress" />
+			<OIDAlias id="PRIMARY LED" oid=".primaryLEDStatus" />
+			<OIDAlias id="BACKUP LED" oid=".backupLEDStatus" />
+		</OIDAlias>
+		<OIDAlias id="TRAPS" oid=".traps.trapPrefix" />
+		<OIDAlias id="CHANNEL" oid=".channel.channelTable.channelAttribute" >
+			<OIDAlias id="CHANNEL ENABLE" oid=".enableState" />
+			<OIDAlias id="CHANNEL NAME" oid=".name" />
+			<OIDAlias id="CHANNEL AUTO TRIGGER" oid=".autoTriggerEnable" />
+			<OIDAlias id="CHANNEL PRIMARY STATE" oid=".primaryInputState" />
+			<OIDAlias id="CHANNEL BACKUP STATE" oid=".backupInputState" />
+			<OIDAlias id="CHANNEL PRIMARY VOLTS" oid=".primaryInputVolt" />
+			<OIDAlias id="CHANNEL BACKUP VOLTS" oid=".backupInputVolt" />
+		</OIDAlias>
+	</OIDAlias>
+
+	<UnitTypeDef typeName="TEKTRONIX_ECO-8000_1.0.0" snmpVersion="2C">
+		
+		<!-- Standard SNMP and Ethernet Definitions -->
+	
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: eco8000.rsnmp 3770 2019-01-22 11:47:23Z MichaelMunns $</StaticString>
+		</StaticDef>
+	
+		<TranslationDef link="PORT NAME ARRAY" >
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>	
+		
+		<TranslationDef link="PORT STATUS ARRAY" >
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>	
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<GetNextArray dynamic="true"/> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<GetNextArray dynamic="true"/> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<GetNextArray dynamic="true"/>   
+		</TranslationDef>
+		
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<GetNextArray dynamic="true"/>  
+		</TranslationDef>
+
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<GetNextArray dynamic="true"/>   
+		</TranslationDef>
+		
+		<TranslationDef link="PORT TRAFFIC IN ARRAY">
+			<GetNextArray dynamic="true"/>   
+		</TranslationDef>
+
+		<TranslationDef link="PORT TRAFFIC OUT ARRAY">
+			<GetNextArray dynamic="true"/>   
+		</TranslationDef>
+		
+		<!-- Tek specific translation definitions -->
+		
+		<TranslationDef rcLogField="FAULT_STATUS" pollRate="10" >
+			<OID alias="STATUS FAULT">.0</OID>
+			<StringRule match=".*PS1 AC Fault.*" format="FAIL: PSU 1 Fault: %s" />
+			<StringRule match=".*PS2 AC Fault.*" format="FAIL: PSU 2 Fault: %s" />
+			<StringRule match=".*Primary Fault.*" format="FAIL: Primary Fault: %s" />
+			<StringRule match=".*Backup Fault.*" format="FAIL: Backup Fault: %s" />
+			<ErrorRule format="WARN: No Data" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FIRMWARE_VERSION" pollRate="600" >
+			<OID alias="FIRMWARE VERSION">.0</OID>
+			<StringRule />
+			<ErrorRule format="WARN: No Data" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_DHCP" pollRate="600" >
+			<OID alias="DHCP">.0</OID>
+			<NumRule value="0" format="INFO: DHCP Disabled" />
+			<NumRule value="1" format="INFO: DHCP Enabled" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMPERATURE_STATUS" pollRate="60" >
+			<OID alias="TEMP">.0</OID>
+			<StringRule match=".*(FAULT).*" format="FAIL: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="INFO: %s"/>
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYSTEM_CLOCK_BATTERY_STATUS" pollRate="60" >
+			<OID alias="BATTERY">.0</OID>
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="WARN: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_1_FAN_STATUS" pollRate="60" >
+			<OID alias="FAN">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match="PS1 Fan is running.*" format="OK: PSU 1 Fan running" />
+			<StringRule format="WARN: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_2_FAN_STATUS" pollRate="60" >
+			<OID alias="FAN">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match=".*PS2 Fan is running.*" format="OK: PSU 2 Fan running" />
+			<StringRule format="WARN: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_HOURS" pollRate="600" >
+			<OID alias="PSU HOURS">.0</OID>
+			<StringRule format="INFO: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_12V_STATUS" pollRate="600" >
+			<OID alias="12V">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="INFO: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_1_AC_INPUT_STATUS" pollRate="60" >
+			<OID alias="AC 1">.0</OID>
+			<StringRule match="green" format="OK: AC Input Status is Green" />
+			<StringRule match="dim green" format="OK: AC Input Status is Dim Green" />
+			<StringRule match="yellow" format="WARN: AC Input Status is Yellow" />
+			<StringRule match="red" format="FAIL: AC Input Status is Red" />
+			<ConstRule format="WARN: %s" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_2_AC_INPUT_STATUS" pollRate="60" >
+			<OID alias="AC 2">.0</OID>
+			<StringRule match="green" format="OK: AC Input Status is Green" />
+			<StringRule match="dim green" format="OK: AC Input Status is Dim Green" />
+			<StringRule match="yellow" format="WARN: AC Input Status is Yellow" />
+			<StringRule match="red" format="FAIL: AC Input Status is Red" />
+			<ConstRule format="WARN: %s" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_1_DC_INPUT_STATUS" pollRate="60" >
+			<OID alias="DC 1">.0</OID>
+			<StringRule match="green" format="OK: DC Input Status is Green" />
+			<StringRule match="dim green" format="OK: DC Input Status is Dim Green" />
+			<StringRule match="yellow" format="WARN: DC Input Status is Yellow" />
+			<StringRule match="red" format="FAIL: DC Input Status is Red" />
+			<ConstRule format="WARN: %s" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_2_DC_INPUT_STATUS" pollRate="60" >
+			<OID alias="DC 2">.0</OID>
+			<StringRule match="green" format="OK: DC Input Status is Green" />
+			<StringRule match="dim green" format="OK: DC Input Status is Dim Green" />
+			<StringRule match="yellow" format="WARN: DC Input Status is Yellow" />
+			<StringRule match="red" format="FAIL: DC Input Status is Red" />
+			<ConstRule format="WARN: %s" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="NUMBER_OF_CHANNELS" pollRate="600" >
+			<OID alias="CHANNELS">.0</OID>
+			<StringRule format="INFO: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANGEOVER_MODE" pollRate="600" >
+			<OID alias="ECO AUTO">.0</OID>
+			<NumRule value="0" format="OK: Auto" />
+			<NumRule value="1" format="WARN: Manual" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="WEB_UI_STATE" pollRate="600" >
+			<OID alias="WEB UI">.0</OID>
+			<NumRule value="0" format="OK: Full Control" />
+			<NumRule value="1" format="OK: Read Only" />
+			<NumRule value="2" format="WARN: Disabled" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="INPUT_SELECT" pollRate="30" >
+			<OID alias="IO SELECT">.0</OID>
+			<NumRule value="0" format="OK: Primary" />
+			<NumRule value="1" format="WARN: Backup" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="POWER_ON_SELF_TEST_RESULT" pollRate="600" >
+			<OID alias="POWER ON TEST">.0</OID>
+			<StringRule match=".*SELF-TEST PASS.*" format="OK: Pass" />
+			<StringRule format="WARN: %s" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SUBNET_MASK" pollRate="600" >
+			<OID alias="SUBNET">.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_GATEWAY" pollRate="600" >
+			<OID alias="IP GATEWAY">.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SPG_PRIMARY_LED" pollRate="60" >
+			<OID alias="PRIMARY LED">.0</OID>
+			<StringRule match="^SPG off.*" format="FAIL: SPG PRIMARY LED Off" />
+			<StringRule match="^SPG on.*" format="OK: SPG PRIMARY LED On" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LTC_PRIMARY_LED" pollRate="60" >
+			<OID alias="PRIMARY LED">.0</OID>
+			<StringRule match=".*LTC off.*" format="FAIL: LTC PRIMARY LED Off" />
+			<StringRule match=".*LTC on.*" format="OK: LTC PRIMARY LED On" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH1_PRIMARY_LED" pollRate="60" >
+			<OID alias="PRIMARY LED">.0</OID>
+			<StringRule match=".*CH1 red.*" format="FAIL: CH1 PRIMARY LED red" />
+			<StringRule match=".*CH1 yellow.*" format="WARN: CH1 PRIMARY LED yellow" />
+			<StringRule match=".*CH1 on.*" format="OK: CH1 PRIMARY LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH2_PRIMARY_LED" pollRate="60" >
+			<OID alias="PRIMARY LED">.0</OID>
+			<StringRule match=".*CH2 red.*" format="FAIL: CH2 PRIMARY LED red" />
+			<StringRule match=".*CH2 yellow.*" format="WARN: CH2 PRIMARY LED yellow" />
+			<StringRule match=".*CH2 on.*" format="OK: CH2 PRIMARY LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH3_PRIMARY_LED" pollRate="60" >
+			<OID alias="PRIMARY LED">.0</OID>
+			<StringRule match=".*CH3 red.*" format="FAIL: CH3 PRIMARY LED red" />
+			<StringRule match=".*CH3 yellow.*" format="WARN: CH3 PRIMARY LED yellow" />
+			<StringRule match=".*CH3 on.*" format="OK: CH3 PRIMARY LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SPG_BACKUP_LED" pollRate="60" >
+			<OID alias="BACKUP LED">.0</OID>
+			<StringRule match="^SPG off.*" format="FAIL: SPG BACKUP LED Off" />
+			<StringRule match="^SPG on.*" format="OK: SPG BACKUP LED On" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LTC_BACKUP_LED" pollRate="60" >
+			<OID alias="BACKUP LED">.0</OID>
+			<StringRule match=".*LTC off.*" format="FAIL: LTC BACKUP LED Off" />
+			<StringRule match=".*LTC on.*" format="OK: LTC BACKUP LED On" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH1_BACKUP_LED" pollRate="60" >
+			<OID alias="BACKUP LED">.0</OID>
+			<StringRule match=".*CH1 red.*" format="FAIL: CH1 Backup LED red" />
+			<StringRule match=".*CH1 yellow.*" format="WARN: CH1 Backup LED yellow" />
+			<StringRule match=".*CH1 on.*" format="OK: CH1 Backup LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH2_BACKUP_LED" pollRate="60" >
+			<OID alias="BACKUP LED">.0</OID>
+			<StringRule match=".*CH2 red.*" format="FAIL: CH2 Backup LED red" />
+			<StringRule match=".*CH2 yellow.*" format="WARN: CH2 Backup LED yellow" />
+			<StringRule match=".*CH2 on.*" format="OK: CH2 Backup LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CH3_BACKUP_LED" pollRate="60" >
+			<OID alias="BACKUP LED">.0</OID>
+			<StringRule match=".*CH3 red.*" format="FAIL: CH3 Backup LED red" />
+			<StringRule match=".*CH3 yellow.*" format="WARN: CH3 Backup LED yellow" />
+			<StringRule match=".*CH3 on.*" format="OK: CH3 Backup LED green" />
+			<ConstRule format="WARN: No Data" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_ENABLE_STATE" pollRate="60" >
+			<OID alias="CHANNEL ENABLE">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<NumRule value="0" format="WARN: Disabled" />
+			<NumRule value="1" format="OK: Enabled" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_NAME" pollRate="300" >
+			<OID alias="CHANNEL NAME">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<StringRule />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_AUTO_TRIGGER_STATE" pollRate="60" >
+			<OID alias="CHANNEL AUTO TRIGGER">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<NumRule value="0" format="WARN: Disabled" />
+			<NumRule value="1" format="OK: Enabled" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_PRIMARY_INPUT_STATE" pollRate="30" >
+			<OID alias="CHANNEL PRIMARY STATE">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<NumRule value="0" format="OK: No Errors" />
+			<NumRule value="1" format="WARN: Errors Detected" />
+			<NumRule value="2" format="WARN: Errors" />
+			<NumRule value="3" format="WARN: Channel Off" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_BACKUP_INPUT_STATE" pollRate="30" >
+			<OID alias="CHANNEL BACKUP STATE">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<NumRule value="0" format="OK: No Errors" />
+			<NumRule value="1" format="WARN: Errors Detected" />
+			<NumRule value="2" format="WARN: Errors" />
+			<NumRule value="3" format="WARN: Channel Off" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_PRIMARY_VOLTAGE" pollRate="60" >
+			<OID alias="CHANNEL PRIMARY VOLTS">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<StringRule format="%s mV" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_BACKUP_VOLTAGE" pollRate="60" >
+			<OID alias="CHANNEL BACKUP VOLTS">.#I</OID>
+			<GetNextArray dynamic="true" />
+			<StringRule format="%s mV" />
+			<ErrorRule format="FAIL: SNMP Error" />
+		</TranslationDef>
+		
+		<!-- TEK SNMP TRAPS -->
+		
+		<TranslationDef rcLogField="PRIMARY_FAULT_STATUS" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.primaryFaultTrap</TrapOID>
+				<ConstCondition format="FAIL: Primary Fault" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="BACKUP_FAULT_STATUS" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.backupFaultTrap</TrapOID>
+				<ConstCondition format="FAIL: Backup Fault" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAILOVER_STATUS" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.primaryBackupSwitchTrap</TrapOID>
+				<ConstCondition format="WARN: Failover has occurred" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAILOVER_STATUS" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.backupTestDueTrap</TrapOID>
+				<ConstCondition format="WARN: Backup Test Is Due" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="HREF_RELAY" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.hrefRelayFailedTrap</TrapOID>
+				<ConstCondition format="FAIL: Href relay has failed" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_1_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.powerSupply1WarningTrap</TrapOID>
+				<ConstCondition format="WARN: PSU1 Warning" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_2_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.powerSupply2WarningTrap</TrapOID>
+				<ConstCondition format="WARN: PSU2 Warning" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_1_FAN" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.powerSupply1FanFaultTrap</TrapOID>
+				<ConstCondition format="WARN: PSU1 Fan Fault" />
+			</TrapDef>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_2_FAN" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.powerSupply2FanFaultTrap</TrapOID>
+				<ConstCondition format="WARN: PSU2 Fan Fault" />
+			</TrapDef>
+		</TranslationDef>
+	
+	</UnitTypeDef>
+
+</DefinitionGroup>

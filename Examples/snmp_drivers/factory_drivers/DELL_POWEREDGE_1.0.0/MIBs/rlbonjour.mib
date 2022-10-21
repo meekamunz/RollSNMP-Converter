@@ -1,0 +1,37 @@
+RADLAN-BONJOUR-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rnd             FROM RADLAN-MIB
+    OBJECT-TYPE,
+    MODULE-IDENTITY FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, TruthValue, DisplayString
+                    FROM SNMPv2-TC;
+
+
+rlBonjour MODULE-IDENTITY
+          LAST-UPDATED "200603260000Z"
+          ORGANIZATION "Radlan Computer Communications Ltd."
+          CONTACT-INFO
+                 "radlan.com"
+          DESCRIPTION
+                 "The private MIB module definition for Bpnjour protocol."
+          REVISION "200603260000Z"
+          DESCRIPTION
+                 "Initial revision."
+         ::= { rnd 114 }
+
+rlBonjourPublish OBJECT-TYPE
+    SYNTAX      INTEGER {
+        enable  (1),
+        disable (2)
+    }
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION
+        "Indicates whether to enable or disable Bonjour publishing."
+    DEFVAL    { enable }
+
+    ::= {rlBonjour 1 }
+
+END
+

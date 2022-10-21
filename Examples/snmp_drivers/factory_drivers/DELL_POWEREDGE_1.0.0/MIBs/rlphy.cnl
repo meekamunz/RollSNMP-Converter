@@ -1,0 +1,34 @@
+
+-- Title:      RADLAN POLICY MIB
+-- Version:    7.30
+-- Date:       13 May 2002
+-- By:         Michael Indenbaum, Ronen Tausi
+-- E-mail:     michael@radlan.com, ronent@radlan.com
+--
+
+RADLAN-PHY-MIB-A DEFINITIONS ::= BEGIN
+
+
+IMPORTS
+    OBJECT-TYPE                                 FROM RFC-1212
+    ifIndex                                     FROM IF-MIB
+    rlPhy                                       FROM RADLAN-MIB;
+
+
+
+rlPhyTest OBJECT IDENTIFIER ::= { rlPhy 1 }
+
+
+rlPhyTestSetTable   OBJECT-TYPE
+    ::= { rlPhyTest 1}
+
+rlPhyTestSetEntry OBJECT-TYPE
+    ::= { rlPhyTestSetTable 1 }
+
+rlPhyTestGetTable   OBJECT-TYPE
+    ::= { rlPhyTest 2}
+
+rlPhyTestGetEntry OBJECT-TYPE
+    ::= { rlPhyTestGetTable 1 }
+
+END

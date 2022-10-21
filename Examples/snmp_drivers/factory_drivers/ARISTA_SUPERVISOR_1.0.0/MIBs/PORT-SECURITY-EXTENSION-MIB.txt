@@ -1,0 +1,96 @@
+PORT-SECURITY-EXTENSION-MIB DEFINITIONS ::= BEGIN
+
+--
+-- EOS snmp extension script v1.0
+--
+
+IMPORTS
+   MODULE-IDENTITY, OBJECT-TYPE, Integer32   			FROM SNMPv2-SMI
+   TEXTUAL-CONVENTION, TruthValue				FROM SNMPv2-TC
+   netSnmpExamples 						FROM NET-SNMP-EXAMPLES-MIB
+   ifIndex							FROM IF-MIB
+;
+
+portSecurityExtension MODULE-IDENTITY
+   LAST-UPDATED "201805251500Z"
+   ORGANIZATION "www.arista.com"
+   CONTACT-INFO "rw@arista.com"
+   DESCRIPTION "MIB objects for snmp extension script"
+   ::= { netSnmpExamples 1000 }
+
+portSecurityTable OBJECT-TYPE
+   SYNTAX SEQUENCE OF portSecurityEntry
+   MAX-ACCESS not-accessible
+   STATUS current
+   DESCRIPTION "Table of port security status"
+   INDEX { ifIndex }
+   ::= { portSecurityExtension 100 }
+
+portSecurityEntry ::=
+   SEQUENCE {
+      portSecurityEnabled Integer32,
+      portStatus OctetString,
+      violationMode OctetString,
+      maxMacAddresses Integer32,
+      totalMacAddresses Integer32,
+      agingType OctetString,
+      agingTime Integer32,
+      macAclApplied Integer32,
+      macAclName OctetString
+}
+
+portSecurityEnabled OBJECT-TYPE
+   SYNTAX TruthValue
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 1 }
+
+portStatus OBJECT-TYPE
+   SYNTAX OctetString
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 2 }
+
+violationMode OBJECT-TYPE
+   SYNTAX OctetString
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 3 }
+
+maxMacAddresses OBJECT-TYPE
+   SYNTAX Integer32
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 4 }
+
+totalMacAddresses OBJECT-TYPE
+   SYNTAX Integer32
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 5 }
+
+agingType OBJECT-TYPE
+   SYNTAX OctetString
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 6 }
+
+agingTime OBJECT-TYPE
+   SYNTAX Integer32
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 7 }
+
+macAclApplied OBJECT-TYPE
+   SYNTAX TruthValue
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 8 }
+
+macAclName OBJECT-TYPE
+   SYNTAX OctetString
+   MAX-ACCESS not-accessible
+   STATUS current
+   ::= {portSecurityTable 9 }
+
+END

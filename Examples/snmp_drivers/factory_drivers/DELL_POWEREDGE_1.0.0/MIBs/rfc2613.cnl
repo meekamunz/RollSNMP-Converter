@@ -1,0 +1,91 @@
+  SMON-CNL DEFINITIONS ::= BEGIN
+
+   IMPORTS
+        MODULE-IDENTITY, OBJECT-TYPE, Counter32,
+        Integer32, Counter64
+                FROM SNMPv2-SMI
+        RowStatus, TEXTUAL-CONVENTION
+                FROM SNMPv2-TC
+        rmon, OwnerString
+                FROM RMON-MIB
+        LastCreateTime, DataSource, rmonConformance, probeConfig
+                FROM RMON2-MIB
+        InterfaceIndex
+                FROM IF-MIB
+        MODULE-COMPLIANCE, OBJECT-GROUP
+                FROM SNMPv2-CONF;
+
+      switchRMON OBJECT IDENTIFIER
+        ::= { rmon 22 }
+
+
+
+   smonMIBObjects OBJECT IDENTIFIER ::= { switchRMON 1 }
+
+   dataSourceCaps          OBJECT IDENTIFIER ::= {smonMIBObjects 1}
+   smonStats               OBJECT IDENTIFIER ::= {smonMIBObjects 2}
+   portCopyConfig          OBJECT IDENTIFIER ::= {smonMIBObjects 3}
+   smonRegistrationPoints  OBJECT IDENTIFIER ::= {smonMIBObjects 4}
+
+
+   dataSourceCapsTable OBJECT-TYPE
+   ::= { dataSourceCaps 1 }
+
+   dataSourceCapsEntry  OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { dataSourceCapsTable 1 }
+
+
+   smonVlanStatsControlTable OBJECT-TYPE
+    ::= { smonStats 1 }
+
+   smonVlanStatsControlEntry OBJECT-TYPE
+   ROW-STATUS-TYPE v2-status-field
+   STATUS-FIELD-NAME smonVlanStatsControlStatus
+    ::= { smonVlanStatsControlTable 1 }
+
+
+   -- The VLAN Statistics Table
+
+   smonVlanIdStatsTable  OBJECT-TYPE
+   ::= { smonStats 2 }
+
+
+   smonVlanIdStatsEntry  OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { smonVlanIdStatsTable 1 }
+
+
+   -- smonPrioStatsControlTable
+
+   smonPrioStatsControlTable OBJECT-TYPE
+    ::= { smonStats 3 }
+
+   smonPrioStatsControlEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME smonPrioStatsControlStatus
+    ::= { smonPrioStatsControlTable 1 }
+
+
+   -- The Priority Statistics Table
+
+   smonPrioStatsTable  OBJECT-TYPE
+    ::= { smonStats 4 }
+
+   smonPrioStatsEntry  OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { smonPrioStatsTable 1 }
+
+
+   portCopyTable  OBJECT-TYPE
+   ::= { portCopyConfig 1 }
+
+   portCopyEntry  OBJECT-TYPE
+   ROW-STATUS-TYPE v2-status-field
+   STATUS-FIELD-NAME portCopyStatus
+   ::= { portCopyTable 1 }
+
+
+
+   END
+

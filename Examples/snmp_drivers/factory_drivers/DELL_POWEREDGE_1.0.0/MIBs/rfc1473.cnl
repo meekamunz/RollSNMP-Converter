@@ -1,0 +1,37 @@
+
+          PPP-IP-NCP-MIB-A DEFINITIONS ::= BEGIN
+
+          IMPORTS
+      --         Counter
+      --              FROM RFC1155-SMI
+               ifIndex
+                    FROM RFC1213-MIB
+               OBJECT-TYPE
+                    FROM RFC-1212
+               ppp
+                    FROM PPP-LCP-MIB;
+
+               -- The PPP IP Group.
+               -- Implementation of this group is mandatory for all
+               -- PPP implementations that support operating IP over PPP.
+
+               pppIp OBJECT IDENTIFIER ::= { ppp 3 }
+
+
+          pppIpTable   OBJECT-TYPE
+               ::= { pppIp 1 }
+
+
+          pppIpEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppIpTable 1 }
+
+          pppIpConfigTable   OBJECT-TYPE
+               ::= { pppIp 2 }
+
+          pppIpConfigEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppIpConfigTable 1 }
+
+          END
+

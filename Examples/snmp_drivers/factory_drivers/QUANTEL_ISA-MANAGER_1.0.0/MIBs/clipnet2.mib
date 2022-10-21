@@ -1,0 +1,236 @@
+-- Copyright (c) Quantel 2003
+--
+-- Title: Clipnet2 MIB
+-- Issue: 1.1
+-- Date:  24/10/2007 IdR
+--
+
+QUANTEL-CLIPNET2-MIB
+
+DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY,
+        OBJECT-TYPE FROM SNMPv2-SMI
+        Counter FROM RFC1155-SMI
+        DisplayString FROM RFC1213-MIB
+        TRAP-TYPE FROM RFC-1215
+        quantelProduct FROM QUANTEL-MIB
+        ;
+
+-- Module Identification Definition
+
+quantelClipnet2 MODULE-IDENTITY
+    LAST-UPDATED "200710240000Z"
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"
+    DESCRIPTION "This is the Clipnet2 MIB"
+    ::= { quantelProduct 9 }
+
+-- Groups defined in this MIB
+sysconfig     OBJECT IDENTIFIER ::= { quantelClipnet2 1 }
+clipnet2Stats OBJECT IDENTIFIER ::= { quantelClipnet2 2 }
+
+-- sysconfig Group
+--
+-- No items currently defined in this group
+--
+
+-- clipnet2Stats Group
+
+qcpSessionsInSuccessful OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of successful QCP sessions in."
+    ::= { clipnet2Stats 1 }
+
+qcpSessionsOutSuccessful OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of successful QCP sessions out."
+    ::= { clipnet2Stats 2 }
+
+qcpSessionsInAborted OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of aborted QCP sessions In."
+    ::= { clipnet2Stats 3 }
+
+qcpSessionsOutAborted OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of aborted QCP sessions Out."
+    ::= { clipnet2Stats 4 }
+
+cqpSessionsOut OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of CQP sessions out."
+    ::= { clipnet2Stats 5 }
+
+cqpSessionsIn OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of CQP sessions in."
+    ::= { clipnet2Stats 6 }
+
+cqpGetfrags OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of CQP getfrags commands."
+    ::= { clipnet2Stats 7 }
+
+cqpSPosts OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of CQP spost commands."
+    ::= { clipnet2Stats 8 }
+
+diskWrites OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk Writes."
+    ::= { clipnet2Stats 9 }
+
+diskReads OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk Reads."
+    ::= { clipnet2Stats 10 }
+
+diskAborts OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk Aborts."
+    ::= { clipnet2Stats 11 }
+
+diskFatals OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk Fatals."
+    ::= { clipnet2Stats 12 }
+
+diskGuidErrors OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk GUID Errors."
+    ::= { clipnet2Stats 13 }
+
+diskSignatureErrors OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of Clipnet Disk Signature Errors."
+    ::= { clipnet2Stats 14 }
+
+stdSendCount OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of standard ethernet packets sent."
+    ::= { clipnet2Stats 15 }
+
+jumboSendCount OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of jumbo ethernet packets sent."
+    ::= { clipnet2Stats 16 }
+
+totalSendBytes OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of bytes sent. Note this is likely to wrap."
+    ::= { clipnet2Stats 17 }
+
+stdRecvCount OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of standard ethernet packets received."
+    ::= { clipnet2Stats 18 }
+
+jumboRecvCount OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of jumbo ethernet packets received."
+    ::= { clipnet2Stats 19 }
+
+totalRecvBytes OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of bytes received. Note this is likely to wrap."
+    ::= { clipnet2Stats 20 }
+
+totalResendCount OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of resend requests."
+    ::= { clipnet2Stats 21 }
+
+diskWriteMagics OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of disk write magics."
+    ::= { clipnetStats 22 }
+
+diskReadMagics OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of disk read magics."
+    ::= { clipnetStats 23 }
+
+diskWriteWarnings OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of disk write warnings."
+    ::= { clipnetStats 24 }
+
+diskReadWarnings OBJECT-TYPE
+    SYNTAX Counter
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The total number of disk read warnings."
+    ::= { clipnetStats 25 }
+
+
+-- Traps
+
+clipnetDiskWarning TRAP-TYPE
+    ENTERPRISE quantelClipnet
+    DESCRIPTION "Trap is sent when a disk warning occurs"
+    ::= 1
+
+clipnetDiskFatal TRAP-TYPE
+    ENTERPRISE quantelClipnet
+    DESCRIPTION "Trap is sent when a disk fatal error occurs"
+    ::= 2
+
+END
+

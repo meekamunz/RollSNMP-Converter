@@ -1,0 +1,951 @@
+-- Copyright 2006 Evertz Microsystems Ltd.
+-- 2008/10/17
+-- Confidential
+
+LBANDRTR-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprLBANDRTR
+        FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+        FROM RFC-1212;
+
+-- AGENT       
+    lbandrtrControl      OBJECT IDENTIFIER ::= { miniexprLBANDRTR 3 }
+    lbandrtrNotification OBJECT IDENTIFIER ::= { miniexprLBANDRTR 4 } 
+    lbandrtrTraps        OBJECT IDENTIFIER ::= { miniexprLBANDRTR 5 }
+
+    numInputs OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the largest input number enabled on the
+                router."
+        ::= { lbandrtrControl 1 }
+
+    numOutputs OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the largest output number enabled on the
+                router."
+        ::= { lbandrtrControl 2 }
+
+    numGpReg OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the number of general purpose registers
+                supported by the router."
+        ::= { lbandrtrControl 3 }
+
+    inputControlTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF InputControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related to the
+                router input controls."
+        ::= { lbandrtrControl 4 }
+
+    inputControlEntry OBJECT-TYPE
+        SYNTAX  InputControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { inputIndex }
+        ::= { inputControlTable 1 }
+
+    InputControlEntry ::= SEQUENCE {
+        inputIndex                  INTEGER,
+        inputDescription            OCTET STRING,
+        inputMode                   INTEGER,
+        inputAgcOutputPowerLevel    INTEGER,
+        inputGain                   INTEGER,
+        inputUpperThreshold         INTEGER,
+        inputLowerThreshold         INTEGER,
+        inputSquelchThreshold       INTEGER,
+        inputSquelchEnable          INTEGER,
+        inputPowerLevel             INTEGER
+    }
+
+    inputIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the input control
+                table.  Its value ranges between 1 and the value
+                of numInputs."
+        ::= { inputControlEntry 1 }
+
+    inputDescription OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(1..16))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to associate a description with a router
+                input."
+        ::= { inputControlEntry 2 }
+
+    inputMode OBJECT-TYPE
+        SYNTAX  INTEGER {
+                manual(0),
+                automaticGainControl(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the mode under which an input's
+                gain stage operates.  'manual' is the default for this object."
+        ::= { inputControlEntry 3 }
+
+    inputAgcOutputPowerLevel OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the desired target power
+                level at the output of the gain stage associated with an
+                input.  This object has significance only when the input
+                mode is set to AGC and should not be set when the mode
+                is set to manual.  This object's range typically is -50
+                to -20 dBm with a default of -20 dBm."
+        ::= { inputControlEntry 4 }
+
+    inputGain OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the amount of gain applied
+                to an input in the gain stage.  This object has significance
+                only when the input mode is set to manual and should not be
+                set when the mode is set to AGC.  This object's range
+                typically is -6 to 20 dB with a default of 0 dB."
+        ::= { inputControlEntry 5 }
+
+    inputUpperThreshold OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the power level above which
+                an input is considered to be operating at high power and below
+                which is considered to be operating at normal power.  This
+                object's range typically is -30 to -5 dBm with a default of
+                -20 dBm."
+        ::= { inputControlEntry 6 }
+
+    inputLowerThreshold  OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the power level above which an
+                input is considered to be operating at normal power and below
+                which is considered to be operating at low power.  This object's
+                range typically is -70 to -31 dBm with a default of -65 dBm."
+        ::= { inputControlEntry 7 }
+
+    inputSquelchThreshold OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-write
+        STATUS mandatory
+        DESCRIPTION
+                "This object is used to control the power level above which an
+                input is considered to be operating at low power and below which
+                is considered to be off.  This object's range typically is -70
+                to -50 dBm with a default of -70 dBm."
+        ::= { inputControlEntry 8 }
+
+    inputSquelchEnable OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disable(0),
+                enable(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object controls whether or not an input is automatically
+                 turned off should the power level at the output of the gain
+                 stage fall below the squelch threshold."
+        ::= { inputControlEntry 9 }
+
+    inputPowerLevel OBJECT-TYPE
+        SYNTAX  INTEGER ( -126..127 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to report the power level at the output of
+                the gain stage associated with an input.  NOTE: A value of
+                -126 dBm indicates that the power level is too low to measure.
+                A value of 127 dBm indicates that the power level is too high
+                measure."
+        ::= { inputControlEntry 10 }
+
+    outputControlTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF OutputControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related to the
+                router output controls."
+        ::= { lbandrtrControl 5 }
+
+    outputControlEntry OBJECT-TYPE
+        SYNTAX  OutputControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { outputIndex }
+        ::= { outputControlTable 1 }
+
+    OutputControlEntry ::= SEQUENCE {
+        outputIndex         INTEGER,
+        outputDescription   OCTET STRING,
+        outputInputSelect   INTEGER,
+        outputStatusFlags   INTEGER,
+        outputSwitchDelay   INTEGER
+    }
+
+    outputIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the output control table.  Its
+                value ranges between 1 and the value of numOutputs."
+        ::= { outputControlEntry 1 }
+
+    outputDescription OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(1..16))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to associate a description witch a router
+                output."
+        ::= { outputControlEntry 2 }
+
+    outputInputSelect  OBJECT-TYPE
+        SYNTAX  INTEGER ( -1..64 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to report or switch the indicated input
+                to the indexed output.  Its value ranges between -1 and the
+                value of numInputs.  A set using value -1 indicates the
+                output, regardless of its presence within the XRF6 chassis,
+                is to be disabled.  This proves useful in a passive redundant
+                scenario.  A value of 0 means the output is disabled."
+        ::= { outputControlEntry 3 }
+
+    outputStatusFlags OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..65535 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to report or set the status flags of the
+                indexed output.  Each status flag consists of a bit in this
+                multi-byte integer value.  The status flags correspond to the
+                following hexadecimal values:
+                    0x1 - Output is locked
+                    0x2 - Output is protected
+                More than 1 flag may apply to the indexed output at a given
+                time.  For instance, if this object reports 0x3 it means the
+                output is locked and protected."
+        ::= { outputControlEntry 4 }
+
+    outputSwitchDelay OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..5000 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control the time, in milliseconds,
+                between when an output is turned off and when a new crosspoint
+                is applied to it."
+        ::= { outputControlEntry 5 }
+
+    gpControlTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF GpControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related to the
+                router general purpose controls."
+        ::= { lbandrtrControl 6 }
+
+    gpControlEntry OBJECT-TYPE
+        SYNTAX  GpControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { gpIndex }
+        ::= { gpControlTable 1 }
+
+    GpControlEntry ::= SEQUENCE {
+        gpIndex     INTEGER,
+        gpRegister  INTEGER
+    }
+
+    gpIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..64 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the general purpose control
+                table.  Its value ranges between 1 and the value of numGpReg."
+        ::= { gpControlEntry 1 }
+
+    gpRegister OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..2147483647 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to control a general purpose register."
+        ::= { gpControlEntry 2 }
+
+    cardControlTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF CardControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related to the
+                feature cards of the router."
+        ::= { lbandrtrControl 7 }
+
+    cardControlEntry OBJECT-TYPE
+        SYNTAX  CardControlEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { cardIndex }
+        ::= { cardControlTable 1 }
+
+    CardControlEntry ::= SEQUENCE {
+        cardIndex           INTEGER,
+        cardCommunication   INTEGER,
+        cardType            INTEGER,
+        firmwareVersion     OCTET STRING,
+        prepareUpgrade      INTEGER,
+        moduleState         INTEGER,
+        transferStatus      INTEGER,
+        abortTransfer       INTEGER,
+        commitReboot        INTEGER
+    }
+
+    cardIndex OBJECT-TYPE
+        SYNTAX  INTEGER {
+                slot1(1),
+                slot2(2),
+                slot3(3),
+                slot4(4),
+                slot5(5),
+                slot6(6),
+                slot7(7),
+                slot8(8)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the card control table."
+        ::= { cardControlEntry 1 }
+
+    cardCommunication OBJECT-TYPE
+        SYNTAX  INTEGER {
+                cardNotPresent(1),
+                cardPresentNoComm(2),
+                cardPresentComm(3)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the frame controller's current ability
+                to communicate with the card in the indexed slot.  If '1'
+                is reported then the card is not present in the chassis.
+                If '2' is reported then the card is present in the chassis
+                but the frame controller is not communicating with it.  If
+                '3' is reported then the card is present in the chassis and
+                the frame controller is communicating with it."
+        ::= { cardControlEntry 2 }
+
+    cardType OBJECT-TYPE
+        SYNTAX  INTEGER {
+                x6400rf_i16lb(0),
+                x6400rf_o16lb(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the type of card which can be present
+                in the indexed slot."
+        ::= { cardControlEntry 3 }
+
+    firmwareVersion OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(1..32))
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the firmware version associated with the
+                card in the indexed slot."
+        ::= { cardControlEntry 4 }
+
+    prepareUpgrade OBJECT-TYPE
+        SYNTAX  INTEGER {
+                noSubProcessorBootUpgrade(1),
+                subProcessorBootUpgrade(2)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object instructs how the card in the indexed slot should
+    			prepare for firmware upgrade.  If set to '2' then the
+    			subprocessor, if present, will have its boot code upgraded
+    			should the upgrade fimrware file contain a subprocessor boot
+    			image.  Loss of signal will occur during the time the
+    			subprocessor boot code is upgraded.  If set to '1' then the
+    			subprocessor boot code firmware will not be upgraded and no
+    			loss of signal will result.  A value other than those
+                listed indicates the card is not prepared for upgrade."
+        ::= { cardControlEntry 5 }
+
+    moduleState OBJECT-TYPE
+        SYNTAX  INTEGER {
+                idle(1),
+                readyToRcv(2),
+                transferInProgress(3),
+                transferComplete(4)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the state of the upgrade process for
+                the card in the indexed slot."
+        ::= { cardControlEntry 6 }
+
+    transferStatus OBJECT-TYPE
+        SYNTAX  INTEGER {
+                none(1),
+                passed(2),
+                failedWrongFirmware(3),
+                failedBadCrc(4),
+                failedTooLarge(5),
+                failedFirmwareIncomplete(6),
+                failedFirmwarePrepareUpgradeMismatch(7)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the result of the upgrade process for
+                the card in the indexed slot."
+        ::= { cardControlEntry 7 }
+
+    abortTransfer OBJECT-TYPE
+        SYNTAX  INTEGER {
+                set(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "When set this object instructs the card in the indexed slot
+                to abort the upgrade process."
+        ::= { cardControlEntry 8 }
+
+    commitReboot OBJECT-TYPE
+        SYNTAX  INTEGER {
+                set(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "When set this object instructs the card in the indexed slot
+                to commit its firmware upgrade image to non-volatile storage
+                and to reboot causing the upgraded firmware to take effect.
+                "
+        ::= { cardControlEntry 9 }
+
+    fcFirmwareVersion OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(1..32))
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the firmware version associated with the
+                frame controller."
+        ::= { lbandrtrControl 8 }
+
+    executeSalvo OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..8 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "A read of this object reports the index of the last executed
+                salvo.  A write to this object sets the index of the next
+                salvo to be executed."
+        ::= { lbandrtrControl 9 }
+
+    salvoTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF SalvoEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related to the
+                router salvos."
+        ::= { lbandrtrControl 10 }
+
+    salvoEntry OBJECT-TYPE
+        SYNTAX  SalvoEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX { salvoIndex }
+        ::= { salvoTable 1 }
+
+    SalvoEntry ::= SEQUENCE {
+        salvoIndex          INTEGER,
+        salvoDescription    OCTET STRING,
+        salvoCmd            OCTET STRING,
+        salvoStatusFlags    INTEGER
+    }
+
+    salvoIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..8 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the salvo table."
+    ::= { salvoEntry 1 }
+
+    salvoDescription OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(1..16))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to associate a description with a
+                salvo."
+        ::= { salvoEntry 2 }
+    
+    salvoCmd OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(0..384))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object contains the salvo command of the format:
+                    output<input,output<input,...
+                No spaces are present within the salvo command.  As an
+                example, the salvo command:
+                    1<3,2<0,3<1
+                indicates:
+                    input 3 is to be routed to output 1
+                    output 2 is to be switched off
+                    input 1 is to be routed to ouput 3."
+        ::= { salvoEntry 3 }
+    
+    salvoStatusFlags OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..65535 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to report the status flags of the
+                indexed salvo.  Each status flag consists of a bit in this
+                multi-byte integer value.  The status flags correspond to the
+                following hexadecimal values:
+                    0x1 - At least one output in this salvo is locked
+                    0x2 - At least one output in this salvo is protected
+                More than 1 flag may apply to the indexed salvo at a given
+                time.  For instance, if this object reports 0x3 it means at
+                least one output within this salvo command is locked and
+                protected."
+        ::= { salvoEntry 4 }
+
+    passcodeTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF PasscodeEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains information and objects related
+                to the router passcodes."
+        ::= { lbandrtrControl 11 }
+
+    passcodeEntry OBJECT-TYPE
+        SYNTAX  PasscodeEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX { passcodeIndex }
+        ::= { passcodeTable 1 }
+
+    PasscodeEntry ::= SEQUENCE {
+        passcodeIndex   INTEGER,
+        passcode        INTEGER
+    }
+
+    passcodeIndex OBJECT-TYPE
+        SYNTAX  INTEGER {
+                administrator(1),
+                operator(2)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to index the passcode table."
+        ::= { passcodeEntry 1 }
+
+    passcode OBJECT-TYPE
+        SYNTAX  INTEGER ( 0..9999 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to get/set a maximum 4-character passcode.
+                 There are 2 types of passcodes: administrator and operator.
+                 A passcode is disabled by setting it to 0.  A passcode is
+                 enabled by setting it to a value other than 0.  If the
+                 operator passcode is enabled, it or the administrator passcode
+                 must be entered at the panel in order to lock/unlock
+                 a router output.  If the administrator passcode is enabled, it
+                 must be entered at the panel in order to permit router
+                 configuration."
+        ::= { passcodeEntry 2 }
+
+    mgmtFaultTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF MgmtFaultEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION
+                "This table contains information and objects related to the
+                faults and their control."
+        ::= { lbandrtrNotification 1 }
+
+    mgmtFaultEntry OBJECT-TYPE
+        SYNTAX  MgmtFaultEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { faultName }
+        ::= { mgmtFaultTable 1 }
+
+    MgmtFaultEntry ::= SEQUENCE {
+        faultName       INTEGER,  
+        sendTrap        INTEGER,
+        faultPresent    INTEGER 
+    }
+
+    faultName OBJECT-TYPE
+        SYNTAX  INTEGER {
+                rfHighInput1(1),
+                rfHighInput2(2),
+                rfHighInput3(3),
+                rfHighInput4(4),
+                rfHighInput5(5),
+                rfHighInput6(6),
+                rfHighInput7(7),
+                rfHighInput8(8),
+                rfHighInput9(9),
+                rfHighInput10(10),
+                rfHighInput11(11),
+                rfHighInput12(12),
+                rfHighInput13(13),
+                rfHighInput14(14),
+                rfHighInput15(15),
+                rfHighInput16(16),
+                rfHighInput17(17),
+                rfHighInput18(18),
+                rfHighInput19(19),
+                rfHighInput20(20),
+                rfHighInput21(21),
+                rfHighInput22(22),
+                rfHighInput23(23),
+                rfHighInput24(24),
+                rfHighInput25(25),
+                rfHighInput26(26),
+                rfHighInput27(27),
+                rfHighInput28(28),
+                rfHighInput29(29),
+                rfHighInput30(30),
+                rfHighInput31(31),
+                rfHighInput32(32),
+                rfHighInput33(33),
+                rfHighInput34(34),
+                rfHighInput35(35),
+                rfHighInput36(36),
+                rfHighInput37(37),
+                rfHighInput38(38),
+                rfHighInput39(39),
+                rfHighInput40(40),
+                rfHighInput41(41),
+                rfHighInput42(42),
+                rfHighInput43(43),
+                rfHighInput44(44),
+                rfHighInput45(45),
+                rfHighInput46(46),
+                rfHighInput47(47),
+                rfHighInput48(48),
+                rfHighInput49(49),
+                rfHighInput50(50),
+                rfHighInput51(51),
+                rfHighInput52(52),
+                rfHighInput53(53),
+                rfHighInput54(54),
+                rfHighInput55(55),
+                rfHighInput56(56),
+                rfHighInput57(57),
+                rfHighInput58(58),
+                rfHighInput59(59),
+                rfHighInput60(60),
+                rfHighInput61(61),
+                rfHighInput62(62),
+                rfHighInput63(63),
+                rfHighInput64(64),
+                rfLowInput1(65),
+                rfLowInput2(66),
+                rfLowInput3(67),
+                rfLowInput4(68),
+                rfLowInput5(69),
+                rfLowInput6(70),
+                rfLowInput7(71),
+                rfLowInput8(72),
+                rfLowInput9(73),
+                rfLowInput10(74),
+                rfLowInput11(75),
+                rfLowInput12(76),
+                rfLowInput13(77),
+                rfLowInput14(78),
+                rfLowInput15(79),
+                rfLowInput16(80),
+                rfLowInput17(81),
+                rfLowInput18(82),
+                rfLowInput19(83),
+                rfLowInput20(84),
+                rfLowInput21(85),
+                rfLowInput22(86),
+                rfLowInput23(87),
+                rfLowInput24(88),
+                rfLowInput25(89),
+                rfLowInput26(90),
+                rfLowInput27(91),
+                rfLowInput28(92),
+                rfLowInput29(93),
+                rfLowInput30(94),
+                rfLowInput31(95),
+                rfLowInput32(96),
+                rfLowInput33(97),
+                rfLowInput34(98),
+                rfLowInput35(99),
+                rfLowInput36(100),
+                rfLowInput37(101),
+                rfLowInput38(102),
+                rfLowInput39(103),
+                rfLowInput40(104),
+                rfLowInput41(105),
+                rfLowInput42(106),
+                rfLowInput43(107),
+                rfLowInput44(108),
+                rfLowInput45(109),
+                rfLowInput46(110),
+                rfLowInput47(111),
+                rfLowInput48(112),
+                rfLowInput49(113),
+                rfLowInput50(114),
+                rfLowInput51(115),
+                rfLowInput52(116),
+                rfLowInput53(117),
+                rfLowInput54(118),
+                rfLowInput55(119),
+                rfLowInput56(120),
+                rfLowInput57(121),
+                rfLowInput58(122),
+                rfLowInput59(123),
+                rfLowInput60(124),
+                rfLowInput61(125),
+                rfLowInput62(126),
+                rfLowInput63(127),
+                rfLowInput64(128),
+                rfSquelchedInput1(129),
+                rfSquelchedInput2(130),
+                rfSquelchedInput3(131),
+                rfSquelchedInput4(132),
+                rfSquelchedInput5(133),
+                rfSquelchedInput6(134),
+                rfSquelchedInput7(135),
+                rfSquelchedInput8(136),
+                rfSquelchedInput9(137),
+                rfSquelchedInput10(138),
+                rfSquelchedInput11(139),
+                rfSquelchedInput12(140),
+                rfSquelchedInput13(141),
+                rfSquelchedInput14(142),
+                rfSquelchedInput15(143),
+                rfSquelchedInput16(144),
+                rfSquelchedInput17(145),
+                rfSquelchedInput18(146),
+                rfSquelchedInput19(147),
+                rfSquelchedInput20(148),
+                rfSquelchedInput21(149),
+                rfSquelchedInput22(150),
+                rfSquelchedInput23(151),
+                rfSquelchedInput24(152),
+                rfSquelchedInput25(153),
+                rfSquelchedInput26(154),
+                rfSquelchedInput27(155),
+                rfSquelchedInput28(156),
+                rfSquelchedInput29(157),
+                rfSquelchedInput30(158),
+                rfSquelchedInput31(159),
+                rfSquelchedInput32(160),
+                rfSquelchedInput33(161),
+                rfSquelchedInput34(162),
+                rfSquelchedInput35(163),
+                rfSquelchedInput36(164),
+                rfSquelchedInput37(165),
+                rfSquelchedInput38(166),
+                rfSquelchedInput39(167),
+                rfSquelchedInput40(168),
+                rfSquelchedInput41(169),
+                rfSquelchedInput42(170),
+                rfSquelchedInput43(171),
+                rfSquelchedInput44(172),
+                rfSquelchedInput45(173),
+                rfSquelchedInput46(174),
+                rfSquelchedInput47(175),
+                rfSquelchedInput48(176),
+                rfSquelchedInput49(177),
+                rfSquelchedInput50(178),
+                rfSquelchedInput51(179),
+                rfSquelchedInput52(180),
+                rfSquelchedInput53(181),
+                rfSquelchedInput54(182),
+                rfSquelchedInput55(183),
+                rfSquelchedInput56(184),
+                rfSquelchedInput57(185),
+                rfSquelchedInput58(186),
+                rfSquelchedInput59(187),
+                rfSquelchedInput60(188),
+                rfSquelchedInput61(189),
+                rfSquelchedInput62(190),
+                rfSquelchedInput63(191),
+                rfSquelchedInput64(192),
+                rfOutOfRangeInput1(193),
+                rfOutOfRangeInput2(194),
+                rfOutOfRangeInput3(195),
+                rfOutOfRangeInput4(196),
+                rfOutOfRangeInput5(197),
+                rfOutOfRangeInput6(198),
+                rfOutOfRangeInput7(199),
+                rfOutOfRangeInput8(200),
+                rfOutOfRangeInput9(201),
+                rfOutOfRangeInput10(202),
+                rfOutOfRangeInput11(203),
+                rfOutOfRangeInput12(204),
+                rfOutOfRangeInput13(205),
+                rfOutOfRangeInput14(206),
+                rfOutOfRangeInput15(207),
+                rfOutOfRangeInput16(208),
+                rfOutOfRangeInput17(209),
+                rfOutOfRangeInput18(210),
+                rfOutOfRangeInput19(211),
+                rfOutOfRangeInput20(212),
+                rfOutOfRangeInput21(213),
+                rfOutOfRangeInput22(214),
+                rfOutOfRangeInput23(215),
+                rfOutOfRangeInput24(216),
+                rfOutOfRangeInput25(217),
+                rfOutOfRangeInput26(218),
+                rfOutOfRangeInput27(219),
+                rfOutOfRangeInput28(220),
+                rfOutOfRangeInput29(221),
+                rfOutOfRangeInput30(222),
+                rfOutOfRangeInput31(223),
+                rfOutOfRangeInput32(224),
+                rfOutOfRangeInput33(225),
+                rfOutOfRangeInput34(226),
+                rfOutOfRangeInput35(227),
+                rfOutOfRangeInput36(228),
+                rfOutOfRangeInput37(229),
+                rfOutOfRangeInput38(230),
+                rfOutOfRangeInput39(231),
+                rfOutOfRangeInput40(232),
+                rfOutOfRangeInput41(233),
+                rfOutOfRangeInput42(234),
+                rfOutOfRangeInput43(235),
+                rfOutOfRangeInput44(236),
+                rfOutOfRangeInput45(237),
+                rfOutOfRangeInput46(238),
+                rfOutOfRangeInput47(239),
+                rfOutOfRangeInput48(240),
+                rfOutOfRangeInput49(241),
+                rfOutOfRangeInput50(242),
+                rfOutOfRangeInput51(243),
+                rfOutOfRangeInput52(244),
+                rfOutOfRangeInput53(245),
+                rfOutOfRangeInput54(246),
+                rfOutOfRangeInput55(247),
+                rfOutOfRangeInput56(248),
+                rfOutOfRangeInput57(249),
+                rfOutOfRangeInput58(250),
+                rfOutOfRangeInput59(251),
+                rfOutOfRangeInput60(252),
+                rfOutOfRangeInput61(253),
+                rfOutOfRangeInput62(254),
+                rfOutOfRangeInput63(255),
+                rfOutOfRangeInput64(256),
+                lostCommunicationSlot1(257),
+                lostCommunicationSlot2(258),
+                lostCommunicationSlot3(259),
+                lostCommunicationSlot4(260),
+                lostCommunicationSlot5(261),
+                lostCommunicationSlot6(262),
+                lostCommunicationSlot7(263),
+                lostCommunicationSlot8(264),
+                psu1Fail(265),
+                psu2Fail(266)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION 
+                "This object is used to index the table.  Each value of this
+                index corresponds to a particular fault."
+        ::= { mgmtFaultEntry 1 }
+
+    sendTrap OBJECT-TYPE
+        SYNTAX  INTEGER {
+                false(1),
+                true(2)
+        }   
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION 
+                "This object allows the user to control which faults the agent
+                will transmit as traps and which faults the agent will ignore."
+        ::= { mgmtFaultEntry 2 }
+
+    faultPresent OBJECT-TYPE
+        SYNTAX  INTEGER {
+                false(1),
+                true(2)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION 
+                "This control allows the user to read the state of a fault.  If
+                the value for a fault says false, then there are no errors with
+                that fault.  If the value for a fault says true, then a fault
+                is present."
+        ::= { mgmtFaultEntry 3 }
+
+END

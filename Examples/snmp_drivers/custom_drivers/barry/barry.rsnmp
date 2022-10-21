@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- SVN $Id:  $ -->
+
+<DefinitionGroup>
+
+	<MIBSource href="Quantel/MIBs"/>
+	
+	<!-- OID Alias to assist with the unit specific table declarations -->
+	
+	<OIDAlias id="QUANTEL" oid=".iso.org.dod.internet.private.enterprises.quantel"> <!--15248-->
+		<OIDAlias id="AGENT" oid=".quantelAgent"/>
+		<OIDAlias id="PRODUCT" oid=".quantelProduct">
+			<OIDAlias id="ARTHUR" oid=".quantelQuentinServerAV3">
+				<OIDAlias id="QUANTEL SYSTEM" oid=".system"/>
+				<OIDAlias id="VIDEO CHANNELS" oid=".videoChannels.videoChannelTable.videoChannelEntry"/>
+				<OIDAlias id="DISK SYSTEM" oid=".diskSystem.videoDiskEnclosureTable.videoDiskEnclosureEntry"/>
+				<OIDAlias id="CLIPNET" oid=".clipnetSystem">
+					<OIDAlias id="CLIPNET TABLE" oid=".clipnetPortTable.clipnetPortEntry"/>
+				</OIDAlias>
+				<OIDAlias id="OFFLINE BROWSE" oid=".offlineBrowse"/>
+				<OIDAlias id="CARDS" oid=".cards.cardTable.slotEntry"/>
+			</OIDAlias>
+		</OIDAlias>
+	</OIDAlias>
+	
+	<OIDAlias id="MIB2" oid=".1.3.6.1.2.1" >	
+		<OIDAlias id="IF ENTRY" oid=".2.2.1" >
+			<OIDAlias id="IF DESC" oid=".2" />
+			<OIDAlias id="IF TYPE" oid=".3" />
+		</OIDAlias>
+	</OIDAlias>
+	
+	<UnitTypeDef typeName="BarryTouch" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id:  $</StaticString>
+		</StaticDef>
+		
+		<!-- Filter Arrays -->
+		
+		<OIDFilter id="LAN PORTS" dynamic="true" >
+			<OID alias="IF TYPE">.#I</OID>
+			<OIDFilterRule regex="6" />
+		</OIDFilter>
+	
+		<!-- These fields reference some of the global MIB-2 translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS LOCATION" />
+
+		<TranslationDef link="TCP CURR ESTAB" />
+		
+		<TranslationDef link="SYS DATE" />
+		
+		<TranslationDef link="USERS" />
+		
+		<TranslationDef link="PROCESSES" />
+		
+		<TranslationDef link="RAM" />
+		
+		<TranslationDef link="CPU ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_NAME" pollRate="600" >
+			<OID alias="IF DESC">.#I</OID>
+			<Array filter="LAN PORTS" /> 
+			<StringRule format="%s" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef link="PORT NAME TYPE ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<!--TranslationDef link="PORT SPEED ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef-->
+		
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="LAN PORT ERRORS">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<!-- Unit Specific Fields -->
+		
+		<TranslationDef rcLogField="CPU_%d_LOAD" pollRate="60">
+			<OID alias="QUANTEL SYSTEM">.cpuTable.cpuEntry.cpuLoad.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYS_NAME" pollRate="1000">
+			<OID alias="AGENT">.sysName.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYS_VERSION" pollRate="1000">
+			<OID alias="AGENT">.sysVersion.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYS_STATUS" pollRate="300">
+			<OID alias="AGENT">.sysStatus.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CURRENT_TEMP" pollRate="30">
+			<OID alias="QUANTEL SYSTEM">.crateTemperature.0</OID>
+			<ConditionRule condition="$1 e 80 $lt;" format="OK: %d"/>
+			<ConditionRule condition="$1 e 79 $gt;" format="WARN: %d"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="MAX_TEMP" pollRate="300">
+			<OID alias="QUANTEL SYSTEM">.maxCrateTemperature.0</OID>
+			<ConditionRule condition="$1 e 80 &lt;" format="OK: %d"/>
+			<ConditionRule condition="$1 e 80 &gt;=" format="WARN: %d"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_STATE" pollRate="60">
+			<OID alias="QUANTEL SYSTEM">.psuStatus.0</OID>
+			<NumRule value="0" format="WARN: PSU Missing"/>
+			<NumRule value="1" format="FAIL: PSU Failed"/>
+			<NumRule value="2" format="OK"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_PSU_STATE" pollRate="60">
+			<OID alias="DISK SYSTEM">.videoDiskEnclosurePsuStatus.0</OID>
+			<NumRule value="0" format="WARN: Unsupported"/>
+			<NumRule value="1" format="OK"/>
+			<NumRule value="2" format="FAIL: Critical"/>
+			<NumRule value="3" format="WARN: Non-critical"/>
+			<NumRule value="4" format="FAIL: Unrecoverable"/>
+			<NumRule value="5" format="WARN: Not installed"/>
+			<NumRule value="6" format="WARN: Unknown"/>
+			<NumRule value="7" format="FAIL: Not available"/>
+			<NumRule value="8" format="WARN: No access"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_REBUILD_STATUS" pollRate="60">
+			<OID alias="DISK SYSTEM">.videoDiskEnclosureRebuildStatus.0</OID>
+			<NumRule value="0" format="OK: Rebuild done"/>
+			<NumRule value="1" format="WARN: Rebuild active"/>
+			<NumRule value="2" format="FAIL: Rebuild failed"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_REBUILD_PROGRESS" pollRate="60">
+			<ExpOID alias="DISK SYSTEM">.videoDiskEnclosureRebuildStatus.0</ExpOID>		<!-- $1 -->
+			<ExpOID alias="DISK SYSTEM">.videoDiskEnclosureRebuildProgress.0</ExpOID>	<!-- $2 -->
+			<ConditionRule condition="$1 e 1 ==" format="WARN: Rebuild progress $2%%" />
+			<ConditionRule condition="$1 e 2 ==" format="FAIL: Rebuild progress $2%%" />
+			<ConditionRule condition="$1 e 0 == e $2 e 100 == AND" format="OK: Rebuild not in progress" />
+			<ConditionRule condition="$2 e 100 ==" format="OK: Rebuild $2%%"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_LOWEST_HEALTH" pollRate="60">
+			<ExpOID alias="DISK SYSTEM">.videoDiskEnclosureLowestDiskHealth.0</ExpOID>
+			<ConditionRule condition="$1 e 2 &lt;=" format="FAIL: Replace drive now!"/>
+			<ConditionRule condition="$1 e 4 &lt;=" format="WARN: Replace drive soon"/>
+			<ConditionRule condition="$1 e 8 &lt;=" format="WARN: Drive has issues, monitor"/>
+			<ConditionRule condition="$1 e 9 &gt;=" format="OK: Drive is OK"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_FAN_STATUS" pollRate="60">
+			<OID alias="DISK SYSTEM">.videoDiskEnclosureFanStatus.0</OID>
+			<NumRule value="0" format="WARN: Unsupported"/>
+			<NumRule value="1" format="OK"/>
+			<NumRule value="2" format="FAIL: Critical"/>
+			<NumRule value="3" format="WARN: Non-critical"/>
+			<NumRule value="4" format="FAIL: Unrecoverable"/>
+			<NumRule value="5" format="WARN: Not installed"/>
+			<NumRule value="6" format="WARN: Unknown"/>
+			<NumRule value="7" format="FAIL: Not available"/>
+			<NumRule value="8" format="WARN: No access"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_TEMP_STATUS" pollRate="60">
+			<OID alias="DISK SYSTEM">.videoDiskEnclosureTemperatureStatus.0</OID>
+			<NumRule value="0" format="WARN: Unsupported"/>
+			<NumRule value="1" format="OK"/>
+			<NumRule value="2" format="FAIL: Critical"/>
+			<NumRule value="3" format="WARN: Non-critical"/>
+			<NumRule value="4" format="FAIL: Unrecoverable"/>
+			<NumRule value="5" format="WARN: Not installed"/>
+			<NumRule value="6" format="WARN: Unknown"/>
+			<NumRule value="7" format="FAIL: Not available"/>
+			<NumRule value="8" format="WARN: No access"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VID_DISK_ENC_TOTAL_FAULTS" pollRate="120">
+			<OID alias="DISK SYSTEM">.videoDiskEnclosureDiskFault.0</OID>
+			<NumRule value="0" format="OK: No faulty disks"/>
+			<StringRule format="WARN: %s faulty disks"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_STATUS" pollRate="30">
+			<OID alias="VIDEO CHANNELS">.videoChannelStatus.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="0" format="OK: Idle"/>
+			<NumRule value="1" format="OK: Play"/>
+			<NumRule value="2" format="OK: Record"/>
+			<NumRule value="3" format="OK: Offline"/>
+			<NumRule value="4" format="WARN: Fault"/>
+			<NumRule value="5" format="WARN: Booting"/>
+			<NumRule value="6" format="OK: Playing"/>
+			<NumRule value="7" format="OK: Recording"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_FRAMES" pollRate="30">
+			<ExpOID alias="VIDEO CHANNELS">.videoChannelStatus.#I</ExpOID>					<!-- $1 -->
+			<ExpOID alias="VIDEO CHANNELS">.videoChannelPlayedFrames.#I</ExpOID>		<!-- $2 -->
+			<ExpOID alias="VIDEO CHANNELS">.videoChannelRecordedFrames.#I</ExpOID>	<!-- $3 -->
+			<GetNextArray dynamic="true"/>
+			<ConditionRule condition="$1 e 1 &lt;=" format="$2 frames played"/>
+			<ConditionRule condition="$1 e 2 ==" format="$3 frames recorded"/>
+			<ConditionRule condition="$1 e 6 ==" format="$2 frames played"/>
+			<ConditionRule condition="$1 e 7 ==" format="$3 frames recorded"/>
+			<StringRule format="$2 frames played, $3 frames recorded"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_BLACK_FRAMES" pollRate="30">
+			<OID alias="VIDEO CHANNELS">.videoChannelBlackFrames.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_BAD_FRAMES" pollRate="30">
+			<OID alias="VIDEO CHANNELS">.videoChannelBadFrames.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_SIG_ERRORS" pollRate="30">
+			<OID alias="VIDEO CHANNELS">.videoChannelSignatureErrors.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s read signature errors"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_FAILED_FRAMES" pollRate="30">
+			<OID alias="VIDEO CHANNELS">.videoChannelFailedRecordedFrames.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s failed to record"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_AUDIO_ERRORS" pollRate="60">
+			<OID alias="VIDEO CHANNELS">.videoChannelAudioGUIDErrors.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s audio frames played with errors"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIDEO_CHANNEL_%d_SPEED" pollRate="60">
+			<OID alias="VIDEO CHANNELS">.videoChannelSpeed.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="NUM_CLIPNET_PORTS" pollRate="120">
+			<OID alias="CLIPNET">.clipnetPortNumber.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CLIPNET_PORT_%d_IP_ADDRESS" pollRate="300">
+			<OID alias="CLIPNET TABLE">.clipnetPortAddress.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CLIPNET_PORT_%d_STATUS" pollRate="60">
+			<OID alias="CLIPNET TABLE">.clipnetPortStatus.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="0" format="WARN: Faulty"/>
+			<NumRule value="1" format="OK: Operational"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CLIPNET_PORT_%d_LINK_STATUS" pollRate="60">
+			<OID alias="CLIPNET TABLE">.clipnetPortLinkStatus.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="0" format="WARN: Link Down"/>
+			<NumRule value="1" format="OK: Link Up"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CLIPNET_PORT_%d_COMMS_ERRORS" pollRate="60">
+			<OID alias="CLIPNET TABLE">.clipnetPortCommsErrors.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CARD_%d_CONTENT" pollRate="300">
+			<OID alias="CARDS">.slotContents.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CARD_%d_TEMP" pollRate="30">
+			<OID alias="CARDS">.slotTemp.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule format="%s"/>
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+	</UnitTypeDef>
+
+</DefinitionGroup>

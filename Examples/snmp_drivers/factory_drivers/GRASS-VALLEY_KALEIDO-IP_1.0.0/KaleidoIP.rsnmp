@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<DefinitionGroup>
+	<!-- Comment: Multiple MibSource paths are also allowed.-->
+	<MIBSource href="drivers/GRASS-VALLEY_KALEIDO-IP_1.0.0/MIBs"/>
+
+<!-- OID Alias to assist with the unit specific table declarations -->
+
+	<OIDAlias id="MIRANDA" oid=".1.3.6.1.4.1.3872">
+	</OIDAlias>
+
+	<OIDAlias id="KX SYSTEM" oid=".1.3.6.1.4.1.3872.21.1">
+		<OIDAlias id="SLOT ENTRY" oid=".21.1" />
+		<OIDAlias id="SLOT TRAPS" oid=".22" />
+	</OIDAlias>
+
+	<OIDAlias id="KX CONFIG" oid=".1.3.6.1.4.1.3872.21.2">
+		<OIDAlias id="TRAP TARGET TABLE ENTRY" oid=".8.1" />
+		<OIDAlias id="GATEWAY COMMAND" oid=".9" />
+		<OIDAlias id="CONFIG TRAPS" oid=".10" />
+	</OIDAlias>
+
+	<OIDAlias id="KX VIRTUAL ALARM" oid=".1.3.6.1.4.1.3872.21.6">
+		<OIDAlias id="VIRTUAL ALARM TABLE ENTRY" oid=".2.1" />
+		<OIDAlias id="VIRTUAL ALARM TRAPS" oid=".3" />
+	</OIDAlias>
+
+	<OIDAlias id="KxTRAPS" oid=".iso.org.dod.internet.private.enterprises.miranda.kaleidoKX.kxTrap">
+				
+	</OIDAlias>
+
+	<UnitTypeDef typeName="GRASS-VALLEY_KALEIDO-IP_1.0.0" repollOnTrap="false" >
+		
+		<!-- Filter Arrays -->
+		
+		<OIDFilter id="CHANNELS" dynamic="true" >
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.2.#I</OID>
+			<OIDFilterRule regex="^(.*(GlobalAlarm)).*"/>
+		</OIDFilter>
+		
+		<OIDFilter id="VIRTUAL ALARMS" dynamic="true" >
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.2.#I</OID>
+			<OIDFilterRule regex="^(?!.*(GlobalAlarm)).*"/>
+		</OIDFilter>
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>KaleidoIP.rsnmp</StaticString>
+		</StaticDef>
+
+		<TranslationDef link="SYS UPTIME" />
+		
+	<!-- Description:	Overall frame status as found in the dashboard. -->
+		<TranslationDef rcLogField="FRAME_STATE"  pollRate="60" > <!-- Temporary fast poll until trap handling added to config! -->
+			<OID alias="KX SYSTEM">.1.0</OID>
+			<NumRule value="-1" format="N/A"/>
+			<NumRule value="10000" format="OK"/>
+			<NumRule value="20000" format="WARNING"/>
+			<NumRule value="30000" format="FAIL"/>
+			<NumRule value="40000" format="FAIL:Unknown"/>
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+	<!--Description:	Indicates the overall fan status.-->
+		<StaticDef rcLogField="FAN_1_STATE" >
+			<StaticString>See IPMI Monitoring</StaticString>
+		</StaticDef>
+	
+		<StaticDef rcLogField="FAN_1_NAME" >
+			<StaticString>Overall frame fan status</StaticString>
+		</StaticDef>
+	
+	<!--Description:	Indicates the overall power supply status.-->
+		<StaticDef rcLogField="PSU_1_STATE" >
+			<StaticString>See IPMI Monitoring</StaticString>
+		</StaticDef>
+	
+		<StaticDef rcLogField="PSU_1_NAME" >
+			<StaticString>Overall frame PSU status</StaticString>
+		</StaticDef>
+	
+	<!--Description:	Frame Model.-->
+		<TranslationDef rcLogField="MODEL" pollRate="600">
+			<OID alias="KX SYSTEM">.7.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+			
+	 <!--Description:Frame Software Version.-->		
+ 		<TranslationDef rcLogField="VERSION" pollRate="600">
+			<OID alias="KX SYSTEM">.8.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+	 	
+	 <!--Description:	Number of card present in the frame.-->
+		<TranslationDef rcLogField="CARD_COUNT" pollRate="600">
+			<OID alias="KX SYSTEM">.9.0</OID>
+			<NumRule format="%d"/>
+		</TranslationDef>
+			
+	 
+	 <!--Description:	Number of Slots present in the frame.-->
+		<TranslationDef rcLogField="SLOT_COUNT" pollRate="600">
+			<OID alias="KX SYSTEM">.20.0</OID>
+			<NumRule format="%d"/>
+		</TranslationDef>
+	
+	
+	<!--Description:	List of existing rooms in the system.-->
+		<TranslationDef rcLogField="ROOMS" pollRate="600">
+			<OID alias="KX SYSTEM">.5.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+	
+	
+	<!--Description:	List of currently loaded layout names separated by ';'. The list is in the same order as kxRooms-->
+		<TranslationDef rcLogField="LAYOUT_USED" pollRate="600">
+			<OID alias="KX SYSTEM">.4.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+	
+	
+	<!--Description:	kx Frame snmp community string-->
+		<TranslationDef rcLogField="SNMP_COMMUNITY_NAME" pollRate="600">
+			<OID alias="KX CONFIG">.3.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+	<!--Description:	Frame Netmask used by all KXO cards-->
+		<TranslationDef rcLogField="SUBNET_MASK_ADDRESS" pollRate="600">
+			<OID alias="KX CONFIG">.4.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+		
+	<!--Description:	Frame Gateway address used by all KXO cards-->
+		<TranslationDef rcLogField="DEFAULT_GATEWAY_ADDRESS" pollRate="600">
+			<OID alias="KX CONFIG">.5.0</OID>
+			<StringRule format="%s"/>
+		</TranslationDef>
+	
+	<!--Description:	List of ip addresses used by KXO cards -->
+		<TranslationDef rcLogField="KXO_IP_ADDRESSESS" pollRate="600">
+			<OID alias="KX CONFIG">.6.0</OID>
+			<StringRule format="[Card Slot No=IP],%s"/>
+		</TranslationDef>
+
+<!-- Description:	Virtual alarm current status -->
+		<TranslationDef rcLogField="CHANNEL_%d_NAME" pollRate="60">
+			<Array filter="CHANNELS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.2.#I</OID>
+			<StringRule />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_STATE" pollRate="60">
+			<Array filter="CHANNELS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.3.#I</OID>
+			<NumRule value="-1" format="DISABLED"/>
+			<NumRule value="10000" format="OK"/>
+			<NumRule value="20000" format="WARN"/>
+			<NumRule value="30000" format="FAIL"/>
+			<NumRule value="40000" format="FAIL:Unknown"/>
+			<NumRule format="FAIL:Unknown (%d)"/>
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANNEL_%d_ALARM_CAUSE" pollRate="60">
+			<Array filter="CHANNELS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.5.#I</OID>
+			<StringRule match="^$" format="N/A"/>
+			<StringRule />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VIRTUAL_ALARM_%d_NAME" pollRate="60">
+			<Array filter="VIRTUAL ALARMS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.2.#I</OID>
+			<StringRule />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIRTUAL_ALARM_%d_STATE" pollRate="60">
+			<Array filter="VIRTUAL ALARMS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.3.#I</OID>
+			<NumRule value="-1" format="DISABLED"/>
+			<NumRule value="10000" format="OK"/>
+			<NumRule value="20000" format="WARN"/>
+			<NumRule value="30000" format="FAIL"/>
+			<NumRule value="40000" format="FAIL:Unknown"/>
+			<NumRule format="FAIL:Unknown (%d)"/>
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VIRTUAL_ALARM_%d_CAUSE" pollRate="60">
+			<Array filter="VIRTUAL ALARMS"/>
+			<OID alias="VIRTUAL ALARM TABLE ENTRY">.5.#I</OID>
+			<StringRule match="^$" format="N/A"/>
+			<StringRule />
+		</TranslationDef>
+
+	</UnitTypeDef>
+
+</DefinitionGroup>

@@ -1,0 +1,59 @@
+RADLAN-COPY-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rnd                                     FROM RADLAN-MIB
+    rlCopy                                  FROM RADLAN-COPY-MIB
+    OBJECT-TYPE, IpAddress, Unsigned32,Counter32,
+    MODULE-IDENTITY                         FROM SNMPv2-SMI
+    DisplayString                           FROM SNMPv2-TC-v1
+    TEXTUAL-CONVENTION,
+    TruthValue, RowStatus                   FROM SNMPv2-TC;
+
+rlCopyMibVersion OBJECT-TYPE
+    ::= {rlCopy 1 }
+
+rlCopyTable OBJECT-TYPE
+    ::= {rlCopy 2 }
+
+rlCopyEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlCopyRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= {rlCopyTable  1 }
+
+rlCopyFreeHistoryIndex  OBJECT-TYPE
+    ::= { rlCopy 3 }
+
+
+rlCopyHistoryTable OBJECT-TYPE
+    ::= {rlCopy 4 }
+
+rlCopyHistoryEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlCopyHistoryRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= {rlCopyHistoryTable  1 }
+
+rlCopyAuditingEnable  OBJECT-TYPE
+    ::= { rlCopy 5 }
+
+rlCopyMessagesTable OBJECT-TYPE
+    ::= {rlCopy 6 }
+
+rlCopyMessagesEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlCopyMessagesStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= {rlCopyMessagesTable  1 }
+
+rlCopyFinished TRAP-TYPE
+    ENTERPRISE  rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlCopyFinished_E
+    SEVERITY    WARNING
+    ::=  180
+
+rlCopyFailed TRAP-TYPE
+    ENTERPRISE  rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlCopyFailed_E
+    SEVERITY    WARNING
+    ::=  181
+
+END
+

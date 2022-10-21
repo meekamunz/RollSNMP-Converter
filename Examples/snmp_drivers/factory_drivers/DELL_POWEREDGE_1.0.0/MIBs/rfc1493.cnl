@@ -1,0 +1,252 @@
+BRIDGE-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+           Counter, TimeTicks
+                   FROM RFC1155-SMI
+           mib-2
+                   FROM RFC1213-MIB
+           OBJECT-TYPE
+                   FROM RFC-1212
+           TRAP-TYPE
+                   FROM RFC-1215
+              TruthValue
+                   FROM SNMPv2-TC;
+
+
+-- All representations of MAC addresses in this MIB Module
+-- use, as a textual convention (i.e. this convention does
+-- not affect their encoding), the data type:
+
+MacAddress ::= OCTET STRING (SIZE (6))    -- a 6 octet address
+                                          -- in the
+                                          -- "canonical"
+                                          -- order
+-- defined by IEEE 802.1a, i.e., as if it were transmitted
+-- least significant bit first, even though 802.5 (in
+-- contrast to other n802.x protocols) requires MAC
+-- addresses to be transmitted most significant bit first.
+--
+-- 16-bit addresses, if needed, are represented by setting
+-- their upper 4 octets to all 0's, i.e., AAFF would be
+-- represented as 00000000AAFF.
+
+
+-- Similarly, all representations of Bridge-Id in this MIB
+-- Module use, as a textual convention (i.e. this
+-- convention does not affect their encoding), the data
+-- type:
+
+BridgeId ::= OCTET STRING (SIZE (8))   -- the
+                                       -- Bridge-Identifier
+                                       -- as used in the
+                                       -- Spanning Tree
+-- Protocol to uniquely identify a bridge.  Its first two
+-- octets (in network byte order) contain a priority
+-- value and its last 6 octets contain the MAC address
+-- used to refer to a bridge in a unique fashion
+-- (typically, the numerically smallest MAC address
+-- of all ports on the bridge).
+-- Several objects in this MIB module represent values of
+-- timers used by the Spanning Tree Protocol.  In this
+-- MIB, these timers have values in units of hundreths of
+-- a second (i.e. 1/100 secs).
+-- These timers, when stored in a Spanning Tree Protocol's
+-- BPDU, are in units of 1/256 seconds.  Note, however,
+-- that 802.1D-1990 specifies a settable granularity of
+-- no more than 1 second for these timers.  To avoid
+-- ambiguity, a data type is defined here as a textual
+-- convention and all representation of these timers
+-- in this MIB module are defined using this data type.  An
+-- algorithm is also defined for converting between the
+-- different units, to ensure a timer's value is not
+-- distorted by multiple conversions.
+-- The data type is:
+
+Timeout ::= INTEGER -- a STP timer in units of 1/100 seconds
+
+-- To convert a Timeout value into a value in units of
+-- 1/256 seconds, the following algorithm should be used:
+--
+--      b  = floor( (n * 256) / 100)
+--
+-- where:
+--      floor   =  quotient [ignore remainder]
+--      n is the value in 1/100 second units
+--      b is the value in 1/256 second units
+--
+-- To convert the value from 1/256 second units back to
+-- 1/100 seconds, the following algorithm should be used:
+--
+--      n = ceiling( (b * 100) / 256)
+--
+-- where:
+--      ceiling =  quotient [if remainder is 0], or
+--                 quotient + 1 [if remainder is non-zero]
+--      n is the value in 1/100 second units
+--      b is the value in 1/256 second units
+--
+-- Note: it is important that the arithmetic operations are
+-- done in the order specified (i.e., multiply first, divide
+-- second).
+
+
+   dot1dBridge   OBJECT IDENTIFIER ::= { mib-2 17 }
+
+-- groups in the Bridge MIB
+
+dot1dBase     OBJECT IDENTIFIER ::= { dot1dBridge 1 }
+
+dot1dStp      OBJECT IDENTIFIER ::= { dot1dBridge 2 }
+
+dot1dSr       OBJECT IDENTIFIER ::= { dot1dBridge 3 }
+-- separately documented
+
+dot1dTp       OBJECT IDENTIFIER ::= { dot1dBridge 4 }
+
+dot1dStatic   OBJECT IDENTIFIER ::= { dot1dBridge 5 }
+
+
+-- the dot1dBase group
+
+-- Implementation of the dot1dBase group is mandatory for all
+-- bridges.
+
+dot1dBaseBridgeAddress OBJECT-TYPE
+    ::= { dot1dBase 1 }
+
+dot1dBaseNumPorts OBJECT-TYPE
+    ::= { dot1dBase 2 }
+
+dot1dBaseType OBJECT-TYPE
+    ::= { dot1dBase 3 }
+
+-- The Generic Bridge Port Table
+
+dot1dBasePortTable OBJECT-TYPE
+    ::= { dot1dBase 4 }
+
+dot1dBasePortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dBasePortTable 1 }
+
+-- the dot1dStp group
+
+-- Implementation of the dot1dStp group is optional.  It is
+-- implemented by those bridges that support the Spanning Tree
+-- Protocol.
+
+
+dot1dStpProtocolSpecification OBJECT-TYPE
+    ::= { dot1dStp 1 }
+
+dot1dStpPriority OBJECT-TYPE
+    ::= { dot1dStp 2 }
+
+dot1dStpTimeSinceTopologyChange OBJECT-TYPE
+    ::= { dot1dStp 3 }
+
+dot1dStpTopChanges OBJECT-TYPE
+    ::= { dot1dStp 4 }
+
+dot1dStpDesignatedRoot OBJECT-TYPE
+    ::= { dot1dStp 5 }
+
+dot1dStpRootCost OBJECT-TYPE
+    ::= { dot1dStp 6 }
+
+dot1dStpRootPort OBJECT-TYPE
+    ::= { dot1dStp 7 }
+
+dot1dStpMaxAge OBJECT-TYPE
+    ::= { dot1dStp 8 }
+
+dot1dStpHelloTime OBJECT-TYPE
+    ::= { dot1dStp 9 }
+
+dot1dStpHoldTime OBJECT-TYPE
+    ::= { dot1dStp 10 }
+
+dot1dStpForwardDelay OBJECT-TYPE
+    ::= { dot1dStp 11 }
+
+dot1dStpBridgeMaxAge OBJECT-TYPE
+    ::= { dot1dStp 12 }
+
+dot1dStpBridgeHelloTime OBJECT-TYPE
+    ::= { dot1dStp 13 }
+
+dot1dStpBridgeForwardDelay OBJECT-TYPE
+    ::= { dot1dStp 14 }
+
+-- The Spanning Tree Port Table
+
+dot1dStpPortTable OBJECT-TYPE
+    ::= { dot1dStp 15 }
+
+dot1dStpPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dStpPortTable 1 }
+
+
+
+-- the dot1dTp group
+
+-- Implementation of the dot1dTp group is optional.  It is
+-- implemented by those bridges that support the transparent
+-- bridging mode.  A transparent or SRT bridge will implement
+-- this group.
+
+
+dot1dTpLearnedEntryDiscards OBJECT-TYPE
+    ::= { dot1dTp 1 }
+
+dot1dTpAgingTime OBJECT-TYPE
+    ::= { dot1dTp 2 }
+
+
+--  The Forwarding Database for Transparent Bridges
+
+dot1dTpFdbTable OBJECT-TYPE
+    ::= { dot1dTp 3 }
+
+dot1dTpFdbEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dTpFdbTable 1 }
+
+--  Port Table for Transparent Bridges
+
+dot1dTpPortTable OBJECT-TYPE
+    ::= { dot1dTp 4 }
+
+dot1dTpPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1dTpPortTable 1 }
+
+
+-- The Static (Destination-Address Filtering) Database
+
+-- Implementation of this group is optional.
+
+
+dot1dStaticTable OBJECT-TYPE
+    ::= { dot1dStatic 1 }
+
+dot1dStaticEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME dot1dStaticStatus
+    DELETE-VALUE      invalid
+    ::= { dot1dStaticTable 1 }
+
+-- Traps for use by Bridges
+
+-- Traps for the Spanning Tree Protocol
+
+--newRoot TRAP-TYPE
+--    ENTERPRISE  dot1dBridge
+--    ::= 1
+
+--topologyChange TRAP-TYPE
+--    ENTERPRISE  dot1dBridge
+--    ::= 2
+
+END

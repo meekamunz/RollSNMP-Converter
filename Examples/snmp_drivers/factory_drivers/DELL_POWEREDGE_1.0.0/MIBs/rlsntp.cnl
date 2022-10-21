@@ -1,0 +1,61 @@
+-- *****************************************************************
+-- RADLAN-SNTP-MIB.cnl:  SNTP & NTP MIB
+--
+-- 22-Nov-2003
+--
+-- Copyright (c) 2003 by RADLAN Computer Communications Ltd.
+-- All rights reserved.
+--
+-- *****************************************************************
+--
+
+RADLAN-TIMESYNCHRONIZATION-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rlTimeSynchronization                       FROM RADLAN-MIB
+    DisplayString                               FROM SNMPv2-TC-v1
+    Unsigned32, Integer32, IpAddress            FROM SNMPv2-SMI
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, RowStatus               FROM SNMPv2-TC;
+
+
+rlTimeSyncMethodMode OBJECT IDENTIFIER ::= { rlTimeSynchronization 1 }
+rlSntpNtpClient  OBJECT IDENTIFIER ::= { rlTimeSynchronization 2 }
+
+rlSntpNtpConfig  OBJECT IDENTIFIER ::= { rlSntpNtpClient 1 }
+rlSntpConfig  OBJECT IDENTIFIER ::= { rlSntpNtpClient 2 }
+rlNtpConfig  OBJECT IDENTIFIER ::= { rlSntpNtpClient 3 }
+
+rlSntpConfigBroadcastTable OBJECT-TYPE
+        ::= { rlSntpConfig 10 }
+
+rlSntpBroadcastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlSntpBroadcastRowStatus
+        ::= { rlSntpConfigBroadcastTable 1 }
+
+rlSntpConfigAnycastTable OBJECT-TYPE
+        ::= { rlSntpConfig 11 }
+
+rlSntpAnycastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlSntpAnycastRowStatus
+        ::= { rlSntpConfigAnycastTable 1 }
+
+rlSntpConfigServerTable OBJECT-TYPE
+        ::= { rlSntpConfig 12 }
+
+rlSntpServerEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlSntpServerRowStatus
+        ::= { rlSntpConfigServerTable 1 }
+
+rlSntpConfigAuthenticationTable OBJECT-TYPE
+        ::= { rlSntpConfig 13 }
+
+rlSntpAuthenticationEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlSntpAuthenticationRowStatus
+        ::= { rlSntpConfigAuthenticationTable 1 }
+
+END

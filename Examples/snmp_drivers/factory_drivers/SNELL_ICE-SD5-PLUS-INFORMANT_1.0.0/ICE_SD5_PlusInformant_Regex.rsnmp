@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id: ICE_X9DRW_V1.2_SD5 regex.rsnmp 3718 2018-04-09 11:07:35Z kadhimboyd $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitor
+	Snell 2U ICE units as of July 2014, which are based on
+	Supermicro servers with the X9DRW motherboards running Windows Server 2008,
+
+	It assumes that standard-alias-include.rsnmp and standard-fields-include.rsnmp is already included, 
+	and also generic windows config.
+
+-->
+
+<DefinitionGroup>
+
+	<MIBSource href="drivers/SNELL_ICE-SD5-PLUS-INFORMANT_1.0.0/MIBs"/>
+	<MIBSource href="drivers/SNELL_ICE-SD5-PLUS-INFORMANT_1.0.0/MIBs"/>
+
+	<OIDAlias id="SUPERMICRO" oid=".iso.org.dod.internet.private.enterprises.supermicro" >
+		<OIDAlias id="HEALTH MONITOR ENTRY" oid=".smHealth.smHealthMIB.smHealthObjects.smHealthMonitorTable.smHealthMonitorEntry">
+			<OIDAlias id="HEALTH MONITOR NAME" oid=".smHealthMonitorName" />
+			<OIDAlias id="HEALTH MONITOR READING" oid=".smHealthMonitorReading" />
+			<OIDAlias id="HEALTH MONITOR HIGH LIMIT" oid=".smHealthMonitorHighLimit" />
+			<OIDAlias id="HEALTH MONITOR LOW LIMIT" oid=".smHealthMonitorLowLimit" />
+			<OIDAlias id="HEALTH MONITOR DIVISOR" oid=".smHealthMonitorDivisor" />
+			<OIDAlias id="HEALTH MONITOR MONITOR" oid=".smHealthMonitorMonitor" />	
+			<OIDAlias id="HEALTH MONITOR STATUS" oid=".smHealthMonitorStatus" />
+		</OIDAlias>
+	</OIDAlias>	
+	<OIDAlias id="INFORMANT" oid=".iso.org.dod.internet.private.enterprises.wtcs.informant.advanced" >
+		<OIDAlias id="INFORMANT PROCESS TABLE" oid=".processTable.processEntry" >
+			<OIDAlias id="INFORMANT PROCESS ID" oid=".processIDProcess" />
+			<OIDAlias id="INFORMANT PROCESS NAME" oid=".processInstance" />
+			<OIDAlias id="INFORMANT PROCESS CPU" oid=".processPercentProcessorTime" >
+				<OIDAlias id="INFORMANT PROCESS CPU TOTAL" oid=".6.95.84.111.116.97.108" /> <!-- ._Total -->
+			</OIDAlias>
+			<OIDAlias id="INFORMANT PROCESS VIRTUAL RAM" oid=".processVirtualMBytes" />
+			<OIDAlias id="INFORMANT PROCESS PHYSICAL RAM" oid=".processWorkingSetMBytes" />
+			<OIDAlias id="INFORMANT PROCESS IO" oid=".processIODataBytesPerSec" />
+		</OIDAlias>
+		<OIDAlias id="INFORMANT PROCESSOR TABLE" oid=".processorTable.processorEntry" >
+			<OIDAlias id="INFORMANT PROCESSOR TIME" oid=".cpuPercentProcessorTime" >
+				<OIDAlias id="INFORMANT PROCESSOR TIME TOTAL" oid=".6.95.84.111.116.97.108" /> <!-- ._Total -->
+			</OIDAlias>
+		</OIDAlias>
+	</OIDAlias>
+
+		
+	
+	<UnitTypeDef typeName="SNELL_ICE-SD5-PLUS-INFORMANT_1.0.0" pollTimeout="60000" pollLifeCount="2" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>CVS $Id: SD5_PlusINformant_Regex.rsnmp 3718 2021-07-21 11:07:35Z michaelmunns $</StaticString>
+		</StaticDef>
+		
+		<OIDFilter id="PSU STATE" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d Status)"/>
+			<OIDSortRule regex="PS(\d).*" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="PSU FAN" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d Fan\d)"/>
+			<OIDSortRule regex="PS(\d) Fan\d" type="Num"/>
+			<OIDSortRule regex="PS\d Fan(\d)" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="PSU TEMP" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d Temperature\d)"/>
+			<OIDSortRule regex="PS(\d) Temperature\d" type="Num"/>
+			<OIDSortRule regex="PS\d Temperature(\d)" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="VOLTAGE" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d .*Voltage)"/>
+			<OIDSortRule regex="PS(\d).*" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="CURRENT" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d .*Current)"/>
+			<OIDSortRule regex="PS(\d).*" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="POWER" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(PS\d .*Power)"/>
+			<OIDSortRule regex="PS(\d).*" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="FAN" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(FAN\d)"/>
+			<OIDSortRule regex="FAN(\d)" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="TEMPERATURE" dynamic="true" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<OIDFilterRule regex="^(.*Temp\d{0,1})$"/>
+		</OIDFilter>
+
+		<!-- These fields reference some of the global MIB-2 translations.
+		     They are all available from any Microsoft PC running SNMP agent services. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS NAME" />
+
+		<TranslationDef link="SYS LOCATION" />
+
+		<TranslationDef link="TCP CURR ESTAB" />
+
+		<TranslationDef link="SYS OBJECT ID" />
+		
+		<TranslationDef link="SYS DATE" />
+
+		<TranslationDef link="USERS" />
+
+		<TranslationDef link="PROCESSES" />
+
+		<TranslationDef link="RAM" />
+
+		<TranslationDef link="PC_DESCRIPTION" />
+
+		<!-- The next 7 are arrays, to cover any number of LAN ports.  -->
+		<!-- On the ICE, the minimum we need to monitor is 4 physical ports.
+			On some of the US demo ICEs, we need to have from 11 to 16 to cover all 4 ports. -->
+
+
+	<OIDFilter id="PORT" dynamic="true">
+		<OID alias="PORT NAME ARRAY">.#I</OID>
+		<OIDFilterRule regex="(Intel\(R\) I350 Gigabit Network Connection)( #)?[0-9]*?$"/>
+		<OIDFilterRule regex="^(TEAM)[ ]?[: ][A-Z|0-9| ]*$"/>
+	</OIDFilter>
+		<TranslationDef link="PORT NAME ALIAS ARRAY"> <!-- "LAN_PORT_%d_NAME" = "local area connection" -->
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT INT ARRAY"> <!-- "LAN_PORT_%d_INT" = HP, Intel, broadcom etc -->
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT NAME TYPE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT ADMIN STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT SPEED ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="LAN PORT ERRORS">
+			<Array filter="PORT"/>
+		</TranslationDef>
+
+
+
+
+	<OIDFilter id="PARTITION" dynamic="true">
+		<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+		<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+				we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+		<!--<OIDFilterRule regex="^(hrStorageFixedDisk)$"/>-->
+		<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.4)$"/>
+	</OIDFilter>
+		<TranslationDef link="PARTITION NAME ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION SIZE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FULL ERRORS ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>		
+		
+		
+		
+	<OIDFilter id="VIRT MEM" dynamic="true">
+		<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+		<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+				we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+		<!--<OIDFilterRule regex="^(hrStorageVirtualMemory)$"/>-->
+		<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.3)$"/>
+	</OIDFilter>
+		<TranslationDef link="VIRT MEM SIZE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FULL ERRORS ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>		
+		
+
+		<TranslationDef link="CPU ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+
+	<OIDFilter id="PHY MEM" dynamic="true">
+		<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+		<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+				we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+		<!--<OIDFilterRule regex="^(hrStorageRam)$"/>-->
+		<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.2)$"/>
+	</OIDFilter>
+		<TranslationDef link="PHY MEM SIZE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FULL ERRORS ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>		
+		
+
+		<TranslationDef link="SNMP ENABLE AUTHENTICATION TRAPS">
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CPU_AVERAGE_LOAD"  pollRate="10" >
+			<OID alias="INFORMANT PROCESSOR TIME TOTAL" />
+			<NumRule valueMin="90" format="FAIL:%d%% CPU loading" />
+			<NumRule valueMin="75" format="WARN:%d%% CPU loading" />
+			<NumRule format="%d%% CPU loading" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+		
+		<StaticDef rcLogField="PROCESS_1_NAME" >
+			<StaticString>SAM ICE</StaticString>
+		</StaticDef>
+
+					<TranslationDef rcLogField="PROCESS_1_STATE" pollRate="5">
+						<OID alias="INFORMANT PROCESS ID">.7.77.99.112.72.111.115.116</OID>
+						<NumRule valueMin="1" format="OK:Running" />
+						<ConstRule format="WARN:Unknown?" />
+						<ErrorRule format="FAIL:Process Stopped" />
+					</TranslationDef>
+			
+					<TranslationDef rcLogField="PROCESS_1_EXE" pollRate="600">
+						<OID alias="INFORMANT PROCESS NAME">.7.77.99.112.72.111.115.116</OID>
+						<StringRule match="McpHost" format="OK:%s.exe" />
+						<ConstRule format="McpHost.exe" />
+						<ErrorRule format="McpHost.exe" />
+					</TranslationDef>
+			
+					<TranslationDef rcLogField="PROCESS_1_CPU_USE" pollRate="30">
+						<ExpOID alias="INFORMANT PROCESS CPU">.7.77.99.112.72.111.115.116</ExpOID>
+						<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+						<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+						<ErrorRule format="N/A" />
+					</TranslationDef>
+			
+					<TranslationDef rcLogField="PROCESS_1_RAM_USE" pollRate="30">
+						<OID alias="INFORMANT PROCESS PHYSICAL RAM">.7.77.99.112.72.111.115.116</OID>
+						<NumRule format="%d MBytes" />
+						<ErrorRule format="N/A" />
+					</TranslationDef>
+			
+					<TranslationDef rcLogField="PROCESS_1_IO_USE" pollRate="30">
+						<ExpOID alias="INFORMANT PROCESS IO">.7.77.99.112.72.111.115.116</ExpOID>
+						<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+						<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+						<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+						<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+						<ErrorRule format="N/A" />
+					</TranslationDef>
+
+		<!-- Support for Supermicro PC running Supero Doctor 5 Client.  -->		
+		
+		<TranslationDef rcLogField="VOLTAGE_%d_NAME"  pollRate="600" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<Array filter="VOLTAGE" />
+			<StringRule />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_%d_STATE"  pollRate="60" >
+			<Array filter="VOLTAGE" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>		<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR HIGH LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		<!-- $3 -->
+			<ConditionRule condition="$1 e $2 &lt;" format="OK"/>
+			<ConditionRule condition="$1 e $2 &gt;=" format="WARN"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL"/>
+			<ConditionRule condition="$3 e 1 !=" format="INFO: Not Fitted" />	
+			<ConstRule format="OK" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VOLTAGE_%d_VALUE"  pollRate="120" >
+			<Array filter="VOLTAGE" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>					
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		
+			<ConditionRule condition="$2 e 1 !=" format="-" />	
+			<ConditionRule condition="1" expression="$1 e 1000 /" format="%.3f Volts" />
+		</TranslationDef>		
+		
+		<TranslationDef rcLogField="CURRENT_%d_NAME"  pollRate="600" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<Array filter="CURRENT" />
+			<StringRule />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="CURRENT_%d_STATE"  pollRate="60" >
+			<Array filter="CURRENT" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>		<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR HIGH LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		<!-- $3 -->
+			<ConditionRule condition="$1 e $2 &lt;" format="OK"/>
+			<ConditionRule condition="$1 e $2 &gt;=" format="WARN"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL"/>
+			<ConditionRule condition="$3 e 1 !=" format="INFO: Not Fitted" />	
+			<ConstRule format="OK" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CURRENT_%d_VALUE"  pollRate="120" >
+			<Array filter="CURRENT" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>					
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		
+			<ConditionRule condition="$2 e 1 !=" format="-" />	
+			<ConditionRule condition="1" expression="$1 e 1000 /" format="%.3f Amps" />
+		</TranslationDef>		
+		
+		<TranslationDef rcLogField="POWER_%d_NAME"  pollRate="600" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<Array filter="POWER" />
+			<StringRule />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="POWER_%d_STATE"  pollRate="60" >
+			<Array filter="POWER" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>		<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR HIGH LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		<!-- $3 -->
+			<ConditionRule condition="$1 e $2 &lt;" format="OK"/>
+			<ConditionRule condition="$1 e $2 &gt;=" format="WARN"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL"/>
+			<ConditionRule condition="$3 e 1 !=" format="INFO: Not Fitted" />	
+			<ConstRule format="OK" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="POWER_%d_VALUE"  pollRate="120" >
+			<Array filter="POWER" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>					
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		
+			<ConditionRule condition="$2 e 1 !=" format="-" />	
+			<ConditionRule condition="1" expression="$1 e 1000 /" format="%.3f Watts" />
+		</TranslationDef>	
+		
+		<TranslationDef rcLogField="FAN_%d_NAME"  pollRate="600" >
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<Array filter="FAN" />
+			<StringRule />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="FAN_%d_STATE"  pollRate="60" >
+			<Array filter="FAN" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>		<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR LOW LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		<!-- $3 -->
+			<ConditionRule condition="$1 e $2 &gt;" format="OK"/>
+			<ConditionRule condition="$1 e $2 &lt;=" format="WARN"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL"/>
+			<ConditionRule condition="$3 e 1 !=" format="INFO: Not Fitted" />	
+			<ConstRule format="OK" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d_VALUE"  pollRate="120" >
+			<Array filter="FAN" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>					
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		
+			<ConditionRule condition="$2 e 1 !=" format="-" />	
+			<ExpressionRule condition="1" expression="$1 e $1 =" format="$1 RPM" />
+		</TranslationDef>		
+		
+		<TranslationDef rcLogField="TEMP_%d_NAME"  pollRate="600" >
+			<Array filter="TEMPERATURE"/>
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<StringRule />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="TEMP_%d_STATE"  pollRate="60" >
+			<Array filter="TEMPERATURE"/>
+			<OID alias="HEALTH MONITOR STATUS">.#I</OID>
+			<NumRule value="0" format="OK" />
+			<NumRule value="1" format="WARN" />
+			<NumRule value="2" format="FAIL" />
+			<ConstRule format="OK" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_%d_CELSIUS"  pollRate="120" >
+			<Array filter="TEMPERATURE"/>
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>					
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		
+			<ConditionRule condition="$2 e 1 !=" format="N/A" />	
+			<ConditionRule condition="1" expression="$1 e" format="%.0f" />
+		</TranslationDef>		
+<!--		
+		<TranslationDef rcLogField="CHASSIS_INTRUSION"  pollRate="60" >
+			<OID alias="HEALTH MONITOR READING">.49</OID>
+			<NumRule value="0" format="OK" />
+			<NumRule value="1" format="FAIL:Intrusion" />
+			<NumRule value="2" format="FAIL:Intrusion" />
+			<NumRule format="FAIL:?Unknown number? %d" />
+		</TranslationDef>		
+-->		
+	
+		<TranslationDef rcLogField="PSU_%d_STATE" pollRate="5">
+			<Array filter="PSU STATE" />
+			<OID alias="HEALTH MONITOR READING">.#I</OID>
+			<NumRule value="0" format="OK" />
+			<NumRule value="1" format="WARN" />
+			<NumRule value="2" format="FAIL" />
+			<NumRule format="FAIL:?Unknown number? %d" />
+			<ErrorRule format="FAIL:PSU not installed" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_FAN" pollRate="5">
+			<Array filter="PSU FAN" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>		<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR LOW LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ExpOID alias="HEALTH MONITOR MONITOR">.#I</ExpOID>		<!-- $3 -->
+			<ConditionRule condition="$1 e $2 &gt;" format="OK: $1 RPM"/>
+			<ConditionRule condition="$1 e $2 &lt;=" format="WARN: $1 RPM"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL: $1 RPM"/>
+			<ConditionRule condition="$3 e 1 !=" format="Not Fitted" />	
+			<ErrorRule format="FAIL:PSU Fan fault" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_TEMP_%d" pollRate="5">
+			<Array filter="PSU TEMP" />
+			<ExpOID alias="HEALTH MONITOR READING">.#I</ExpOID>			<!-- $1 -->
+			<ExpOID alias="HEALTH MONITOR HIGH LIMIT">.#I</ExpOID>	<!-- $2 -->
+			<ConditionRule condition="$1 e $2 &lt;" format="OK: $1 C"/>
+			<ConditionRule condition="$1 e $2 &gt;=" format="WARN: $1 C"/>
+			<ConditionRule condition="$1 e 0 =" format="FAIL: $1 C"/>
+			<ErrorRule format="FAIL:PSU Fan fault" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_TEMP_%d_NAME" pollRate="600">
+			<Array filter="PSU TEMP" />
+			<OID alias="HEALTH MONITOR NAME">.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:No data" />
+		</TranslationDef>
+
+	</UnitTypeDef>
+</DefinitionGroup>
+
+

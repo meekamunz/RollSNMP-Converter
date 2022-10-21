@@ -1,0 +1,22 @@
+RADLAN-rlBrgMcMngr-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN LCLI MIB
+-- Version:    7.45
+-- Date:       15 Jun 2006
+--
+
+IMPORTS
+    rlBrgMcMngr, rnd                              FROM RADLAN-MIB
+    VlanIndex                                   FROM Q-BRIDGE-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI;
+
+
+rlBrgMulticastManagerTable OBJECT-TYPE
+    ::= { rlBrgMcMngr  1 }
+
+rlBrgMulticastManagerEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlBrgMulticastManagerTable 1 }
+
+
+END

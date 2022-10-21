@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on Cisco Nexus 3548 IP POC SAM unit at SLP, 8th Jan 2016.
+	The software version of the unit tested is:
+		Cisco NX-OS(tm) n3500, Software (n3500-uk9), Version 6.0(2)A6(1), RELEASE SOFTWARE Copyright (c) 2002-2012 by Cisco Systems, Inc.   Compiled 3/5/2015 4:00:00
+	This unit is configured with V2c SNMP, so this config is for V2c SNMP units.  It hasn't been tested
+	and may not work with units configured for V1 SNMP.
+
+	Currently no user indices are required.  This config is hard-coded for 48 user ports plus one management port - see details below.
+
+	Done:
+		* MIB-II LAN ports etc. including throughput
+		* Temperature readings
+		* Fan monitoring
+		* Temperature status
+
+	Still to do:
+		* PSU status, including currents, voltages etc.
+		* CPU status
+-->
+
+<DefinitionGroup>
+
+	<!-- These OIDs are for the Nexus 3548 switch only -->
+
+	<MIBSource href="drivers/CISCO_CISCO-SWITCH-GENERIC_1.0.0/MIBs"/>
+
+	<!-- These OIDs are for the Nexus 3548 switch only -->
+	<OIDAlias id="CISCO FAN_TRAY" oid="iso.org.dod.internet.private.enterprises.cisco.ciscoMgmt.ciscoEntityFRUControlMIB.cefcMIBObjects.cefcFRUFan.cefcFanTrayStatusTable.cefcFanTrayStatusEntry" />
+	<OIDAlias id="NEXUS TEMP THRESHOLD" oid="iso.org.dod.internet.private.enterprises.cisco.ciscoMgmt.ciscoEntitySensorMIB.entitySensorMIBObjects.entSensorThresholds.entSensorThresholdTable.entSensorThresholdEntry.entSensorThresholdValue" />
+	<OIDAlias id="CISCO TEMP SENSOR" oid="iso.org.dod.internet.private.enterprises.cisco.ciscoMgmt.ciscoEntitySensorMIB.entitySensorMIBObjects.entSensorValues.entSensorValueTable.entSensorValueEntry.entSensorValue" />
+
+	<UnitTypeDef typeName="CISCO_CISCO-SWITCH-GENERIC_1.0.0" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: Cisco Switch Generic.rsnmp 3747 2018-08-21 12:17:46Z markwatkins $</StaticString>
+		</StaticDef>
+
+		<TranslationDef link="Cisco_Cisco Switch Generic_1.0.0::Cisco Defs version" />
+
+		<!-- These examples reference some of the global translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS NAME" />
+
+		<TranslationDef link="SYS LOCATION" />
+
+		<!-- These are array translations, so you get one RollCall log field for every OID in the specified range. -->
+
+<!--	Notes about bizarre LAN port array indices seen on the Cisco Nexus 3548 IP POC SAM unit at SLP, 8th Jan 2016:
+		The array indices are non-sequential, with 4096 index offset between each of the main 48 10G ports.
+		The management port is the first index, with index 83886080.  We have converted this to RollCall log
+		field LAN_PORT_49_xxx
+		The user ports have SNMP indices 436207616 (user port 1), 436211712, 436215808 ... 436400128 (user port 48).
+		These are converted to RollCall log fields LAN_PORT_1_xxx through to LAN_PORT_48_xxx.
+		A static array is used for the single management port, and a dynamic walked GetNextArray is used for the user ports,
+		but restricted to a maximum size of 48 ports so as not to clash with the management port using log field array number 49.
+-->
+		<TranslationDef link="PORT NAME ARRAY">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="Cisco_Cisco Switch Generic_1.0.0::Cisco Port Status Reason Array" >
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="Cisco_Cisco Switch Generic_1.0.0::Cisco Port Connection Desc Array" >
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="PORT TRAFFIC IN ARRAY">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<TranslationDef link="PORT TRAFFIC OUT ARRAY">
+			<GetNextArray  />
+		</TranslationDef>
+
+		<!-- Now some fields specific to this unit type. -->
+
+		<TranslationDef link="Cisco_Cisco Switch Generic_1.0.0::Cisco Version" />
+
+		<TranslationDef rcLogField="FAN_%d_STATE" pollRate="120">
+			<Comment> Translation definition for Fan Tray state &amp; Trap definition have the same OIDs as the polling OID (.cefcFanTrayOperStatus.#I) </Comment>
+			<OID alias="CISCO FAN_TRAY">.cefcFanTrayOperStatus.#I</OID>
+			<GetNextArray  />
+			<NumRule value="1" format="WARN:Unknown" />
+			<NumRule value="2" format="OK:Powered On" />
+			<NumRule value="3" format="FAIL:Powered Off" />
+			<NumRule value="4" format="WARN:Partial Failure, Needs Replacement" />
+			<ConstRule format="WARN:Unkown State %d?" />
+			<ErrorRule format="FAIL:Missing" />
+		</TranslationDef>
+
+<!--		<StaticDef rcLogField="FAN_1_NAME" >
+			<StaticString>Rear Fan Module 1</StaticString>
+		</StaticDef>
+
+		<StaticDef rcLogField="FAN_2_NAME" >
+			<StaticString>Rear Fan Module 2</StaticString>
+		</StaticDef>
+
+		<StaticDef rcLogField="FAN_3_NAME" >
+			<StaticString>Rear Fan Module 3</StaticString>
+		</StaticDef>
+
+		<StaticDef rcLogField="FAN_4_NAME" >
+			<StaticString>Rear Fan Module 4</StaticString>
+		</StaticDef>
+
+		<StaticDef rcLogField="FAN_5_NAME" >
+			<StaticString>Rear Left PSU Fan</StaticString>
+		</StaticDef>
+
+		<StaticDef rcLogField="FAN_6_NAME" >
+			<StaticString>Rear Right PSU Fan</StaticString>
+		</StaticDef>
+-->
+
+		<TranslationDef pollRate="60" rcLogField="TEMP_%d_CELSIUS" >
+			<OID alias="CISCO TEMP SENSOR" >.#I</OID>
+			<GetNextArray  />
+			<StringRule format="%s C"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef pollRate="60" rcLogField="TEMP_%d_STATE" defaultValue="N/A" >
+			<ExpOID alias="CISCO TEMP SENSOR" >.#I</ExpOID> <Comment> placeholder var $1 </Comment>
+			<ExpOID alias="NEXUS TEMP THRESHOLD" >.#I.1</ExpOID> <Comment> placeholder var $2 </Comment>
+			<ExpOID alias="NEXUS TEMP THRESHOLD" >.#I.2</ExpOID> <Comment> placeholder var $3 </Comment>
+			<GetNextArray  />
+			<ConditionRule condition="$1 e 0 &lt;=" format="FAIL:Low" />
+			<ConditionRule condition="$1 e 5 &lt;=" format="WARN:Low" />
+			<ConditionRule condition="$1 e $2 &gt;=" format="FAIL:High" />
+			<ConditionRule condition="$1 e $3 &gt;=" format="WARN:High" />
+			<ConstRule format="OK" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+
+	</UnitTypeDef>
+
+</DefinitionGroup>

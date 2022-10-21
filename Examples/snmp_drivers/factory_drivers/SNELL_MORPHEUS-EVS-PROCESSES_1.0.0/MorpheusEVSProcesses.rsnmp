@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id: MorpheusEVSProcesses.rsnmp 3870 2021-04-22 13:11:17Z michaelmunns $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitor
+	Morpheus server processes.
+
+	It requires SNMP Informant Advanced to be running on each target server.
+-->
+
+<DefinitionGroup>
+
+	<MIBSource href="drivers/SNELL_MORPHEUS-EVS-PROCESSES_1.0.0/MIBs"/>
+
+	<OIDAlias id="INFORMANT" oid=".iso.org.dod.internet.private.enterprises.wtcs.informant.advanced" >
+		<OIDAlias id="INFORMANT PROCESS TABLE" oid=".processTable.processEntry" >
+			<OIDAlias id="INFORMANT PROCESS ID" oid=".processIDProcess" />
+			<OIDAlias id="INFORMANT PROCESS NAME" oid=".processInstance" />
+			<OIDAlias id="INFORMANT PROCESS CPU" oid=".processPercentProcessorTime" >
+				<OIDAlias id="INFORMANT PROCESS CPU TOTAL" oid=".6.95.84.111.116.97.108" /> <!-- ._Total -->
+			</OIDAlias>
+			<OIDAlias id="INFORMANT PROCESS VIRTUAL RAM" oid=".processVirtualMBytes" />
+			<OIDAlias id="INFORMANT PROCESS PHYSICAL RAM" oid=".processWorkingSetMBytes" />
+			<OIDAlias id="INFORMANT PROCESS IO" oid=".processIODataBytesPerSec" />
+		</OIDAlias>
+	</OIDAlias>
+
+	<UnitTypeDef typeName="SNELL_MORPHEUS-EVS-PROCESSES_1.0.0" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>CVS $Id: MorpheusEVSProcesses.rsnmp 3870 2021-04-22 13:11:17Z michaelmunns $</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_STATE" pollRate="120">
+			<OID alias="INFORMANT">.siAdvanceVersion.0</OID>
+			<StringRule format="OK:Running SNMP Informant Version %s" />
+			<ConstRule format="WARN:SNMP Informant Offline" />
+			<ErrorRule format="WARN:SNMP Informant Offline" />
+		</TranslationDef>
+
+		<StaticDef rcLogField="PROCESS_1_NAME" >
+			<StaticString>SAM Rescale Snapshotter</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_1_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.11.83.110.97.112.115.104.111.116.116.101.114</OID>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_1_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.11.83.110.97.112.115.104.111.116.116.101.114</OID>
+			<StringRule match="Snapshotter" format="OK:%s.exe" />
+			<ConstRule format="Snapshotter.exe" />
+			<ErrorRule format="Snapshotter.exe" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_1_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.11.83.110.97.112.115.104.111.116.116.101.114</ExpOID>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_1_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.11.83.110.97.112.115.104.111.116.116.101.114</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+<!--
+		<TranslationDef rcLogField="PROCESS_1_RAM_VIRTUAL_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS VIRTUAL RAM">.11.83.110.97.112.115.104.111.116.116.101.114</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+-->
+
+		<TranslationDef rcLogField="PROCESS_1_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.11.83.110.97.112.115.104.111.116.116.101.114</ExpOID>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+
+		<StaticDef rcLogField="PROCESS_2_NAME" >
+			<StaticString>Morpheus Application Server</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_2_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.42.80.114.111.98.101.108.46.65.117.116.111.109.97.116.105.111.110.46.65.112.112.108.105.99.97.116.105.111.110.83.101.114.118.101.114.46.83.101.114.118.101.114</OID>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_2_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.42.80.114.111.98.101.108.46.65.117.116.111.109.97.116.105.111.110.46.65.112.112.108.105.99.97.116.105.111.110.83.101.114.118.101.114.46.83.101.114.118.101.114</OID>
+			<StringRule match="Probel.Automation.ApplicationServer.Server" format="OK:%s.exe" />
+			<ConstRule format="Probel.Automation.ApplicationServer.Server.exe" />
+			<ErrorRule format="Probel.Automation.ApplicationServer.Server.exe" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_2_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.42.80.114.111.98.101.108.46.65.117.116.111.109.97.116.105.111.110.46.65.112.112.108.105.99.97.116.105.111.110.83.101.114.118.101.114.46.83.101.114.118.101.114</ExpOID>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_2_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.42.80.114.111.98.101.108.46.65.117.116.111.109.97.116.105.111.110.46.65.112.112.108.105.99.97.116.105.111.110.83.101.114.118.101.114.46.83.101.114.118.101.114</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_2_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.42.80.114.111.98.101.108.46.65.117.116.111.109.97.116.105.111.110.46.65.112.112.108.105.99.97.116.105.111.110.83.101.114.118.101.114.46.83.101.114.118.101.114</ExpOID>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		
+		<StaticDef rcLogField="PROCESS_4_NAME" >
+			<StaticString>SAM HostShell</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_4_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.17.77.111.114.112.104.101.117.115.72.111.115.116.83.104.101.108.108</OID>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_4_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.17.77.111.114.112.104.101.117.115.72.111.115.116.83.104.101.108.108</OID>
+			<StringRule match="MorpheusHostShell" format="OK:%s.exe" />
+			<ConstRule format="MorpheusHostShell.exe" />
+			<ErrorRule format="MorpheusHostShell.exe" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_4_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.17.77.111.114.112.104.101.117.115.72.111.115.116.83.104.101.108.108</ExpOID>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_4_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.17.77.111.114.112.104.101.117.115.72.111.115.116.83.104.101.108.108</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_4_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.17.77.111.114.112.104.101.117.115.72.111.115.116.83.104.101.108.108</ExpOID>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		
+		<StaticDef rcLogField="PROCESS_5_NAME" >
+			<StaticString>SAM Bridge</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_5_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.10.80.98.97.107.66.114.105.100.103.101</OID>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_5_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.10.80.98.97.107.66.114.105.100.103.101</OID>
+			<StringRule match="PbakBridge" format="OK:%s.exe" />
+			<ConstRule format="PbakBridge.exe" />
+			<ErrorRule format="PbakBridge.exe" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_5_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.10.80.98.97.107.66.114.105.100.103.101</ExpOID>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_5_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.10.80.98.97.107.66.114.105.100.103.101</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_5_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.10.80.98.97.107.66.114.105.100.103.101</ExpOID>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		
+		<StaticDef rcLogField="PROCESS_6_NAME" >
+			<StaticString>SAM Automation Database Reporter</StaticString>
+		</StaticDef>
+
+		<TranslationDef rcLogField="PROCESS_6_STATE" pollRate="5">
+			<OID alias="INFORMANT PROCESS ID">.20.65.117.116.111.109.97.116.105.111.110.68.98.82.101.112.111.114.116.101.114</OID>
+			<NumRule valueMin="1" format="OK:Running" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL:Process Stopped" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_6_EXE" pollRate="600">
+			<OID alias="INFORMANT PROCESS NAME">.20.65.117.116.111.109.97.116.105.111.110.68.98.82.101.112.111.114.116.101.114</OID>
+			<StringRule match="AutomationDbReporter" format="OK:%s.exe" />
+			<ConstRule format="AutomationDbReporter.exe" />
+			<ErrorRule format="AutomationDbReporter.exe" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_6_CPU_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS CPU">.20.65.117.116.111.109.97.116.105.111.110.68.98.82.101.112.111.114.116.101.114</ExpOID>
+			<ExpOID alias="INFORMANT PROCESS CPU TOTAL"/>
+			<ExpressionRule expression="$1 e 100 * e $2 /" format="%.1f %%" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_6_RAM_USE" pollRate="30">
+			<OID alias="INFORMANT PROCESS PHYSICAL RAM">.20.65.117.116.111.109.97.116.105.111.110.68.98.82.101.112.111.114.116.101.114</OID>
+			<NumRule format="%d MBytes" />
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PROCESS_6_IO_USE" pollRate="30">
+			<ExpOID alias="INFORMANT PROCESS IO">.20.65.117.116.111.109.97.116.105.111.110.68.98.82.101.112.111.114.116.101.114</ExpOID>
+			<ConditionRule condition="$1 e 1073741824 >=" expression="$1 e 1073741824 /" format="%.3f GByte/s"/>
+			<ConditionRule condition="$1 e 1048576 >=" expression="$1 e 1048576 /" format="%.3f MByte/s"/>
+			<ConditionRule condition="$1 e 1024 >=" expression="$1 e 1024 /" format="%.3f KByte/s"/>
+			<ConditionRule condition="1" expression="$1" format="%d Byte/s"/>
+			<ErrorRule format="N/A" />
+		</TranslationDef>
+
+
+	</UnitTypeDef>
+</DefinitionGroup>
+
+
+		<!--
+		http://cryptii.com/text/decimal
+		https://www.branah.com/ascii-converter
+		http://www.asciitable.com/index/asciifull.gif
+		-->

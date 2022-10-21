@@ -1,0 +1,219 @@
+CACHESERVER-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        quantelProduct                        FROM QUANTEL-MIB
+        DisplayString                         FROM RFC1213-MIB
+        OBJECT-TYPE, Integer32,
+        MODULE-IDENTITY                       FROM SNMPv2-SMI;
+
+
+cacheServerMIB MODULE-IDENTITY
+    LAST-UPDATED "200311130000Z"            
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"   
+    DESCRIPTION  "This is the Quantel cacheserver MIB"
+
+    ::= { quantelProduct 4 }
+
+cacheServerMIBObjects     OBJECT IDENTIFIER ::= { cacheServerMIB 1 }
+
+
+UpTime OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Eleapsed time sine the cacheServer was started (HH:MM:SS)"
+    ::= { cacheServerMIBObjects 1 }
+
+WorkQueueLength OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION 
+        "The number of pending requests in the Work queue. 
+        If this number is increasing cacheServer is unable to
+        cope with the number of incoming requests"
+    ::= { cacheServerMIBObjects 2 }
+
+WorkInProgress OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "The number of requests currenlty being worked upon"
+    ::= { cacheServerMIBObjects 3 }
+
+NumGetErrors OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of errors during data requests from cache to server"
+    ::= { cacheServerMIBObjects 4 }
+
+ThunkSize OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Current thunk size"
+    ::= { cacheServerMIBObjects 5 }
+
+MemCacheSize OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Size of the memory cache in thunks"
+    ::= { cacheServerMIBObjects 6 }
+
+DiskCacheSize OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Size of the disk ache in thunks"
+    ::= { cacheServerMIBObjects 7 }
+
+ThunksInMem OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of thunks in memory"
+    ::= { cacheServerMIBObjects 8 }
+
+ThunksInDisk OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of thunks on disk"
+    ::= { cacheServerMIBObjects 9 }
+
+NumRequests OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of thunk requests since startup"
+    ::= { cacheServerMIBObjects 10 }
+
+NumMemHits OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of memory hits"
+    ::= { cacheServerMIBObjects 11 }
+
+NumDiskhits OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk hits"
+    ::= { cacheServerMIBObjects 12 }
+
+NumDiskWrites OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk writes"
+    ::= { cacheServerMIBObjects 13 }
+
+NumNoData OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of NODATA thunks recieved"
+    ::= { cacheServerMIBObjects 14 }
+
+LastThunkAge OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Identifier of last thunk age"
+    ::= { cacheServerMIBObjects 15 }
+
+
+NetGetMBytesTransfered OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "total number of MBytes transfered to clients"
+    ::= { cacheServerMIBObjects 16 }
+
+NetGetFragmentsResent OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "number of fragments resent"
+    ::= { cacheServerMIBObjects 17 }
+
+NetGetLatencyAvg OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "average network get latency (us)"
+    ::= { cacheServerMIBObjects 18 }
+
+NetGetLatencyPeak OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "peak network get latency (us)"
+    ::= { cacheServerMIBObjects 19 }
+
+DiskGetLatencyAvg OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "average disk latency (us)"
+    ::= { cacheServerMIBObjects 20 }
+
+DiskGetLatencyPeak OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Peak disk latency (us)"
+    ::= { cacheServerMIBObjects 21 }
+
+CacheGetLatencyAvg OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Average latency (us)"
+    ::= { cacheServerMIBObjects 22 }
+
+CacheGetLatencyPeak OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Cache peak latency (us)"
+    ::= { cacheServerMIBObjects 23 }
+
+NetPutMBytesTransfered OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "number of transfered MBytes"
+    ::= { cacheServerMIBObjects 24 }
+
+NetPutFragmentsResent OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "number of fragments resent"
+    ::= { cacheServerMIBObjects 25 }
+
+PreloadThunksTodo OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "number of preload thunks remaining"
+    ::= { cacheServerMIBObjects 26 }
+
+Status OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Status of the cache server"
+    ::= { cacheServerMIBObjects 27 }
+END

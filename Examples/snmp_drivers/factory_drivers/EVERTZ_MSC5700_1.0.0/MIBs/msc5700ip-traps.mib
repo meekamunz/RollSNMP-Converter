@@ -1,0 +1,2323 @@
+-- Copyright 2019 Evertz Microsystems Ltd.
+-- Wed May 15 15:53:40 2019
+-- Confidential
+
+MSC5700IP-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    msc5700ipInstance, msc5700ipTraps
+        FROM MSC5700IP-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { msc5700ipTraps 1 }
+
+
+-- beginning of referencePresent trap
+
+    faultreferencePresentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frequency lock Locked"
+    ::= 1000
+    
+    faultreferencePresentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frequency lock Not Locked"
+    ::= 1001
+
+-- end of referencePresent trap
+
+-- beginning of timeLocked trap
+
+    faulttimeLockedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Time Lock Locked"
+    ::= 1002
+    
+    faulttimeLockedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Time Lock Not Locked"
+    ::= 1003
+
+-- end of timeLocked trap
+
+-- beginning of referenceJamNeeded trap
+
+    faultreferenceJamNeededFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frequency Jam Needed OK"
+    ::= 1004
+    
+    faultreferenceJamNeededTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frequency Jam Needed Jam Needed"
+    ::= 1005
+
+-- end of referenceJamNeeded trap
+
+-- beginning of timeJamNeeded trap
+
+    faulttimeJamNeededFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Time Jam Needed OK"
+    ::= 1006
+    
+    faulttimeJamNeededTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Time Jam Needed Jam Needed"
+    ::= 1007
+
+-- end of timeJamNeeded trap
+
+-- beginning of fanFail trap
+
+    faultfanFailFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Fan Failure OK"
+    ::= 1008
+    
+    faultfanFailTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Fan Failure Fan Fail"
+    ::= 1009
+
+-- end of fanFail trap
+
+-- beginning of hardwareFail trap
+
+    faulthardwareFailFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Hardware Failure OK"
+    ::= 1010
+    
+    faulthardwareFailTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Hardware Failure Hardware Fail"
+    ::= 1011
+
+-- end of hardwareFail trap
+
+-- beginning of overtemp trap
+
+    faultovertempFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Over Temperature OK"
+    ::= 1012
+    
+    faultovertempTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Over Temperature Over Temperature"
+    ::= 1013
+
+-- end of overtemp trap
+
+-- beginning of gpi1 trap
+
+    faultgpi1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPI 1 High"
+    ::= 1014
+    
+    faultgpi1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPI 1 Low"
+    ::= 1015
+
+-- end of gpi1 trap
+
+-- beginning of gpi2 trap
+
+    faultgpi2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPI 2 High"
+    ::= 1016
+    
+    faultgpi2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPI 2 Low"
+    ::= 1017
+
+-- end of gpi2 trap
+
+-- beginning of ptp1g1 trap
+
+    faultptp1g1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 PTP State Changed"
+    ::= 1018
+    
+    faultptp1g1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 PTP State Changed"
+    ::= 1019
+
+-- end of ptp1g1 trap
+
+-- beginning of ptp1g2 trap
+
+    faultptp1g2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 PTP State Changed"
+    ::= 1020
+    
+    faultptp1g2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 PTP State Changed"
+    ::= 1021
+
+-- end of ptp1g2 trap
+
+-- beginning of ptp10g1 trap
+
+    faultptp10g1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 PTP State Changed"
+    ::= 1022
+    
+    faultptp10g1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 PTP State Changed"
+    ::= 1023
+
+-- end of ptp10g1 trap
+
+-- beginning of ptp10g2 trap
+
+    faultptp10g2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 PTP State Changed"
+    ::= 1024
+    
+    faultptp10g2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 PTP State Changed"
+    ::= 1025
+
+-- end of ptp10g2 trap
+
+-- beginning of ptpFrame trap
+
+    faultptpFrameFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame PTP State Changed"
+    ::= 1026
+    
+    faultptpFrameTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame PTP State Changed"
+    ::= 1027
+
+-- end of ptpFrame trap
+
+-- beginning of ptpProfileChange I1G1 trap
+
+    faultptpProfileChangeI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I1G1"
+    ::= 1028
+    
+    faultptpProfileChangeI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I1G1"
+    ::= 1029
+
+-- end of ptpProfileChange I1G1 trap
+
+-- beginning of ptpProfileChange I1G2 trap
+
+    faultptpProfileChangeI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I1G2"
+    ::= 1030
+    
+    faultptpProfileChangeI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I1G2"
+    ::= 1031
+
+-- end of ptpProfileChange I1G2 trap
+
+-- beginning of ptpProfileChange I10G1 trap
+
+    faultptpProfileChangeI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I10G1"
+    ::= 1032
+    
+    faultptpProfileChangeI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I10G1"
+    ::= 1033
+
+-- end of ptpProfileChange I10G1 trap
+
+-- beginning of ptpProfileChange I10G2 trap
+
+    faultptpProfileChangeI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I10G2"
+    ::= 1034
+    
+    faultptpProfileChangeI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on I10G2"
+    ::= 1035
+
+-- end of ptpProfileChange I10G2 trap
+
+-- beginning of ptpProfileChange Fr trap
+
+    faultptpProfileChangeFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on Fr"
+    ::= 1036
+    
+    faultptpProfileChangeFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP profile Changed on Fr"
+    ::= 1037
+
+-- end of ptpProfileChange Fr trap
+
+-- beginning of ptpDscpChange I1G1 trap
+
+    faultptpDscpChangeI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I1G1"
+    ::= 1038
+    
+    faultptpDscpChangeI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I1G1"
+    ::= 1039
+
+-- end of ptpDscpChange I1G1 trap
+
+-- beginning of ptpDscpChange I1G2 trap
+
+    faultptpDscpChangeI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I1G2"
+    ::= 1040
+    
+    faultptpDscpChangeI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I1G2"
+    ::= 1041
+
+-- end of ptpDscpChange I1G2 trap
+
+-- beginning of ptpDscpChange I10G1 trap
+
+    faultptpDscpChangeI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I10G1"
+    ::= 1042
+    
+    faultptpDscpChangeI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I10G1"
+    ::= 1043
+
+-- end of ptpDscpChange I10G1 trap
+
+-- beginning of ptpDscpChange I10G2 trap
+
+    faultptpDscpChangeI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I10G2"
+    ::= 1044
+    
+    faultptpDscpChangeI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on I10G2"
+    ::= 1045
+
+-- end of ptpDscpChange I10G2 trap
+
+-- beginning of ptpDscpChange Fr trap
+
+    faultptpDscpChangeFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on Fr"
+    ::= 1046
+    
+    faultptpDscpChangeFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Dscp Changed on Fr"
+    ::= 1047
+
+-- end of ptpDscpChange Fr trap
+
+-- beginning of ptpSyncRateChange I1G1 trap
+
+    faultptpSyncRateChangeI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I1G1"
+    ::= 1048
+    
+    faultptpSyncRateChangeI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I1G1"
+    ::= 1049
+
+-- end of ptpSyncRateChange I1G1 trap
+
+-- beginning of ptpSyncRateChange I1G2 trap
+
+    faultptpSyncRateChangeI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I1G2"
+    ::= 1050
+    
+    faultptpSyncRateChangeI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I1G2"
+    ::= 1051
+
+-- end of ptpSyncRateChange I1G2 trap
+
+-- beginning of ptpSyncRateChange I10G1 trap
+
+    faultptpSyncRateChangeI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I10G1"
+    ::= 1052
+    
+    faultptpSyncRateChangeI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I10G1"
+    ::= 1053
+
+-- end of ptpSyncRateChange I10G1 trap
+
+-- beginning of ptpSyncRateChange I10G2 trap
+
+    faultptpSyncRateChangeI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I10G2"
+    ::= 1054
+    
+    faultptpSyncRateChangeI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on I10G2"
+    ::= 1055
+
+-- end of ptpSyncRateChange I10G2 trap
+
+-- beginning of ptpSyncRateChange Fr trap
+
+    faultptpSyncRateChangeFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on Fr"
+    ::= 1056
+    
+    faultptpSyncRateChangeFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Sync Rate Changed on Fr"
+    ::= 1057
+
+-- end of ptpSyncRateChange Fr trap
+
+-- beginning of ptpAnnounceRateChange I1G1 trap
+
+    faultptpAnnounceRateChangeI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I1G1"
+    ::= 1058
+    
+    faultptpAnnounceRateChangeI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I1G1"
+    ::= 1059
+
+-- end of ptpAnnounceRateChange I1G1 trap
+
+-- beginning of ptpAnnounceRateChange I1G2 trap
+
+    faultptpAnnounceRateChangeI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I1G2"
+    ::= 1060
+    
+    faultptpAnnounceRateChangeI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I1G2"
+    ::= 1061
+
+-- end of ptpAnnounceRateChange I1G2 trap
+
+-- beginning of ptpAnnounceRateChange I10G1 trap
+
+    faultptpAnnounceRateChangeI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I10G1"
+    ::= 1062
+    
+    faultptpAnnounceRateChangeI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I10G1"
+    ::= 1063
+
+-- end of ptpAnnounceRateChange I10G1 trap
+
+-- beginning of ptpAnnounceRateChange I10G2 trap
+
+    faultptpAnnounceRateChangeI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I10G2"
+    ::= 1064
+    
+    faultptpAnnounceRateChangeI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on I10G2"
+    ::= 1065
+
+-- end of ptpAnnounceRateChange I10G2 trap
+
+-- beginning of ptpAnnounceRateChange Fr trap
+
+    faultptpAnnounceRateChangeFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on Fr"
+    ::= 1066
+    
+    faultptpAnnounceRateChangeFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Announce Rate Changed on Fr"
+    ::= 1067
+
+-- end of ptpAnnounceRateChange Fr trap
+
+-- beginning of ptpMstTimeoutChange I1G1 trap
+
+    faultptpMstTimeoutChangeI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I1G1"
+    ::= 1068
+    
+    faultptpMstTimeoutChangeI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I1G1"
+    ::= 1069
+
+-- end of ptpMstTimeoutChange I1G1 trap
+
+-- beginning of ptpMstTimeoutChange I1G2 trap
+
+    faultptpMstTimeoutChangeI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I1G2"
+    ::= 1070
+    
+    faultptpMstTimeoutChangeI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I1G2"
+    ::= 1071
+
+-- end of ptpMstTimeoutChange I1G2 trap
+
+-- beginning of ptpMstTimeoutChange I10G1 trap
+
+    faultptpMstTimeoutChangeI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I10G1"
+    ::= 1072
+    
+    faultptpMstTimeoutChangeI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I10G1"
+    ::= 1073
+
+-- end of ptpMstTimeoutChange I10G1 trap
+
+-- beginning of ptpMstTimeoutChange I10G2 trap
+
+    faultptpMstTimeoutChangeI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I10G2"
+    ::= 1074
+    
+    faultptpMstTimeoutChangeI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on I10G2"
+    ::= 1075
+
+-- end of ptpMstTimeoutChange I10G2 trap
+
+-- beginning of ptpMstTimeoutChange Fr trap
+
+    faultptpMstTimeoutChangeFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on Fr"
+    ::= 1076
+    
+    faultptpMstTimeoutChangeFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP MST Timeout Changed on Fr"
+    ::= 1077
+
+-- end of ptpMstTimeoutChange Fr trap
+
+-- beginning of acceptableMstListEn I1G1 trap
+
+    faultacceptableMstListEnI1G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I1G1"
+    ::= 1078
+    
+    faultacceptableMstListEnI1G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I1G1"
+    ::= 1079
+
+-- end of acceptableMstListEn I1G1 trap
+
+-- beginning of acceptableMstListEn I1G2 trap
+
+    faultacceptableMstListEnI1G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I1G2"
+    ::= 1080
+    
+    faultacceptableMstListEnI1G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I1G2"
+    ::= 1081
+
+-- end of acceptableMstListEn I1G2 trap
+
+-- beginning of acceptableMstListEn I10G1 trap
+
+    faultacceptableMstListEnI10G1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I10G1"
+    ::= 1082
+    
+    faultacceptableMstListEnI10G1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I10G1"
+    ::= 1083
+
+-- end of acceptableMstListEn I10G1 trap
+
+-- beginning of acceptableMstListEn I10G2 trap
+
+    faultacceptableMstListEnI10G2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I10G2"
+    ::= 1084
+    
+    faultacceptableMstListEnI10G2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on I10G2"
+    ::= 1085
+
+-- end of acceptableMstListEn I10G2 trap
+
+-- beginning of acceptableMstListEn Fr trap
+
+    faultacceptableMstListEnFrFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on Fr"
+    ::= 1086
+    
+    faultacceptableMstListEnFrTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master List Enable Changed on Fr"
+    ::= 1087
+
+-- end of acceptableMstListEn Fr trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster1 trap
+
+    faultacceptableMasterEnableAcceptabeMaster1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster1"
+    ::= 1088
+    
+    faultacceptableMasterEnableAcceptabeMaster1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster1"
+    ::= 1089
+
+-- end of acceptableMasterEnable AcceptabeMaster1 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster2 trap
+
+    faultacceptableMasterEnableAcceptabeMaster2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster2"
+    ::= 1090
+    
+    faultacceptableMasterEnableAcceptabeMaster2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster2"
+    ::= 1091
+
+-- end of acceptableMasterEnable AcceptabeMaster2 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster3 trap
+
+    faultacceptableMasterEnableAcceptabeMaster3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster3"
+    ::= 1092
+    
+    faultacceptableMasterEnableAcceptabeMaster3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster3"
+    ::= 1093
+
+-- end of acceptableMasterEnable AcceptabeMaster3 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster4 trap
+
+    faultacceptableMasterEnableAcceptabeMaster4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster4"
+    ::= 1094
+    
+    faultacceptableMasterEnableAcceptabeMaster4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster4"
+    ::= 1095
+
+-- end of acceptableMasterEnable AcceptabeMaster4 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster5 trap
+
+    faultacceptableMasterEnableAcceptabeMaster5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster5"
+    ::= 1096
+    
+    faultacceptableMasterEnableAcceptabeMaster5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster5"
+    ::= 1097
+
+-- end of acceptableMasterEnable AcceptabeMaster5 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster6 trap
+
+    faultacceptableMasterEnableAcceptabeMaster6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster6"
+    ::= 1098
+    
+    faultacceptableMasterEnableAcceptabeMaster6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster6"
+    ::= 1099
+
+-- end of acceptableMasterEnable AcceptabeMaster6 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster7 trap
+
+    faultacceptableMasterEnableAcceptabeMaster7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster7"
+    ::= 1100
+    
+    faultacceptableMasterEnableAcceptabeMaster7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster7"
+    ::= 1101
+
+-- end of acceptableMasterEnable AcceptabeMaster7 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster8 trap
+
+    faultacceptableMasterEnableAcceptabeMaster8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster8"
+    ::= 1102
+    
+    faultacceptableMasterEnableAcceptabeMaster8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster8"
+    ::= 1103
+
+-- end of acceptableMasterEnable AcceptabeMaster8 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster9 trap
+
+    faultacceptableMasterEnableAcceptabeMaster9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster9"
+    ::= 1104
+    
+    faultacceptableMasterEnableAcceptabeMaster9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster9"
+    ::= 1105
+
+-- end of acceptableMasterEnable AcceptabeMaster9 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster10 trap
+
+    faultacceptableMasterEnableAcceptabeMaster10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster10"
+    ::= 1106
+    
+    faultacceptableMasterEnableAcceptabeMaster10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster10"
+    ::= 1107
+
+-- end of acceptableMasterEnable AcceptabeMaster10 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster11 trap
+
+    faultacceptableMasterEnableAcceptabeMaster11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster11"
+    ::= 1108
+    
+    faultacceptableMasterEnableAcceptabeMaster11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster11"
+    ::= 1109
+
+-- end of acceptableMasterEnable AcceptabeMaster11 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster12 trap
+
+    faultacceptableMasterEnableAcceptabeMaster12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster12"
+    ::= 1110
+    
+    faultacceptableMasterEnableAcceptabeMaster12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster12"
+    ::= 1111
+
+-- end of acceptableMasterEnable AcceptabeMaster12 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster13 trap
+
+    faultacceptableMasterEnableAcceptabeMaster13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster13"
+    ::= 1112
+    
+    faultacceptableMasterEnableAcceptabeMaster13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster13"
+    ::= 1113
+
+-- end of acceptableMasterEnable AcceptabeMaster13 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster14 trap
+
+    faultacceptableMasterEnableAcceptabeMaster14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster14"
+    ::= 1114
+    
+    faultacceptableMasterEnableAcceptabeMaster14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster14"
+    ::= 1115
+
+-- end of acceptableMasterEnable AcceptabeMaster14 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster15 trap
+
+    faultacceptableMasterEnableAcceptabeMaster15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster15"
+    ::= 1116
+    
+    faultacceptableMasterEnableAcceptabeMaster15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster15"
+    ::= 1117
+
+-- end of acceptableMasterEnable AcceptabeMaster15 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster16 trap
+
+    faultacceptableMasterEnableAcceptabeMaster16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster16"
+    ::= 1118
+    
+    faultacceptableMasterEnableAcceptabeMaster16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster16"
+    ::= 1119
+
+-- end of acceptableMasterEnable AcceptabeMaster16 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster17 trap
+
+    faultacceptableMasterEnableAcceptabeMaster17False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster17"
+    ::= 1120
+    
+    faultacceptableMasterEnableAcceptabeMaster17True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster17"
+    ::= 1121
+
+-- end of acceptableMasterEnable AcceptabeMaster17 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster18 trap
+
+    faultacceptableMasterEnableAcceptabeMaster18False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster18"
+    ::= 1122
+    
+    faultacceptableMasterEnableAcceptabeMaster18True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster18"
+    ::= 1123
+
+-- end of acceptableMasterEnable AcceptabeMaster18 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster19 trap
+
+    faultacceptableMasterEnableAcceptabeMaster19False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster19"
+    ::= 1124
+    
+    faultacceptableMasterEnableAcceptabeMaster19True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster19"
+    ::= 1125
+
+-- end of acceptableMasterEnable AcceptabeMaster19 trap
+
+-- beginning of acceptableMasterEnable AcceptabeMaster20 trap
+
+    faultacceptableMasterEnableAcceptabeMaster20False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster20"
+    ::= 1126
+    
+    faultacceptableMasterEnableAcceptabeMaster20True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Enabled Changed on AcceptabeMaster20"
+    ::= 1127
+
+-- end of acceptableMasterEnable AcceptabeMaster20 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster1 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster1"
+    ::= 1128
+    
+    faultacceptableMasterIpChangeAcceptabeMaster1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster1"
+    ::= 1129
+
+-- end of acceptableMasterIpChange AcceptabeMaster1 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster2 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster2"
+    ::= 1130
+    
+    faultacceptableMasterIpChangeAcceptabeMaster2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster2"
+    ::= 1131
+
+-- end of acceptableMasterIpChange AcceptabeMaster2 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster3 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster3"
+    ::= 1132
+    
+    faultacceptableMasterIpChangeAcceptabeMaster3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster3"
+    ::= 1133
+
+-- end of acceptableMasterIpChange AcceptabeMaster3 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster4 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster4"
+    ::= 1134
+    
+    faultacceptableMasterIpChangeAcceptabeMaster4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster4"
+    ::= 1135
+
+-- end of acceptableMasterIpChange AcceptabeMaster4 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster5 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster5"
+    ::= 1136
+    
+    faultacceptableMasterIpChangeAcceptabeMaster5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster5"
+    ::= 1137
+
+-- end of acceptableMasterIpChange AcceptabeMaster5 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster6 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster6"
+    ::= 1138
+    
+    faultacceptableMasterIpChangeAcceptabeMaster6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster6"
+    ::= 1139
+
+-- end of acceptableMasterIpChange AcceptabeMaster6 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster7 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster7"
+    ::= 1140
+    
+    faultacceptableMasterIpChangeAcceptabeMaster7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster7"
+    ::= 1141
+
+-- end of acceptableMasterIpChange AcceptabeMaster7 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster8 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster8"
+    ::= 1142
+    
+    faultacceptableMasterIpChangeAcceptabeMaster8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster8"
+    ::= 1143
+
+-- end of acceptableMasterIpChange AcceptabeMaster8 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster9 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster9"
+    ::= 1144
+    
+    faultacceptableMasterIpChangeAcceptabeMaster9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster9"
+    ::= 1145
+
+-- end of acceptableMasterIpChange AcceptabeMaster9 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster10 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster10"
+    ::= 1146
+    
+    faultacceptableMasterIpChangeAcceptabeMaster10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster10"
+    ::= 1147
+
+-- end of acceptableMasterIpChange AcceptabeMaster10 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster11 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster11"
+    ::= 1148
+    
+    faultacceptableMasterIpChangeAcceptabeMaster11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster11"
+    ::= 1149
+
+-- end of acceptableMasterIpChange AcceptabeMaster11 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster12 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster12"
+    ::= 1150
+    
+    faultacceptableMasterIpChangeAcceptabeMaster12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster12"
+    ::= 1151
+
+-- end of acceptableMasterIpChange AcceptabeMaster12 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster13 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster13"
+    ::= 1152
+    
+    faultacceptableMasterIpChangeAcceptabeMaster13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster13"
+    ::= 1153
+
+-- end of acceptableMasterIpChange AcceptabeMaster13 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster14 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster14"
+    ::= 1154
+    
+    faultacceptableMasterIpChangeAcceptabeMaster14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster14"
+    ::= 1155
+
+-- end of acceptableMasterIpChange AcceptabeMaster14 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster15 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster15"
+    ::= 1156
+    
+    faultacceptableMasterIpChangeAcceptabeMaster15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster15"
+    ::= 1157
+
+-- end of acceptableMasterIpChange AcceptabeMaster15 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster16 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster16"
+    ::= 1158
+    
+    faultacceptableMasterIpChangeAcceptabeMaster16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster16"
+    ::= 1159
+
+-- end of acceptableMasterIpChange AcceptabeMaster16 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster17 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster17False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster17"
+    ::= 1160
+    
+    faultacceptableMasterIpChangeAcceptabeMaster17True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster17"
+    ::= 1161
+
+-- end of acceptableMasterIpChange AcceptabeMaster17 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster18 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster18False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster18"
+    ::= 1162
+    
+    faultacceptableMasterIpChangeAcceptabeMaster18True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster18"
+    ::= 1163
+
+-- end of acceptableMasterIpChange AcceptabeMaster18 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster19 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster19False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster19"
+    ::= 1164
+    
+    faultacceptableMasterIpChangeAcceptabeMaster19True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster19"
+    ::= 1165
+
+-- end of acceptableMasterIpChange AcceptabeMaster19 trap
+
+-- beginning of acceptableMasterIpChange AcceptabeMaster20 trap
+
+    faultacceptableMasterIpChangeAcceptabeMaster20False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster20"
+    ::= 1166
+    
+    faultacceptableMasterIpChangeAcceptabeMaster20True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master IP Changed on AcceptabeMaster20"
+    ::= 1167
+
+-- end of acceptableMasterIpChange AcceptabeMaster20 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster1 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster1"
+    ::= 1168
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster1"
+    ::= 1169
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster1 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster2 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster2"
+    ::= 1170
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster2"
+    ::= 1171
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster2 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster3 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster3"
+    ::= 1172
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster3"
+    ::= 1173
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster3 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster4 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster4"
+    ::= 1174
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster4"
+    ::= 1175
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster4 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster5 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster5"
+    ::= 1176
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster5"
+    ::= 1177
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster5 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster6 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster6"
+    ::= 1178
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster6"
+    ::= 1179
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster6 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster7 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster7"
+    ::= 1180
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster7"
+    ::= 1181
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster7 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster8 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster8"
+    ::= 1182
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster8"
+    ::= 1183
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster8 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster9 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster9"
+    ::= 1184
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster9"
+    ::= 1185
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster9 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster10 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster10"
+    ::= 1186
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster10"
+    ::= 1187
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster10 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster11 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster11"
+    ::= 1188
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster11"
+    ::= 1189
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster11 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster12 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster12"
+    ::= 1190
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster12"
+    ::= 1191
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster12 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster13 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster13"
+    ::= 1192
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster13"
+    ::= 1193
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster13 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster14 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster14"
+    ::= 1194
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster14"
+    ::= 1195
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster14 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster15 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster15"
+    ::= 1196
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster15"
+    ::= 1197
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster15 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster16 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster16"
+    ::= 1198
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster16"
+    ::= 1199
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster16 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster17 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster17False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster17"
+    ::= 1200
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster17True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster17"
+    ::= 1201
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster17 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster18 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster18False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster18"
+    ::= 1202
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster18True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster18"
+    ::= 1203
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster18 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster19 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster19False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster19"
+    ::= 1204
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster19True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster19"
+    ::= 1205
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster19 trap
+
+-- beginning of acceptableMasterPriorityChange AcceptabeMaster20 trap
+
+    faultacceptableMasterPriorityChangeAcceptabeMaster20False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster20"
+    ::= 1206
+    
+    faultacceptableMasterPriorityChangeAcceptabeMaster20True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Acceptable Master Priority Changed on AcceptabeMaster20"
+    ::= 1207
+
+-- end of acceptableMasterPriorityChange AcceptabeMaster20 trap
+
+-- beginning of gpsEnabled trap
+
+    faultgpsEnabledFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPS Enabled Changed"
+    ::= 1208
+    
+    faultgpsEnabledTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GPS Enabled Changed"
+    ::= 1209
+
+-- end of gpsEnabled trap
+
+-- beginning of glonassEnabled trap
+
+    faultglonassEnabledFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GLONASS Enabled Changed"
+    ::= 1210
+    
+    faultglonassEnabledTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "GLONASS Enabled Changed"
+    ::= 1211
+
+-- end of glonassEnabled trap
+
+-- beginning of ntpSpoofOn trap
+
+    faultntpSpoofOnFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "NTP Spoofing setting ON ON"
+    ::= 1212
+    
+    faultntpSpoofOnTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "NTP Spoofing setting ON OFF"
+    ::= 1213
+
+-- end of ntpSpoofOn trap
+
+-- beginning of ptpDomainChange trap
+
+    faultptpDomainChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Domain Changed"
+    ::= 1214
+    
+    faultptpDomainChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP Domain Changed"
+    ::= 1215
+
+-- end of ptpDomainChange trap
+
+-- beginning of ptpPriority1Change trap
+
+    faultptpPriority1ChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP priority1 Changed"
+    ::= 1216
+    
+    faultptpPriority1ChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP priority1 Changed"
+    ::= 1217
+
+-- end of ptpPriority1Change trap
+
+-- beginning of ptpPriority2Change trap
+
+    faultptpPriority2ChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP priority2 Changed"
+    ::= 1218
+    
+    faultptpPriority2ChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "PTP priority2 Changed"
+    ::= 1219
+
+-- end of ptpPriority2Change trap
+
+-- beginning of smpteEnabled trap
+
+    faultsmpteEnabledFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Enabled Changed"
+    ::= 1220
+    
+    faultsmpteEnabledTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Enabled Changed"
+    ::= 1221
+
+-- end of smpteEnabled trap
+
+-- beginning of smpteDropFrameChange trap
+
+    faultsmpteDropFrameChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 DropFrame Changed"
+    ::= 1222
+    
+    faultsmpteDropFrameChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 DropFrame Changed"
+    ::= 1223
+
+-- end of smpteDropFrameChange trap
+
+-- beginning of smpteColourFrameChange trap
+
+    faultsmpteColourFrameChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 ColourFrame Changed"
+    ::= 1224
+    
+    faultsmpteColourFrameChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 ColourFrame Changed"
+    ::= 1225
+
+-- end of smpteColourFrameChange trap
+
+-- beginning of smpteJamHourChange trap
+
+    faultsmpteJamHourChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Jam Hour Changed"
+    ::= 1226
+    
+    faultsmpteJamHourChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Jam Hour Changed"
+    ::= 1227
+
+-- end of smpteJamHourChange trap
+
+-- beginning of smpteJamMinuteChange trap
+
+    faultsmpteJamMinuteChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Jam Minute Changed"
+    ::= 1228
+    
+    faultsmpteJamMinuteChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Jam Minute Changed"
+    ::= 1229
+
+-- end of smpteJamMinuteChange trap
+
+-- beginning of smpteTimeZoneChange trap
+
+    faultsmpteTimeZoneChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Time Zone Changed"
+    ::= 1230
+    
+    faultsmpteTimeZoneChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Time Zone Changed"
+    ::= 1231
+
+-- end of smpteTimeZoneChange trap
+
+-- beginning of smpteDstEnChange trap
+
+    faultsmpteDstEnChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 DST En Changed"
+    ::= 1232
+    
+    faultsmpteDstEnChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 DST En Changed"
+    ::= 1233
+
+-- end of smpteDstEnChange trap
+
+-- beginning of smpteFramerateChange trap
+
+    faultsmpteFramerateChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Framerate Changed"
+    ::= 1234
+    
+    faultsmpteFramerateChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "SMPTE 2059 Framerate Changed"
+    ::= 1235
+
+-- end of smpteFramerateChange trap
+
+-- beginning of intf1g1ipChange trap
+
+    faultintf1g1ipChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 IP addr Changed"
+    ::= 1236
+    
+    faultintf1g1ipChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 IP addr Changed"
+    ::= 1237
+
+-- end of intf1g1ipChange trap
+
+-- beginning of intf1g2ipChange trap
+
+    faultintf1g2ipChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 IP addr Changed"
+    ::= 1238
+    
+    faultintf1g2ipChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 IP addr Changed"
+    ::= 1239
+
+-- end of intf1g2ipChange trap
+
+-- beginning of intf10g1ipChange trap
+
+    faultintf10g1ipChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 IP addr Changed"
+    ::= 1240
+    
+    faultintf10g1ipChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 IP addr Changed"
+    ::= 1241
+
+-- end of intf10g1ipChange trap
+
+-- beginning of intf10g2ipChange trap
+
+    faultintf10g2ipChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 IP addr Changed"
+    ::= 1242
+    
+    faultintf10g2ipChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 IP addr Changed"
+    ::= 1243
+
+-- end of intf10g2ipChange trap
+
+-- beginning of intfFrameipChange trap
+
+    faultintfFrameipChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame IP addr Changed"
+    ::= 1244
+    
+    faultintfFrameipChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame IP addr Changed"
+    ::= 1245
+
+-- end of intfFrameipChange trap
+
+-- beginning of intf1g1maskChange trap
+
+    faultintf1g1maskChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 Mask Changed"
+    ::= 1246
+    
+    faultintf1g1maskChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G1 Mask Changed"
+    ::= 1247
+
+-- end of intf1g1maskChange trap
+
+-- beginning of intf1g2maskChange trap
+
+    faultintf1g2maskChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 Mask Changed"
+    ::= 1248
+    
+    faultintf1g2maskChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "1G2 Mask Changed"
+    ::= 1249
+
+-- end of intf1g2maskChange trap
+
+-- beginning of intf10g1maskChange trap
+
+    faultintf10g1maskChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 Mask Changed"
+    ::= 1250
+    
+    faultintf10g1maskChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G1 Mask Changed"
+    ::= 1251
+
+-- end of intf10g1maskChange trap
+
+-- beginning of intf10g2maskChange trap
+
+    faultintf10g2maskChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 Mask Changed"
+    ::= 1252
+    
+    faultintf10g2maskChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "10G2 Mask Changed"
+    ::= 1253
+
+-- end of intf10g2maskChange trap
+
+-- beginning of intfFramemaskChange trap
+
+    faultintfFramemaskChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame Mask Changed"
+    ::= 1254
+    
+    faultintfFramemaskChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { msc5700ipInstance }
+        DESCRIPTION
+            "Frame Mask Changed"
+    ::= 1255
+
+-- end of intfFramemaskChange trap
+
+
+
+
+END

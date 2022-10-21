@@ -1,0 +1,191 @@
+-- Copyright (c) Quantel 2005
+--
+-- Title: sQCache MIB
+-- Issue: 1.0
+-- Date:  01/01/2005 IdR
+--
+
+
+SQCACHE-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        quantelProduct                        FROM QUANTEL-MIB
+        DisplayString                         FROM RFC1213-MIB
+        OBJECT-TYPE, Integer32,
+        MODULE-IDENTITY                       FROM SNMPv2-SMI;
+
+
+sQCache MODULE-IDENTITY
+    LAST-UPDATED "200501010000Z"            
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"   
+    DESCRIPTION  "This is the Quantel sQCache MIB"
+
+    ::= { quantelProduct 8 }
+
+sQCacheClients     OBJECT IDENTIFIER ::= { sQCache 1 }
+sQCacheServers     OBJECT IDENTIFIER ::= { sQCache 2 }
+sQCacheMemory      OBJECT IDENTIFIER ::= { sQCache 3 }
+sQCacheDisk        OBJECT IDENTIFIER ::= { sQCache 4 }
+
+UpTime OBJECT-TYPE
+    SYNTAX     Timeticks
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION "System uptime in milliseconds"
+    ::= { sQCache 5 }
+
+NumRequests OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of requests from clients"
+    ::= { sQCacheClients 1 }
+
+NumTransfers OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of transfers to clients"
+    ::= { sQCacheClients 2 }
+
+NumDiscards OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of discarded requests"
+    ::= { sQCacheClients 3 }
+
+NumErrors OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of errors when responding to clients"
+    ::= { sQCacheClients 4 }
+
+AvgLatancy OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Average latency when responding to clients (in ms)"
+    ::= { sQCacheClients 5 }
+
+MaxLatancy OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Maximum latency when responding to clients (in ms)"
+    ::= { sQCacheClients 6 }
+
+NumCqpPorts OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of Clipnet ports in use"
+    ::= { sQCacheServers 1 }
+
+NumCqpTransfers OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of Clipnet CQP transfers performed"
+    ::= { sQCacheServers 2 }
+
+NumCqpNoData OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of CQP NoData responses received"
+    ::= { sQCacheServers 3 }
+
+NumCqpErrors OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of CQP Error responses received"
+    ::= { sQCacheServers 4 }
+
+AvgCqpLatancy OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Average latency when receiving Clipnet transfer"
+    ::= { sQCacheServers 5 }
+
+MaxCqpLatancy OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Maximum latency when receiving Clipnet transfer"
+    ::= { sQCacheServers 6 }
+
+MemSize OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of memory slots"
+    ::= { sQCacheMemory 1 }
+
+MemUsed OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of memory slots in use"
+    ::= { sQCacheMemory 2 }
+
+MemHits OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of memory hits (data already cached in memory)"
+    ::= { sQCacheMemory 3 }
+
+MemMiss OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of memory misses (data not cached)"
+    ::= { sQCacheMemory 4 }
+
+DiskSize OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk slots"
+    ::= { sQCacheDisk 1 }
+
+DiskUsed OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk slots in use"
+    ::= { sQCacheDisk 2 }
+
+DiskHits OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk hits (data already cached on disk)"
+    ::= { sQCacheDisk 3 }
+
+DiskMiss OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of disk misses (data not cached)"
+    ::= { sQCacheDisk 4 }
+
+
+-- Traps
+systemStartup TRAP-TYPE
+    ENTERPRISE sQCache 
+    DESCRIPTION "Trap is sent when sQCache starts up"
+    ::= 1
+
+END

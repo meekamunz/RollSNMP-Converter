@@ -1,0 +1,75 @@
+RADLAN-SYSLOG-MIB-A DEFINITIONS ::= BEGIN
+
+
+IMPORTS
+    rnd                                     FROM RADLAN-MIB
+    rlSyslog                                FROM RADLAN-SYSLOG-MIB
+    OBJECT-TYPE, IpAddress, Unsigned32,
+    MODULE-IDENTITY                         FROM SNMPv2-SMI
+    DisplayString                           FROM SNMPv2-TC-v1
+    TEXTUAL-CONVENTION,
+    TruthValue, RowStatus                   FROM SNMPv2-TC;
+
+
+rlSyslogPrivate  OBJECT IDENTIFIER ::= { rlSyslog 2 }
+
+rlSyslogGlobalEnable OBJECT-TYPE
+    ::= { rlSyslogPrivate 1 }
+
+rlSyslogMinLogToConsoleSeverity OBJECT-TYPE
+    ::= { rlSyslogPrivate 2 }
+
+rlSyslogMinLogToFileSeverity OBJECT-TYPE
+    ::= { rlSyslogPrivate 3 }
+
+rlSyslogMinLogToCacheSeverity OBJECT-TYPE
+    ::= { rlSyslogPrivate 4 }
+
+rlSyslogClearLogfile OBJECT-TYPE
+    ::= { rlSyslogPrivate 5 }
+
+rlSyslogClearCache OBJECT-TYPE
+    ::= { rlSyslogPrivate 6 }
+
+rlSyslogMibVersion OBJECT-TYPE
+    ::= { rlSyslogPrivate 7 }
+
+--
+-- rlSyslogLog Table
+--
+rlSyslogLogTable OBJECT-TYPE
+    ::= { rlSyslogPrivate 8 }
+
+rlSyslogLogEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlSyslogLogTable 1 }
+
+--
+-- rlSyslogLogCache Table
+--
+rlSyslogLogCacheTable OBJECT-TYPE
+    ::= { rlSyslogPrivate 9 }
+
+rlSyslogLogCacheEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlSyslogLogCacheTable 1 }
+
+rlSyslogConsoleMessagesIgnored OBJECT-TYPE
+    ::= { rlSyslogPrivate 10 }
+
+rlSyslogFileMessagesIgnored OBJECT-TYPE
+    ::= { rlSyslogPrivate 11 }
+
+rlSyslogFileMessagesLogged OBJECT-TYPE
+    ::= { rlSyslogPrivate 12 }
+
+rlSyslogCacheTotalMessages OBJECT-TYPE
+    ::= { rlSyslogPrivate 13 }
+
+rlSyslogPhaseOneTests OBJECT IDENTIFIER ::= { rlSyslog 3}
+
+rlSyslogPhaseOneTestGenerator OBJECT-TYPE
+    ::=  { rlSyslogPhaseOneTests 1 }
+
+END
+

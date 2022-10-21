@@ -1,0 +1,43 @@
+
+          PPP-LCP-MIB-A DEFINITIONS ::= BEGIN
+
+          IMPORTS
+               Counter
+                    FROM RFC1155-SMI
+               ifIndex, transmission
+                    FROM RFC1213-MIB
+               OBJECT-TYPE
+                    FROM RFC-1212;
+
+               --  PPP MIB
+
+               ppp  OBJECT IDENTIFIER ::= { transmission 23 }
+
+               pppLcp OBJECT IDENTIFIER ::= { ppp 1 }
+
+
+               -- The individual groups within the PPP-LCP-MIB
+
+               pppLink      OBJECT IDENTIFIER ::= { pppLcp 1 }
+
+
+          pppLinkStatusTable   OBJECT-TYPE
+               ::= { pppLink 1 }
+
+          pppLinkStatusEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppLinkStatusTable 1 }
+
+
+
+          pppLinkConfigTable   OBJECT-TYPE
+               ::= { pppLink 2 }
+
+
+          pppLinkConfigEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppLinkConfigTable 1 }
+
+
+          END
+

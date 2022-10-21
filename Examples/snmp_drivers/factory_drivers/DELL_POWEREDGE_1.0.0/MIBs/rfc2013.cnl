@@ -1,0 +1,38 @@
+UDP-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Counter32,
+    IpAddress, mib-2                   FROM SNMPv2-SMI
+    MODULE-COMPLIANCE, OBJECT-GROUP    FROM SNMPv2-CONF;
+
+-- the UDP group
+
+udp      OBJECT IDENTIFIER ::= { mib-2 7 }
+
+udpInDatagrams OBJECT-TYPE
+    ::= { udp 1 }
+
+udpNoPorts OBJECT-TYPE
+    ::= { udp 2 }
+
+udpInErrors OBJECT-TYPE
+    ::= { udp 3 }
+
+udpOutDatagrams OBJECT-TYPE
+    ::= { udp 4 }
+
+-- the UDP Listener table
+
+-- The UDP listener table contains information about this
+-- entity's UDP end-points on which a local application is
+-- currently accepting datagrams.
+
+udpTable OBJECT-TYPE
+    ::= { udp 5 }
+
+udpEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { udpTable 1 }
+
+END
+

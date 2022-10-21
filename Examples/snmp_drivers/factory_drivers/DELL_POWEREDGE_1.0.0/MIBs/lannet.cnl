@@ -1,0 +1,66 @@
+LANNET-MIB-A DEFINITIONS ::= BEGIN
+IMPORTS
+      IpAddress, Counter, enterprises, TimeTicks
+    FROM RFC1155-SMI
+      OBJECT-TYPE
+    FROM RFC-1212
+      DisplayString
+    FROM RFC1213-MIB;
+
+lannet  OBJECT IDENTIFIER ::= { enterprises 81 }
+lntBoxIdent OBJECT IDENTIFIER ::= { lannet 17 1 5 }
+
+lntLanSwitch   OBJECT IDENTIFIER ::= { lannet 19 } -- switch group
+vnsPacket   OBJECT IDENTIFIER ::=  { lntLanSwitch 7 }
+vnsPacketTable OBJECT-TYPE
+    ::= { vnsPacket 1 }
+
+vnsPacketEntry OBJECT-TYPE
+     APP-FILENAME l2\auto\madge.dtd
+    ::= { vnsPacketTable 1 }
+
+vnsPacketMACAddress OBJECT-TYPE
+    ::= { vnsPacketEntry 1 }
+
+vnsPacketProtocolTypeMask   OBJECT-TYPE
+    ::= { vnsPacketEntry 2 }
+
+vnsPacketIPAddress OBJECT-TYPE
+    ::= { vnsPacketEntry 3 }
+
+vnsPacketIPNetMask OBJECT-TYPE
+    ::= { vnsPacketEntry 4 }
+
+vnsPacketIPXnetwork OBJECT-TYPE
+    ::= { vnsPacketEntry 5 }
+
+vnsPacketStationType OBJECT-TYPE
+    ::= { vnsPacketEntry 6 }
+
+vnsPacketPortGroupId OBJECT-TYPE
+      ::= { vnsPacketEntry 7 }
+      
+vnsPacketPortId OBJECT-TYPE
+      ::= { vnsPacketEntry 8 }
+      
+ vnsPacketBackbonePort  OBJECT-TYPE
+    ::= { vnsPacketEntry 9 }
+ 
+vnsPacketExpectedVLAN OBJECT-TYPE 
+    ::= { vnsPacketEntry 10 } 
+
+vnsPacketDetectedVLAN OBJECT-TYPE 
+    ::= { vnsPacketEntry 11 }
+
+ vnsPacketBoxAgentIP OBJECT-TYPE
+    ::= { vnsPacketEntry 12 }
+
+-- Traps  version 7.2
+-- Trap for LRE regarding the VLAN viloation
+
+    lreVLANViolationTrap TRAP-TYPE
+        ENTERPRISE  lntBoxIdent
+        ERRCODE     RSG_ErrMsg_code_lreViolation_E
+        ::= 26
+END
+

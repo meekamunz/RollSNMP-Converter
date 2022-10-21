@@ -1,0 +1,3956 @@
+-- UNIQUE TIME STAMP: 2013-03-04 17-12-47 DO NOT EDIT THIS LINE
+-- Copyright 2013 Evertz Microsystems Ltd.
+-- Mon Mar  4 17:12:49 2013
+-- Confidential
+
+FC3405-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    fc3405Traps
+        FROM FC3405-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { fc3405Traps 1 }
+
+
+-- beginning of txCarrier1 Sfp1 trap
+
+    faulttxCarrier1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp1"
+    ::= 1000
+    
+    faulttxCarrier1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp1"
+    ::= 1001
+
+-- end of txCarrier1 Sfp1 trap
+
+-- beginning of txCarrier1 Sfp2 trap
+
+    faulttxCarrier1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp2"
+    ::= 1002
+    
+    faulttxCarrier1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp2"
+    ::= 1003
+
+-- end of txCarrier1 Sfp2 trap
+
+-- beginning of txCarrier1 Sfp3 trap
+
+    faulttxCarrier1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp3"
+    ::= 1004
+    
+    faulttxCarrier1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp3"
+    ::= 1005
+
+-- end of txCarrier1 Sfp3 trap
+
+-- beginning of txCarrier1 Sfp4 trap
+
+    faulttxCarrier1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp4"
+    ::= 1006
+    
+    faulttxCarrier1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp4"
+    ::= 1007
+
+-- end of txCarrier1 Sfp4 trap
+
+-- beginning of txCarrier1 Sfp5 trap
+
+    faulttxCarrier1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp5"
+    ::= 1008
+    
+    faulttxCarrier1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp5"
+    ::= 1009
+
+-- end of txCarrier1 Sfp5 trap
+
+-- beginning of txCarrier1 Sfp6 trap
+
+    faulttxCarrier1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp6"
+    ::= 1010
+    
+    faulttxCarrier1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp6"
+    ::= 1011
+
+-- end of txCarrier1 Sfp6 trap
+
+-- beginning of txCarrier1 Sfp7 trap
+
+    faulttxCarrier1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp7"
+    ::= 1012
+    
+    faulttxCarrier1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp7"
+    ::= 1013
+
+-- end of txCarrier1 Sfp7 trap
+
+-- beginning of txCarrier1 Sfp8 trap
+
+    faulttxCarrier1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp8"
+    ::= 1014
+    
+    faulttxCarrier1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp8"
+    ::= 1015
+
+-- end of txCarrier1 Sfp8 trap
+
+-- beginning of txCarrier1 Sfp9 trap
+
+    faulttxCarrier1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp9"
+    ::= 1016
+    
+    faulttxCarrier1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp9"
+    ::= 1017
+
+-- end of txCarrier1 Sfp9 trap
+
+-- beginning of txCarrier1 Sfp10 trap
+
+    faulttxCarrier1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp10"
+    ::= 1018
+    
+    faulttxCarrier1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp10"
+    ::= 1019
+
+-- end of txCarrier1 Sfp10 trap
+
+-- beginning of txCarrier1 Sfp11 trap
+
+    faulttxCarrier1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp11"
+    ::= 1020
+    
+    faulttxCarrier1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp11"
+    ::= 1021
+
+-- end of txCarrier1 Sfp11 trap
+
+-- beginning of txCarrier1 Sfp12 trap
+
+    faulttxCarrier1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp12"
+    ::= 1022
+    
+    faulttxCarrier1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp12"
+    ::= 1023
+
+-- end of txCarrier1 Sfp12 trap
+
+-- beginning of txCarrier1 Sfp13 trap
+
+    faulttxCarrier1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp13"
+    ::= 1024
+    
+    faulttxCarrier1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp13"
+    ::= 1025
+
+-- end of txCarrier1 Sfp13 trap
+
+-- beginning of txCarrier1 Sfp14 trap
+
+    faulttxCarrier1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp14"
+    ::= 1026
+    
+    faulttxCarrier1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp14"
+    ::= 1027
+
+-- end of txCarrier1 Sfp14 trap
+
+-- beginning of txCarrier1 Sfp15 trap
+
+    faulttxCarrier1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp15"
+    ::= 1028
+    
+    faulttxCarrier1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp15"
+    ::= 1029
+
+-- end of txCarrier1 Sfp15 trap
+
+-- beginning of txCarrier1 Sfp16 trap
+
+    faulttxCarrier1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Present on Sfp16"
+    ::= 1030
+    
+    faulttxCarrier1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier1 Not Present on Sfp16"
+    ::= 1031
+
+-- end of txCarrier1 Sfp16 trap
+
+-- beginning of txCarrier2 Sfp1 trap
+
+    faulttxCarrier2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp1"
+    ::= 1032
+    
+    faulttxCarrier2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp1"
+    ::= 1033
+
+-- end of txCarrier2 Sfp1 trap
+
+-- beginning of txCarrier2 Sfp2 trap
+
+    faulttxCarrier2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp2"
+    ::= 1034
+    
+    faulttxCarrier2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp2"
+    ::= 1035
+
+-- end of txCarrier2 Sfp2 trap
+
+-- beginning of txCarrier2 Sfp3 trap
+
+    faulttxCarrier2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp3"
+    ::= 1036
+    
+    faulttxCarrier2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp3"
+    ::= 1037
+
+-- end of txCarrier2 Sfp3 trap
+
+-- beginning of txCarrier2 Sfp4 trap
+
+    faulttxCarrier2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp4"
+    ::= 1038
+    
+    faulttxCarrier2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp4"
+    ::= 1039
+
+-- end of txCarrier2 Sfp4 trap
+
+-- beginning of txCarrier2 Sfp5 trap
+
+    faulttxCarrier2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp5"
+    ::= 1040
+    
+    faulttxCarrier2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp5"
+    ::= 1041
+
+-- end of txCarrier2 Sfp5 trap
+
+-- beginning of txCarrier2 Sfp6 trap
+
+    faulttxCarrier2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp6"
+    ::= 1042
+    
+    faulttxCarrier2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp6"
+    ::= 1043
+
+-- end of txCarrier2 Sfp6 trap
+
+-- beginning of txCarrier2 Sfp7 trap
+
+    faulttxCarrier2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp7"
+    ::= 1044
+    
+    faulttxCarrier2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp7"
+    ::= 1045
+
+-- end of txCarrier2 Sfp7 trap
+
+-- beginning of txCarrier2 Sfp8 trap
+
+    faulttxCarrier2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp8"
+    ::= 1046
+    
+    faulttxCarrier2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp8"
+    ::= 1047
+
+-- end of txCarrier2 Sfp8 trap
+
+-- beginning of txCarrier2 Sfp9 trap
+
+    faulttxCarrier2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp9"
+    ::= 1048
+    
+    faulttxCarrier2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp9"
+    ::= 1049
+
+-- end of txCarrier2 Sfp9 trap
+
+-- beginning of txCarrier2 Sfp10 trap
+
+    faulttxCarrier2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp10"
+    ::= 1050
+    
+    faulttxCarrier2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp10"
+    ::= 1051
+
+-- end of txCarrier2 Sfp10 trap
+
+-- beginning of txCarrier2 Sfp11 trap
+
+    faulttxCarrier2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp11"
+    ::= 1052
+    
+    faulttxCarrier2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp11"
+    ::= 1053
+
+-- end of txCarrier2 Sfp11 trap
+
+-- beginning of txCarrier2 Sfp12 trap
+
+    faulttxCarrier2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp12"
+    ::= 1054
+    
+    faulttxCarrier2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp12"
+    ::= 1055
+
+-- end of txCarrier2 Sfp12 trap
+
+-- beginning of txCarrier2 Sfp13 trap
+
+    faulttxCarrier2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp13"
+    ::= 1056
+    
+    faulttxCarrier2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp13"
+    ::= 1057
+
+-- end of txCarrier2 Sfp13 trap
+
+-- beginning of txCarrier2 Sfp14 trap
+
+    faulttxCarrier2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp14"
+    ::= 1058
+    
+    faulttxCarrier2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp14"
+    ::= 1059
+
+-- end of txCarrier2 Sfp14 trap
+
+-- beginning of txCarrier2 Sfp15 trap
+
+    faulttxCarrier2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp15"
+    ::= 1060
+    
+    faulttxCarrier2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp15"
+    ::= 1061
+
+-- end of txCarrier2 Sfp15 trap
+
+-- beginning of txCarrier2 Sfp16 trap
+
+    faulttxCarrier2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Present on Sfp16"
+    ::= 1062
+    
+    faulttxCarrier2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) TX Carrier2 Not Present on Sfp16"
+    ::= 1063
+
+-- end of txCarrier2 Sfp16 trap
+
+-- beginning of rxLoss1 Sfp1 trap
+
+    faultrxLoss1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp1"
+    ::= 1064
+    
+    faultrxLoss1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp1"
+    ::= 1065
+
+-- end of rxLoss1 Sfp1 trap
+
+-- beginning of rxLoss1 Sfp2 trap
+
+    faultrxLoss1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp2"
+    ::= 1066
+    
+    faultrxLoss1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp2"
+    ::= 1067
+
+-- end of rxLoss1 Sfp2 trap
+
+-- beginning of rxLoss1 Sfp3 trap
+
+    faultrxLoss1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp3"
+    ::= 1068
+    
+    faultrxLoss1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp3"
+    ::= 1069
+
+-- end of rxLoss1 Sfp3 trap
+
+-- beginning of rxLoss1 Sfp4 trap
+
+    faultrxLoss1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp4"
+    ::= 1070
+    
+    faultrxLoss1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp4"
+    ::= 1071
+
+-- end of rxLoss1 Sfp4 trap
+
+-- beginning of rxLoss1 Sfp5 trap
+
+    faultrxLoss1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp5"
+    ::= 1072
+    
+    faultrxLoss1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp5"
+    ::= 1073
+
+-- end of rxLoss1 Sfp5 trap
+
+-- beginning of rxLoss1 Sfp6 trap
+
+    faultrxLoss1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp6"
+    ::= 1074
+    
+    faultrxLoss1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp6"
+    ::= 1075
+
+-- end of rxLoss1 Sfp6 trap
+
+-- beginning of rxLoss1 Sfp7 trap
+
+    faultrxLoss1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp7"
+    ::= 1076
+    
+    faultrxLoss1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp7"
+    ::= 1077
+
+-- end of rxLoss1 Sfp7 trap
+
+-- beginning of rxLoss1 Sfp8 trap
+
+    faultrxLoss1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp8"
+    ::= 1078
+    
+    faultrxLoss1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp8"
+    ::= 1079
+
+-- end of rxLoss1 Sfp8 trap
+
+-- beginning of rxLoss1 Sfp9 trap
+
+    faultrxLoss1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp9"
+    ::= 1080
+    
+    faultrxLoss1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp9"
+    ::= 1081
+
+-- end of rxLoss1 Sfp9 trap
+
+-- beginning of rxLoss1 Sfp10 trap
+
+    faultrxLoss1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp10"
+    ::= 1082
+    
+    faultrxLoss1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp10"
+    ::= 1083
+
+-- end of rxLoss1 Sfp10 trap
+
+-- beginning of rxLoss1 Sfp11 trap
+
+    faultrxLoss1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp11"
+    ::= 1084
+    
+    faultrxLoss1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp11"
+    ::= 1085
+
+-- end of rxLoss1 Sfp11 trap
+
+-- beginning of rxLoss1 Sfp12 trap
+
+    faultrxLoss1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp12"
+    ::= 1086
+    
+    faultrxLoss1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp12"
+    ::= 1087
+
+-- end of rxLoss1 Sfp12 trap
+
+-- beginning of rxLoss1 Sfp13 trap
+
+    faultrxLoss1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp13"
+    ::= 1088
+    
+    faultrxLoss1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp13"
+    ::= 1089
+
+-- end of rxLoss1 Sfp13 trap
+
+-- beginning of rxLoss1 Sfp14 trap
+
+    faultrxLoss1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp14"
+    ::= 1090
+    
+    faultrxLoss1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp14"
+    ::= 1091
+
+-- end of rxLoss1 Sfp14 trap
+
+-- beginning of rxLoss1 Sfp15 trap
+
+    faultrxLoss1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp15"
+    ::= 1092
+    
+    faultrxLoss1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp15"
+    ::= 1093
+
+-- end of rxLoss1 Sfp15 trap
+
+-- beginning of rxLoss1 Sfp16 trap
+
+    faultrxLoss1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Present on Sfp16"
+    ::= 1094
+    
+    faultrxLoss1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal1 Loss on Sfp16"
+    ::= 1095
+
+-- end of rxLoss1 Sfp16 trap
+
+-- beginning of rxLoss2 Sfp1 trap
+
+    faultrxLoss2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp1"
+    ::= 1096
+    
+    faultrxLoss2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp1"
+    ::= 1097
+
+-- end of rxLoss2 Sfp1 trap
+
+-- beginning of rxLoss2 Sfp2 trap
+
+    faultrxLoss2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp2"
+    ::= 1098
+    
+    faultrxLoss2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp2"
+    ::= 1099
+
+-- end of rxLoss2 Sfp2 trap
+
+-- beginning of rxLoss2 Sfp3 trap
+
+    faultrxLoss2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp3"
+    ::= 1100
+    
+    faultrxLoss2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp3"
+    ::= 1101
+
+-- end of rxLoss2 Sfp3 trap
+
+-- beginning of rxLoss2 Sfp4 trap
+
+    faultrxLoss2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp4"
+    ::= 1102
+    
+    faultrxLoss2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp4"
+    ::= 1103
+
+-- end of rxLoss2 Sfp4 trap
+
+-- beginning of rxLoss2 Sfp5 trap
+
+    faultrxLoss2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp5"
+    ::= 1104
+    
+    faultrxLoss2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp5"
+    ::= 1105
+
+-- end of rxLoss2 Sfp5 trap
+
+-- beginning of rxLoss2 Sfp6 trap
+
+    faultrxLoss2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp6"
+    ::= 1106
+    
+    faultrxLoss2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp6"
+    ::= 1107
+
+-- end of rxLoss2 Sfp6 trap
+
+-- beginning of rxLoss2 Sfp7 trap
+
+    faultrxLoss2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp7"
+    ::= 1108
+    
+    faultrxLoss2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp7"
+    ::= 1109
+
+-- end of rxLoss2 Sfp7 trap
+
+-- beginning of rxLoss2 Sfp8 trap
+
+    faultrxLoss2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp8"
+    ::= 1110
+    
+    faultrxLoss2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp8"
+    ::= 1111
+
+-- end of rxLoss2 Sfp8 trap
+
+-- beginning of rxLoss2 Sfp9 trap
+
+    faultrxLoss2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp9"
+    ::= 1112
+    
+    faultrxLoss2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp9"
+    ::= 1113
+
+-- end of rxLoss2 Sfp9 trap
+
+-- beginning of rxLoss2 Sfp10 trap
+
+    faultrxLoss2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp10"
+    ::= 1114
+    
+    faultrxLoss2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp10"
+    ::= 1115
+
+-- end of rxLoss2 Sfp10 trap
+
+-- beginning of rxLoss2 Sfp11 trap
+
+    faultrxLoss2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp11"
+    ::= 1116
+    
+    faultrxLoss2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp11"
+    ::= 1117
+
+-- end of rxLoss2 Sfp11 trap
+
+-- beginning of rxLoss2 Sfp12 trap
+
+    faultrxLoss2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp12"
+    ::= 1118
+    
+    faultrxLoss2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp12"
+    ::= 1119
+
+-- end of rxLoss2 Sfp12 trap
+
+-- beginning of rxLoss2 Sfp13 trap
+
+    faultrxLoss2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp13"
+    ::= 1120
+    
+    faultrxLoss2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp13"
+    ::= 1121
+
+-- end of rxLoss2 Sfp13 trap
+
+-- beginning of rxLoss2 Sfp14 trap
+
+    faultrxLoss2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp14"
+    ::= 1122
+    
+    faultrxLoss2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp14"
+    ::= 1123
+
+-- end of rxLoss2 Sfp14 trap
+
+-- beginning of rxLoss2 Sfp15 trap
+
+    faultrxLoss2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp15"
+    ::= 1124
+    
+    faultrxLoss2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp15"
+    ::= 1125
+
+-- end of rxLoss2 Sfp15 trap
+
+-- beginning of rxLoss2 Sfp16 trap
+
+    faultrxLoss2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Present on Sfp16"
+    ::= 1126
+    
+    faultrxLoss2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "(DEPRECATED) RX Signal2 Loss on Sfp16"
+    ::= 1127
+
+-- end of rxLoss2 Sfp16 trap
+
+-- beginning of rxOptPwrHigh1 Sfp1 trap
+
+    faultrxOptPwrHigh1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp1"
+    ::= 1128
+    
+    faultrxOptPwrHigh1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp1"
+    ::= 1129
+
+-- end of rxOptPwrHigh1 Sfp1 trap
+
+-- beginning of rxOptPwrHigh1 Sfp2 trap
+
+    faultrxOptPwrHigh1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp2"
+    ::= 1130
+    
+    faultrxOptPwrHigh1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp2"
+    ::= 1131
+
+-- end of rxOptPwrHigh1 Sfp2 trap
+
+-- beginning of rxOptPwrHigh1 Sfp3 trap
+
+    faultrxOptPwrHigh1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp3"
+    ::= 1132
+    
+    faultrxOptPwrHigh1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp3"
+    ::= 1133
+
+-- end of rxOptPwrHigh1 Sfp3 trap
+
+-- beginning of rxOptPwrHigh1 Sfp4 trap
+
+    faultrxOptPwrHigh1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp4"
+    ::= 1134
+    
+    faultrxOptPwrHigh1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp4"
+    ::= 1135
+
+-- end of rxOptPwrHigh1 Sfp4 trap
+
+-- beginning of rxOptPwrHigh1 Sfp5 trap
+
+    faultrxOptPwrHigh1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp5"
+    ::= 1136
+    
+    faultrxOptPwrHigh1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp5"
+    ::= 1137
+
+-- end of rxOptPwrHigh1 Sfp5 trap
+
+-- beginning of rxOptPwrHigh1 Sfp6 trap
+
+    faultrxOptPwrHigh1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp6"
+    ::= 1138
+    
+    faultrxOptPwrHigh1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp6"
+    ::= 1139
+
+-- end of rxOptPwrHigh1 Sfp6 trap
+
+-- beginning of rxOptPwrHigh1 Sfp7 trap
+
+    faultrxOptPwrHigh1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp7"
+    ::= 1140
+    
+    faultrxOptPwrHigh1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp7"
+    ::= 1141
+
+-- end of rxOptPwrHigh1 Sfp7 trap
+
+-- beginning of rxOptPwrHigh1 Sfp8 trap
+
+    faultrxOptPwrHigh1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp8"
+    ::= 1142
+    
+    faultrxOptPwrHigh1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp8"
+    ::= 1143
+
+-- end of rxOptPwrHigh1 Sfp8 trap
+
+-- beginning of rxOptPwrHigh1 Sfp9 trap
+
+    faultrxOptPwrHigh1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp9"
+    ::= 1144
+    
+    faultrxOptPwrHigh1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp9"
+    ::= 1145
+
+-- end of rxOptPwrHigh1 Sfp9 trap
+
+-- beginning of rxOptPwrHigh1 Sfp10 trap
+
+    faultrxOptPwrHigh1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp10"
+    ::= 1146
+    
+    faultrxOptPwrHigh1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp10"
+    ::= 1147
+
+-- end of rxOptPwrHigh1 Sfp10 trap
+
+-- beginning of rxOptPwrHigh1 Sfp11 trap
+
+    faultrxOptPwrHigh1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp11"
+    ::= 1148
+    
+    faultrxOptPwrHigh1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp11"
+    ::= 1149
+
+-- end of rxOptPwrHigh1 Sfp11 trap
+
+-- beginning of rxOptPwrHigh1 Sfp12 trap
+
+    faultrxOptPwrHigh1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp12"
+    ::= 1150
+    
+    faultrxOptPwrHigh1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp12"
+    ::= 1151
+
+-- end of rxOptPwrHigh1 Sfp12 trap
+
+-- beginning of rxOptPwrHigh1 Sfp13 trap
+
+    faultrxOptPwrHigh1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp13"
+    ::= 1152
+    
+    faultrxOptPwrHigh1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp13"
+    ::= 1153
+
+-- end of rxOptPwrHigh1 Sfp13 trap
+
+-- beginning of rxOptPwrHigh1 Sfp14 trap
+
+    faultrxOptPwrHigh1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp14"
+    ::= 1154
+    
+    faultrxOptPwrHigh1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp14"
+    ::= 1155
+
+-- end of rxOptPwrHigh1 Sfp14 trap
+
+-- beginning of rxOptPwrHigh1 Sfp15 trap
+
+    faultrxOptPwrHigh1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp15"
+    ::= 1156
+    
+    faultrxOptPwrHigh1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp15"
+    ::= 1157
+
+-- end of rxOptPwrHigh1 Sfp15 trap
+
+-- beginning of rxOptPwrHigh1 Sfp16 trap
+
+    faultrxOptPwrHigh1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp16"
+    ::= 1158
+    
+    faultrxOptPwrHigh1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power High on Sfp16"
+    ::= 1159
+
+-- end of rxOptPwrHigh1 Sfp16 trap
+
+-- beginning of rxOptPwrHigh2 Sfp1 trap
+
+    faultrxOptPwrHigh2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp1"
+    ::= 1160
+    
+    faultrxOptPwrHigh2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp1"
+    ::= 1161
+
+-- end of rxOptPwrHigh2 Sfp1 trap
+
+-- beginning of rxOptPwrHigh2 Sfp2 trap
+
+    faultrxOptPwrHigh2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp2"
+    ::= 1162
+    
+    faultrxOptPwrHigh2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp2"
+    ::= 1163
+
+-- end of rxOptPwrHigh2 Sfp2 trap
+
+-- beginning of rxOptPwrHigh2 Sfp3 trap
+
+    faultrxOptPwrHigh2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp3"
+    ::= 1164
+    
+    faultrxOptPwrHigh2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp3"
+    ::= 1165
+
+-- end of rxOptPwrHigh2 Sfp3 trap
+
+-- beginning of rxOptPwrHigh2 Sfp4 trap
+
+    faultrxOptPwrHigh2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp4"
+    ::= 1166
+    
+    faultrxOptPwrHigh2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp4"
+    ::= 1167
+
+-- end of rxOptPwrHigh2 Sfp4 trap
+
+-- beginning of rxOptPwrHigh2 Sfp5 trap
+
+    faultrxOptPwrHigh2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp5"
+    ::= 1168
+    
+    faultrxOptPwrHigh2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp5"
+    ::= 1169
+
+-- end of rxOptPwrHigh2 Sfp5 trap
+
+-- beginning of rxOptPwrHigh2 Sfp6 trap
+
+    faultrxOptPwrHigh2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp6"
+    ::= 1170
+    
+    faultrxOptPwrHigh2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp6"
+    ::= 1171
+
+-- end of rxOptPwrHigh2 Sfp6 trap
+
+-- beginning of rxOptPwrHigh2 Sfp7 trap
+
+    faultrxOptPwrHigh2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp7"
+    ::= 1172
+    
+    faultrxOptPwrHigh2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp7"
+    ::= 1173
+
+-- end of rxOptPwrHigh2 Sfp7 trap
+
+-- beginning of rxOptPwrHigh2 Sfp8 trap
+
+    faultrxOptPwrHigh2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp8"
+    ::= 1174
+    
+    faultrxOptPwrHigh2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp8"
+    ::= 1175
+
+-- end of rxOptPwrHigh2 Sfp8 trap
+
+-- beginning of rxOptPwrHigh2 Sfp9 trap
+
+    faultrxOptPwrHigh2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp9"
+    ::= 1176
+    
+    faultrxOptPwrHigh2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp9"
+    ::= 1177
+
+-- end of rxOptPwrHigh2 Sfp9 trap
+
+-- beginning of rxOptPwrHigh2 Sfp10 trap
+
+    faultrxOptPwrHigh2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp10"
+    ::= 1178
+    
+    faultrxOptPwrHigh2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp10"
+    ::= 1179
+
+-- end of rxOptPwrHigh2 Sfp10 trap
+
+-- beginning of rxOptPwrHigh2 Sfp11 trap
+
+    faultrxOptPwrHigh2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp11"
+    ::= 1180
+    
+    faultrxOptPwrHigh2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp11"
+    ::= 1181
+
+-- end of rxOptPwrHigh2 Sfp11 trap
+
+-- beginning of rxOptPwrHigh2 Sfp12 trap
+
+    faultrxOptPwrHigh2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp12"
+    ::= 1182
+    
+    faultrxOptPwrHigh2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp12"
+    ::= 1183
+
+-- end of rxOptPwrHigh2 Sfp12 trap
+
+-- beginning of rxOptPwrHigh2 Sfp13 trap
+
+    faultrxOptPwrHigh2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp13"
+    ::= 1184
+    
+    faultrxOptPwrHigh2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp13"
+    ::= 1185
+
+-- end of rxOptPwrHigh2 Sfp13 trap
+
+-- beginning of rxOptPwrHigh2 Sfp14 trap
+
+    faultrxOptPwrHigh2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp14"
+    ::= 1186
+    
+    faultrxOptPwrHigh2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp14"
+    ::= 1187
+
+-- end of rxOptPwrHigh2 Sfp14 trap
+
+-- beginning of rxOptPwrHigh2 Sfp15 trap
+
+    faultrxOptPwrHigh2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp15"
+    ::= 1188
+    
+    faultrxOptPwrHigh2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp15"
+    ::= 1189
+
+-- end of rxOptPwrHigh2 Sfp15 trap
+
+-- beginning of rxOptPwrHigh2 Sfp16 trap
+
+    faultrxOptPwrHigh2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp16"
+    ::= 1190
+    
+    faultrxOptPwrHigh2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power High on Sfp16"
+    ::= 1191
+
+-- end of rxOptPwrHigh2 Sfp16 trap
+
+-- beginning of rxOptPwrLow1 Sfp1 trap
+
+    faultrxOptPwrLow1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp1"
+    ::= 1192
+    
+    faultrxOptPwrLow1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp1"
+    ::= 1193
+
+-- end of rxOptPwrLow1 Sfp1 trap
+
+-- beginning of rxOptPwrLow1 Sfp2 trap
+
+    faultrxOptPwrLow1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp2"
+    ::= 1194
+    
+    faultrxOptPwrLow1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp2"
+    ::= 1195
+
+-- end of rxOptPwrLow1 Sfp2 trap
+
+-- beginning of rxOptPwrLow1 Sfp3 trap
+
+    faultrxOptPwrLow1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp3"
+    ::= 1196
+    
+    faultrxOptPwrLow1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp3"
+    ::= 1197
+
+-- end of rxOptPwrLow1 Sfp3 trap
+
+-- beginning of rxOptPwrLow1 Sfp4 trap
+
+    faultrxOptPwrLow1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp4"
+    ::= 1198
+    
+    faultrxOptPwrLow1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp4"
+    ::= 1199
+
+-- end of rxOptPwrLow1 Sfp4 trap
+
+-- beginning of rxOptPwrLow1 Sfp5 trap
+
+    faultrxOptPwrLow1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp5"
+    ::= 1200
+    
+    faultrxOptPwrLow1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp5"
+    ::= 1201
+
+-- end of rxOptPwrLow1 Sfp5 trap
+
+-- beginning of rxOptPwrLow1 Sfp6 trap
+
+    faultrxOptPwrLow1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp6"
+    ::= 1202
+    
+    faultrxOptPwrLow1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp6"
+    ::= 1203
+
+-- end of rxOptPwrLow1 Sfp6 trap
+
+-- beginning of rxOptPwrLow1 Sfp7 trap
+
+    faultrxOptPwrLow1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp7"
+    ::= 1204
+    
+    faultrxOptPwrLow1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp7"
+    ::= 1205
+
+-- end of rxOptPwrLow1 Sfp7 trap
+
+-- beginning of rxOptPwrLow1 Sfp8 trap
+
+    faultrxOptPwrLow1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp8"
+    ::= 1206
+    
+    faultrxOptPwrLow1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp8"
+    ::= 1207
+
+-- end of rxOptPwrLow1 Sfp8 trap
+
+-- beginning of rxOptPwrLow1 Sfp9 trap
+
+    faultrxOptPwrLow1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp9"
+    ::= 1208
+    
+    faultrxOptPwrLow1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp9"
+    ::= 1209
+
+-- end of rxOptPwrLow1 Sfp9 trap
+
+-- beginning of rxOptPwrLow1 Sfp10 trap
+
+    faultrxOptPwrLow1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp10"
+    ::= 1210
+    
+    faultrxOptPwrLow1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp10"
+    ::= 1211
+
+-- end of rxOptPwrLow1 Sfp10 trap
+
+-- beginning of rxOptPwrLow1 Sfp11 trap
+
+    faultrxOptPwrLow1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp11"
+    ::= 1212
+    
+    faultrxOptPwrLow1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp11"
+    ::= 1213
+
+-- end of rxOptPwrLow1 Sfp11 trap
+
+-- beginning of rxOptPwrLow1 Sfp12 trap
+
+    faultrxOptPwrLow1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp12"
+    ::= 1214
+    
+    faultrxOptPwrLow1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp12"
+    ::= 1215
+
+-- end of rxOptPwrLow1 Sfp12 trap
+
+-- beginning of rxOptPwrLow1 Sfp13 trap
+
+    faultrxOptPwrLow1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp13"
+    ::= 1216
+    
+    faultrxOptPwrLow1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp13"
+    ::= 1217
+
+-- end of rxOptPwrLow1 Sfp13 trap
+
+-- beginning of rxOptPwrLow1 Sfp14 trap
+
+    faultrxOptPwrLow1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp14"
+    ::= 1218
+    
+    faultrxOptPwrLow1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp14"
+    ::= 1219
+
+-- end of rxOptPwrLow1 Sfp14 trap
+
+-- beginning of rxOptPwrLow1 Sfp15 trap
+
+    faultrxOptPwrLow1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp15"
+    ::= 1220
+    
+    faultrxOptPwrLow1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp15"
+    ::= 1221
+
+-- end of rxOptPwrLow1 Sfp15 trap
+
+-- beginning of rxOptPwrLow1 Sfp16 trap
+
+    faultrxOptPwrLow1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power OK on Sfp16"
+    ::= 1222
+    
+    faultrxOptPwrLow1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 RX optical power Low on Sfp16"
+    ::= 1223
+
+-- end of rxOptPwrLow1 Sfp16 trap
+
+-- beginning of rxOptPwrLow2 Sfp1 trap
+
+    faultrxOptPwrLow2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp1"
+    ::= 1224
+    
+    faultrxOptPwrLow2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp1"
+    ::= 1225
+
+-- end of rxOptPwrLow2 Sfp1 trap
+
+-- beginning of rxOptPwrLow2 Sfp2 trap
+
+    faultrxOptPwrLow2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp2"
+    ::= 1226
+    
+    faultrxOptPwrLow2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp2"
+    ::= 1227
+
+-- end of rxOptPwrLow2 Sfp2 trap
+
+-- beginning of rxOptPwrLow2 Sfp3 trap
+
+    faultrxOptPwrLow2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp3"
+    ::= 1228
+    
+    faultrxOptPwrLow2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp3"
+    ::= 1229
+
+-- end of rxOptPwrLow2 Sfp3 trap
+
+-- beginning of rxOptPwrLow2 Sfp4 trap
+
+    faultrxOptPwrLow2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp4"
+    ::= 1230
+    
+    faultrxOptPwrLow2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp4"
+    ::= 1231
+
+-- end of rxOptPwrLow2 Sfp4 trap
+
+-- beginning of rxOptPwrLow2 Sfp5 trap
+
+    faultrxOptPwrLow2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp5"
+    ::= 1232
+    
+    faultrxOptPwrLow2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp5"
+    ::= 1233
+
+-- end of rxOptPwrLow2 Sfp5 trap
+
+-- beginning of rxOptPwrLow2 Sfp6 trap
+
+    faultrxOptPwrLow2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp6"
+    ::= 1234
+    
+    faultrxOptPwrLow2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp6"
+    ::= 1235
+
+-- end of rxOptPwrLow2 Sfp6 trap
+
+-- beginning of rxOptPwrLow2 Sfp7 trap
+
+    faultrxOptPwrLow2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp7"
+    ::= 1236
+    
+    faultrxOptPwrLow2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp7"
+    ::= 1237
+
+-- end of rxOptPwrLow2 Sfp7 trap
+
+-- beginning of rxOptPwrLow2 Sfp8 trap
+
+    faultrxOptPwrLow2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp8"
+    ::= 1238
+    
+    faultrxOptPwrLow2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp8"
+    ::= 1239
+
+-- end of rxOptPwrLow2 Sfp8 trap
+
+-- beginning of rxOptPwrLow2 Sfp9 trap
+
+    faultrxOptPwrLow2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp9"
+    ::= 1240
+    
+    faultrxOptPwrLow2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp9"
+    ::= 1241
+
+-- end of rxOptPwrLow2 Sfp9 trap
+
+-- beginning of rxOptPwrLow2 Sfp10 trap
+
+    faultrxOptPwrLow2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp10"
+    ::= 1242
+    
+    faultrxOptPwrLow2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp10"
+    ::= 1243
+
+-- end of rxOptPwrLow2 Sfp10 trap
+
+-- beginning of rxOptPwrLow2 Sfp11 trap
+
+    faultrxOptPwrLow2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp11"
+    ::= 1244
+    
+    faultrxOptPwrLow2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp11"
+    ::= 1245
+
+-- end of rxOptPwrLow2 Sfp11 trap
+
+-- beginning of rxOptPwrLow2 Sfp12 trap
+
+    faultrxOptPwrLow2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp12"
+    ::= 1246
+    
+    faultrxOptPwrLow2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp12"
+    ::= 1247
+
+-- end of rxOptPwrLow2 Sfp12 trap
+
+-- beginning of rxOptPwrLow2 Sfp13 trap
+
+    faultrxOptPwrLow2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp13"
+    ::= 1248
+    
+    faultrxOptPwrLow2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp13"
+    ::= 1249
+
+-- end of rxOptPwrLow2 Sfp13 trap
+
+-- beginning of rxOptPwrLow2 Sfp14 trap
+
+    faultrxOptPwrLow2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp14"
+    ::= 1250
+    
+    faultrxOptPwrLow2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp14"
+    ::= 1251
+
+-- end of rxOptPwrLow2 Sfp14 trap
+
+-- beginning of rxOptPwrLow2 Sfp15 trap
+
+    faultrxOptPwrLow2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp15"
+    ::= 1252
+    
+    faultrxOptPwrLow2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp15"
+    ::= 1253
+
+-- end of rxOptPwrLow2 Sfp15 trap
+
+-- beginning of rxOptPwrLow2 Sfp16 trap
+
+    faultrxOptPwrLow2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power OK on Sfp16"
+    ::= 1254
+    
+    faultrxOptPwrLow2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 RX optical power Low on Sfp16"
+    ::= 1255
+
+-- end of rxOptPwrLow2 Sfp16 trap
+
+-- beginning of noInputDetected1 Sfp1 trap
+
+    faultnoInputDetected1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp1"
+    ::= 1256
+    
+    faultnoInputDetected1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp1"
+    ::= 1257
+
+-- end of noInputDetected1 Sfp1 trap
+
+-- beginning of noInputDetected1 Sfp2 trap
+
+    faultnoInputDetected1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp2"
+    ::= 1258
+    
+    faultnoInputDetected1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp2"
+    ::= 1259
+
+-- end of noInputDetected1 Sfp2 trap
+
+-- beginning of noInputDetected1 Sfp3 trap
+
+    faultnoInputDetected1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp3"
+    ::= 1260
+    
+    faultnoInputDetected1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp3"
+    ::= 1261
+
+-- end of noInputDetected1 Sfp3 trap
+
+-- beginning of noInputDetected1 Sfp4 trap
+
+    faultnoInputDetected1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp4"
+    ::= 1262
+    
+    faultnoInputDetected1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp4"
+    ::= 1263
+
+-- end of noInputDetected1 Sfp4 trap
+
+-- beginning of noInputDetected1 Sfp5 trap
+
+    faultnoInputDetected1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp5"
+    ::= 1264
+    
+    faultnoInputDetected1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp5"
+    ::= 1265
+
+-- end of noInputDetected1 Sfp5 trap
+
+-- beginning of noInputDetected1 Sfp6 trap
+
+    faultnoInputDetected1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp6"
+    ::= 1266
+    
+    faultnoInputDetected1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp6"
+    ::= 1267
+
+-- end of noInputDetected1 Sfp6 trap
+
+-- beginning of noInputDetected1 Sfp7 trap
+
+    faultnoInputDetected1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp7"
+    ::= 1268
+    
+    faultnoInputDetected1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp7"
+    ::= 1269
+
+-- end of noInputDetected1 Sfp7 trap
+
+-- beginning of noInputDetected1 Sfp8 trap
+
+    faultnoInputDetected1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp8"
+    ::= 1270
+    
+    faultnoInputDetected1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp8"
+    ::= 1271
+
+-- end of noInputDetected1 Sfp8 trap
+
+-- beginning of noInputDetected1 Sfp9 trap
+
+    faultnoInputDetected1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp9"
+    ::= 1272
+    
+    faultnoInputDetected1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp9"
+    ::= 1273
+
+-- end of noInputDetected1 Sfp9 trap
+
+-- beginning of noInputDetected1 Sfp10 trap
+
+    faultnoInputDetected1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp10"
+    ::= 1274
+    
+    faultnoInputDetected1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp10"
+    ::= 1275
+
+-- end of noInputDetected1 Sfp10 trap
+
+-- beginning of noInputDetected1 Sfp11 trap
+
+    faultnoInputDetected1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp11"
+    ::= 1276
+    
+    faultnoInputDetected1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp11"
+    ::= 1277
+
+-- end of noInputDetected1 Sfp11 trap
+
+-- beginning of noInputDetected1 Sfp12 trap
+
+    faultnoInputDetected1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp12"
+    ::= 1278
+    
+    faultnoInputDetected1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp12"
+    ::= 1279
+
+-- end of noInputDetected1 Sfp12 trap
+
+-- beginning of noInputDetected1 Sfp13 trap
+
+    faultnoInputDetected1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp13"
+    ::= 1280
+    
+    faultnoInputDetected1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp13"
+    ::= 1281
+
+-- end of noInputDetected1 Sfp13 trap
+
+-- beginning of noInputDetected1 Sfp14 trap
+
+    faultnoInputDetected1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp14"
+    ::= 1282
+    
+    faultnoInputDetected1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp14"
+    ::= 1283
+
+-- end of noInputDetected1 Sfp14 trap
+
+-- beginning of noInputDetected1 Sfp15 trap
+
+    faultnoInputDetected1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp15"
+    ::= 1284
+    
+    faultnoInputDetected1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp15"
+    ::= 1285
+
+-- end of noInputDetected1 Sfp15 trap
+
+-- beginning of noInputDetected1 Sfp16 trap
+
+    faultnoInputDetected1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: OK on Sfp16"
+    ::= 1286
+    
+    faultnoInputDetected1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 input: No Signal on Sfp16"
+    ::= 1287
+
+-- end of noInputDetected1 Sfp16 trap
+
+-- beginning of noInputDetected2 Sfp1 trap
+
+    faultnoInputDetected2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp1"
+    ::= 1288
+    
+    faultnoInputDetected2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp1"
+    ::= 1289
+
+-- end of noInputDetected2 Sfp1 trap
+
+-- beginning of noInputDetected2 Sfp2 trap
+
+    faultnoInputDetected2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp2"
+    ::= 1290
+    
+    faultnoInputDetected2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp2"
+    ::= 1291
+
+-- end of noInputDetected2 Sfp2 trap
+
+-- beginning of noInputDetected2 Sfp3 trap
+
+    faultnoInputDetected2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp3"
+    ::= 1292
+    
+    faultnoInputDetected2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp3"
+    ::= 1293
+
+-- end of noInputDetected2 Sfp3 trap
+
+-- beginning of noInputDetected2 Sfp4 trap
+
+    faultnoInputDetected2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp4"
+    ::= 1294
+    
+    faultnoInputDetected2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp4"
+    ::= 1295
+
+-- end of noInputDetected2 Sfp4 trap
+
+-- beginning of noInputDetected2 Sfp5 trap
+
+    faultnoInputDetected2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp5"
+    ::= 1296
+    
+    faultnoInputDetected2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp5"
+    ::= 1297
+
+-- end of noInputDetected2 Sfp5 trap
+
+-- beginning of noInputDetected2 Sfp6 trap
+
+    faultnoInputDetected2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp6"
+    ::= 1298
+    
+    faultnoInputDetected2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp6"
+    ::= 1299
+
+-- end of noInputDetected2 Sfp6 trap
+
+-- beginning of noInputDetected2 Sfp7 trap
+
+    faultnoInputDetected2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp7"
+    ::= 1300
+    
+    faultnoInputDetected2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp7"
+    ::= 1301
+
+-- end of noInputDetected2 Sfp7 trap
+
+-- beginning of noInputDetected2 Sfp8 trap
+
+    faultnoInputDetected2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp8"
+    ::= 1302
+    
+    faultnoInputDetected2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp8"
+    ::= 1303
+
+-- end of noInputDetected2 Sfp8 trap
+
+-- beginning of noInputDetected2 Sfp9 trap
+
+    faultnoInputDetected2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp9"
+    ::= 1304
+    
+    faultnoInputDetected2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp9"
+    ::= 1305
+
+-- end of noInputDetected2 Sfp9 trap
+
+-- beginning of noInputDetected2 Sfp10 trap
+
+    faultnoInputDetected2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp10"
+    ::= 1306
+    
+    faultnoInputDetected2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp10"
+    ::= 1307
+
+-- end of noInputDetected2 Sfp10 trap
+
+-- beginning of noInputDetected2 Sfp11 trap
+
+    faultnoInputDetected2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp11"
+    ::= 1308
+    
+    faultnoInputDetected2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp11"
+    ::= 1309
+
+-- end of noInputDetected2 Sfp11 trap
+
+-- beginning of noInputDetected2 Sfp12 trap
+
+    faultnoInputDetected2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp12"
+    ::= 1310
+    
+    faultnoInputDetected2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp12"
+    ::= 1311
+
+-- end of noInputDetected2 Sfp12 trap
+
+-- beginning of noInputDetected2 Sfp13 trap
+
+    faultnoInputDetected2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp13"
+    ::= 1312
+    
+    faultnoInputDetected2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp13"
+    ::= 1313
+
+-- end of noInputDetected2 Sfp13 trap
+
+-- beginning of noInputDetected2 Sfp14 trap
+
+    faultnoInputDetected2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp14"
+    ::= 1314
+    
+    faultnoInputDetected2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp14"
+    ::= 1315
+
+-- end of noInputDetected2 Sfp14 trap
+
+-- beginning of noInputDetected2 Sfp15 trap
+
+    faultnoInputDetected2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp15"
+    ::= 1316
+    
+    faultnoInputDetected2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp15"
+    ::= 1317
+
+-- end of noInputDetected2 Sfp15 trap
+
+-- beginning of noInputDetected2 Sfp16 trap
+
+    faultnoInputDetected2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: OK on Sfp16"
+    ::= 1318
+    
+    faultnoInputDetected2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 input: No Signal on Sfp16"
+    ::= 1319
+
+-- end of noInputDetected2 Sfp16 trap
+
+-- beginning of reclockerLoss1 Sfp1 trap
+
+    faultreclockerLoss1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp1"
+    ::= 1320
+    
+    faultreclockerLoss1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp1"
+    ::= 1321
+
+-- end of reclockerLoss1 Sfp1 trap
+
+-- beginning of reclockerLoss1 Sfp2 trap
+
+    faultreclockerLoss1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp2"
+    ::= 1322
+    
+    faultreclockerLoss1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp2"
+    ::= 1323
+
+-- end of reclockerLoss1 Sfp2 trap
+
+-- beginning of reclockerLoss1 Sfp3 trap
+
+    faultreclockerLoss1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp3"
+    ::= 1324
+    
+    faultreclockerLoss1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp3"
+    ::= 1325
+
+-- end of reclockerLoss1 Sfp3 trap
+
+-- beginning of reclockerLoss1 Sfp4 trap
+
+    faultreclockerLoss1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp4"
+    ::= 1326
+    
+    faultreclockerLoss1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp4"
+    ::= 1327
+
+-- end of reclockerLoss1 Sfp4 trap
+
+-- beginning of reclockerLoss1 Sfp5 trap
+
+    faultreclockerLoss1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp5"
+    ::= 1328
+    
+    faultreclockerLoss1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp5"
+    ::= 1329
+
+-- end of reclockerLoss1 Sfp5 trap
+
+-- beginning of reclockerLoss1 Sfp6 trap
+
+    faultreclockerLoss1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp6"
+    ::= 1330
+    
+    faultreclockerLoss1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp6"
+    ::= 1331
+
+-- end of reclockerLoss1 Sfp6 trap
+
+-- beginning of reclockerLoss1 Sfp7 trap
+
+    faultreclockerLoss1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp7"
+    ::= 1332
+    
+    faultreclockerLoss1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp7"
+    ::= 1333
+
+-- end of reclockerLoss1 Sfp7 trap
+
+-- beginning of reclockerLoss1 Sfp8 trap
+
+    faultreclockerLoss1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp8"
+    ::= 1334
+    
+    faultreclockerLoss1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp8"
+    ::= 1335
+
+-- end of reclockerLoss1 Sfp8 trap
+
+-- beginning of reclockerLoss1 Sfp9 trap
+
+    faultreclockerLoss1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp9"
+    ::= 1336
+    
+    faultreclockerLoss1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp9"
+    ::= 1337
+
+-- end of reclockerLoss1 Sfp9 trap
+
+-- beginning of reclockerLoss1 Sfp10 trap
+
+    faultreclockerLoss1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp10"
+    ::= 1338
+    
+    faultreclockerLoss1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp10"
+    ::= 1339
+
+-- end of reclockerLoss1 Sfp10 trap
+
+-- beginning of reclockerLoss1 Sfp11 trap
+
+    faultreclockerLoss1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp11"
+    ::= 1340
+    
+    faultreclockerLoss1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp11"
+    ::= 1341
+
+-- end of reclockerLoss1 Sfp11 trap
+
+-- beginning of reclockerLoss1 Sfp12 trap
+
+    faultreclockerLoss1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp12"
+    ::= 1342
+    
+    faultreclockerLoss1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp12"
+    ::= 1343
+
+-- end of reclockerLoss1 Sfp12 trap
+
+-- beginning of reclockerLoss1 Sfp13 trap
+
+    faultreclockerLoss1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp13"
+    ::= 1344
+    
+    faultreclockerLoss1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp13"
+    ::= 1345
+
+-- end of reclockerLoss1 Sfp13 trap
+
+-- beginning of reclockerLoss1 Sfp14 trap
+
+    faultreclockerLoss1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp14"
+    ::= 1346
+    
+    faultreclockerLoss1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp14"
+    ::= 1347
+
+-- end of reclockerLoss1 Sfp14 trap
+
+-- beginning of reclockerLoss1 Sfp15 trap
+
+    faultreclockerLoss1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp15"
+    ::= 1348
+    
+    faultreclockerLoss1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp15"
+    ::= 1349
+
+-- end of reclockerLoss1 Sfp15 trap
+
+-- beginning of reclockerLoss1 Sfp16 trap
+
+    faultreclockerLoss1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker OK on Sfp16"
+    ::= 1350
+    
+    faultreclockerLoss1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 reclocker Not Locked on Sfp16"
+    ::= 1351
+
+-- end of reclockerLoss1 Sfp16 trap
+
+-- beginning of reclockerLoss2 Sfp1 trap
+
+    faultreclockerLoss2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp1"
+    ::= 1352
+    
+    faultreclockerLoss2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp1"
+    ::= 1353
+
+-- end of reclockerLoss2 Sfp1 trap
+
+-- beginning of reclockerLoss2 Sfp2 trap
+
+    faultreclockerLoss2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp2"
+    ::= 1354
+    
+    faultreclockerLoss2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp2"
+    ::= 1355
+
+-- end of reclockerLoss2 Sfp2 trap
+
+-- beginning of reclockerLoss2 Sfp3 trap
+
+    faultreclockerLoss2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp3"
+    ::= 1356
+    
+    faultreclockerLoss2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp3"
+    ::= 1357
+
+-- end of reclockerLoss2 Sfp3 trap
+
+-- beginning of reclockerLoss2 Sfp4 trap
+
+    faultreclockerLoss2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp4"
+    ::= 1358
+    
+    faultreclockerLoss2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp4"
+    ::= 1359
+
+-- end of reclockerLoss2 Sfp4 trap
+
+-- beginning of reclockerLoss2 Sfp5 trap
+
+    faultreclockerLoss2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp5"
+    ::= 1360
+    
+    faultreclockerLoss2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp5"
+    ::= 1361
+
+-- end of reclockerLoss2 Sfp5 trap
+
+-- beginning of reclockerLoss2 Sfp6 trap
+
+    faultreclockerLoss2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp6"
+    ::= 1362
+    
+    faultreclockerLoss2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp6"
+    ::= 1363
+
+-- end of reclockerLoss2 Sfp6 trap
+
+-- beginning of reclockerLoss2 Sfp7 trap
+
+    faultreclockerLoss2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp7"
+    ::= 1364
+    
+    faultreclockerLoss2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp7"
+    ::= 1365
+
+-- end of reclockerLoss2 Sfp7 trap
+
+-- beginning of reclockerLoss2 Sfp8 trap
+
+    faultreclockerLoss2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp8"
+    ::= 1366
+    
+    faultreclockerLoss2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp8"
+    ::= 1367
+
+-- end of reclockerLoss2 Sfp8 trap
+
+-- beginning of reclockerLoss2 Sfp9 trap
+
+    faultreclockerLoss2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp9"
+    ::= 1368
+    
+    faultreclockerLoss2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp9"
+    ::= 1369
+
+-- end of reclockerLoss2 Sfp9 trap
+
+-- beginning of reclockerLoss2 Sfp10 trap
+
+    faultreclockerLoss2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp10"
+    ::= 1370
+    
+    faultreclockerLoss2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp10"
+    ::= 1371
+
+-- end of reclockerLoss2 Sfp10 trap
+
+-- beginning of reclockerLoss2 Sfp11 trap
+
+    faultreclockerLoss2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp11"
+    ::= 1372
+    
+    faultreclockerLoss2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp11"
+    ::= 1373
+
+-- end of reclockerLoss2 Sfp11 trap
+
+-- beginning of reclockerLoss2 Sfp12 trap
+
+    faultreclockerLoss2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp12"
+    ::= 1374
+    
+    faultreclockerLoss2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp12"
+    ::= 1375
+
+-- end of reclockerLoss2 Sfp12 trap
+
+-- beginning of reclockerLoss2 Sfp13 trap
+
+    faultreclockerLoss2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp13"
+    ::= 1376
+    
+    faultreclockerLoss2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp13"
+    ::= 1377
+
+-- end of reclockerLoss2 Sfp13 trap
+
+-- beginning of reclockerLoss2 Sfp14 trap
+
+    faultreclockerLoss2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp14"
+    ::= 1378
+    
+    faultreclockerLoss2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp14"
+    ::= 1379
+
+-- end of reclockerLoss2 Sfp14 trap
+
+-- beginning of reclockerLoss2 Sfp15 trap
+
+    faultreclockerLoss2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp15"
+    ::= 1380
+    
+    faultreclockerLoss2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp15"
+    ::= 1381
+
+-- end of reclockerLoss2 Sfp15 trap
+
+-- beginning of reclockerLoss2 Sfp16 trap
+
+    faultreclockerLoss2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker OK on Sfp16"
+    ::= 1382
+    
+    faultreclockerLoss2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 reclocker Not Locked on Sfp16"
+    ::= 1383
+
+-- end of reclockerLoss2 Sfp16 trap
+
+-- beginning of txLaserFault1 Sfp1 trap
+
+    faulttxLaserFault1Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp1"
+    ::= 1384
+    
+    faulttxLaserFault1Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp1"
+    ::= 1385
+
+-- end of txLaserFault1 Sfp1 trap
+
+-- beginning of txLaserFault1 Sfp2 trap
+
+    faulttxLaserFault1Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp2"
+    ::= 1386
+    
+    faulttxLaserFault1Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp2"
+    ::= 1387
+
+-- end of txLaserFault1 Sfp2 trap
+
+-- beginning of txLaserFault1 Sfp3 trap
+
+    faulttxLaserFault1Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp3"
+    ::= 1388
+    
+    faulttxLaserFault1Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp3"
+    ::= 1389
+
+-- end of txLaserFault1 Sfp3 trap
+
+-- beginning of txLaserFault1 Sfp4 trap
+
+    faulttxLaserFault1Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp4"
+    ::= 1390
+    
+    faulttxLaserFault1Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp4"
+    ::= 1391
+
+-- end of txLaserFault1 Sfp4 trap
+
+-- beginning of txLaserFault1 Sfp5 trap
+
+    faulttxLaserFault1Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp5"
+    ::= 1392
+    
+    faulttxLaserFault1Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp5"
+    ::= 1393
+
+-- end of txLaserFault1 Sfp5 trap
+
+-- beginning of txLaserFault1 Sfp6 trap
+
+    faulttxLaserFault1Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp6"
+    ::= 1394
+    
+    faulttxLaserFault1Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp6"
+    ::= 1395
+
+-- end of txLaserFault1 Sfp6 trap
+
+-- beginning of txLaserFault1 Sfp7 trap
+
+    faulttxLaserFault1Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp7"
+    ::= 1396
+    
+    faulttxLaserFault1Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp7"
+    ::= 1397
+
+-- end of txLaserFault1 Sfp7 trap
+
+-- beginning of txLaserFault1 Sfp8 trap
+
+    faulttxLaserFault1Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp8"
+    ::= 1398
+    
+    faulttxLaserFault1Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp8"
+    ::= 1399
+
+-- end of txLaserFault1 Sfp8 trap
+
+-- beginning of txLaserFault1 Sfp9 trap
+
+    faulttxLaserFault1Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp9"
+    ::= 1400
+    
+    faulttxLaserFault1Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp9"
+    ::= 1401
+
+-- end of txLaserFault1 Sfp9 trap
+
+-- beginning of txLaserFault1 Sfp10 trap
+
+    faulttxLaserFault1Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp10"
+    ::= 1402
+    
+    faulttxLaserFault1Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp10"
+    ::= 1403
+
+-- end of txLaserFault1 Sfp10 trap
+
+-- beginning of txLaserFault1 Sfp11 trap
+
+    faulttxLaserFault1Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp11"
+    ::= 1404
+    
+    faulttxLaserFault1Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp11"
+    ::= 1405
+
+-- end of txLaserFault1 Sfp11 trap
+
+-- beginning of txLaserFault1 Sfp12 trap
+
+    faulttxLaserFault1Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp12"
+    ::= 1406
+    
+    faulttxLaserFault1Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp12"
+    ::= 1407
+
+-- end of txLaserFault1 Sfp12 trap
+
+-- beginning of txLaserFault1 Sfp13 trap
+
+    faulttxLaserFault1Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp13"
+    ::= 1408
+    
+    faulttxLaserFault1Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp13"
+    ::= 1409
+
+-- end of txLaserFault1 Sfp13 trap
+
+-- beginning of txLaserFault1 Sfp14 trap
+
+    faulttxLaserFault1Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp14"
+    ::= 1410
+    
+    faulttxLaserFault1Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp14"
+    ::= 1411
+
+-- end of txLaserFault1 Sfp14 trap
+
+-- beginning of txLaserFault1 Sfp15 trap
+
+    faulttxLaserFault1Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp15"
+    ::= 1412
+    
+    faulttxLaserFault1Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp15"
+    ::= 1413
+
+-- end of txLaserFault1 Sfp15 trap
+
+-- beginning of txLaserFault1 Sfp16 trap
+
+    faulttxLaserFault1Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser OK on Sfp16"
+    ::= 1414
+    
+    faulttxLaserFault1Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 1 laser Fault on Sfp16"
+    ::= 1415
+
+-- end of txLaserFault1 Sfp16 trap
+
+-- beginning of txLaserFault2 Sfp1 trap
+
+    faulttxLaserFault2Sfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp1"
+    ::= 1416
+    
+    faulttxLaserFault2Sfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp1"
+    ::= 1417
+
+-- end of txLaserFault2 Sfp1 trap
+
+-- beginning of txLaserFault2 Sfp2 trap
+
+    faulttxLaserFault2Sfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp2"
+    ::= 1418
+    
+    faulttxLaserFault2Sfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp2"
+    ::= 1419
+
+-- end of txLaserFault2 Sfp2 trap
+
+-- beginning of txLaserFault2 Sfp3 trap
+
+    faulttxLaserFault2Sfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp3"
+    ::= 1420
+    
+    faulttxLaserFault2Sfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp3"
+    ::= 1421
+
+-- end of txLaserFault2 Sfp3 trap
+
+-- beginning of txLaserFault2 Sfp4 trap
+
+    faulttxLaserFault2Sfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp4"
+    ::= 1422
+    
+    faulttxLaserFault2Sfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp4"
+    ::= 1423
+
+-- end of txLaserFault2 Sfp4 trap
+
+-- beginning of txLaserFault2 Sfp5 trap
+
+    faulttxLaserFault2Sfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp5"
+    ::= 1424
+    
+    faulttxLaserFault2Sfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp5"
+    ::= 1425
+
+-- end of txLaserFault2 Sfp5 trap
+
+-- beginning of txLaserFault2 Sfp6 trap
+
+    faulttxLaserFault2Sfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp6"
+    ::= 1426
+    
+    faulttxLaserFault2Sfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp6"
+    ::= 1427
+
+-- end of txLaserFault2 Sfp6 trap
+
+-- beginning of txLaserFault2 Sfp7 trap
+
+    faulttxLaserFault2Sfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp7"
+    ::= 1428
+    
+    faulttxLaserFault2Sfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp7"
+    ::= 1429
+
+-- end of txLaserFault2 Sfp7 trap
+
+-- beginning of txLaserFault2 Sfp8 trap
+
+    faulttxLaserFault2Sfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp8"
+    ::= 1430
+    
+    faulttxLaserFault2Sfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp8"
+    ::= 1431
+
+-- end of txLaserFault2 Sfp8 trap
+
+-- beginning of txLaserFault2 Sfp9 trap
+
+    faulttxLaserFault2Sfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp9"
+    ::= 1432
+    
+    faulttxLaserFault2Sfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp9"
+    ::= 1433
+
+-- end of txLaserFault2 Sfp9 trap
+
+-- beginning of txLaserFault2 Sfp10 trap
+
+    faulttxLaserFault2Sfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp10"
+    ::= 1434
+    
+    faulttxLaserFault2Sfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp10"
+    ::= 1435
+
+-- end of txLaserFault2 Sfp10 trap
+
+-- beginning of txLaserFault2 Sfp11 trap
+
+    faulttxLaserFault2Sfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp11"
+    ::= 1436
+    
+    faulttxLaserFault2Sfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp11"
+    ::= 1437
+
+-- end of txLaserFault2 Sfp11 trap
+
+-- beginning of txLaserFault2 Sfp12 trap
+
+    faulttxLaserFault2Sfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp12"
+    ::= 1438
+    
+    faulttxLaserFault2Sfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp12"
+    ::= 1439
+
+-- end of txLaserFault2 Sfp12 trap
+
+-- beginning of txLaserFault2 Sfp13 trap
+
+    faulttxLaserFault2Sfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp13"
+    ::= 1440
+    
+    faulttxLaserFault2Sfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp13"
+    ::= 1441
+
+-- end of txLaserFault2 Sfp13 trap
+
+-- beginning of txLaserFault2 Sfp14 trap
+
+    faulttxLaserFault2Sfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp14"
+    ::= 1442
+    
+    faulttxLaserFault2Sfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp14"
+    ::= 1443
+
+-- end of txLaserFault2 Sfp14 trap
+
+-- beginning of txLaserFault2 Sfp15 trap
+
+    faulttxLaserFault2Sfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp15"
+    ::= 1444
+    
+    faulttxLaserFault2Sfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp15"
+    ::= 1445
+
+-- end of txLaserFault2 Sfp15 trap
+
+-- beginning of txLaserFault2 Sfp16 trap
+
+    faulttxLaserFault2Sfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser OK on Sfp16"
+    ::= 1446
+    
+    faulttxLaserFault2Sfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Channel 2 laser Fault on Sfp16"
+    ::= 1447
+
+-- end of txLaserFault2 Sfp16 trap
+
+-- beginning of sfpCommunicationLoss Sfp1 trap
+
+    faultsfpCommunicationLossSfp1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp1"
+    ::= 1448
+    
+    faultsfpCommunicationLossSfp1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp1"
+    ::= 1449
+
+-- end of sfpCommunicationLoss Sfp1 trap
+
+-- beginning of sfpCommunicationLoss Sfp2 trap
+
+    faultsfpCommunicationLossSfp2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp2"
+    ::= 1450
+    
+    faultsfpCommunicationLossSfp2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp2"
+    ::= 1451
+
+-- end of sfpCommunicationLoss Sfp2 trap
+
+-- beginning of sfpCommunicationLoss Sfp3 trap
+
+    faultsfpCommunicationLossSfp3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp3"
+    ::= 1452
+    
+    faultsfpCommunicationLossSfp3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp3"
+    ::= 1453
+
+-- end of sfpCommunicationLoss Sfp3 trap
+
+-- beginning of sfpCommunicationLoss Sfp4 trap
+
+    faultsfpCommunicationLossSfp4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp4"
+    ::= 1454
+    
+    faultsfpCommunicationLossSfp4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp4"
+    ::= 1455
+
+-- end of sfpCommunicationLoss Sfp4 trap
+
+-- beginning of sfpCommunicationLoss Sfp5 trap
+
+    faultsfpCommunicationLossSfp5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp5"
+    ::= 1456
+    
+    faultsfpCommunicationLossSfp5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp5"
+    ::= 1457
+
+-- end of sfpCommunicationLoss Sfp5 trap
+
+-- beginning of sfpCommunicationLoss Sfp6 trap
+
+    faultsfpCommunicationLossSfp6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp6"
+    ::= 1458
+    
+    faultsfpCommunicationLossSfp6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp6"
+    ::= 1459
+
+-- end of sfpCommunicationLoss Sfp6 trap
+
+-- beginning of sfpCommunicationLoss Sfp7 trap
+
+    faultsfpCommunicationLossSfp7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp7"
+    ::= 1460
+    
+    faultsfpCommunicationLossSfp7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp7"
+    ::= 1461
+
+-- end of sfpCommunicationLoss Sfp7 trap
+
+-- beginning of sfpCommunicationLoss Sfp8 trap
+
+    faultsfpCommunicationLossSfp8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp8"
+    ::= 1462
+    
+    faultsfpCommunicationLossSfp8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp8"
+    ::= 1463
+
+-- end of sfpCommunicationLoss Sfp8 trap
+
+-- beginning of sfpCommunicationLoss Sfp9 trap
+
+    faultsfpCommunicationLossSfp9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp9"
+    ::= 1464
+    
+    faultsfpCommunicationLossSfp9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp9"
+    ::= 1465
+
+-- end of sfpCommunicationLoss Sfp9 trap
+
+-- beginning of sfpCommunicationLoss Sfp10 trap
+
+    faultsfpCommunicationLossSfp10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp10"
+    ::= 1466
+    
+    faultsfpCommunicationLossSfp10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp10"
+    ::= 1467
+
+-- end of sfpCommunicationLoss Sfp10 trap
+
+-- beginning of sfpCommunicationLoss Sfp11 trap
+
+    faultsfpCommunicationLossSfp11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp11"
+    ::= 1468
+    
+    faultsfpCommunicationLossSfp11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp11"
+    ::= 1469
+
+-- end of sfpCommunicationLoss Sfp11 trap
+
+-- beginning of sfpCommunicationLoss Sfp12 trap
+
+    faultsfpCommunicationLossSfp12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp12"
+    ::= 1470
+    
+    faultsfpCommunicationLossSfp12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp12"
+    ::= 1471
+
+-- end of sfpCommunicationLoss Sfp12 trap
+
+-- beginning of sfpCommunicationLoss Sfp13 trap
+
+    faultsfpCommunicationLossSfp13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp13"
+    ::= 1472
+    
+    faultsfpCommunicationLossSfp13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp13"
+    ::= 1473
+
+-- end of sfpCommunicationLoss Sfp13 trap
+
+-- beginning of sfpCommunicationLoss Sfp14 trap
+
+    faultsfpCommunicationLossSfp14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp14"
+    ::= 1474
+    
+    faultsfpCommunicationLossSfp14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp14"
+    ::= 1475
+
+-- end of sfpCommunicationLoss Sfp14 trap
+
+-- beginning of sfpCommunicationLoss Sfp15 trap
+
+    faultsfpCommunicationLossSfp15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp15"
+    ::= 1476
+    
+    faultsfpCommunicationLossSfp15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp15"
+    ::= 1477
+
+-- end of sfpCommunicationLoss Sfp15 trap
+
+-- beginning of sfpCommunicationLoss Sfp16 trap
+
+    faultsfpCommunicationLossSfp16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication OK on Sfp16"
+    ::= 1478
+    
+    faultsfpCommunicationLossSfp16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SFP communication Fault on Sfp16"
+    ::= 1479
+
+-- end of sfpCommunicationLoss Sfp16 trap
+
+-- beginning of fan1bad trap
+
+    faultfan1badFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan 1 OK"
+    ::= 1480
+    
+    faultfan1badTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan 1 Failed"
+    ::= 1481
+
+-- end of fan1bad trap
+
+-- beginning of fan2bad trap
+
+    faultfan2badFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan 2 OK"
+    ::= 1482
+    
+    faultfan2badTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan 2 Failed"
+    ::= 1483
+
+-- end of fan2bad trap
+
+-- beginning of psu1fail trap
+
+    faultpsu1failFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Unit 1 OK"
+    ::= 1484
+    
+    faultpsu1failTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Unit 1 Failed"
+    ::= 1485
+
+-- end of psu1fail trap
+
+-- beginning of psu2fail trap
+
+    faultpsu2failFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Unit 2 OK"
+    ::= 1486
+    
+    faultpsu2failTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Unit 2 Failed"
+    ::= 1487
+
+-- end of psu2fail trap
+
+-- beginning of extpwr1fail trap
+
+    faultextpwr1failFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "External 12V Power 1 OK"
+    ::= 1488
+    
+    faultextpwr1failTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "External 12V Power 1 Failed"
+    ::= 1489
+
+-- end of extpwr1fail trap
+
+-- beginning of extpwr2fail trap
+
+    faultextpwr2failFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "External 12V Power 2 OK"
+    ::= 1490
+    
+    faultextpwr2failTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "External 12V Power 2 Failed"
+    ::= 1491
+
+-- end of extpwr2fail trap
+
+
+
+
+END

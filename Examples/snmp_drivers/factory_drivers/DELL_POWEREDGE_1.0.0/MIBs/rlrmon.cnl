@@ -1,0 +1,46 @@
+RADLAN-RMON-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN Rmon Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rlRmonControl                                           FROM RADLAN-RMON
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rlRmonControlMibVersion OBJECT-TYPE
+   ::= {rlRmonControl 1}
+
+rlRmonControlHistoryControlQuotaBucket OBJECT-TYPE
+   ::= {rlRmonControl 2}
+
+rlRmonControlHistoryControlMaxGlobalBuckets OBJECT-TYPE
+   ::= {rlRmonControl 3}
+
+rlHistoryControlTable OBJECT-TYPE
+    ::= {rlRmonControl 4}
+
+rlHistoryControlEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rlHistoryControlStatus
+    DELETE-VALUE      invalid
+    ::= { rlHistoryControlTable 1 }
+
+rlHistoryTable OBJECT-TYPE
+    ::= { rlRmonControl 5 }
+
+rlHistoryEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlHistoryTable 1 }
+
+rlControlHistoryControlQuotaBucket OBJECT-TYPE
+   ::= {rlRmonControl 6}
+
+rlControlHistoryControlMaxGlobalBuckets OBJECT-TYPE
+   ::= {rlRmonControl 7}
+
+rlControlHistoryMaxEntries OBJECT-TYPE
+   ::= {rlRmonControl 8}
+
+END

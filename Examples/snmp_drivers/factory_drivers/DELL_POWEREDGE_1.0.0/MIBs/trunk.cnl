@@ -1,0 +1,125 @@
+LAG-MIB-A DEFINITIONS ::= BEGIN
+
+---------------------------------------------------------------
+--IEEE 802.3ad MIB
+---------------------------------------------------------------
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Counter32,
+    TimeTicks                                           FROM SNMPv2-SMI
+    DisplayString, MacAddress, TEXTUAL-CONVENTION,
+    TruthValue                                          FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP                     FROM SNMPv2-CONF
+    InterfaceIndex                                      FROM IF-MIB
+    PortList                                            FROM Q-BRIDGE-MIB
+    lagMIB                                              FROM IEEE8023-LAG-MIB;
+
+lagMIBObjects OBJECT IDENTIFIER ::= { lagMIB 1 }
+
+---------------------------------------------------------------
+--Textual Conventions
+---------------------------------------------------------------
+
+LacpKey ::= TEXTUAL-CONVENTION
+    STATUS  current
+    DESCRIPTION
+        "The Actor or Partner Key value."
+    SYNTAX INTEGER (0.. 65535)
+
+LacpState ::= TEXTUAL-CONVENTION
+    STATUS  current
+    DESCRIPTION
+        "The Actor and Partner State values from the LACPDU."
+    SYNTAX BITS {
+        lacpActivity(0),
+        lacpTimeout(1),
+        aggregation(2),
+        synchronisation(3),
+        collecting(4),
+        distributing(5),
+        defaulted(6),
+        expired(7)
+    }
+--    SYNTAX      OCTET STRING (SIZE(1))
+
+ChurnState ::= TEXTUAL-CONVENTION
+    STATUS  current
+    DESCRIPTION
+        "The state of the Churn detection machine."
+    SYNTAX INTEGER {
+        noChurn(1),
+        churn(2),
+        churnMonitor(3)
+    }
+
+---------------------------------------------------------------
+-- groups in the LAG MIB
+---------------------------------------------------------------
+
+dot3adAgg OBJECT IDENTIFIER ::= { lagMIBObjects 1 }
+dot3adAggPort OBJECT IDENTIFIER ::= { lagMIBObjects 2 }
+
+---------------------------------------------------------------
+--The Tables Last Changed Object
+---------------------------------------------------------------
+
+dot3adTablesLastChanged OBJECT-TYPE
+    ::= { lagMIBObjects 3 }
+
+---------------------------------------------------------------
+--The Aggregator Configuration Table
+---------------------------------------------------------------
+
+dot3adAggTable OBJECT-TYPE
+    ::= { dot3adAgg 1 }
+
+dot3adAggEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3adAggTable 1 }
+
+
+---------------------------------------------------------------
+--The Aggregation Port List Table
+---------------------------------------------------------------
+
+dot3adAggPortListTable OBJECT-TYPE
+    ::= { dot3adAgg 2 }
+
+dot3adAggPortListEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3adAggPortListTable 1 }
+
+---------------------------------------------------------------
+--The Aggregation Port Table
+---------------------------------------------------------------
+
+dot3adAggPortTable OBJECT-TYPE
+    ::= { dot3adAggPort 1 }
+
+dot3adAggPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3adAggPortTable 1 }
+
+---------------------------------------------------------------
+--LACP Statistics Table
+---------------------------------------------------------------
+
+dot3adAggPortStatsTable OBJECT-TYPE
+    ::= { dot3adAggPort 2 }
+
+dot3adAggPortStatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3adAggPortStatsTable 1 }
+
+---------------------------------------------------------------
+--LACP Debug Table
+---------------------------------------------------------------
+
+dot3adAggPortDebugTable OBJECT-TYPE
+    ::= { dot3adAggPort 3 }
+
+dot3adAggPortDebugEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3adAggPortDebugTable 1 }
+
+END

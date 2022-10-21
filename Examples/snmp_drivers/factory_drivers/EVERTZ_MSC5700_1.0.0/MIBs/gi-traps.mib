@@ -1,0 +1,6931 @@
+-- Copyright 2005 Evertz Microsystems Ltd.
+-- Thu Oct 06 13:04:00 2005
+-- Confidential
+
+GI-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    trapTag, giTraps
+        FROM GI-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { giTraps 1 }
+
+
+-- beginning of futureUseVid1 Input1 trap
+
+    faultfutureUseVid1Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Cleared on Input1"
+    ::= 1000
+    
+    faultfutureUseVid1Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Alert on Input1"
+    ::= 1001
+
+-- end of futureUseVid1 Input1 trap
+
+-- beginning of futureUseVid1 Input2 trap
+
+    faultfutureUseVid1Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Cleared on Input2"
+    ::= 1002
+    
+    faultfutureUseVid1Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Alert on Input2"
+    ::= 1003
+
+-- end of futureUseVid1 Input2 trap
+
+-- beginning of futureUseVid1 Input3 trap
+
+    faultfutureUseVid1Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Cleared on Input3"
+    ::= 1004
+    
+    faultfutureUseVid1Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Alert on Input3"
+    ::= 1005
+
+-- end of futureUseVid1 Input3 trap
+
+-- beginning of futureUseVid1 Input4 trap
+
+    faultfutureUseVid1Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Cleared on Input4"
+    ::= 1006
+    
+    faultfutureUseVid1Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid1 Alert on Input4"
+    ::= 1007
+
+-- end of futureUseVid1 Input4 trap
+
+-- beginning of futureUseVid2 Input1 trap
+
+    faultfutureUseVid2Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Cleared on Input1"
+    ::= 1008
+    
+    faultfutureUseVid2Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Alert on Input1"
+    ::= 1009
+
+-- end of futureUseVid2 Input1 trap
+
+-- beginning of futureUseVid2 Input2 trap
+
+    faultfutureUseVid2Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Cleared on Input2"
+    ::= 1010
+    
+    faultfutureUseVid2Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Alert on Input2"
+    ::= 1011
+
+-- end of futureUseVid2 Input2 trap
+
+-- beginning of futureUseVid2 Input3 trap
+
+    faultfutureUseVid2Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Cleared on Input3"
+    ::= 1012
+    
+    faultfutureUseVid2Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Alert on Input3"
+    ::= 1013
+
+-- end of futureUseVid2 Input3 trap
+
+-- beginning of futureUseVid2 Input4 trap
+
+    faultfutureUseVid2Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Cleared on Input4"
+    ::= 1014
+    
+    faultfutureUseVid2Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid2 Alert on Input4"
+    ::= 1015
+
+-- end of futureUseVid2 Input4 trap
+
+-- beginning of lossOfVideo Input1 trap
+
+    faultlossOfVideoInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Cleared on Input1"
+    ::= 1016
+    
+    faultlossOfVideoInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Alert on Input1"
+    ::= 1017
+
+-- end of lossOfVideo Input1 trap
+
+-- beginning of lossOfVideo Input2 trap
+
+    faultlossOfVideoInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Cleared on Input2"
+    ::= 1018
+    
+    faultlossOfVideoInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Alert on Input2"
+    ::= 1019
+
+-- end of lossOfVideo Input2 trap
+
+-- beginning of lossOfVideo Input3 trap
+
+    faultlossOfVideoInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Cleared on Input3"
+    ::= 1020
+    
+    faultlossOfVideoInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Alert on Input3"
+    ::= 1021
+
+-- end of lossOfVideo Input3 trap
+
+-- beginning of lossOfVideo Input4 trap
+
+    faultlossOfVideoInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Cleared on Input4"
+    ::= 1022
+    
+    faultlossOfVideoInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Video Input Loss Alert on Input4"
+    ::= 1023
+
+-- end of lossOfVideo Input4 trap
+
+-- beginning of futureUseVid3 Input1 trap
+
+    faultfutureUseVid3Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Cleared on Input1"
+    ::= 1024
+    
+    faultfutureUseVid3Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Alert on Input1"
+    ::= 1025
+
+-- end of futureUseVid3 Input1 trap
+
+-- beginning of futureUseVid3 Input2 trap
+
+    faultfutureUseVid3Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Cleared on Input2"
+    ::= 1026
+    
+    faultfutureUseVid3Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Alert on Input2"
+    ::= 1027
+
+-- end of futureUseVid3 Input2 trap
+
+-- beginning of futureUseVid3 Input3 trap
+
+    faultfutureUseVid3Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Cleared on Input3"
+    ::= 1028
+    
+    faultfutureUseVid3Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Alert on Input3"
+    ::= 1029
+
+-- end of futureUseVid3 Input3 trap
+
+-- beginning of futureUseVid3 Input4 trap
+
+    faultfutureUseVid3Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Cleared on Input4"
+    ::= 1030
+    
+    faultfutureUseVid3Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid3 Alert on Input4"
+    ::= 1031
+
+-- end of futureUseVid3 Input4 trap
+
+-- beginning of futureUseVid4 Input1 trap
+
+    faultfutureUseVid4Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Cleared on Input1"
+    ::= 1032
+    
+    faultfutureUseVid4Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Alert on Input1"
+    ::= 1033
+
+-- end of futureUseVid4 Input1 trap
+
+-- beginning of futureUseVid4 Input2 trap
+
+    faultfutureUseVid4Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Cleared on Input2"
+    ::= 1034
+    
+    faultfutureUseVid4Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Alert on Input2"
+    ::= 1035
+
+-- end of futureUseVid4 Input2 trap
+
+-- beginning of futureUseVid4 Input3 trap
+
+    faultfutureUseVid4Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Cleared on Input3"
+    ::= 1036
+    
+    faultfutureUseVid4Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Alert on Input3"
+    ::= 1037
+
+-- end of futureUseVid4 Input3 trap
+
+-- beginning of futureUseVid4 Input4 trap
+
+    faultfutureUseVid4Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Cleared on Input4"
+    ::= 1038
+    
+    faultfutureUseVid4Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid4 Alert on Input4"
+    ::= 1039
+
+-- end of futureUseVid4 Input4 trap
+
+-- beginning of futureUseVid5 Input1 trap
+
+    faultfutureUseVid5Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Cleared on Input1"
+    ::= 1040
+    
+    faultfutureUseVid5Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Alert on Input1"
+    ::= 1041
+
+-- end of futureUseVid5 Input1 trap
+
+-- beginning of futureUseVid5 Input2 trap
+
+    faultfutureUseVid5Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Cleared on Input2"
+    ::= 1042
+    
+    faultfutureUseVid5Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Alert on Input2"
+    ::= 1043
+
+-- end of futureUseVid5 Input2 trap
+
+-- beginning of futureUseVid5 Input3 trap
+
+    faultfutureUseVid5Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Cleared on Input3"
+    ::= 1044
+    
+    faultfutureUseVid5Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Alert on Input3"
+    ::= 1045
+
+-- end of futureUseVid5 Input3 trap
+
+-- beginning of futureUseVid5 Input4 trap
+
+    faultfutureUseVid5Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Cleared on Input4"
+    ::= 1046
+    
+    faultfutureUseVid5Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid5 Alert on Input4"
+    ::= 1047
+
+-- end of futureUseVid5 Input4 trap
+
+-- beginning of futureUseVid6 Input1 trap
+
+    faultfutureUseVid6Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Cleared on Input1"
+    ::= 1048
+    
+    faultfutureUseVid6Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Alert on Input1"
+    ::= 1049
+
+-- end of futureUseVid6 Input1 trap
+
+-- beginning of futureUseVid6 Input2 trap
+
+    faultfutureUseVid6Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Cleared on Input2"
+    ::= 1050
+    
+    faultfutureUseVid6Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Alert on Input2"
+    ::= 1051
+
+-- end of futureUseVid6 Input2 trap
+
+-- beginning of futureUseVid6 Input3 trap
+
+    faultfutureUseVid6Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Cleared on Input3"
+    ::= 1052
+    
+    faultfutureUseVid6Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Alert on Input3"
+    ::= 1053
+
+-- end of futureUseVid6 Input3 trap
+
+-- beginning of futureUseVid6 Input4 trap
+
+    faultfutureUseVid6Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Cleared on Input4"
+    ::= 1054
+    
+    faultfutureUseVid6Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid6 Alert on Input4"
+    ::= 1055
+
+-- end of futureUseVid6 Input4 trap
+
+-- beginning of futureUseVid7 Input1 trap
+
+    faultfutureUseVid7Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Cleared on Input1"
+    ::= 1056
+    
+    faultfutureUseVid7Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Alert on Input1"
+    ::= 1057
+
+-- end of futureUseVid7 Input1 trap
+
+-- beginning of futureUseVid7 Input2 trap
+
+    faultfutureUseVid7Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Cleared on Input2"
+    ::= 1058
+    
+    faultfutureUseVid7Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Alert on Input2"
+    ::= 1059
+
+-- end of futureUseVid7 Input2 trap
+
+-- beginning of futureUseVid7 Input3 trap
+
+    faultfutureUseVid7Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Cleared on Input3"
+    ::= 1060
+    
+    faultfutureUseVid7Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Alert on Input3"
+    ::= 1061
+
+-- end of futureUseVid7 Input3 trap
+
+-- beginning of futureUseVid7 Input4 trap
+
+    faultfutureUseVid7Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Cleared on Input4"
+    ::= 1062
+    
+    faultfutureUseVid7Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid7 Alert on Input4"
+    ::= 1063
+
+-- end of futureUseVid7 Input4 trap
+
+-- beginning of futureUseVid8 Input1 trap
+
+    faultfutureUseVid8Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Cleared on Input1"
+    ::= 1064
+    
+    faultfutureUseVid8Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Alert on Input1"
+    ::= 1065
+
+-- end of futureUseVid8 Input1 trap
+
+-- beginning of futureUseVid8 Input2 trap
+
+    faultfutureUseVid8Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Cleared on Input2"
+    ::= 1066
+    
+    faultfutureUseVid8Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Alert on Input2"
+    ::= 1067
+
+-- end of futureUseVid8 Input2 trap
+
+-- beginning of futureUseVid8 Input3 trap
+
+    faultfutureUseVid8Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Cleared on Input3"
+    ::= 1068
+    
+    faultfutureUseVid8Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Alert on Input3"
+    ::= 1069
+
+-- end of futureUseVid8 Input3 trap
+
+-- beginning of futureUseVid8 Input4 trap
+
+    faultfutureUseVid8Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Cleared on Input4"
+    ::= 1070
+    
+    faultfutureUseVid8Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid8 Alert on Input4"
+    ::= 1071
+
+-- end of futureUseVid8 Input4 trap
+
+-- beginning of futureUseVid9 Input1 trap
+
+    faultfutureUseVid9Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Cleared on Input1"
+    ::= 1072
+    
+    faultfutureUseVid9Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Alert on Input1"
+    ::= 1073
+
+-- end of futureUseVid9 Input1 trap
+
+-- beginning of futureUseVid9 Input2 trap
+
+    faultfutureUseVid9Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Cleared on Input2"
+    ::= 1074
+    
+    faultfutureUseVid9Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Alert on Input2"
+    ::= 1075
+
+-- end of futureUseVid9 Input2 trap
+
+-- beginning of futureUseVid9 Input3 trap
+
+    faultfutureUseVid9Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Cleared on Input3"
+    ::= 1076
+    
+    faultfutureUseVid9Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Alert on Input3"
+    ::= 1077
+
+-- end of futureUseVid9 Input3 trap
+
+-- beginning of futureUseVid9 Input4 trap
+
+    faultfutureUseVid9Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Cleared on Input4"
+    ::= 1078
+    
+    faultfutureUseVid9Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid9 Alert on Input4"
+    ::= 1079
+
+-- end of futureUseVid9 Input4 trap
+
+-- beginning of futureUseVid10 Input1 trap
+
+    faultfutureUseVid10Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Cleared on Input1"
+    ::= 1080
+    
+    faultfutureUseVid10Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Alert on Input1"
+    ::= 1081
+
+-- end of futureUseVid10 Input1 trap
+
+-- beginning of futureUseVid10 Input2 trap
+
+    faultfutureUseVid10Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Cleared on Input2"
+    ::= 1082
+    
+    faultfutureUseVid10Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Alert on Input2"
+    ::= 1083
+
+-- end of futureUseVid10 Input2 trap
+
+-- beginning of futureUseVid10 Input3 trap
+
+    faultfutureUseVid10Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Cleared on Input3"
+    ::= 1084
+    
+    faultfutureUseVid10Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Alert on Input3"
+    ::= 1085
+
+-- end of futureUseVid10 Input3 trap
+
+-- beginning of futureUseVid10 Input4 trap
+
+    faultfutureUseVid10Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Cleared on Input4"
+    ::= 1086
+    
+    faultfutureUseVid10Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid10 Alert on Input4"
+    ::= 1087
+
+-- end of futureUseVid10 Input4 trap
+
+-- beginning of futureUseVid11 Input1 trap
+
+    faultfutureUseVid11Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Cleared on Input1"
+    ::= 1088
+    
+    faultfutureUseVid11Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Alert on Input1"
+    ::= 1089
+
+-- end of futureUseVid11 Input1 trap
+
+-- beginning of futureUseVid11 Input2 trap
+
+    faultfutureUseVid11Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Cleared on Input2"
+    ::= 1090
+    
+    faultfutureUseVid11Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Alert on Input2"
+    ::= 1091
+
+-- end of futureUseVid11 Input2 trap
+
+-- beginning of futureUseVid11 Input3 trap
+
+    faultfutureUseVid11Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Cleared on Input3"
+    ::= 1092
+    
+    faultfutureUseVid11Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Alert on Input3"
+    ::= 1093
+
+-- end of futureUseVid11 Input3 trap
+
+-- beginning of futureUseVid11 Input4 trap
+
+    faultfutureUseVid11Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Cleared on Input4"
+    ::= 1094
+    
+    faultfutureUseVid11Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid11 Alert on Input4"
+    ::= 1095
+
+-- end of futureUseVid11 Input4 trap
+
+-- beginning of futureUseVid12 Input1 trap
+
+    faultfutureUseVid12Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Cleared on Input1"
+    ::= 1096
+    
+    faultfutureUseVid12Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Alert on Input1"
+    ::= 1097
+
+-- end of futureUseVid12 Input1 trap
+
+-- beginning of futureUseVid12 Input2 trap
+
+    faultfutureUseVid12Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Cleared on Input2"
+    ::= 1098
+    
+    faultfutureUseVid12Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Alert on Input2"
+    ::= 1099
+
+-- end of futureUseVid12 Input2 trap
+
+-- beginning of futureUseVid12 Input3 trap
+
+    faultfutureUseVid12Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Cleared on Input3"
+    ::= 1100
+    
+    faultfutureUseVid12Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Alert on Input3"
+    ::= 1101
+
+-- end of futureUseVid12 Input3 trap
+
+-- beginning of futureUseVid12 Input4 trap
+
+    faultfutureUseVid12Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Cleared on Input4"
+    ::= 1102
+    
+    faultfutureUseVid12Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid12 Alert on Input4"
+    ::= 1103
+
+-- end of futureUseVid12 Input4 trap
+
+-- beginning of futureUseVid13 Input1 trap
+
+    faultfutureUseVid13Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Cleared on Input1"
+    ::= 1104
+    
+    faultfutureUseVid13Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Alert on Input1"
+    ::= 1105
+
+-- end of futureUseVid13 Input1 trap
+
+-- beginning of futureUseVid13 Input2 trap
+
+    faultfutureUseVid13Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Cleared on Input2"
+    ::= 1106
+    
+    faultfutureUseVid13Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Alert on Input2"
+    ::= 1107
+
+-- end of futureUseVid13 Input2 trap
+
+-- beginning of futureUseVid13 Input3 trap
+
+    faultfutureUseVid13Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Cleared on Input3"
+    ::= 1108
+    
+    faultfutureUseVid13Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Alert on Input3"
+    ::= 1109
+
+-- end of futureUseVid13 Input3 trap
+
+-- beginning of futureUseVid13 Input4 trap
+
+    faultfutureUseVid13Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Cleared on Input4"
+    ::= 1110
+    
+    faultfutureUseVid13Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid13 Alert on Input4"
+    ::= 1111
+
+-- end of futureUseVid13 Input4 trap
+
+-- beginning of futureUseVid14 Input1 trap
+
+    faultfutureUseVid14Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Cleared on Input1"
+    ::= 1112
+    
+    faultfutureUseVid14Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Alert on Input1"
+    ::= 1113
+
+-- end of futureUseVid14 Input1 trap
+
+-- beginning of futureUseVid14 Input2 trap
+
+    faultfutureUseVid14Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Cleared on Input2"
+    ::= 1114
+    
+    faultfutureUseVid14Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Alert on Input2"
+    ::= 1115
+
+-- end of futureUseVid14 Input2 trap
+
+-- beginning of futureUseVid14 Input3 trap
+
+    faultfutureUseVid14Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Cleared on Input3"
+    ::= 1116
+    
+    faultfutureUseVid14Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Alert on Input3"
+    ::= 1117
+
+-- end of futureUseVid14 Input3 trap
+
+-- beginning of futureUseVid14 Input4 trap
+
+    faultfutureUseVid14Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Cleared on Input4"
+    ::= 1118
+    
+    faultfutureUseVid14Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid14 Alert on Input4"
+    ::= 1119
+
+-- end of futureUseVid14 Input4 trap
+
+-- beginning of futureUseVid15 Input1 trap
+
+    faultfutureUseVid15Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Cleared on Input1"
+    ::= 1120
+    
+    faultfutureUseVid15Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Alert on Input1"
+    ::= 1121
+
+-- end of futureUseVid15 Input1 trap
+
+-- beginning of futureUseVid15 Input2 trap
+
+    faultfutureUseVid15Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Cleared on Input2"
+    ::= 1122
+    
+    faultfutureUseVid15Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Alert on Input2"
+    ::= 1123
+
+-- end of futureUseVid15 Input2 trap
+
+-- beginning of futureUseVid15 Input3 trap
+
+    faultfutureUseVid15Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Cleared on Input3"
+    ::= 1124
+    
+    faultfutureUseVid15Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Alert on Input3"
+    ::= 1125
+
+-- end of futureUseVid15 Input3 trap
+
+-- beginning of futureUseVid15 Input4 trap
+
+    faultfutureUseVid15Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Cleared on Input4"
+    ::= 1126
+    
+    faultfutureUseVid15Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid15 Alert on Input4"
+    ::= 1127
+
+-- end of futureUseVid15 Input4 trap
+
+-- beginning of futureUseVid16 Input1 trap
+
+    faultfutureUseVid16Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Cleared on Input1"
+    ::= 1128
+    
+    faultfutureUseVid16Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Alert on Input1"
+    ::= 1129
+
+-- end of futureUseVid16 Input1 trap
+
+-- beginning of futureUseVid16 Input2 trap
+
+    faultfutureUseVid16Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Cleared on Input2"
+    ::= 1130
+    
+    faultfutureUseVid16Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Alert on Input2"
+    ::= 1131
+
+-- end of futureUseVid16 Input2 trap
+
+-- beginning of futureUseVid16 Input3 trap
+
+    faultfutureUseVid16Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Cleared on Input3"
+    ::= 1132
+    
+    faultfutureUseVid16Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Alert on Input3"
+    ::= 1133
+
+-- end of futureUseVid16 Input3 trap
+
+-- beginning of futureUseVid16 Input4 trap
+
+    faultfutureUseVid16Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Cleared on Input4"
+    ::= 1134
+    
+    faultfutureUseVid16Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid16 Alert on Input4"
+    ::= 1135
+
+-- end of futureUseVid16 Input4 trap
+
+-- beginning of futureUseVid17 Input1 trap
+
+    faultfutureUseVid17Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Cleared on Input1"
+    ::= 1136
+    
+    faultfutureUseVid17Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Alert on Input1"
+    ::= 1137
+
+-- end of futureUseVid17 Input1 trap
+
+-- beginning of futureUseVid17 Input2 trap
+
+    faultfutureUseVid17Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Cleared on Input2"
+    ::= 1138
+    
+    faultfutureUseVid17Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Alert on Input2"
+    ::= 1139
+
+-- end of futureUseVid17 Input2 trap
+
+-- beginning of futureUseVid17 Input3 trap
+
+    faultfutureUseVid17Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Cleared on Input3"
+    ::= 1140
+    
+    faultfutureUseVid17Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Alert on Input3"
+    ::= 1141
+
+-- end of futureUseVid17 Input3 trap
+
+-- beginning of futureUseVid17 Input4 trap
+
+    faultfutureUseVid17Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Cleared on Input4"
+    ::= 1142
+    
+    faultfutureUseVid17Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid17 Alert on Input4"
+    ::= 1143
+
+-- end of futureUseVid17 Input4 trap
+
+-- beginning of futureUseVid18 Input1 trap
+
+    faultfutureUseVid18Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Cleared on Input1"
+    ::= 1144
+    
+    faultfutureUseVid18Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Alert on Input1"
+    ::= 1145
+
+-- end of futureUseVid18 Input1 trap
+
+-- beginning of futureUseVid18 Input2 trap
+
+    faultfutureUseVid18Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Cleared on Input2"
+    ::= 1146
+    
+    faultfutureUseVid18Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Alert on Input2"
+    ::= 1147
+
+-- end of futureUseVid18 Input2 trap
+
+-- beginning of futureUseVid18 Input3 trap
+
+    faultfutureUseVid18Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Cleared on Input3"
+    ::= 1148
+    
+    faultfutureUseVid18Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Alert on Input3"
+    ::= 1149
+
+-- end of futureUseVid18 Input3 trap
+
+-- beginning of futureUseVid18 Input4 trap
+
+    faultfutureUseVid18Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Cleared on Input4"
+    ::= 1150
+    
+    faultfutureUseVid18Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid18 Alert on Input4"
+    ::= 1151
+
+-- end of futureUseVid18 Input4 trap
+
+-- beginning of futureUseVid19 Input1 trap
+
+    faultfutureUseVid19Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Cleared on Input1"
+    ::= 1152
+    
+    faultfutureUseVid19Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Alert on Input1"
+    ::= 1153
+
+-- end of futureUseVid19 Input1 trap
+
+-- beginning of futureUseVid19 Input2 trap
+
+    faultfutureUseVid19Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Cleared on Input2"
+    ::= 1154
+    
+    faultfutureUseVid19Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Alert on Input2"
+    ::= 1155
+
+-- end of futureUseVid19 Input2 trap
+
+-- beginning of futureUseVid19 Input3 trap
+
+    faultfutureUseVid19Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Cleared on Input3"
+    ::= 1156
+    
+    faultfutureUseVid19Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Alert on Input3"
+    ::= 1157
+
+-- end of futureUseVid19 Input3 trap
+
+-- beginning of futureUseVid19 Input4 trap
+
+    faultfutureUseVid19Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Cleared on Input4"
+    ::= 1158
+    
+    faultfutureUseVid19Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid19 Alert on Input4"
+    ::= 1159
+
+-- end of futureUseVid19 Input4 trap
+
+-- beginning of futureUseVid20 Input1 trap
+
+    faultfutureUseVid20Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Cleared on Input1"
+    ::= 1160
+    
+    faultfutureUseVid20Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Alert on Input1"
+    ::= 1161
+
+-- end of futureUseVid20 Input1 trap
+
+-- beginning of futureUseVid20 Input2 trap
+
+    faultfutureUseVid20Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Cleared on Input2"
+    ::= 1162
+    
+    faultfutureUseVid20Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Alert on Input2"
+    ::= 1163
+
+-- end of futureUseVid20 Input2 trap
+
+-- beginning of futureUseVid20 Input3 trap
+
+    faultfutureUseVid20Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Cleared on Input3"
+    ::= 1164
+    
+    faultfutureUseVid20Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Alert on Input3"
+    ::= 1165
+
+-- end of futureUseVid20 Input3 trap
+
+-- beginning of futureUseVid20 Input4 trap
+
+    faultfutureUseVid20Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Cleared on Input4"
+    ::= 1166
+    
+    faultfutureUseVid20Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid20 Alert on Input4"
+    ::= 1167
+
+-- end of futureUseVid20 Input4 trap
+
+-- beginning of futureUseVid21 Input1 trap
+
+    faultfutureUseVid21Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Cleared on Input1"
+    ::= 1168
+    
+    faultfutureUseVid21Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Alert on Input1"
+    ::= 1169
+
+-- end of futureUseVid21 Input1 trap
+
+-- beginning of futureUseVid21 Input2 trap
+
+    faultfutureUseVid21Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Cleared on Input2"
+    ::= 1170
+    
+    faultfutureUseVid21Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Alert on Input2"
+    ::= 1171
+
+-- end of futureUseVid21 Input2 trap
+
+-- beginning of futureUseVid21 Input3 trap
+
+    faultfutureUseVid21Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Cleared on Input3"
+    ::= 1172
+    
+    faultfutureUseVid21Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Alert on Input3"
+    ::= 1173
+
+-- end of futureUseVid21 Input3 trap
+
+-- beginning of futureUseVid21 Input4 trap
+
+    faultfutureUseVid21Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Cleared on Input4"
+    ::= 1174
+    
+    faultfutureUseVid21Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid21 Alert on Input4"
+    ::= 1175
+
+-- end of futureUseVid21 Input4 trap
+
+-- beginning of futureUseVid22 Input1 trap
+
+    faultfutureUseVid22Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Cleared on Input1"
+    ::= 1176
+    
+    faultfutureUseVid22Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Alert on Input1"
+    ::= 1177
+
+-- end of futureUseVid22 Input1 trap
+
+-- beginning of futureUseVid22 Input2 trap
+
+    faultfutureUseVid22Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Cleared on Input2"
+    ::= 1178
+    
+    faultfutureUseVid22Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Alert on Input2"
+    ::= 1179
+
+-- end of futureUseVid22 Input2 trap
+
+-- beginning of futureUseVid22 Input3 trap
+
+    faultfutureUseVid22Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Cleared on Input3"
+    ::= 1180
+    
+    faultfutureUseVid22Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Alert on Input3"
+    ::= 1181
+
+-- end of futureUseVid22 Input3 trap
+
+-- beginning of futureUseVid22 Input4 trap
+
+    faultfutureUseVid22Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Cleared on Input4"
+    ::= 1182
+    
+    faultfutureUseVid22Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid22 Alert on Input4"
+    ::= 1183
+
+-- end of futureUseVid22 Input4 trap
+
+-- beginning of futureUseVid23 Input1 trap
+
+    faultfutureUseVid23Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Cleared on Input1"
+    ::= 1184
+    
+    faultfutureUseVid23Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Alert on Input1"
+    ::= 1185
+
+-- end of futureUseVid23 Input1 trap
+
+-- beginning of futureUseVid23 Input2 trap
+
+    faultfutureUseVid23Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Cleared on Input2"
+    ::= 1186
+    
+    faultfutureUseVid23Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Alert on Input2"
+    ::= 1187
+
+-- end of futureUseVid23 Input2 trap
+
+-- beginning of futureUseVid23 Input3 trap
+
+    faultfutureUseVid23Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Cleared on Input3"
+    ::= 1188
+    
+    faultfutureUseVid23Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Alert on Input3"
+    ::= 1189
+
+-- end of futureUseVid23 Input3 trap
+
+-- beginning of futureUseVid23 Input4 trap
+
+    faultfutureUseVid23Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Cleared on Input4"
+    ::= 1190
+    
+    faultfutureUseVid23Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid23 Alert on Input4"
+    ::= 1191
+
+-- end of futureUseVid23 Input4 trap
+
+-- beginning of futureUseVid24 Input1 trap
+
+    faultfutureUseVid24Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Cleared on Input1"
+    ::= 1192
+    
+    faultfutureUseVid24Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Alert on Input1"
+    ::= 1193
+
+-- end of futureUseVid24 Input1 trap
+
+-- beginning of futureUseVid24 Input2 trap
+
+    faultfutureUseVid24Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Cleared on Input2"
+    ::= 1194
+    
+    faultfutureUseVid24Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Alert on Input2"
+    ::= 1195
+
+-- end of futureUseVid24 Input2 trap
+
+-- beginning of futureUseVid24 Input3 trap
+
+    faultfutureUseVid24Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Cleared on Input3"
+    ::= 1196
+    
+    faultfutureUseVid24Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Alert on Input3"
+    ::= 1197
+
+-- end of futureUseVid24 Input3 trap
+
+-- beginning of futureUseVid24 Input4 trap
+
+    faultfutureUseVid24Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Cleared on Input4"
+    ::= 1198
+    
+    faultfutureUseVid24Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid24 Alert on Input4"
+    ::= 1199
+
+-- end of futureUseVid24 Input4 trap
+
+-- beginning of futureUseVid25 Input1 trap
+
+    faultfutureUseVid25Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Cleared on Input1"
+    ::= 1200
+    
+    faultfutureUseVid25Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Alert on Input1"
+    ::= 1201
+
+-- end of futureUseVid25 Input1 trap
+
+-- beginning of futureUseVid25 Input2 trap
+
+    faultfutureUseVid25Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Cleared on Input2"
+    ::= 1202
+    
+    faultfutureUseVid25Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Alert on Input2"
+    ::= 1203
+
+-- end of futureUseVid25 Input2 trap
+
+-- beginning of futureUseVid25 Input3 trap
+
+    faultfutureUseVid25Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Cleared on Input3"
+    ::= 1204
+    
+    faultfutureUseVid25Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Alert on Input3"
+    ::= 1205
+
+-- end of futureUseVid25 Input3 trap
+
+-- beginning of futureUseVid25 Input4 trap
+
+    faultfutureUseVid25Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Cleared on Input4"
+    ::= 1206
+    
+    faultfutureUseVid25Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid25 Alert on Input4"
+    ::= 1207
+
+-- end of futureUseVid25 Input4 trap
+
+-- beginning of futureUseVid26 Input1 trap
+
+    faultfutureUseVid26Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Cleared on Input1"
+    ::= 1208
+    
+    faultfutureUseVid26Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Alert on Input1"
+    ::= 1209
+
+-- end of futureUseVid26 Input1 trap
+
+-- beginning of futureUseVid26 Input2 trap
+
+    faultfutureUseVid26Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Cleared on Input2"
+    ::= 1210
+    
+    faultfutureUseVid26Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Alert on Input2"
+    ::= 1211
+
+-- end of futureUseVid26 Input2 trap
+
+-- beginning of futureUseVid26 Input3 trap
+
+    faultfutureUseVid26Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Cleared on Input3"
+    ::= 1212
+    
+    faultfutureUseVid26Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Alert on Input3"
+    ::= 1213
+
+-- end of futureUseVid26 Input3 trap
+
+-- beginning of futureUseVid26 Input4 trap
+
+    faultfutureUseVid26Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Cleared on Input4"
+    ::= 1214
+    
+    faultfutureUseVid26Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid26 Alert on Input4"
+    ::= 1215
+
+-- end of futureUseVid26 Input4 trap
+
+-- beginning of futureUseVid27 Input1 trap
+
+    faultfutureUseVid27Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Cleared on Input1"
+    ::= 1216
+    
+    faultfutureUseVid27Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Alert on Input1"
+    ::= 1217
+
+-- end of futureUseVid27 Input1 trap
+
+-- beginning of futureUseVid27 Input2 trap
+
+    faultfutureUseVid27Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Cleared on Input2"
+    ::= 1218
+    
+    faultfutureUseVid27Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Alert on Input2"
+    ::= 1219
+
+-- end of futureUseVid27 Input2 trap
+
+-- beginning of futureUseVid27 Input3 trap
+
+    faultfutureUseVid27Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Cleared on Input3"
+    ::= 1220
+    
+    faultfutureUseVid27Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Alert on Input3"
+    ::= 1221
+
+-- end of futureUseVid27 Input3 trap
+
+-- beginning of futureUseVid27 Input4 trap
+
+    faultfutureUseVid27Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Cleared on Input4"
+    ::= 1222
+    
+    faultfutureUseVid27Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid27 Alert on Input4"
+    ::= 1223
+
+-- end of futureUseVid27 Input4 trap
+
+-- beginning of futureUseVid28 Input1 trap
+
+    faultfutureUseVid28Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Cleared on Input1"
+    ::= 1224
+    
+    faultfutureUseVid28Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Alert on Input1"
+    ::= 1225
+
+-- end of futureUseVid28 Input1 trap
+
+-- beginning of futureUseVid28 Input2 trap
+
+    faultfutureUseVid28Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Cleared on Input2"
+    ::= 1226
+    
+    faultfutureUseVid28Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Alert on Input2"
+    ::= 1227
+
+-- end of futureUseVid28 Input2 trap
+
+-- beginning of futureUseVid28 Input3 trap
+
+    faultfutureUseVid28Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Cleared on Input3"
+    ::= 1228
+    
+    faultfutureUseVid28Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Alert on Input3"
+    ::= 1229
+
+-- end of futureUseVid28 Input3 trap
+
+-- beginning of futureUseVid28 Input4 trap
+
+    faultfutureUseVid28Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Cleared on Input4"
+    ::= 1230
+    
+    faultfutureUseVid28Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid28 Alert on Input4"
+    ::= 1231
+
+-- end of futureUseVid28 Input4 trap
+
+-- beginning of futureUseVid29 Input1 trap
+
+    faultfutureUseVid29Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Cleared on Input1"
+    ::= 1232
+    
+    faultfutureUseVid29Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Alert on Input1"
+    ::= 1233
+
+-- end of futureUseVid29 Input1 trap
+
+-- beginning of futureUseVid29 Input2 trap
+
+    faultfutureUseVid29Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Cleared on Input2"
+    ::= 1234
+    
+    faultfutureUseVid29Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Alert on Input2"
+    ::= 1235
+
+-- end of futureUseVid29 Input2 trap
+
+-- beginning of futureUseVid29 Input3 trap
+
+    faultfutureUseVid29Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Cleared on Input3"
+    ::= 1236
+    
+    faultfutureUseVid29Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Alert on Input3"
+    ::= 1237
+
+-- end of futureUseVid29 Input3 trap
+
+-- beginning of futureUseVid29 Input4 trap
+
+    faultfutureUseVid29Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Cleared on Input4"
+    ::= 1238
+    
+    faultfutureUseVid29Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid29 Alert on Input4"
+    ::= 1239
+
+-- end of futureUseVid29 Input4 trap
+
+-- beginning of futureUseVid30 Input1 trap
+
+    faultfutureUseVid30Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Cleared on Input1"
+    ::= 1240
+    
+    faultfutureUseVid30Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Alert on Input1"
+    ::= 1241
+
+-- end of futureUseVid30 Input1 trap
+
+-- beginning of futureUseVid30 Input2 trap
+
+    faultfutureUseVid30Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Cleared on Input2"
+    ::= 1242
+    
+    faultfutureUseVid30Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Alert on Input2"
+    ::= 1243
+
+-- end of futureUseVid30 Input2 trap
+
+-- beginning of futureUseVid30 Input3 trap
+
+    faultfutureUseVid30Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Cleared on Input3"
+    ::= 1244
+    
+    faultfutureUseVid30Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Alert on Input3"
+    ::= 1245
+
+-- end of futureUseVid30 Input3 trap
+
+-- beginning of futureUseVid30 Input4 trap
+
+    faultfutureUseVid30Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Cleared on Input4"
+    ::= 1246
+    
+    faultfutureUseVid30Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid30 Alert on Input4"
+    ::= 1247
+
+-- end of futureUseVid30 Input4 trap
+
+-- beginning of futureUseVid31 Input1 trap
+
+    faultfutureUseVid31Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Cleared on Input1"
+    ::= 1248
+    
+    faultfutureUseVid31Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Alert on Input1"
+    ::= 1249
+
+-- end of futureUseVid31 Input1 trap
+
+-- beginning of futureUseVid31 Input2 trap
+
+    faultfutureUseVid31Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Cleared on Input2"
+    ::= 1250
+    
+    faultfutureUseVid31Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Alert on Input2"
+    ::= 1251
+
+-- end of futureUseVid31 Input2 trap
+
+-- beginning of futureUseVid31 Input3 trap
+
+    faultfutureUseVid31Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Cleared on Input3"
+    ::= 1252
+    
+    faultfutureUseVid31Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Alert on Input3"
+    ::= 1253
+
+-- end of futureUseVid31 Input3 trap
+
+-- beginning of futureUseVid31 Input4 trap
+
+    faultfutureUseVid31Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Cleared on Input4"
+    ::= 1254
+    
+    faultfutureUseVid31Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "FutureUseVid31 Alert on Input4"
+    ::= 1255
+
+-- end of futureUseVid31 Input4 trap
+
+-- beginning of lossOfAudioCH1 Input1 trap
+
+    faultlossOfAudioCH1Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Cleared on Input1"
+    ::= 1256
+    
+    faultlossOfAudioCH1Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Alert on Input1"
+    ::= 1257
+
+-- end of lossOfAudioCH1 Input1 trap
+
+-- beginning of lossOfAudioCH1 Input2 trap
+
+    faultlossOfAudioCH1Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Cleared on Input2"
+    ::= 1258
+    
+    faultlossOfAudioCH1Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Alert on Input2"
+    ::= 1259
+
+-- end of lossOfAudioCH1 Input2 trap
+
+-- beginning of lossOfAudioCH1 Input3 trap
+
+    faultlossOfAudioCH1Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Cleared on Input3"
+    ::= 1260
+    
+    faultlossOfAudioCH1Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Alert on Input3"
+    ::= 1261
+
+-- end of lossOfAudioCH1 Input3 trap
+
+-- beginning of lossOfAudioCH1 Input4 trap
+
+    faultlossOfAudioCH1Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Cleared on Input4"
+    ::= 1262
+    
+    faultlossOfAudioCH1Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Alert on Input4"
+    ::= 1263
+
+-- end of lossOfAudioCH1 Input4 trap
+
+-- beginning of lossOfAudioCH2 Input1 trap
+
+    faultlossOfAudioCH2Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Cleared on Input1"
+    ::= 1264
+    
+    faultlossOfAudioCH2Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Alert on Input1"
+    ::= 1265
+
+-- end of lossOfAudioCH2 Input1 trap
+
+-- beginning of lossOfAudioCH2 Input2 trap
+
+    faultlossOfAudioCH2Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Cleared on Input2"
+    ::= 1266
+    
+    faultlossOfAudioCH2Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Alert on Input2"
+    ::= 1267
+
+-- end of lossOfAudioCH2 Input2 trap
+
+-- beginning of lossOfAudioCH2 Input3 trap
+
+    faultlossOfAudioCH2Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Cleared on Input3"
+    ::= 1268
+    
+    faultlossOfAudioCH2Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Alert on Input3"
+    ::= 1269
+
+-- end of lossOfAudioCH2 Input3 trap
+
+-- beginning of lossOfAudioCH2 Input4 trap
+
+    faultlossOfAudioCH2Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Cleared on Input4"
+    ::= 1270
+    
+    faultlossOfAudioCH2Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Alert on Input4"
+    ::= 1271
+
+-- end of lossOfAudioCH2 Input4 trap
+
+-- beginning of lossOfAudioCH3 Input1 trap
+
+    faultlossOfAudioCH3Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Cleared on Input1"
+    ::= 1272
+    
+    faultlossOfAudioCH3Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Alert on Input1"
+    ::= 1273
+
+-- end of lossOfAudioCH3 Input1 trap
+
+-- beginning of lossOfAudioCH3 Input2 trap
+
+    faultlossOfAudioCH3Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Cleared on Input2"
+    ::= 1274
+    
+    faultlossOfAudioCH3Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Alert on Input2"
+    ::= 1275
+
+-- end of lossOfAudioCH3 Input2 trap
+
+-- beginning of lossOfAudioCH3 Input3 trap
+
+    faultlossOfAudioCH3Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Cleared on Input3"
+    ::= 1276
+    
+    faultlossOfAudioCH3Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Alert on Input3"
+    ::= 1277
+
+-- end of lossOfAudioCH3 Input3 trap
+
+-- beginning of lossOfAudioCH3 Input4 trap
+
+    faultlossOfAudioCH3Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Cleared on Input4"
+    ::= 1278
+    
+    faultlossOfAudioCH3Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Alert on Input4"
+    ::= 1279
+
+-- end of lossOfAudioCH3 Input4 trap
+
+-- beginning of lossOfAudioCH4 Input1 trap
+
+    faultlossOfAudioCH4Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Cleared on Input1"
+    ::= 1280
+    
+    faultlossOfAudioCH4Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Alert on Input1"
+    ::= 1281
+
+-- end of lossOfAudioCH4 Input1 trap
+
+-- beginning of lossOfAudioCH4 Input2 trap
+
+    faultlossOfAudioCH4Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Cleared on Input2"
+    ::= 1282
+    
+    faultlossOfAudioCH4Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Alert on Input2"
+    ::= 1283
+
+-- end of lossOfAudioCH4 Input2 trap
+
+-- beginning of lossOfAudioCH4 Input3 trap
+
+    faultlossOfAudioCH4Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Cleared on Input3"
+    ::= 1284
+    
+    faultlossOfAudioCH4Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Alert on Input3"
+    ::= 1285
+
+-- end of lossOfAudioCH4 Input3 trap
+
+-- beginning of lossOfAudioCH4 Input4 trap
+
+    faultlossOfAudioCH4Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Cleared on Input4"
+    ::= 1286
+    
+    faultlossOfAudioCH4Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Alert on Input4"
+    ::= 1287
+
+-- end of lossOfAudioCH4 Input4 trap
+
+-- beginning of lossOfAudioCH5 Input1 trap
+
+    faultlossOfAudioCH5Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Cleared on Input1"
+    ::= 1288
+    
+    faultlossOfAudioCH5Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Alert on Input1"
+    ::= 1289
+
+-- end of lossOfAudioCH5 Input1 trap
+
+-- beginning of lossOfAudioCH5 Input2 trap
+
+    faultlossOfAudioCH5Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Cleared on Input2"
+    ::= 1290
+    
+    faultlossOfAudioCH5Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Alert on Input2"
+    ::= 1291
+
+-- end of lossOfAudioCH5 Input2 trap
+
+-- beginning of lossOfAudioCH5 Input3 trap
+
+    faultlossOfAudioCH5Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Cleared on Input3"
+    ::= 1292
+    
+    faultlossOfAudioCH5Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Alert on Input3"
+    ::= 1293
+
+-- end of lossOfAudioCH5 Input3 trap
+
+-- beginning of lossOfAudioCH5 Input4 trap
+
+    faultlossOfAudioCH5Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Cleared on Input4"
+    ::= 1294
+    
+    faultlossOfAudioCH5Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Alert on Input4"
+    ::= 1295
+
+-- end of lossOfAudioCH5 Input4 trap
+
+-- beginning of lossOfAudioCH6 Input1 trap
+
+    faultlossOfAudioCH6Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Cleared on Input1"
+    ::= 1296
+    
+    faultlossOfAudioCH6Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Alert on Input1"
+    ::= 1297
+
+-- end of lossOfAudioCH6 Input1 trap
+
+-- beginning of lossOfAudioCH6 Input2 trap
+
+    faultlossOfAudioCH6Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Cleared on Input2"
+    ::= 1298
+    
+    faultlossOfAudioCH6Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Alert on Input2"
+    ::= 1299
+
+-- end of lossOfAudioCH6 Input2 trap
+
+-- beginning of lossOfAudioCH6 Input3 trap
+
+    faultlossOfAudioCH6Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Cleared on Input3"
+    ::= 1300
+    
+    faultlossOfAudioCH6Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Alert on Input3"
+    ::= 1301
+
+-- end of lossOfAudioCH6 Input3 trap
+
+-- beginning of lossOfAudioCH6 Input4 trap
+
+    faultlossOfAudioCH6Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Cleared on Input4"
+    ::= 1302
+    
+    faultlossOfAudioCH6Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Alert on Input4"
+    ::= 1303
+
+-- end of lossOfAudioCH6 Input4 trap
+
+-- beginning of lossOfAudioCH7 Input1 trap
+
+    faultlossOfAudioCH7Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Cleared on Input1"
+    ::= 1304
+    
+    faultlossOfAudioCH7Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Alert on Input1"
+    ::= 1305
+
+-- end of lossOfAudioCH7 Input1 trap
+
+-- beginning of lossOfAudioCH7 Input2 trap
+
+    faultlossOfAudioCH7Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Cleared on Input2"
+    ::= 1306
+    
+    faultlossOfAudioCH7Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Alert on Input2"
+    ::= 1307
+
+-- end of lossOfAudioCH7 Input2 trap
+
+-- beginning of lossOfAudioCH7 Input3 trap
+
+    faultlossOfAudioCH7Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Cleared on Input3"
+    ::= 1308
+    
+    faultlossOfAudioCH7Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Alert on Input3"
+    ::= 1309
+
+-- end of lossOfAudioCH7 Input3 trap
+
+-- beginning of lossOfAudioCH7 Input4 trap
+
+    faultlossOfAudioCH7Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Cleared on Input4"
+    ::= 1310
+    
+    faultlossOfAudioCH7Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Alert on Input4"
+    ::= 1311
+
+-- end of lossOfAudioCH7 Input4 trap
+
+-- beginning of lossOfAudioCH8 Input1 trap
+
+    faultlossOfAudioCH8Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Cleared on Input1"
+    ::= 1312
+    
+    faultlossOfAudioCH8Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Alert on Input1"
+    ::= 1313
+
+-- end of lossOfAudioCH8 Input1 trap
+
+-- beginning of lossOfAudioCH8 Input2 trap
+
+    faultlossOfAudioCH8Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Cleared on Input2"
+    ::= 1314
+    
+    faultlossOfAudioCH8Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Alert on Input2"
+    ::= 1315
+
+-- end of lossOfAudioCH8 Input2 trap
+
+-- beginning of lossOfAudioCH8 Input3 trap
+
+    faultlossOfAudioCH8Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Cleared on Input3"
+    ::= 1316
+    
+    faultlossOfAudioCH8Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Alert on Input3"
+    ::= 1317
+
+-- end of lossOfAudioCH8 Input3 trap
+
+-- beginning of lossOfAudioCH8 Input4 trap
+
+    faultlossOfAudioCH8Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Cleared on Input4"
+    ::= 1318
+    
+    faultlossOfAudioCH8Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Alert on Input4"
+    ::= 1319
+
+-- end of lossOfAudioCH8 Input4 trap
+
+-- beginning of audioCH1Silence Input1 trap
+
+    faultaudioCH1SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Cleared on Input1"
+    ::= 1320
+    
+    faultaudioCH1SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Alert on Input1"
+    ::= 1321
+
+-- end of audioCH1Silence Input1 trap
+
+-- beginning of audioCH1Silence Input2 trap
+
+    faultaudioCH1SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Cleared on Input2"
+    ::= 1322
+    
+    faultaudioCH1SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Alert on Input2"
+    ::= 1323
+
+-- end of audioCH1Silence Input2 trap
+
+-- beginning of audioCH1Silence Input3 trap
+
+    faultaudioCH1SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Cleared on Input3"
+    ::= 1324
+    
+    faultaudioCH1SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Alert on Input3"
+    ::= 1325
+
+-- end of audioCH1Silence Input3 trap
+
+-- beginning of audioCH1Silence Input4 trap
+
+    faultaudioCH1SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Cleared on Input4"
+    ::= 1326
+    
+    faultaudioCH1SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Alert on Input4"
+    ::= 1327
+
+-- end of audioCH1Silence Input4 trap
+
+-- beginning of audioCH2Silence Input1 trap
+
+    faultaudioCH2SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Cleared on Input1"
+    ::= 1328
+    
+    faultaudioCH2SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Alert on Input1"
+    ::= 1329
+
+-- end of audioCH2Silence Input1 trap
+
+-- beginning of audioCH2Silence Input2 trap
+
+    faultaudioCH2SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Cleared on Input2"
+    ::= 1330
+    
+    faultaudioCH2SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Alert on Input2"
+    ::= 1331
+
+-- end of audioCH2Silence Input2 trap
+
+-- beginning of audioCH2Silence Input3 trap
+
+    faultaudioCH2SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Cleared on Input3"
+    ::= 1332
+    
+    faultaudioCH2SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Alert on Input3"
+    ::= 1333
+
+-- end of audioCH2Silence Input3 trap
+
+-- beginning of audioCH2Silence Input4 trap
+
+    faultaudioCH2SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Cleared on Input4"
+    ::= 1334
+    
+    faultaudioCH2SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Alert on Input4"
+    ::= 1335
+
+-- end of audioCH2Silence Input4 trap
+
+-- beginning of audioCH3Silence Input1 trap
+
+    faultaudioCH3SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Cleared on Input1"
+    ::= 1336
+    
+    faultaudioCH3SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Alert on Input1"
+    ::= 1337
+
+-- end of audioCH3Silence Input1 trap
+
+-- beginning of audioCH3Silence Input2 trap
+
+    faultaudioCH3SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Cleared on Input2"
+    ::= 1338
+    
+    faultaudioCH3SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Alert on Input2"
+    ::= 1339
+
+-- end of audioCH3Silence Input2 trap
+
+-- beginning of audioCH3Silence Input3 trap
+
+    faultaudioCH3SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Cleared on Input3"
+    ::= 1340
+    
+    faultaudioCH3SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Alert on Input3"
+    ::= 1341
+
+-- end of audioCH3Silence Input3 trap
+
+-- beginning of audioCH3Silence Input4 trap
+
+    faultaudioCH3SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Cleared on Input4"
+    ::= 1342
+    
+    faultaudioCH3SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Alert on Input4"
+    ::= 1343
+
+-- end of audioCH3Silence Input4 trap
+
+-- beginning of audioCH4Silence Input1 trap
+
+    faultaudioCH4SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Cleared on Input1"
+    ::= 1344
+    
+    faultaudioCH4SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Alert on Input1"
+    ::= 1345
+
+-- end of audioCH4Silence Input1 trap
+
+-- beginning of audioCH4Silence Input2 trap
+
+    faultaudioCH4SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Cleared on Input2"
+    ::= 1346
+    
+    faultaudioCH4SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Alert on Input2"
+    ::= 1347
+
+-- end of audioCH4Silence Input2 trap
+
+-- beginning of audioCH4Silence Input3 trap
+
+    faultaudioCH4SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Cleared on Input3"
+    ::= 1348
+    
+    faultaudioCH4SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Alert on Input3"
+    ::= 1349
+
+-- end of audioCH4Silence Input3 trap
+
+-- beginning of audioCH4Silence Input4 trap
+
+    faultaudioCH4SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Cleared on Input4"
+    ::= 1350
+    
+    faultaudioCH4SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Alert on Input4"
+    ::= 1351
+
+-- end of audioCH4Silence Input4 trap
+
+-- beginning of audioCH5Silence Input1 trap
+
+    faultaudioCH5SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Cleared on Input1"
+    ::= 1352
+    
+    faultaudioCH5SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Alert on Input1"
+    ::= 1353
+
+-- end of audioCH5Silence Input1 trap
+
+-- beginning of audioCH5Silence Input2 trap
+
+    faultaudioCH5SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Cleared on Input2"
+    ::= 1354
+    
+    faultaudioCH5SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Alert on Input2"
+    ::= 1355
+
+-- end of audioCH5Silence Input2 trap
+
+-- beginning of audioCH5Silence Input3 trap
+
+    faultaudioCH5SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Cleared on Input3"
+    ::= 1356
+    
+    faultaudioCH5SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Alert on Input3"
+    ::= 1357
+
+-- end of audioCH5Silence Input3 trap
+
+-- beginning of audioCH5Silence Input4 trap
+
+    faultaudioCH5SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Cleared on Input4"
+    ::= 1358
+    
+    faultaudioCH5SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Alert on Input4"
+    ::= 1359
+
+-- end of audioCH5Silence Input4 trap
+
+-- beginning of audioCH6Silence Input1 trap
+
+    faultaudioCH6SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Cleared on Input1"
+    ::= 1360
+    
+    faultaudioCH6SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Alert on Input1"
+    ::= 1361
+
+-- end of audioCH6Silence Input1 trap
+
+-- beginning of audioCH6Silence Input2 trap
+
+    faultaudioCH6SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Cleared on Input2"
+    ::= 1362
+    
+    faultaudioCH6SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Alert on Input2"
+    ::= 1363
+
+-- end of audioCH6Silence Input2 trap
+
+-- beginning of audioCH6Silence Input3 trap
+
+    faultaudioCH6SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Cleared on Input3"
+    ::= 1364
+    
+    faultaudioCH6SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Alert on Input3"
+    ::= 1365
+
+-- end of audioCH6Silence Input3 trap
+
+-- beginning of audioCH6Silence Input4 trap
+
+    faultaudioCH6SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Cleared on Input4"
+    ::= 1366
+    
+    faultaudioCH6SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Alert on Input4"
+    ::= 1367
+
+-- end of audioCH6Silence Input4 trap
+
+-- beginning of audioCH7Silence Input1 trap
+
+    faultaudioCH7SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Cleared on Input1"
+    ::= 1368
+    
+    faultaudioCH7SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Alert on Input1"
+    ::= 1369
+
+-- end of audioCH7Silence Input1 trap
+
+-- beginning of audioCH7Silence Input2 trap
+
+    faultaudioCH7SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Cleared on Input2"
+    ::= 1370
+    
+    faultaudioCH7SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Alert on Input2"
+    ::= 1371
+
+-- end of audioCH7Silence Input2 trap
+
+-- beginning of audioCH7Silence Input3 trap
+
+    faultaudioCH7SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Cleared on Input3"
+    ::= 1372
+    
+    faultaudioCH7SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Alert on Input3"
+    ::= 1373
+
+-- end of audioCH7Silence Input3 trap
+
+-- beginning of audioCH7Silence Input4 trap
+
+    faultaudioCH7SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Cleared on Input4"
+    ::= 1374
+    
+    faultaudioCH7SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Alert on Input4"
+    ::= 1375
+
+-- end of audioCH7Silence Input4 trap
+
+-- beginning of audioCH8Silence Input1 trap
+
+    faultaudioCH8SilenceInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Cleared on Input1"
+    ::= 1376
+    
+    faultaudioCH8SilenceInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Alert on Input1"
+    ::= 1377
+
+-- end of audioCH8Silence Input1 trap
+
+-- beginning of audioCH8Silence Input2 trap
+
+    faultaudioCH8SilenceInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Cleared on Input2"
+    ::= 1378
+    
+    faultaudioCH8SilenceInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Alert on Input2"
+    ::= 1379
+
+-- end of audioCH8Silence Input2 trap
+
+-- beginning of audioCH8Silence Input3 trap
+
+    faultaudioCH8SilenceInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Cleared on Input3"
+    ::= 1380
+    
+    faultaudioCH8SilenceInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Alert on Input3"
+    ::= 1381
+
+-- end of audioCH8Silence Input3 trap
+
+-- beginning of audioCH8Silence Input4 trap
+
+    faultaudioCH8SilenceInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Cleared on Input4"
+    ::= 1382
+    
+    faultaudioCH8SilenceInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Alert on Input4"
+    ::= 1383
+
+-- end of audioCH8Silence Input4 trap
+
+-- beginning of audioCH1Over Input1 trap
+
+    faultaudioCH1OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Cleared on Input1"
+    ::= 1384
+    
+    faultaudioCH1OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Alert on Input1"
+    ::= 1385
+
+-- end of audioCH1Over Input1 trap
+
+-- beginning of audioCH1Over Input2 trap
+
+    faultaudioCH1OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Cleared on Input2"
+    ::= 1386
+    
+    faultaudioCH1OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Alert on Input2"
+    ::= 1387
+
+-- end of audioCH1Over Input2 trap
+
+-- beginning of audioCH1Over Input3 trap
+
+    faultaudioCH1OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Cleared on Input3"
+    ::= 1388
+    
+    faultaudioCH1OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Alert on Input3"
+    ::= 1389
+
+-- end of audioCH1Over Input3 trap
+
+-- beginning of audioCH1Over Input4 trap
+
+    faultaudioCH1OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Cleared on Input4"
+    ::= 1390
+    
+    faultaudioCH1OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Alert on Input4"
+    ::= 1391
+
+-- end of audioCH1Over Input4 trap
+
+-- beginning of audioCH2Over Input1 trap
+
+    faultaudioCH2OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Cleared on Input1"
+    ::= 1392
+    
+    faultaudioCH2OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Alert on Input1"
+    ::= 1393
+
+-- end of audioCH2Over Input1 trap
+
+-- beginning of audioCH2Over Input2 trap
+
+    faultaudioCH2OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Cleared on Input2"
+    ::= 1394
+    
+    faultaudioCH2OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Alert on Input2"
+    ::= 1395
+
+-- end of audioCH2Over Input2 trap
+
+-- beginning of audioCH2Over Input3 trap
+
+    faultaudioCH2OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Cleared on Input3"
+    ::= 1396
+    
+    faultaudioCH2OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Alert on Input3"
+    ::= 1397
+
+-- end of audioCH2Over Input3 trap
+
+-- beginning of audioCH2Over Input4 trap
+
+    faultaudioCH2OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Cleared on Input4"
+    ::= 1398
+    
+    faultaudioCH2OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Alert on Input4"
+    ::= 1399
+
+-- end of audioCH2Over Input4 trap
+
+-- beginning of audioCH3Over Input1 trap
+
+    faultaudioCH3OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Cleared on Input1"
+    ::= 1400
+    
+    faultaudioCH3OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Alert on Input1"
+    ::= 1401
+
+-- end of audioCH3Over Input1 trap
+
+-- beginning of audioCH3Over Input2 trap
+
+    faultaudioCH3OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Cleared on Input2"
+    ::= 1402
+    
+    faultaudioCH3OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Alert on Input2"
+    ::= 1403
+
+-- end of audioCH3Over Input2 trap
+
+-- beginning of audioCH3Over Input3 trap
+
+    faultaudioCH3OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Cleared on Input3"
+    ::= 1404
+    
+    faultaudioCH3OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Alert on Input3"
+    ::= 1405
+
+-- end of audioCH3Over Input3 trap
+
+-- beginning of audioCH3Over Input4 trap
+
+    faultaudioCH3OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Cleared on Input4"
+    ::= 1406
+    
+    faultaudioCH3OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Alert on Input4"
+    ::= 1407
+
+-- end of audioCH3Over Input4 trap
+
+-- beginning of audioCH4Over Input1 trap
+
+    faultaudioCH4OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Cleared on Input1"
+    ::= 1408
+    
+    faultaudioCH4OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Alert on Input1"
+    ::= 1409
+
+-- end of audioCH4Over Input1 trap
+
+-- beginning of audioCH4Over Input2 trap
+
+    faultaudioCH4OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Cleared on Input2"
+    ::= 1410
+    
+    faultaudioCH4OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Alert on Input2"
+    ::= 1411
+
+-- end of audioCH4Over Input2 trap
+
+-- beginning of audioCH4Over Input3 trap
+
+    faultaudioCH4OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Cleared on Input3"
+    ::= 1412
+    
+    faultaudioCH4OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Alert on Input3"
+    ::= 1413
+
+-- end of audioCH4Over Input3 trap
+
+-- beginning of audioCH4Over Input4 trap
+
+    faultaudioCH4OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Cleared on Input4"
+    ::= 1414
+    
+    faultaudioCH4OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Alert on Input4"
+    ::= 1415
+
+-- end of audioCH4Over Input4 trap
+
+-- beginning of audioCH5Over Input1 trap
+
+    faultaudioCH5OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Cleared on Input1"
+    ::= 1416
+    
+    faultaudioCH5OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Alert on Input1"
+    ::= 1417
+
+-- end of audioCH5Over Input1 trap
+
+-- beginning of audioCH5Over Input2 trap
+
+    faultaudioCH5OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Cleared on Input2"
+    ::= 1418
+    
+    faultaudioCH5OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Alert on Input2"
+    ::= 1419
+
+-- end of audioCH5Over Input2 trap
+
+-- beginning of audioCH5Over Input3 trap
+
+    faultaudioCH5OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Cleared on Input3"
+    ::= 1420
+    
+    faultaudioCH5OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Alert on Input3"
+    ::= 1421
+
+-- end of audioCH5Over Input3 trap
+
+-- beginning of audioCH5Over Input4 trap
+
+    faultaudioCH5OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Cleared on Input4"
+    ::= 1422
+    
+    faultaudioCH5OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Alert on Input4"
+    ::= 1423
+
+-- end of audioCH5Over Input4 trap
+
+-- beginning of audioCH6Over Input1 trap
+
+    faultaudioCH6OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Cleared on Input1"
+    ::= 1424
+    
+    faultaudioCH6OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Alert on Input1"
+    ::= 1425
+
+-- end of audioCH6Over Input1 trap
+
+-- beginning of audioCH6Over Input2 trap
+
+    faultaudioCH6OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Cleared on Input2"
+    ::= 1426
+    
+    faultaudioCH6OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Alert on Input2"
+    ::= 1427
+
+-- end of audioCH6Over Input2 trap
+
+-- beginning of audioCH6Over Input3 trap
+
+    faultaudioCH6OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Cleared on Input3"
+    ::= 1428
+    
+    faultaudioCH6OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Alert on Input3"
+    ::= 1429
+
+-- end of audioCH6Over Input3 trap
+
+-- beginning of audioCH6Over Input4 trap
+
+    faultaudioCH6OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Cleared on Input4"
+    ::= 1430
+    
+    faultaudioCH6OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Alert on Input4"
+    ::= 1431
+
+-- end of audioCH6Over Input4 trap
+
+-- beginning of audioCH7Over Input1 trap
+
+    faultaudioCH7OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Cleared on Input1"
+    ::= 1432
+    
+    faultaudioCH7OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Alert on Input1"
+    ::= 1433
+
+-- end of audioCH7Over Input1 trap
+
+-- beginning of audioCH7Over Input2 trap
+
+    faultaudioCH7OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Cleared on Input2"
+    ::= 1434
+    
+    faultaudioCH7OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Alert on Input2"
+    ::= 1435
+
+-- end of audioCH7Over Input2 trap
+
+-- beginning of audioCH7Over Input3 trap
+
+    faultaudioCH7OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Cleared on Input3"
+    ::= 1436
+    
+    faultaudioCH7OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Alert on Input3"
+    ::= 1437
+
+-- end of audioCH7Over Input3 trap
+
+-- beginning of audioCH7Over Input4 trap
+
+    faultaudioCH7OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Cleared on Input4"
+    ::= 1438
+    
+    faultaudioCH7OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Alert on Input4"
+    ::= 1439
+
+-- end of audioCH7Over Input4 trap
+
+-- beginning of audioCH8Over Input1 trap
+
+    faultaudioCH8OverInput1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Cleared on Input1"
+    ::= 1440
+    
+    faultaudioCH8OverInput1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Alert on Input1"
+    ::= 1441
+
+-- end of audioCH8Over Input1 trap
+
+-- beginning of audioCH8Over Input2 trap
+
+    faultaudioCH8OverInput2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Cleared on Input2"
+    ::= 1442
+    
+    faultaudioCH8OverInput2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Alert on Input2"
+    ::= 1443
+
+-- end of audioCH8Over Input2 trap
+
+-- beginning of audioCH8Over Input3 trap
+
+    faultaudioCH8OverInput3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Cleared on Input3"
+    ::= 1444
+    
+    faultaudioCH8OverInput3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Alert on Input3"
+    ::= 1445
+
+-- end of audioCH8Over Input3 trap
+
+-- beginning of audioCH8Over Input4 trap
+
+    faultaudioCH8OverInput4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Cleared on Input4"
+    ::= 1446
+    
+    faultaudioCH8OverInput4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Alert on Input4"
+    ::= 1447
+
+-- end of audioCH8Over Input4 trap
+
+-- beginning of phaseReversalLevel12 Input1 trap
+
+    faultphaseReversalLevel12Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Cleared on Input1"
+    ::= 1448
+    
+    faultphaseReversalLevel12Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Alert on Input1"
+    ::= 1449
+
+-- end of phaseReversalLevel12 Input1 trap
+
+-- beginning of phaseReversalLevel12 Input2 trap
+
+    faultphaseReversalLevel12Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Cleared on Input2"
+    ::= 1450
+    
+    faultphaseReversalLevel12Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Alert on Input2"
+    ::= 1451
+
+-- end of phaseReversalLevel12 Input2 trap
+
+-- beginning of phaseReversalLevel12 Input3 trap
+
+    faultphaseReversalLevel12Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Cleared on Input3"
+    ::= 1452
+    
+    faultphaseReversalLevel12Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Alert on Input3"
+    ::= 1453
+
+-- end of phaseReversalLevel12 Input3 trap
+
+-- beginning of phaseReversalLevel12 Input4 trap
+
+    faultphaseReversalLevel12Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Cleared on Input4"
+    ::= 1454
+    
+    faultphaseReversalLevel12Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phase Reversed Alert on Input4"
+    ::= 1455
+
+-- end of phaseReversalLevel12 Input4 trap
+
+-- beginning of phaseReversalLevel34 Input1 trap
+
+    faultphaseReversalLevel34Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Cleared on Input1"
+    ::= 1456
+    
+    faultphaseReversalLevel34Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Alert on Input1"
+    ::= 1457
+
+-- end of phaseReversalLevel34 Input1 trap
+
+-- beginning of phaseReversalLevel34 Input2 trap
+
+    faultphaseReversalLevel34Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Cleared on Input2"
+    ::= 1458
+    
+    faultphaseReversalLevel34Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Alert on Input2"
+    ::= 1459
+
+-- end of phaseReversalLevel34 Input2 trap
+
+-- beginning of phaseReversalLevel34 Input3 trap
+
+    faultphaseReversalLevel34Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Cleared on Input3"
+    ::= 1460
+    
+    faultphaseReversalLevel34Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Alert on Input3"
+    ::= 1461
+
+-- end of phaseReversalLevel34 Input3 trap
+
+-- beginning of phaseReversalLevel34 Input4 trap
+
+    faultphaseReversalLevel34Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Cleared on Input4"
+    ::= 1462
+    
+    faultphaseReversalLevel34Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phase Reversed Alert on Input4"
+    ::= 1463
+
+-- end of phaseReversalLevel34 Input4 trap
+
+-- beginning of phaseReversalLevel56 Input1 trap
+
+    faultphaseReversalLevel56Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Cleared on Input1"
+    ::= 1464
+    
+    faultphaseReversalLevel56Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Alert on Input1"
+    ::= 1465
+
+-- end of phaseReversalLevel56 Input1 trap
+
+-- beginning of phaseReversalLevel56 Input2 trap
+
+    faultphaseReversalLevel56Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Cleared on Input2"
+    ::= 1466
+    
+    faultphaseReversalLevel56Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Alert on Input2"
+    ::= 1467
+
+-- end of phaseReversalLevel56 Input2 trap
+
+-- beginning of phaseReversalLevel56 Input3 trap
+
+    faultphaseReversalLevel56Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Cleared on Input3"
+    ::= 1468
+    
+    faultphaseReversalLevel56Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Alert on Input3"
+    ::= 1469
+
+-- end of phaseReversalLevel56 Input3 trap
+
+-- beginning of phaseReversalLevel56 Input4 trap
+
+    faultphaseReversalLevel56Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Cleared on Input4"
+    ::= 1470
+    
+    faultphaseReversalLevel56Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phase Reversed Alert on Input4"
+    ::= 1471
+
+-- end of phaseReversalLevel56 Input4 trap
+
+-- beginning of phaseReversalLevel78 Input1 trap
+
+    faultphaseReversalLevel78Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Cleared on Input1"
+    ::= 1472
+    
+    faultphaseReversalLevel78Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Alert on Input1"
+    ::= 1473
+
+-- end of phaseReversalLevel78 Input1 trap
+
+-- beginning of phaseReversalLevel78 Input2 trap
+
+    faultphaseReversalLevel78Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Cleared on Input2"
+    ::= 1474
+    
+    faultphaseReversalLevel78Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Alert on Input2"
+    ::= 1475
+
+-- end of phaseReversalLevel78 Input2 trap
+
+-- beginning of phaseReversalLevel78 Input3 trap
+
+    faultphaseReversalLevel78Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Cleared on Input3"
+    ::= 1476
+    
+    faultphaseReversalLevel78Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Alert on Input3"
+    ::= 1477
+
+-- end of phaseReversalLevel78 Input3 trap
+
+-- beginning of phaseReversalLevel78 Input4 trap
+
+    faultphaseReversalLevel78Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Cleared on Input4"
+    ::= 1478
+    
+    faultphaseReversalLevel78Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phase Reversed Alert on Input4"
+    ::= 1479
+
+-- end of phaseReversalLevel78 Input4 trap
+
+-- beginning of audioMono12 Input1 trap
+
+    faultaudioMono12Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Cleared on Input1"
+    ::= 1480
+    
+    faultaudioMono12Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Alert on Input1"
+    ::= 1481
+
+-- end of audioMono12 Input1 trap
+
+-- beginning of audioMono12 Input2 trap
+
+    faultaudioMono12Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Cleared on Input2"
+    ::= 1482
+    
+    faultaudioMono12Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Alert on Input2"
+    ::= 1483
+
+-- end of audioMono12 Input2 trap
+
+-- beginning of audioMono12 Input3 trap
+
+    faultaudioMono12Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Cleared on Input3"
+    ::= 1484
+    
+    faultaudioMono12Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Alert on Input3"
+    ::= 1485
+
+-- end of audioMono12 Input3 trap
+
+-- beginning of audioMono12 Input4 trap
+
+    faultaudioMono12Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Cleared on Input4"
+    ::= 1486
+    
+    faultaudioMono12Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Alert on Input4"
+    ::= 1487
+
+-- end of audioMono12 Input4 trap
+
+-- beginning of audioMono34 Input1 trap
+
+    faultaudioMono34Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Cleared on Input1"
+    ::= 1488
+    
+    faultaudioMono34Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Alert on Input1"
+    ::= 1489
+
+-- end of audioMono34 Input1 trap
+
+-- beginning of audioMono34 Input2 trap
+
+    faultaudioMono34Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Cleared on Input2"
+    ::= 1490
+    
+    faultaudioMono34Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Alert on Input2"
+    ::= 1491
+
+-- end of audioMono34 Input2 trap
+
+-- beginning of audioMono34 Input3 trap
+
+    faultaudioMono34Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Cleared on Input3"
+    ::= 1492
+    
+    faultaudioMono34Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Alert on Input3"
+    ::= 1493
+
+-- end of audioMono34 Input3 trap
+
+-- beginning of audioMono34 Input4 trap
+
+    faultaudioMono34Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Cleared on Input4"
+    ::= 1494
+    
+    faultaudioMono34Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Alert on Input4"
+    ::= 1495
+
+-- end of audioMono34 Input4 trap
+
+-- beginning of audioMono56 Input1 trap
+
+    faultaudioMono56Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Cleared on Input1"
+    ::= 1496
+    
+    faultaudioMono56Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Alert on Input1"
+    ::= 1497
+
+-- end of audioMono56 Input1 trap
+
+-- beginning of audioMono56 Input2 trap
+
+    faultaudioMono56Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Cleared on Input2"
+    ::= 1498
+    
+    faultaudioMono56Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Alert on Input2"
+    ::= 1499
+
+-- end of audioMono56 Input2 trap
+
+-- beginning of audioMono56 Input3 trap
+
+    faultaudioMono56Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Cleared on Input3"
+    ::= 1500
+    
+    faultaudioMono56Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Alert on Input3"
+    ::= 1501
+
+-- end of audioMono56 Input3 trap
+
+-- beginning of audioMono56 Input4 trap
+
+    faultaudioMono56Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Cleared on Input4"
+    ::= 1502
+    
+    faultaudioMono56Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Alert on Input4"
+    ::= 1503
+
+-- end of audioMono56 Input4 trap
+
+-- beginning of audioMono78 Input1 trap
+
+    faultaudioMono78Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Cleared on Input1"
+    ::= 1504
+    
+    faultaudioMono78Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Alert on Input1"
+    ::= 1505
+
+-- end of audioMono78 Input1 trap
+
+-- beginning of audioMono78 Input2 trap
+
+    faultaudioMono78Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Cleared on Input2"
+    ::= 1506
+    
+    faultaudioMono78Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Alert on Input2"
+    ::= 1507
+
+-- end of audioMono78 Input2 trap
+
+-- beginning of audioMono78 Input3 trap
+
+    faultaudioMono78Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Cleared on Input3"
+    ::= 1508
+    
+    faultaudioMono78Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Alert on Input3"
+    ::= 1509
+
+-- end of audioMono78 Input3 trap
+
+-- beginning of audioMono78 Input4 trap
+
+    faultaudioMono78Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Cleared on Input4"
+    ::= 1510
+    
+    faultaudioMono78Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Alert on Input4"
+    ::= 1511
+
+-- end of audioMono78 Input4 trap
+
+-- beginning of lossOfNonPCMAudio12 Input1 trap
+
+    faultlossOfNonPCMAudio12Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Cleared on Input1"
+    ::= 1512
+    
+    faultlossOfNonPCMAudio12Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Alert on Input1"
+    ::= 1513
+
+-- end of lossOfNonPCMAudio12 Input1 trap
+
+-- beginning of lossOfNonPCMAudio12 Input2 trap
+
+    faultlossOfNonPCMAudio12Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Cleared on Input2"
+    ::= 1514
+    
+    faultlossOfNonPCMAudio12Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Alert on Input2"
+    ::= 1515
+
+-- end of lossOfNonPCMAudio12 Input2 trap
+
+-- beginning of lossOfNonPCMAudio12 Input3 trap
+
+    faultlossOfNonPCMAudio12Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Cleared on Input3"
+    ::= 1516
+    
+    faultlossOfNonPCMAudio12Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Alert on Input3"
+    ::= 1517
+
+-- end of lossOfNonPCMAudio12 Input3 trap
+
+-- beginning of lossOfNonPCMAudio12 Input4 trap
+
+    faultlossOfNonPCMAudio12Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Cleared on Input4"
+    ::= 1518
+    
+    faultlossOfNonPCMAudio12Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid Alert on Input4"
+    ::= 1519
+
+-- end of lossOfNonPCMAudio12 Input4 trap
+
+-- beginning of lossOfNonPCMAudio34 Input1 trap
+
+    faultlossOfNonPCMAudio34Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Cleared on Input1"
+    ::= 1520
+    
+    faultlossOfNonPCMAudio34Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Alert on Input1"
+    ::= 1521
+
+-- end of lossOfNonPCMAudio34 Input1 trap
+
+-- beginning of lossOfNonPCMAudio34 Input2 trap
+
+    faultlossOfNonPCMAudio34Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Cleared on Input2"
+    ::= 1522
+    
+    faultlossOfNonPCMAudio34Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Alert on Input2"
+    ::= 1523
+
+-- end of lossOfNonPCMAudio34 Input2 trap
+
+-- beginning of lossOfNonPCMAudio34 Input3 trap
+
+    faultlossOfNonPCMAudio34Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Cleared on Input3"
+    ::= 1524
+    
+    faultlossOfNonPCMAudio34Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Alert on Input3"
+    ::= 1525
+
+-- end of lossOfNonPCMAudio34 Input3 trap
+
+-- beginning of lossOfNonPCMAudio34 Input4 trap
+
+    faultlossOfNonPCMAudio34Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Cleared on Input4"
+    ::= 1526
+    
+    faultlossOfNonPCMAudio34Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid Alert on Input4"
+    ::= 1527
+
+-- end of lossOfNonPCMAudio34 Input4 trap
+
+-- beginning of lossOfNonPCMAudio56 Input1 trap
+
+    faultlossOfNonPCMAudio56Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Cleared on Input1"
+    ::= 1528
+    
+    faultlossOfNonPCMAudio56Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Alert on Input1"
+    ::= 1529
+
+-- end of lossOfNonPCMAudio56 Input1 trap
+
+-- beginning of lossOfNonPCMAudio56 Input2 trap
+
+    faultlossOfNonPCMAudio56Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Cleared on Input2"
+    ::= 1530
+    
+    faultlossOfNonPCMAudio56Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Alert on Input2"
+    ::= 1531
+
+-- end of lossOfNonPCMAudio56 Input2 trap
+
+-- beginning of lossOfNonPCMAudio56 Input3 trap
+
+    faultlossOfNonPCMAudio56Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Cleared on Input3"
+    ::= 1532
+    
+    faultlossOfNonPCMAudio56Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Alert on Input3"
+    ::= 1533
+
+-- end of lossOfNonPCMAudio56 Input3 trap
+
+-- beginning of lossOfNonPCMAudio56 Input4 trap
+
+    faultlossOfNonPCMAudio56Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Cleared on Input4"
+    ::= 1534
+    
+    faultlossOfNonPCMAudio56Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid Alert on Input4"
+    ::= 1535
+
+-- end of lossOfNonPCMAudio56 Input4 trap
+
+-- beginning of lossOfNonPCMAudio78 Input1 trap
+
+    faultlossOfNonPCMAudio78Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Cleared on Input1"
+    ::= 1536
+    
+    faultlossOfNonPCMAudio78Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Alert on Input1"
+    ::= 1537
+
+-- end of lossOfNonPCMAudio78 Input1 trap
+
+-- beginning of lossOfNonPCMAudio78 Input2 trap
+
+    faultlossOfNonPCMAudio78Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Cleared on Input2"
+    ::= 1538
+    
+    faultlossOfNonPCMAudio78Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Alert on Input2"
+    ::= 1539
+
+-- end of lossOfNonPCMAudio78 Input2 trap
+
+-- beginning of lossOfNonPCMAudio78 Input3 trap
+
+    faultlossOfNonPCMAudio78Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Cleared on Input3"
+    ::= 1540
+    
+    faultlossOfNonPCMAudio78Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Alert on Input3"
+    ::= 1541
+
+-- end of lossOfNonPCMAudio78 Input3 trap
+
+-- beginning of lossOfNonPCMAudio78 Input4 trap
+
+    faultlossOfNonPCMAudio78Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Cleared on Input4"
+    ::= 1542
+    
+    faultlossOfNonPCMAudio78Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid Alert on Input4"
+    ::= 1543
+
+-- end of lossOfNonPCMAudio78 Input4 trap
+
+-- beginning of futureUseAudVid4 Input1 trap
+
+    faultfutureUseAudVid4Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Cleared on Input1"
+    ::= 1544
+    
+    faultfutureUseAudVid4Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Alert on Input1"
+    ::= 1545
+
+-- end of futureUseAudVid4 Input1 trap
+
+-- beginning of futureUseAudVid4 Input2 trap
+
+    faultfutureUseAudVid4Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Cleared on Input2"
+    ::= 1546
+    
+    faultfutureUseAudVid4Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Alert on Input2"
+    ::= 1547
+
+-- end of futureUseAudVid4 Input2 trap
+
+-- beginning of futureUseAudVid4 Input3 trap
+
+    faultfutureUseAudVid4Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Cleared on Input3"
+    ::= 1548
+    
+    faultfutureUseAudVid4Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Alert on Input3"
+    ::= 1549
+
+-- end of futureUseAudVid4 Input3 trap
+
+-- beginning of futureUseAudVid4 Input4 trap
+
+    faultfutureUseAudVid4Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Cleared on Input4"
+    ::= 1550
+    
+    faultfutureUseAudVid4Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid4 Alert on Input4"
+    ::= 1551
+
+-- end of futureUseAudVid4 Input4 trap
+
+-- beginning of futureUseAudVid5 Input1 trap
+
+    faultfutureUseAudVid5Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Cleared on Input1"
+    ::= 1552
+    
+    faultfutureUseAudVid5Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Alert on Input1"
+    ::= 1553
+
+-- end of futureUseAudVid5 Input1 trap
+
+-- beginning of futureUseAudVid5 Input2 trap
+
+    faultfutureUseAudVid5Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Cleared on Input2"
+    ::= 1554
+    
+    faultfutureUseAudVid5Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Alert on Input2"
+    ::= 1555
+
+-- end of futureUseAudVid5 Input2 trap
+
+-- beginning of futureUseAudVid5 Input3 trap
+
+    faultfutureUseAudVid5Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Cleared on Input3"
+    ::= 1556
+    
+    faultfutureUseAudVid5Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Alert on Input3"
+    ::= 1557
+
+-- end of futureUseAudVid5 Input3 trap
+
+-- beginning of futureUseAudVid5 Input4 trap
+
+    faultfutureUseAudVid5Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Cleared on Input4"
+    ::= 1558
+    
+    faultfutureUseAudVid5Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid5 Alert on Input4"
+    ::= 1559
+
+-- end of futureUseAudVid5 Input4 trap
+
+-- beginning of futureUseAudVid6 Input1 trap
+
+    faultfutureUseAudVid6Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Cleared on Input1"
+    ::= 1560
+    
+    faultfutureUseAudVid6Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Alert on Input1"
+    ::= 1561
+
+-- end of futureUseAudVid6 Input1 trap
+
+-- beginning of futureUseAudVid6 Input2 trap
+
+    faultfutureUseAudVid6Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Cleared on Input2"
+    ::= 1562
+    
+    faultfutureUseAudVid6Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Alert on Input2"
+    ::= 1563
+
+-- end of futureUseAudVid6 Input2 trap
+
+-- beginning of futureUseAudVid6 Input3 trap
+
+    faultfutureUseAudVid6Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Cleared on Input3"
+    ::= 1564
+    
+    faultfutureUseAudVid6Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Alert on Input3"
+    ::= 1565
+
+-- end of futureUseAudVid6 Input3 trap
+
+-- beginning of futureUseAudVid6 Input4 trap
+
+    faultfutureUseAudVid6Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Cleared on Input4"
+    ::= 1566
+    
+    faultfutureUseAudVid6Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid6 Alert on Input4"
+    ::= 1567
+
+-- end of futureUseAudVid6 Input4 trap
+
+-- beginning of futureUseAudVid7 Input1 trap
+
+    faultfutureUseAudVid7Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Cleared on Input1"
+    ::= 1568
+    
+    faultfutureUseAudVid7Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Alert on Input1"
+    ::= 1569
+
+-- end of futureUseAudVid7 Input1 trap
+
+-- beginning of futureUseAudVid7 Input2 trap
+
+    faultfutureUseAudVid7Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Cleared on Input2"
+    ::= 1570
+    
+    faultfutureUseAudVid7Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Alert on Input2"
+    ::= 1571
+
+-- end of futureUseAudVid7 Input2 trap
+
+-- beginning of futureUseAudVid7 Input3 trap
+
+    faultfutureUseAudVid7Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Cleared on Input3"
+    ::= 1572
+    
+    faultfutureUseAudVid7Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Alert on Input3"
+    ::= 1573
+
+-- end of futureUseAudVid7 Input3 trap
+
+-- beginning of futureUseAudVid7 Input4 trap
+
+    faultfutureUseAudVid7Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Cleared on Input4"
+    ::= 1574
+    
+    faultfutureUseAudVid7Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid7 Alert on Input4"
+    ::= 1575
+
+-- end of futureUseAudVid7 Input4 trap
+
+-- beginning of futureUseAudVid8 Input1 trap
+
+    faultfutureUseAudVid8Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Cleared on Input1"
+    ::= 1576
+    
+    faultfutureUseAudVid8Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Alert on Input1"
+    ::= 1577
+
+-- end of futureUseAudVid8 Input1 trap
+
+-- beginning of futureUseAudVid8 Input2 trap
+
+    faultfutureUseAudVid8Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Cleared on Input2"
+    ::= 1578
+    
+    faultfutureUseAudVid8Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Alert on Input2"
+    ::= 1579
+
+-- end of futureUseAudVid8 Input2 trap
+
+-- beginning of futureUseAudVid8 Input3 trap
+
+    faultfutureUseAudVid8Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Cleared on Input3"
+    ::= 1580
+    
+    faultfutureUseAudVid8Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Alert on Input3"
+    ::= 1581
+
+-- end of futureUseAudVid8 Input3 trap
+
+-- beginning of futureUseAudVid8 Input4 trap
+
+    faultfutureUseAudVid8Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Cleared on Input4"
+    ::= 1582
+    
+    faultfutureUseAudVid8Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid8 Alert on Input4"
+    ::= 1583
+
+-- end of futureUseAudVid8 Input4 trap
+
+-- beginning of futureUseAudVid9 Input1 trap
+
+    faultfutureUseAudVid9Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Cleared on Input1"
+    ::= 1584
+    
+    faultfutureUseAudVid9Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Alert on Input1"
+    ::= 1585
+
+-- end of futureUseAudVid9 Input1 trap
+
+-- beginning of futureUseAudVid9 Input2 trap
+
+    faultfutureUseAudVid9Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Cleared on Input2"
+    ::= 1586
+    
+    faultfutureUseAudVid9Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Alert on Input2"
+    ::= 1587
+
+-- end of futureUseAudVid9 Input2 trap
+
+-- beginning of futureUseAudVid9 Input3 trap
+
+    faultfutureUseAudVid9Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Cleared on Input3"
+    ::= 1588
+    
+    faultfutureUseAudVid9Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Alert on Input3"
+    ::= 1589
+
+-- end of futureUseAudVid9 Input3 trap
+
+-- beginning of futureUseAudVid9 Input4 trap
+
+    faultfutureUseAudVid9Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Cleared on Input4"
+    ::= 1590
+    
+    faultfutureUseAudVid9Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid9 Alert on Input4"
+    ::= 1591
+
+-- end of futureUseAudVid9 Input4 trap
+
+-- beginning of futureUseAudVid10 Input1 trap
+
+    faultfutureUseAudVid10Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Cleared on Input1"
+    ::= 1592
+    
+    faultfutureUseAudVid10Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Alert on Input1"
+    ::= 1593
+
+-- end of futureUseAudVid10 Input1 trap
+
+-- beginning of futureUseAudVid10 Input2 trap
+
+    faultfutureUseAudVid10Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Cleared on Input2"
+    ::= 1594
+    
+    faultfutureUseAudVid10Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Alert on Input2"
+    ::= 1595
+
+-- end of futureUseAudVid10 Input2 trap
+
+-- beginning of futureUseAudVid10 Input3 trap
+
+    faultfutureUseAudVid10Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Cleared on Input3"
+    ::= 1596
+    
+    faultfutureUseAudVid10Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Alert on Input3"
+    ::= 1597
+
+-- end of futureUseAudVid10 Input3 trap
+
+-- beginning of futureUseAudVid10 Input4 trap
+
+    faultfutureUseAudVid10Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Cleared on Input4"
+    ::= 1598
+    
+    faultfutureUseAudVid10Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid10 Alert on Input4"
+    ::= 1599
+
+-- end of futureUseAudVid10 Input4 trap
+
+-- beginning of futureUseAudVid11 Input1 trap
+
+    faultfutureUseAudVid11Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Cleared on Input1"
+    ::= 1600
+    
+    faultfutureUseAudVid11Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Alert on Input1"
+    ::= 1601
+
+-- end of futureUseAudVid11 Input1 trap
+
+-- beginning of futureUseAudVid11 Input2 trap
+
+    faultfutureUseAudVid11Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Cleared on Input2"
+    ::= 1602
+    
+    faultfutureUseAudVid11Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Alert on Input2"
+    ::= 1603
+
+-- end of futureUseAudVid11 Input2 trap
+
+-- beginning of futureUseAudVid11 Input3 trap
+
+    faultfutureUseAudVid11Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Cleared on Input3"
+    ::= 1604
+    
+    faultfutureUseAudVid11Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Alert on Input3"
+    ::= 1605
+
+-- end of futureUseAudVid11 Input3 trap
+
+-- beginning of futureUseAudVid11 Input4 trap
+
+    faultfutureUseAudVid11Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Cleared on Input4"
+    ::= 1606
+    
+    faultfutureUseAudVid11Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid11 Alert on Input4"
+    ::= 1607
+
+-- end of futureUseAudVid11 Input4 trap
+
+-- beginning of futureUseAudVid12 Input1 trap
+
+    faultfutureUseAudVid12Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Cleared on Input1"
+    ::= 1608
+    
+    faultfutureUseAudVid12Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Alert on Input1"
+    ::= 1609
+
+-- end of futureUseAudVid12 Input1 trap
+
+-- beginning of futureUseAudVid12 Input2 trap
+
+    faultfutureUseAudVid12Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Cleared on Input2"
+    ::= 1610
+    
+    faultfutureUseAudVid12Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Alert on Input2"
+    ::= 1611
+
+-- end of futureUseAudVid12 Input2 trap
+
+-- beginning of futureUseAudVid12 Input3 trap
+
+    faultfutureUseAudVid12Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Cleared on Input3"
+    ::= 1612
+    
+    faultfutureUseAudVid12Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Alert on Input3"
+    ::= 1613
+
+-- end of futureUseAudVid12 Input3 trap
+
+-- beginning of futureUseAudVid12 Input4 trap
+
+    faultfutureUseAudVid12Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Cleared on Input4"
+    ::= 1614
+    
+    faultfutureUseAudVid12Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid12 Alert on Input4"
+    ::= 1615
+
+-- end of futureUseAudVid12 Input4 trap
+
+-- beginning of futureUseAudVid13 Input1 trap
+
+    faultfutureUseAudVid13Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Cleared on Input1"
+    ::= 1616
+    
+    faultfutureUseAudVid13Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Alert on Input1"
+    ::= 1617
+
+-- end of futureUseAudVid13 Input1 trap
+
+-- beginning of futureUseAudVid13 Input2 trap
+
+    faultfutureUseAudVid13Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Cleared on Input2"
+    ::= 1618
+    
+    faultfutureUseAudVid13Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Alert on Input2"
+    ::= 1619
+
+-- end of futureUseAudVid13 Input2 trap
+
+-- beginning of futureUseAudVid13 Input3 trap
+
+    faultfutureUseAudVid13Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Cleared on Input3"
+    ::= 1620
+    
+    faultfutureUseAudVid13Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Alert on Input3"
+    ::= 1621
+
+-- end of futureUseAudVid13 Input3 trap
+
+-- beginning of futureUseAudVid13 Input4 trap
+
+    faultfutureUseAudVid13Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Cleared on Input4"
+    ::= 1622
+    
+    faultfutureUseAudVid13Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid13 Alert on Input4"
+    ::= 1623
+
+-- end of futureUseAudVid13 Input4 trap
+
+-- beginning of futureUseAudVid14 Input1 trap
+
+    faultfutureUseAudVid14Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Cleared on Input1"
+    ::= 1624
+    
+    faultfutureUseAudVid14Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Alert on Input1"
+    ::= 1625
+
+-- end of futureUseAudVid14 Input1 trap
+
+-- beginning of futureUseAudVid14 Input2 trap
+
+    faultfutureUseAudVid14Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Cleared on Input2"
+    ::= 1626
+    
+    faultfutureUseAudVid14Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Alert on Input2"
+    ::= 1627
+
+-- end of futureUseAudVid14 Input2 trap
+
+-- beginning of futureUseAudVid14 Input3 trap
+
+    faultfutureUseAudVid14Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Cleared on Input3"
+    ::= 1628
+    
+    faultfutureUseAudVid14Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Alert on Input3"
+    ::= 1629
+
+-- end of futureUseAudVid14 Input3 trap
+
+-- beginning of futureUseAudVid14 Input4 trap
+
+    faultfutureUseAudVid14Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Cleared on Input4"
+    ::= 1630
+    
+    faultfutureUseAudVid14Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid14 Alert on Input4"
+    ::= 1631
+
+-- end of futureUseAudVid14 Input4 trap
+
+-- beginning of futureUseAudVid15 Input1 trap
+
+    faultfutureUseAudVid15Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Cleared on Input1"
+    ::= 1632
+    
+    faultfutureUseAudVid15Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Alert on Input1"
+    ::= 1633
+
+-- end of futureUseAudVid15 Input1 trap
+
+-- beginning of futureUseAudVid15 Input2 trap
+
+    faultfutureUseAudVid15Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Cleared on Input2"
+    ::= 1634
+    
+    faultfutureUseAudVid15Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Alert on Input2"
+    ::= 1635
+
+-- end of futureUseAudVid15 Input2 trap
+
+-- beginning of futureUseAudVid15 Input3 trap
+
+    faultfutureUseAudVid15Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Cleared on Input3"
+    ::= 1636
+    
+    faultfutureUseAudVid15Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Alert on Input3"
+    ::= 1637
+
+-- end of futureUseAudVid15 Input3 trap
+
+-- beginning of futureUseAudVid15 Input4 trap
+
+    faultfutureUseAudVid15Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Cleared on Input4"
+    ::= 1638
+    
+    faultfutureUseAudVid15Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid15 Alert on Input4"
+    ::= 1639
+
+-- end of futureUseAudVid15 Input4 trap
+
+-- beginning of futureUseAudVid16 Input1 trap
+
+    faultfutureUseAudVid16Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Cleared on Input1"
+    ::= 1640
+    
+    faultfutureUseAudVid16Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Alert on Input1"
+    ::= 1641
+
+-- end of futureUseAudVid16 Input1 trap
+
+-- beginning of futureUseAudVid16 Input2 trap
+
+    faultfutureUseAudVid16Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Cleared on Input2"
+    ::= 1642
+    
+    faultfutureUseAudVid16Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Alert on Input2"
+    ::= 1643
+
+-- end of futureUseAudVid16 Input2 trap
+
+-- beginning of futureUseAudVid16 Input3 trap
+
+    faultfutureUseAudVid16Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Cleared on Input3"
+    ::= 1644
+    
+    faultfutureUseAudVid16Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Alert on Input3"
+    ::= 1645
+
+-- end of futureUseAudVid16 Input3 trap
+
+-- beginning of futureUseAudVid16 Input4 trap
+
+    faultfutureUseAudVid16Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Cleared on Input4"
+    ::= 1646
+    
+    faultfutureUseAudVid16Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid16 Alert on Input4"
+    ::= 1647
+
+-- end of futureUseAudVid16 Input4 trap
+
+-- beginning of futureUseAudVid17 Input1 trap
+
+    faultfutureUseAudVid17Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Cleared on Input1"
+    ::= 1648
+    
+    faultfutureUseAudVid17Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Alert on Input1"
+    ::= 1649
+
+-- end of futureUseAudVid17 Input1 trap
+
+-- beginning of futureUseAudVid17 Input2 trap
+
+    faultfutureUseAudVid17Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Cleared on Input2"
+    ::= 1650
+    
+    faultfutureUseAudVid17Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Alert on Input2"
+    ::= 1651
+
+-- end of futureUseAudVid17 Input2 trap
+
+-- beginning of futureUseAudVid17 Input3 trap
+
+    faultfutureUseAudVid17Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Cleared on Input3"
+    ::= 1652
+    
+    faultfutureUseAudVid17Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Alert on Input3"
+    ::= 1653
+
+-- end of futureUseAudVid17 Input3 trap
+
+-- beginning of futureUseAudVid17 Input4 trap
+
+    faultfutureUseAudVid17Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Cleared on Input4"
+    ::= 1654
+    
+    faultfutureUseAudVid17Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid17 Alert on Input4"
+    ::= 1655
+
+-- end of futureUseAudVid17 Input4 trap
+
+-- beginning of futureUseAudVid18 Input1 trap
+
+    faultfutureUseAudVid18Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Cleared on Input1"
+    ::= 1656
+    
+    faultfutureUseAudVid18Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Alert on Input1"
+    ::= 1657
+
+-- end of futureUseAudVid18 Input1 trap
+
+-- beginning of futureUseAudVid18 Input2 trap
+
+    faultfutureUseAudVid18Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Cleared on Input2"
+    ::= 1658
+    
+    faultfutureUseAudVid18Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Alert on Input2"
+    ::= 1659
+
+-- end of futureUseAudVid18 Input2 trap
+
+-- beginning of futureUseAudVid18 Input3 trap
+
+    faultfutureUseAudVid18Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Cleared on Input3"
+    ::= 1660
+    
+    faultfutureUseAudVid18Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Alert on Input3"
+    ::= 1661
+
+-- end of futureUseAudVid18 Input3 trap
+
+-- beginning of futureUseAudVid18 Input4 trap
+
+    faultfutureUseAudVid18Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Cleared on Input4"
+    ::= 1662
+    
+    faultfutureUseAudVid18Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid18 Alert on Input4"
+    ::= 1663
+
+-- end of futureUseAudVid18 Input4 trap
+
+-- beginning of futureUseAudVid19 Input1 trap
+
+    faultfutureUseAudVid19Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Cleared on Input1"
+    ::= 1664
+    
+    faultfutureUseAudVid19Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Alert on Input1"
+    ::= 1665
+
+-- end of futureUseAudVid19 Input1 trap
+
+-- beginning of futureUseAudVid19 Input2 trap
+
+    faultfutureUseAudVid19Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Cleared on Input2"
+    ::= 1666
+    
+    faultfutureUseAudVid19Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Alert on Input2"
+    ::= 1667
+
+-- end of futureUseAudVid19 Input2 trap
+
+-- beginning of futureUseAudVid19 Input3 trap
+
+    faultfutureUseAudVid19Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Cleared on Input3"
+    ::= 1668
+    
+    faultfutureUseAudVid19Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Alert on Input3"
+    ::= 1669
+
+-- end of futureUseAudVid19 Input3 trap
+
+-- beginning of futureUseAudVid19 Input4 trap
+
+    faultfutureUseAudVid19Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Cleared on Input4"
+    ::= 1670
+    
+    faultfutureUseAudVid19Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid19 Alert on Input4"
+    ::= 1671
+
+-- end of futureUseAudVid19 Input4 trap
+
+-- beginning of futureUseAudVid20 Input1 trap
+
+    faultfutureUseAudVid20Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Cleared on Input1"
+    ::= 1672
+    
+    faultfutureUseAudVid20Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Alert on Input1"
+    ::= 1673
+
+-- end of futureUseAudVid20 Input1 trap
+
+-- beginning of futureUseAudVid20 Input2 trap
+
+    faultfutureUseAudVid20Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Cleared on Input2"
+    ::= 1674
+    
+    faultfutureUseAudVid20Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Alert on Input2"
+    ::= 1675
+
+-- end of futureUseAudVid20 Input2 trap
+
+-- beginning of futureUseAudVid20 Input3 trap
+
+    faultfutureUseAudVid20Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Cleared on Input3"
+    ::= 1676
+    
+    faultfutureUseAudVid20Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Alert on Input3"
+    ::= 1677
+
+-- end of futureUseAudVid20 Input3 trap
+
+-- beginning of futureUseAudVid20 Input4 trap
+
+    faultfutureUseAudVid20Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Cleared on Input4"
+    ::= 1678
+    
+    faultfutureUseAudVid20Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid20 Alert on Input4"
+    ::= 1679
+
+-- end of futureUseAudVid20 Input4 trap
+
+-- beginning of futureUseAudVid21 Input1 trap
+
+    faultfutureUseAudVid21Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Cleared on Input1"
+    ::= 1680
+    
+    faultfutureUseAudVid21Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Alert on Input1"
+    ::= 1681
+
+-- end of futureUseAudVid21 Input1 trap
+
+-- beginning of futureUseAudVid21 Input2 trap
+
+    faultfutureUseAudVid21Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Cleared on Input2"
+    ::= 1682
+    
+    faultfutureUseAudVid21Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Alert on Input2"
+    ::= 1683
+
+-- end of futureUseAudVid21 Input2 trap
+
+-- beginning of futureUseAudVid21 Input3 trap
+
+    faultfutureUseAudVid21Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Cleared on Input3"
+    ::= 1684
+    
+    faultfutureUseAudVid21Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Alert on Input3"
+    ::= 1685
+
+-- end of futureUseAudVid21 Input3 trap
+
+-- beginning of futureUseAudVid21 Input4 trap
+
+    faultfutureUseAudVid21Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Cleared on Input4"
+    ::= 1686
+    
+    faultfutureUseAudVid21Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid21 Alert on Input4"
+    ::= 1687
+
+-- end of futureUseAudVid21 Input4 trap
+
+-- beginning of futureUseAudVid22 Input1 trap
+
+    faultfutureUseAudVid22Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Cleared on Input1"
+    ::= 1688
+    
+    faultfutureUseAudVid22Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Alert on Input1"
+    ::= 1689
+
+-- end of futureUseAudVid22 Input1 trap
+
+-- beginning of futureUseAudVid22 Input2 trap
+
+    faultfutureUseAudVid22Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Cleared on Input2"
+    ::= 1690
+    
+    faultfutureUseAudVid22Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Alert on Input2"
+    ::= 1691
+
+-- end of futureUseAudVid22 Input2 trap
+
+-- beginning of futureUseAudVid22 Input3 trap
+
+    faultfutureUseAudVid22Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Cleared on Input3"
+    ::= 1692
+    
+    faultfutureUseAudVid22Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Alert on Input3"
+    ::= 1693
+
+-- end of futureUseAudVid22 Input3 trap
+
+-- beginning of futureUseAudVid22 Input4 trap
+
+    faultfutureUseAudVid22Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Cleared on Input4"
+    ::= 1694
+    
+    faultfutureUseAudVid22Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid22 Alert on Input4"
+    ::= 1695
+
+-- end of futureUseAudVid22 Input4 trap
+
+-- beginning of futureUseAudVid23 Input1 trap
+
+    faultfutureUseAudVid23Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Cleared on Input1"
+    ::= 1696
+    
+    faultfutureUseAudVid23Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Alert on Input1"
+    ::= 1697
+
+-- end of futureUseAudVid23 Input1 trap
+
+-- beginning of futureUseAudVid23 Input2 trap
+
+    faultfutureUseAudVid23Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Cleared on Input2"
+    ::= 1698
+    
+    faultfutureUseAudVid23Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Alert on Input2"
+    ::= 1699
+
+-- end of futureUseAudVid23 Input2 trap
+
+-- beginning of futureUseAudVid23 Input3 trap
+
+    faultfutureUseAudVid23Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Cleared on Input3"
+    ::= 1700
+    
+    faultfutureUseAudVid23Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Alert on Input3"
+    ::= 1701
+
+-- end of futureUseAudVid23 Input3 trap
+
+-- beginning of futureUseAudVid23 Input4 trap
+
+    faultfutureUseAudVid23Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Cleared on Input4"
+    ::= 1702
+    
+    faultfutureUseAudVid23Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid23 Alert on Input4"
+    ::= 1703
+
+-- end of futureUseAudVid23 Input4 trap
+
+-- beginning of futureUseAudVid24 Input1 trap
+
+    faultfutureUseAudVid24Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Cleared on Input1"
+    ::= 1704
+    
+    faultfutureUseAudVid24Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Alert on Input1"
+    ::= 1705
+
+-- end of futureUseAudVid24 Input1 trap
+
+-- beginning of futureUseAudVid24 Input2 trap
+
+    faultfutureUseAudVid24Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Cleared on Input2"
+    ::= 1706
+    
+    faultfutureUseAudVid24Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Alert on Input2"
+    ::= 1707
+
+-- end of futureUseAudVid24 Input2 trap
+
+-- beginning of futureUseAudVid24 Input3 trap
+
+    faultfutureUseAudVid24Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Cleared on Input3"
+    ::= 1708
+    
+    faultfutureUseAudVid24Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Alert on Input3"
+    ::= 1709
+
+-- end of futureUseAudVid24 Input3 trap
+
+-- beginning of futureUseAudVid24 Input4 trap
+
+    faultfutureUseAudVid24Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Cleared on Input4"
+    ::= 1710
+    
+    faultfutureUseAudVid24Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid24 Alert on Input4"
+    ::= 1711
+
+-- end of futureUseAudVid24 Input4 trap
+
+-- beginning of futureUseAudVid25 Input1 trap
+
+    faultfutureUseAudVid25Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Cleared on Input1"
+    ::= 1712
+    
+    faultfutureUseAudVid25Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Alert on Input1"
+    ::= 1713
+
+-- end of futureUseAudVid25 Input1 trap
+
+-- beginning of futureUseAudVid25 Input2 trap
+
+    faultfutureUseAudVid25Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Cleared on Input2"
+    ::= 1714
+    
+    faultfutureUseAudVid25Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Alert on Input2"
+    ::= 1715
+
+-- end of futureUseAudVid25 Input2 trap
+
+-- beginning of futureUseAudVid25 Input3 trap
+
+    faultfutureUseAudVid25Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Cleared on Input3"
+    ::= 1716
+    
+    faultfutureUseAudVid25Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Alert on Input3"
+    ::= 1717
+
+-- end of futureUseAudVid25 Input3 trap
+
+-- beginning of futureUseAudVid25 Input4 trap
+
+    faultfutureUseAudVid25Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Cleared on Input4"
+    ::= 1718
+    
+    faultfutureUseAudVid25Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid25 Alert on Input4"
+    ::= 1719
+
+-- end of futureUseAudVid25 Input4 trap
+
+-- beginning of futureUseAudVid26 Input1 trap
+
+    faultfutureUseAudVid26Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Cleared on Input1"
+    ::= 1720
+    
+    faultfutureUseAudVid26Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Alert on Input1"
+    ::= 1721
+
+-- end of futureUseAudVid26 Input1 trap
+
+-- beginning of futureUseAudVid26 Input2 trap
+
+    faultfutureUseAudVid26Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Cleared on Input2"
+    ::= 1722
+    
+    faultfutureUseAudVid26Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Alert on Input2"
+    ::= 1723
+
+-- end of futureUseAudVid26 Input2 trap
+
+-- beginning of futureUseAudVid26 Input3 trap
+
+    faultfutureUseAudVid26Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Cleared on Input3"
+    ::= 1724
+    
+    faultfutureUseAudVid26Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Alert on Input3"
+    ::= 1725
+
+-- end of futureUseAudVid26 Input3 trap
+
+-- beginning of futureUseAudVid26 Input4 trap
+
+    faultfutureUseAudVid26Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Cleared on Input4"
+    ::= 1726
+    
+    faultfutureUseAudVid26Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid26 Alert on Input4"
+    ::= 1727
+
+-- end of futureUseAudVid26 Input4 trap
+
+-- beginning of futureUseAudVid27 Input1 trap
+
+    faultfutureUseAudVid27Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Cleared on Input1"
+    ::= 1728
+    
+    faultfutureUseAudVid27Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Alert on Input1"
+    ::= 1729
+
+-- end of futureUseAudVid27 Input1 trap
+
+-- beginning of futureUseAudVid27 Input2 trap
+
+    faultfutureUseAudVid27Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Cleared on Input2"
+    ::= 1730
+    
+    faultfutureUseAudVid27Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Alert on Input2"
+    ::= 1731
+
+-- end of futureUseAudVid27 Input2 trap
+
+-- beginning of futureUseAudVid27 Input3 trap
+
+    faultfutureUseAudVid27Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Cleared on Input3"
+    ::= 1732
+    
+    faultfutureUseAudVid27Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Alert on Input3"
+    ::= 1733
+
+-- end of futureUseAudVid27 Input3 trap
+
+-- beginning of futureUseAudVid27 Input4 trap
+
+    faultfutureUseAudVid27Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Cleared on Input4"
+    ::= 1734
+    
+    faultfutureUseAudVid27Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid27 Alert on Input4"
+    ::= 1735
+
+-- end of futureUseAudVid27 Input4 trap
+
+-- beginning of futureUseAudVid28 Input1 trap
+
+    faultfutureUseAudVid28Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Cleared on Input1"
+    ::= 1736
+    
+    faultfutureUseAudVid28Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Alert on Input1"
+    ::= 1737
+
+-- end of futureUseAudVid28 Input1 trap
+
+-- beginning of futureUseAudVid28 Input2 trap
+
+    faultfutureUseAudVid28Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Cleared on Input2"
+    ::= 1738
+    
+    faultfutureUseAudVid28Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Alert on Input2"
+    ::= 1739
+
+-- end of futureUseAudVid28 Input2 trap
+
+-- beginning of futureUseAudVid28 Input3 trap
+
+    faultfutureUseAudVid28Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Cleared on Input3"
+    ::= 1740
+    
+    faultfutureUseAudVid28Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Alert on Input3"
+    ::= 1741
+
+-- end of futureUseAudVid28 Input3 trap
+
+-- beginning of futureUseAudVid28 Input4 trap
+
+    faultfutureUseAudVid28Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Cleared on Input4"
+    ::= 1742
+    
+    faultfutureUseAudVid28Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid28 Alert on Input4"
+    ::= 1743
+
+-- end of futureUseAudVid28 Input4 trap
+
+-- beginning of futureUseAudVid29 Input1 trap
+
+    faultfutureUseAudVid29Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Cleared on Input1"
+    ::= 1744
+    
+    faultfutureUseAudVid29Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Alert on Input1"
+    ::= 1745
+
+-- end of futureUseAudVid29 Input1 trap
+
+-- beginning of futureUseAudVid29 Input2 trap
+
+    faultfutureUseAudVid29Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Cleared on Input2"
+    ::= 1746
+    
+    faultfutureUseAudVid29Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Alert on Input2"
+    ::= 1747
+
+-- end of futureUseAudVid29 Input2 trap
+
+-- beginning of futureUseAudVid29 Input3 trap
+
+    faultfutureUseAudVid29Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Cleared on Input3"
+    ::= 1748
+    
+    faultfutureUseAudVid29Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Alert on Input3"
+    ::= 1749
+
+-- end of futureUseAudVid29 Input3 trap
+
+-- beginning of futureUseAudVid29 Input4 trap
+
+    faultfutureUseAudVid29Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Cleared on Input4"
+    ::= 1750
+    
+    faultfutureUseAudVid29Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid29 Alert on Input4"
+    ::= 1751
+
+-- end of futureUseAudVid29 Input4 trap
+
+-- beginning of futureUseAudVid30 Input1 trap
+
+    faultfutureUseAudVid30Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Cleared on Input1"
+    ::= 1752
+    
+    faultfutureUseAudVid30Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Alert on Input1"
+    ::= 1753
+
+-- end of futureUseAudVid30 Input1 trap
+
+-- beginning of futureUseAudVid30 Input2 trap
+
+    faultfutureUseAudVid30Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Cleared on Input2"
+    ::= 1754
+    
+    faultfutureUseAudVid30Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Alert on Input2"
+    ::= 1755
+
+-- end of futureUseAudVid30 Input2 trap
+
+-- beginning of futureUseAudVid30 Input3 trap
+
+    faultfutureUseAudVid30Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Cleared on Input3"
+    ::= 1756
+    
+    faultfutureUseAudVid30Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Alert on Input3"
+    ::= 1757
+
+-- end of futureUseAudVid30 Input3 trap
+
+-- beginning of futureUseAudVid30 Input4 trap
+
+    faultfutureUseAudVid30Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Cleared on Input4"
+    ::= 1758
+    
+    faultfutureUseAudVid30Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid30 Alert on Input4"
+    ::= 1759
+
+-- end of futureUseAudVid30 Input4 trap
+
+-- beginning of futureUseAudVid31 Input1 trap
+
+    faultfutureUseAudVid31Input1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Cleared on Input1"
+    ::= 1760
+    
+    faultfutureUseAudVid31Input1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Alert on Input1"
+    ::= 1761
+
+-- end of futureUseAudVid31 Input1 trap
+
+-- beginning of futureUseAudVid31 Input2 trap
+
+    faultfutureUseAudVid31Input2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Cleared on Input2"
+    ::= 1762
+    
+    faultfutureUseAudVid31Input2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Alert on Input2"
+    ::= 1763
+
+-- end of futureUseAudVid31 Input2 trap
+
+-- beginning of futureUseAudVid31 Input3 trap
+
+    faultfutureUseAudVid31Input3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Cleared on Input3"
+    ::= 1764
+    
+    faultfutureUseAudVid31Input3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Alert on Input3"
+    ::= 1765
+
+-- end of futureUseAudVid31 Input3 trap
+
+-- beginning of futureUseAudVid31 Input4 trap
+
+    faultfutureUseAudVid31Input4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Cleared on Input4"
+    ::= 1766
+    
+    faultfutureUseAudVid31Input4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { trapTag }
+        DESCRIPTION
+            "futureUseAudVid31 Alert on Input4"
+    ::= 1767
+
+-- end of futureUseAudVid31 Input4 trap
+
+
+
+
+END

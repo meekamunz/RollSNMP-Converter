@@ -1,0 +1,170 @@
+LLDP-DOT3-CNL DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Counter32, NOTIFICATION-TYPE
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, TimeStamp, TruthValue
+        FROM SNMPv2-TC
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+    TimeFilter, ZeroBasedCounter32
+        FROM RMON2-MIB
+    AddressFamilyNumbers
+        FROM IANA-ADDRESS-FAMILY-NUMBERS-MIB
+    lldpMIB
+        FROM LLDP-MIB
+    lldpXdot3MIB
+        FROM LLDP-EXT-DOT3-MIB;
+
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+--
+-- Organizationally Defined Information Extension - IEEE 802.3
+--
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+lldpXdot3Objects    OBJECT IDENTIFIER ::= { lldpXdot3MIB 1 }
+
+-- LLDP IEEE 802.3 extension MIB groups
+lldpXdot3Config     OBJECT IDENTIFIER ::= { lldpXdot3Objects 1 }
+lldpXdot3LocalData  OBJECT IDENTIFIER ::= { lldpXdot3Objects 2 }
+lldpXdot3RemoteData OBJECT IDENTIFIER ::= { lldpXdot3Objects 3 }
+
+
+
+------------------------------------------------------------------------------
+-- IEEE 802.3 - Configuration
+------------------------------------------------------------------------------
+
+lldpXdot3PortConfigTable   OBJECT-TYPE
+    ::= { lldpXdot3Config 1 }
+
+lldpXdot3PortConfigEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3PortConfigTable 1 }
+
+
+
+------------------------------------------------------------------------------
+-- IEEE 802.3 - Local Device Information
+------------------------------------------------------------------------------
+---
+--- lldpXdot3LocPortTable: Ethernet Port AutoNeg/Speed/Duplex
+---                        Information Table
+---
+---
+
+lldpXdot3LocPortTable   OBJECT-TYPE
+    ::= { lldpXdot3LocalData 1 }
+
+lldpXdot3LocPortEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3LocPortTable 1 }
+
+
+---
+---
+--- lldpXdot3LocPowerTable: Power Ethernet Information Table
+---
+---
+
+lldpXdot3LocPowerTable   OBJECT-TYPE
+    ::= { lldpXdot3LocalData 2 }
+
+lldpXdot3LocPowerEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3LocPowerTable 1 }
+
+
+---
+---
+--- lldpXdot3LocLinkAggTable: Link Aggregation Information Table
+---
+---
+
+lldpXdot3LocLinkAggTable   OBJECT-TYPE
+    ::= { lldpXdot3LocalData 3 }
+
+lldpXdot3LocLinkAggEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3LocLinkAggTable 1 }
+
+
+---
+---
+--- lldpXdot3LocMaxFrameSizeTable: Maximum Frame Size information
+---
+---
+
+lldpXdot3LocMaxFrameSizeTable   OBJECT-TYPE
+    ::= { lldpXdot3LocalData 4 }
+
+lldpXdot3LocMaxFrameSizeEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3LocMaxFrameSizeTable 1 }
+
+
+------------------------------------------------------------------------------
+-- IEEE 802.3 - Remote Devices Information
+------------------------------------------------------------------------------
+---
+---
+--- lldpXdot3RemPortTable: Ethernet Information Table
+---
+---
+
+lldpXdot3RemPortTable   OBJECT-TYPE
+    ::= { lldpXdot3RemoteData 1 }
+
+lldpXdot3RemPortEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3RemPortTable 1 }
+
+
+---
+---
+--- lldpXdot3RemPowerTable: Power Ethernet Information Table
+---
+---
+
+lldpXdot3RemPowerTable   OBJECT-TYPE
+    ::= { lldpXdot3RemoteData 2 }
+
+lldpXdot3RemPowerEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3RemPowerTable 1 }
+
+
+---
+---
+--- lldpXdot3RemLinkAggTable: Link Aggregation Information Table
+---
+---
+
+lldpXdot3RemLinkAggTable   OBJECT-TYPE
+    ::= { lldpXdot3RemoteData 3 }
+
+lldpXdot3RemLinkAggEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3RemLinkAggTable 1 }
+
+
+---
+---
+--- lldpXdot3RemMaxFrameSizeTable: Maximum Frame Size information
+---
+---
+
+lldpXdot3RemMaxFrameSizeTable   OBJECT-TYPE
+    ::= { lldpXdot3RemoteData 4 }
+
+lldpXdot3RemMaxFrameSizeEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXdot3RemMaxFrameSizeTable 1 }
+
+
+END

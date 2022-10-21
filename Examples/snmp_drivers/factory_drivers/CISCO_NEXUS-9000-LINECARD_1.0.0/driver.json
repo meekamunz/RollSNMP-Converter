@@ -1,0 +1,11 @@
+{
+  "includes": [
+    "Definitions.rsnmp",
+    "Nexus_9000_Linecard_Regex.rsnmp"
+  ],
+  "driverName": "Nexus-9000-linecard",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Cisco",
+  "deviceName": "Nexus 9000 Linecard",
+  "factory": true
+}

@@ -1,0 +1,235 @@
+-- Copyright 2002 Evertz Microsystems Ltd.
+-- 05/28/2002
+-- Confidential
+-- Designed by Jay Parlar
+
+EODS3-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	exprEODS3
+	FROM EVERTZ-EXPERIMENTAL-NODE
+	OBJECT-TYPE
+		FROM RFC-1212;
+
+	eods3InstanceInfo OBJECT IDENTIFIER ::= {exprEODS3 2}
+	eods3Jumpers	  OBJECT IDENTIFIER ::= {exprEODS3 3}
+	eods3Notification OBJECT IDENTIFIER ::= {exprEODS3 4}
+	eods3Traps	  OBJECT IDENTIFIER ::= {exprEODS3 5}
+
+-- beginning of EO Instance Table
+
+	instanceTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"		
+		This table contains information and objects related to the
+		instance. 
+		"
+	::= {eods3InstanceInfo 1}
+
+	instanceEntry OBJECT-TYPE
+		SYNTAX InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This entry object is used to access the objects in this table
+		"
+		INDEX { eods3Instance }
+	::= { instanceTable 1}
+
+	InstanceEntry ::= SEQUENCE {
+		eods3Instance INTEGER
+	}
+
+	eods3Instance OBJECT-TYPE
+		SYNTAX INTEGER ( 2..15 )
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"	
+		This object is the main index for this product. Every object is
+		referenced by it.
+		"
+	::= { instanceEntry 1}
+
+-- end of EO InstanceInfo table
+
+-- beginning of EO Jumper Control table
+
+	jumperControlTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF JumperControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects for setting various
+	jumper values
+	"
+	::= { eods3Jumpers 1}
+
+	jumperControlEntry OBJECT-TYPE
+	SYNTAX JumperControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in the table
+	"
+	INDEX { eods3Instance }
+	::= { jumperControlTable 1 }
+
+	JumperControlEntry ::= SEQUENCE {
+		driver1 INTEGER,
+		driver2 INTEGER
+	}
+
+	driver1 OBJECT-TYPE
+		SYNTAX INTEGER {
+			less250(1),
+			greater250(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control is for the output drive level. For a cable less than 250ft, 
+		choose the lower level, and vice-versa for a cable greater than 250ft.		
+		"
+		::= { jumperControlEntry 1 }
+
+	driver2 OBJECT-TYPE
+		SYNTAX INTEGER {
+			less250(1),
+			greater250(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"      
+		This control is for the output drive level. For a cable less than 250ft, 
+		choose the lower level, and vice-versa for a cable greater than 250ft.
+		"
+		::= { jumperControlEntry 2 }
+
+-- end of Jumper Table
+-- beginning of jumperMonitor Table
+
+	jumperMonitorTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF JumperMonitorEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects related to GET-only monitored 		jumpers
+	"
+	::= { eods3Jumpers 2}
+
+	jumperMonitorEntry OBJECT-TYPE
+	SYNTAX JumperMonitorEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in this table
+	"
+	INDEX { eods3Instance }
+	::= {jumperMonitorTable 1}
+
+	JumperMonitorEntry ::= SEQUENCE {
+		masterJumper INTEGER
+	}
+
+	masterJumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			localControl(1),
+			remoteControl(2)
+		}
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control allows the user to read whether or not we are under
+		local or remote control
+		"
+		::= { jumperMonitorEntry 1}
+
+-- end of jumperMonitor Table
+-- beginning of eods3 Management Notification Table
+
+	mgmtFaultTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF MgmtFaultEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This table contains information and objects related to the
+			faults and their management.
+			"
+		::= { eods3Notification 1}
+
+	mgmtFaultEntry OBJECT-TYPE
+		SYNTAX MgmtFaultEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This entry object type is used to access the values for this
+			table.
+			"    
+		INDEX { faultName, eods3Instance }
+	::= { mgmtFaultTable 1 }             
+
+	MgmtFaultEntry ::= SEQUENCE {
+		faultName INTEGER,
+		sendTrap INTEGER,
+		faultPresent INTEGER
+	}
+
+	faultName OBJECT-TYPE
+		SYNTAX INTEGER {signalNotPresent(1),
+			laserFault(2)
+	
+		}
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This object is the main index for this table. The values
+			of the index correspond to the possible faults. The values are 			
+			signalNotPresent and laserFault
+			"
+	::= { mgmtFaultEntry 1 }
+
+	sendTrap OBJECT-TYPE
+		SYNTAX INTEGER {false(1),
+			true(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This control allows the user to read or write the control that
+			allows for certain traps to be received.  The value for this 				
+			object are false and true.
+			"
+	::= { mgmtFaultEntry 2 }
+
+	faultPresent OBJECT-TYPE                
+		SYNTAX  INTEGER {
+			false(1),				 			
+			true(2)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control lets the user read the status of a trap.
+		"        
+	::= { mgmtFaultEntry 3 }
+-- end of mb Management Notification table 
+
+
+END

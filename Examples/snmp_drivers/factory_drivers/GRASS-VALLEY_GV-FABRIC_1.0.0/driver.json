@@ -1,0 +1,8 @@
+{
+    "includes": ["GV_Fabric_Regex.rsnmp"],
+    "manufacturer": "Grass Valley",
+    "driverName": "GV-Fabric",
+    "driverVersion": "1.0.0",
+    "deviceName": "GV Fabric",
+    "factory": true
+}

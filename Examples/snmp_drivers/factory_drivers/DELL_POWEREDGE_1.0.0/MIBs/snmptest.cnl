@@ -1,0 +1,24 @@
+    SNMP-TEST-MIB DEFINITIONS ::= BEGIN
+
+-- Title:      SNMP testing MIB
+--             This Private MIB supports the Radlan SNMP testing
+-- Version:    7.30
+-- Date:       09 Mar 2001
+-- By:         Robi Goldschlager
+-- E-mail:     robi@radlan.com
+--
+IMPORTS
+    Counter64, OBJECT-TYPE        FROM SNMPv2-SMI
+    PortList                      FROM Q-BRIDGE-MIB
+    rlSnmpTestSimulatedVariables  FROM RADLAN-rndApplications;
+
+rlSnmpTestMibVersion OBJECT-TYPE
+    ::= { rlSnmpTestSimulatedVariables 1 }
+
+rlSetsTestTable OBJECT-TYPE
+    ::= { rlSnmpTestSimulatedVariables 2 }
+
+rlSetsTestEntry OBJECT-TYPE
+  ::= { rlSetsTestTable 1 }
+
+END

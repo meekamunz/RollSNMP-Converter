@@ -1,0 +1,34 @@
+RADLAN-TRUNK-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rnd                                     FROM RADLAN-MIB
+    OBJECT-TYPE, IpAddress, Unsigned32,Counter32, TimeTicks,
+    MODULE-IDENTITY                         FROM SNMPv2-SMI
+    DisplayString, TEXTUAL-CONVENTION, TruthValue, RowStatus
+                                            FROM SNMPv2-TC
+    rlDot3adAgg                             FROM RADLAN-TRUNK-MIB;
+
+    rlDot3adAggBalanceTable  OBJECT-TYPE
+        ::= { rlDot3adAgg 2 }
+
+    rlDot3adAggBalanceEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+        ::= { rlDot3adAggBalanceTable 1 }
+
+rlDot3adAggCreationTable OBJECT-TYPE
+    ::= { rlDot3adAgg 6 }
+
+rlDot3adAggCreationEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlDot3adAggCreationTable 1 }
+
+rlDot3adAggPortLacpTable  OBJECT-TYPE
+    ::= { rlDot3adAgg 8 }
+
+rlDot3adAggPortLacpEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlDot3adAggPortLacpTable 1 }
+
+END
+
+

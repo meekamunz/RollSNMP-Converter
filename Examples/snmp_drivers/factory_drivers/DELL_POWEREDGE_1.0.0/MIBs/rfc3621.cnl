@@ -1,0 +1,21 @@
+POWER-ETHERNET-MIB DEFINITIONS ::= BEGIN
+
+pethPsePortOnOffNotification TRAP-TYPE
+    ENTERPRISE { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) powerEthernetMIB(105) pethNotifications(0) }
+    ERRCODE     RSG_ErrMsg_code_rlPoePsePortOnOff_E
+    SEVERITY    INFO
+    ::= 1
+
+pethMainPowerUsageOnNotification TRAP-TYPE
+    ENTERPRISE { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) powerEthernetMIB(105) pethNotifications(0) }
+    ERRCODE     RSG_ErrMsg_code_rlPoeMainPowerUsageOn_E
+    SEVERITY    INFO
+    ::= 2
+
+pethMainPowerUsageOffNotification TRAP-TYPE
+    ENTERPRISE { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) powerEthernetMIB(105) pethNotifications(0) }
+    ERRCODE     RSG_ErrMsg_code_rlPoeMainPowerUsageOff_E
+    SEVERITY    INFO
+    ::= 3
+
+END

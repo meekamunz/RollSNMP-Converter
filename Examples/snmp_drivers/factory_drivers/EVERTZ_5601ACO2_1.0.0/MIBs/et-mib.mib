@@ -1,0 +1,393 @@
+-- Copyright Evertz Microsystems Ltd.
+-- Confidential 
+
+ET-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS        
+
+	exprET                      FROM EVERTZ-EXPERIMENTAL-NODE        
+	OBJECT-TYPE                FROM RFC-1212;
+
+	etInstanceInformation	OBJECT IDENTIFIER ::= { exprET 2 }
+	etMiscellaneousControl	OBJECT IDENTIFIER ::= { exprET 3 }		
+	etOpticalControl	OBJECT IDENTIFIER ::= { exprET 4 }
+	etEthernetControl	OBJECT IDENTIFIER ::= { exprET 5 }	
+	etNotification		OBJECT IDENTIFIER ::= { exprET 6 }	
+	etTraps			OBJECT IDENTIFIER ::= { exprET 7 }
+
+-- beginning of ET Instance Information table       
+
+	instanceTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains information and objects related to the
+			instance.               
+		"        
+	::= { etInstanceInformation 1 }        
+
+	instanceEntry OBJECT-TYPE                
+		SYNTAX InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object is used to access the objects in this table
+		"                
+		INDEX { etInstance }        
+	::= { instanceTable 1 }        
+
+	InstanceEntry ::= SEQUENCE {                
+		etInstance	INTEGER       
+	}        
+
+	etInstance OBJECT-TYPE                
+		SYNTAX INTEGER ( 2..15 )                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This object is the main index for this product.  Every object
+			is referenced by it.                
+		"        
+	::= { instanceEntry 1 }        
+
+-- end of ET Instance Information table 
+-- beginning of ET miscellaneous control table       
+
+	miscControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains Miscellaneous information and objects that were
+			either added late or didnt have a place in any other table.
+		"        
+	::= { etMiscellaneousControl 1 }        
+
+	miscControlEntry OBJECT-TYPE                
+		SYNTAX MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object type is used to access all of the objects in this
+			table.
+		"                
+		INDEX { etInstance }        
+	::= { miscControlTable 1 }        
+
+	MiscControlEntry ::= SEQUENCE {                
+		cardType		OCTET STRING,
+		cardAddress		INTEGER,
+		t1e1j1			INTEGER,
+		t1e1j1LinkStatus	INTEGER,
+		receivedErrors		INTEGER       
+	}        
+
+	cardType OBJECT-TYPE                
+		SYNTAX OCTET STRING (SIZE(15))                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			Since the same MIB is used for 4 separate cards, this control allows the user
+			to determine which card it is talking to.  The values for this object are any string
+			of length 15 or less representing the name of the card.  
+		"        
+	::= { miscControlEntry 1 }  
+
+	cardAddress OBJECT-TYPE                
+		SYNTAX INTEGER(0..1)                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the address of the card.
+			The values for this object are 0 and 1.       
+		"        
+	::= { miscControlEntry 2 }  
+
+	t1e1j1 OBJECT-TYPE                
+		SYNTAX INTEGER {t1(1),
+				e1(2),
+				j1(3)
+		}              
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the value of either t1, 
+			e1 or j1.           
+		"        
+	::= { miscControlEntry 3 }  
+
+	t1e1j1LinkStatus OBJECT-TYPE                
+		SYNTAX INTEGER {inActive(1),
+				active(2)
+		}              
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to see if the t1/e1/j1 link status is
+			active and inactive.  The values for this object are active and inactive.         
+		"        
+	::= { miscControlEntry 4 }  
+		
+	receivedErrors OBJECT-TYPE                
+		SYNTAX INTEGER (0..65535)		            
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the number of received errors.  The
+			values for this control are from 0 to 65535.			          
+		"        
+	::= { miscControlEntry 5 }  
+
+-- end of ET miscellaneous control table    
+-- beginning of ET optical control table       
+
+	opticalControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF OpticalControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains information related to the optical controls.
+		"        
+	::= { etOpticalControl 1 }        
+
+	opticalControlEntry OBJECT-TYPE                
+		SYNTAX OpticalControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object type is used to access all of the values in this 
+			table.
+		"                
+		INDEX { etInstance }        
+	::= { opticalControlTable 1 }        
+
+	OpticalControlEntry ::= SEQUENCE {                		
+		receivedPower	INTEGER,
+		opticalStatus	INTEGER,
+		laser		INTEGER   
+	}        
+
+	receivedPower OBJECT-TYPE                
+		SYNTAX INTEGER (-35..5)
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the received power parameter.  The
+			values for this object are from -30 to 0.			          
+		"        
+	::= { opticalControlEntry 1 }  
+	
+	opticalStatus OBJECT-TYPE                
+		SYNTAX INTEGER {linkDown(1),
+				linkOK(2)
+		}
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the status of the
+			optical link.  The values for this object are linkOK and 
+			linkDown.          
+		"        
+	::= { opticalControlEntry 2 }  
+
+	laser OBJECT-TYPE                
+		SYNTAX INTEGER {fail(1),
+				ok(2)
+		}
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the status of the laser.  The laser
+			can be ok or it can fail.			          
+		"        
+	::= { opticalControlEntry 3 }  
+
+
+-- end of ET optical control table    
+-- beginning of ET optical control table       
+
+	ethernetControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF EthernetControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains information and objects related to the ethernet
+			controls.			
+		"        
+	::= { etEthernetControl 1 }        
+
+	ethernetControlEntry OBJECT-TYPE                
+		SYNTAX EthernetControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object type is used to access all of the objects in this
+			table.			
+		"                
+		INDEX { ethernet, etInstance }        
+	::= { ethernetControlTable 1 }        
+
+	EthernetControlEntry ::= SEQUENCE {                
+		ethernet	INTEGER,
+		duplex		INTEGER,
+		speed		INTEGER,
+		linkStatus	INTEGER
+	}        
+
+	ethernet OBJECT-TYPE                
+		SYNTAX INTEGER {ethernet1(1),
+				ethernet2(2),
+				ethernet3(3),
+				ethernet4(4)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This is the main index in the table.  It is used to reference all of
+			the other objects in this table.  This object can have a value of 
+			ethernet1, ethernet2, ethernet3 and ethernet4.			          
+		"        
+	::= { ethernetControlEntry 1 }  
+
+	duplex OBJECT-TYPE                
+		SYNTAX INTEGER {full(1),
+				half(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the value of the duplex.  The values
+			for this object are full and half.          
+		"        
+	::= { ethernetControlEntry 2 }  
+
+	speed OBJECT-TYPE                
+		SYNTAX INTEGER {speed10(1),
+				speed100(2),
+				speed1000(3)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the value of the speed parameter.
+			The values for this object are speed10, speed100, and speed1000.  Note: some
+			of the speed values may not be present for some of the cards.         
+		"        
+	::= { ethernetControlEntry 3 }  
+
+	linkStatus OBJECT-TYPE                
+		SYNTAX INTEGER {linkDown(1),
+				linkOK(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        
+			This control allows the user to read the value of the link status parameter.
+			This object can have a value of linkOK and linkDown.			          
+		"        
+	::= { ethernetControlEntry 4 }  
+
+-- end of ET miscellaneous control table    
+-- beginning of ET Management Notification table       
+
+	mgmtFaultTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			                      
+			This table contains information and objects related to the fault
+			management options and traps.
+		"        
+	::= { etNotification 1 }        
+
+	mgmtFaultEntry OBJECT-TYPE                
+		SYNTAX MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"      
+			This entry object type is used to access all of the objects in this
+			table.
+		"                
+		INDEX { faultName, etInstance }        
+	::= { mgmtFaultTable 1 }        
+
+	MgmtFaultEntry ::= SEQUENCE {                
+		faultName	INTEGER,                
+		sendTrap	INTEGER,
+		trapPresent	INTEGER        
+	}        
+
+	faultName OBJECT-TYPE                
+		SYNTAX  INTEGER {opticalLinkStatus(1),
+				 laserOK(2),
+				 ethernetLinkStatus1(3),
+				 ethernetLinkStatus2(4),
+				 ethernetLinkStatus3(5),
+				 ethernetLinkStatus4(6),
+				 t1e1j1LinkStatus(7),
+				 receivedErrors(8)				 				
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This is the main index for this table.  Its values represent the names
+			of the particular faults that can occur on all of the ET cards.  This object	
+			can have a value of opticalLinkStatus, laserOK, ethernetLinkStatus, 
+			t1e1j1LinkStatus and received errors.
+		"        
+	::= { mgmtFaultEntry 1 }        
+
+	sendTrap OBJECT-TYPE                
+		SYNTAX  INTEGER {false(1),
+				 true(2)
+		}                
+		ACCESS  read-write                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                       			                   
+			This control allows the user to set whether the particular trap will be
+			received or ignored.  The values for this control are false and true.
+		"        
+	::= { mgmtFaultEntry 2 }
+
+	trapPresent OBJECT-TYPE                
+		SYNTAX  INTEGER {false(1),				 			
+				 true(2)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control allows the user to read whether the particular trap is present
+			or not present.  The values for this object are false and true.			
+		"        
+	::= { mgmtFaultEntry 3 }
+
+-- end of ET Management Notification table   
+
+END

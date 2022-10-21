@@ -1,0 +1,373 @@
+-- Copyright Evertz Microsystems Ltd.
+
+FC3000-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	locationInstance, fc3000Traps
+		FROM FC3000-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { fc3000Traps 1 }
+
+-- beginning of insertionRemoval1  trap
+
+	faultinsertionRemoval1False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 1"
+	::= 1000
+
+	faultinsertionRemoval1True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 1"
+	::= 1001
+
+-- end of insertionRemoval1  trap
+-- beginning of insertionRemoval2  trap
+
+	faultinsertionRemoval2False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 2"
+	::= 1002
+
+	faultinsertionRemoval2True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 2"
+	::= 1003
+
+-- end of insertionRemoval2  trap
+-- beginning of insertionRemoval3  trap
+
+	faultinsertionRemoval3False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 3"
+	::= 1004
+
+	faultinsertionRemoval3True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 3"
+	::= 1005
+
+-- end of insertionRemoval3  trap
+-- beginning of insertionRemoval4  trap
+
+	faultinsertionRemoval4False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 4"
+	::= 1006
+
+	faultinsertionRemoval4True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 4"
+	::= 1007
+
+-- end of insertionRemoval4  trap
+-- beginning of insertionRemoval5  trap
+
+	faultinsertionRemoval5False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 5"
+	::= 1008
+
+	faultinsertionRemoval5True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 5"
+	::= 1009
+
+-- end of insertionRemoval5  trap
+-- beginning of insertionRemoval6  trap
+
+	faultinsertionRemoval6False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 6"
+	::= 1010
+
+	faultinsertionRemoval6True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 6"
+	::= 1011
+
+-- end of insertionRemoval6  trap
+-- beginning of insertionRemoval7  trap
+
+	faultinsertionRemoval7False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 7"
+	::= 1012
+
+	faultinsertionRemoval7True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 7"
+	::= 1013
+
+-- end of insertionRemoval7  trap
+-- beginning of insertionRemoval8  trap
+
+	faultinsertionRemoval8False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 8"
+	::= 1014
+
+	faultinsertionRemoval8True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 8"
+	::= 1015
+
+-- end of insertionRemoval8  trap
+-- beginning of insertionRemoval9  trap
+
+	faultinsertionRemoval9False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 9"
+	::= 1016
+
+	faultinsertionRemoval9True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 9"
+	::= 1017
+
+-- end of insertionRemoval9  trap
+-- beginning of insertionRemoval10  trap
+
+	faultinsertionRemoval10False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 10"
+	::= 1018
+
+	faultinsertionRemoval10True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 10"
+	::= 1019
+
+-- end of insertionRemoval10  trap
+-- beginning of insertionRemoval11  trap
+
+	faultinsertionRemoval11False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 11"
+	::= 1020
+
+	faultinsertionRemoval11True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 11"
+	::= 1021
+
+-- end of insertionRemoval11  trap
+-- beginning of insertionRemoval12  trap
+
+	faultinsertionRemoval12False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 12"
+	::= 1022
+
+	faultinsertionRemoval12True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 12"
+	::= 1023
+
+-- end of insertionRemoval12  trap
+-- beginning of insertionRemoval13  trap
+
+	faultinsertionRemoval13False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 13"
+	::= 1024
+
+	faultinsertionRemoval13True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 13"
+	::= 1025
+
+-- end of insertionRemoval13  trap
+-- beginning of insertionRemoval14  trap
+
+	faultinsertionRemoval14False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 14"
+	::= 1026
+
+	faultinsertionRemoval14True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 14"
+	::= 1027
+
+-- end of insertionRemoval14  trap
+-- beginning of insertionRemoval15  trap
+
+	faultinsertionRemoval15False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been inserted into slot 15"
+	::= 1028
+
+	faultinsertionRemoval15True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"A card has been removed from slot 15"
+	::= 1029
+
+-- end of insertionRemoval15  trap
+-- beginning of frameStatusLine  trap
+
+	faultframeStatusLineFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Frame Status Line OK"
+	::= 1030
+
+	faultframeStatusLineTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Frame Status Line Not OK"
+	::= 1031
+
+-- end of frameStatusLine  trap
+
+-- beginning of auxStatusLine  trap
+
+	faultauxStatusLineFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Auxiliary Status Line OK"
+	::= 1032
+
+	faultauxStatusLineTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Auxiliary Status Line Not OK"
+	::= 1033
+
+-- end of auxStatusLine  trap
+-- beginning of tempOver  trap
+
+	faulttempOverFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Temperature OK"
+	::= 1034
+
+	faulttempOverTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Temperature Over"
+	::= 1035
+
+-- end of tempOver  trap
+-- beginning of tempUnder  trap
+
+	faulttempUnderFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Temperature Ok"
+	::= 1036
+
+	faulttempUnderTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Termperature Under"
+	::= 1037
+
+-- end of tempUnder  trap
+-- beginning of powerSupply1UnderVoltage  trap
+
+	faultpowerSupply1UnderVoltageFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Power Supply 1 Voltage OK"
+	::= 1038
+
+	faultpowerSupply1UnderVoltageTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Power Supply 1 Voltage Under"
+	::= 1039
+
+-- end of powerSupply1UnderVoltage  trap
+-- beginning of powerSupply2UnderVoltage  trap
+
+	faultpowerSupply2UnderVoltageFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Power Supply 2 Voltage OK"
+	::= 1040
+
+	faultpowerSupply2UnderVoltageTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ locationInstance }
+		DESCRIPTION
+			"Power Supply 2 Voltage Under"
+	::= 1041
+
+-- end of powerSupply2UnderVoltage  trap
+
+
+END

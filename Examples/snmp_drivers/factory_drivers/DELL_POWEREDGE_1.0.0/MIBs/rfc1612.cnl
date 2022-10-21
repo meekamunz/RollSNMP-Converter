@@ -1,0 +1,215 @@
+   DNS-RESOLVER-MIB-A DEFINITIONS ::= BEGIN
+
+   IMPORTS
+       MODULE-IDENTITY, OBJECT-TYPE, IpAddress, Counter32, Integer32
+           FROM SNMPv2-SMI
+       TEXTUAL-CONVENTION, RowStatus, DisplayString
+           FROM SNMPv2-TC
+       MODULE-COMPLIANCE, OBJECT-GROUP
+           FROM SNMPv2-CONF
+       dns, DnsName, DnsNameAsIndex, DnsClass, DnsType, DnsQClass,
+       DnsQType, DnsTime, DnsOpCode, DnsRespCode
+           FROM DNS-SERVER-MIB;
+
+   -- DNS Resolver MIB
+
+--   dnsResMIB MODULE-IDENTITY
+--       LAST-UPDATED "9401282250Z"
+--       ORGANIZATION "IETF DNS Working Group"
+--       CONTACT-INFO
+--               "       Rob Austein
+--               Postal: Epilogue Technology Corporation
+--                       268 Main Street, Suite 283
+--                       North Reading, MA 10864
+--                       US
+--                  Tel: +1 617 245 0804
+--                  Fax: +1 617 245 8122
+--               E-Mail: sra@epilogue.com
+--
+--                       Jon Saperia
+--               Postal: Digital Equipment Corporation
+--                       110 Spit Brook Road
+--                       ZKO1-3/H18
+--                       Nashua, NH 03062-2698
+--                       US
+--                  Tel: +1 603 881 0480
+--                  Fax: +1 603 881 0120
+--               E-mail: saperia@zko.dec.com"
+--       DESCRIPTION
+--               "The MIB module for entities implementing the client
+--               (resolver) side of the Domain Name System (DNS)
+--               protocol."
+--       ::= { dns 2 }
+
+   dnsResMIB    OBJECT IDENTIFIER ::= { dns 2 }
+
+   dnsResMIBObjects        OBJECT IDENTIFIER ::= { dnsResMIB 1 }
+
+   -- (Old-style) groups in the DNS resolver MIB.
+
+   dnsResConfig            OBJECT IDENTIFIER ::= { dnsResMIBObjects 1 }
+   dnsResCounter           OBJECT IDENTIFIER ::= { dnsResMIBObjects 2 }
+   dnsResLameDelegation    OBJECT IDENTIFIER ::= { dnsResMIBObjects 3 }
+   dnsResCache             OBJECT IDENTIFIER ::= { dnsResMIBObjects 4 }
+   dnsResNCache            OBJECT IDENTIFIER ::= { dnsResMIBObjects 5 }
+   dnsResOptCounter        OBJECT IDENTIFIER ::= { dnsResMIBObjects 6 }
+
+
+   -- Resolver Configuration Group
+
+   dnsResConfigImplementIdent OBJECT-TYPE
+       ::= { dnsResConfig 1 }
+
+   dnsResConfigService OBJECT-TYPE
+        ::= { dnsResConfig 2 }
+
+   dnsResConfigMaxCnames OBJECT-TYPE
+       ::= { dnsResConfig 3 }
+
+   -- DNS Resolver Safety Belt Table
+
+   dnsResConfigSbeltTable OBJECT-TYPE
+       ::= { dnsResConfig 4 }
+
+   dnsResConfigSbeltEntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsResConfigSbeltStatus
+       ::= { dnsResConfigSbeltTable 1 }
+
+   dnsResConfigUpTime OBJECT-TYPE
+       ::= { dnsResConfig 5 }
+
+   dnsResConfigResetTime OBJECT-TYPE
+       ::= { dnsResConfig 6 }
+
+   dnsResConfigReset OBJECT-TYPE
+       ::= { dnsResConfig 7 }
+
+
+   -- Resolver Counters Group
+
+   -- Resolver Counter Table
+
+   dnsResCounterByOpcodeTable OBJECT-TYPE
+       ::= { dnsResCounter 3 }
+
+   dnsResCounterByOpcodeEntry OBJECT-TYPE
+       ROW-STATUS-TYPE no-status-field
+       ::= { dnsResCounterByOpcodeTable 1 }
+
+
+   -- Resolver Response Code Counter Table
+
+   dnsResCounterByRcodeTable OBJECT-TYPE
+       ::= { dnsResCounter 4 }
+
+   dnsResCounterByRcodeEntry OBJECT-TYPE
+       ROW-STATUS-TYPE no-status-field
+       ::= { dnsResCounterByRcodeTable 1 }
+
+   -- Additional DNS Resolver Counter Objects
+
+   dnsResCounterNonAuthDataResps OBJECT-TYPE
+       ::= { dnsResCounter 5 }
+
+   dnsResCounterNonAuthNoDataResps OBJECT-TYPE
+       ::= { dnsResCounter 6 }
+
+   dnsResCounterMartians OBJECT-TYPE
+       ::= { dnsResCounter 7 }
+
+   dnsResCounterRecdResponses OBJECT-TYPE
+       ::= { dnsResCounter 8 }
+
+   dnsResCounterUnparseResps OBJECT-TYPE
+       ::= { dnsResCounter 9 }
+
+   dnsResCounterFallbacks OBJECT-TYPE
+       ::= { dnsResCounter 10 }
+
+
+   -- Lame Delegation Group
+
+   dnsResLameDelegationOverflows OBJECT-TYPE
+       ::= { dnsResLameDelegation 1 }
+
+   -- Lame Delegation Table
+
+   dnsResLameDelegationTable OBJECT-TYPE
+       ::= { dnsResLameDelegation 2 }
+
+   dnsResLameDelegationEntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsResLameDelegationStatus
+       ::= { dnsResLameDelegationTable 1 }
+
+   -- Resolver Cache Group
+
+   dnsResCacheStatus OBJECT-TYPE
+       ::= { dnsResCache 1 }
+
+   dnsResCacheMaxTTL OBJECT-TYPE
+       ::= { dnsResCache 2 }
+
+   dnsResCacheGoodCaches OBJECT-TYPE
+       ::= { dnsResCache 3 }
+
+   dnsResCacheBadCaches OBJECT-TYPE
+       ::= { dnsResCache 4 }
+
+   -- Resolver Cache Table
+
+   dnsResCacheRRTable OBJECT-TYPE
+       ::= { dnsResCache 5 }
+
+   dnsResCacheRREntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsResCacheRRStatus
+       ::= { dnsResCacheRRTable 1 }
+
+   -- Resolver Negative Cache Group
+
+   dnsResNCacheStatus OBJECT-TYPE
+       ::= { dnsResNCache 1 }
+
+   dnsResNCacheMaxTTL OBJECT-TYPE
+       ::= { dnsResNCache 2 }
+
+   dnsResNCacheGoodNCaches OBJECT-TYPE
+       ::= { dnsResNCache 3 }
+
+   dnsResNCacheBadNCaches OBJECT-TYPE
+       ::= { dnsResNCache 4 }
+
+   -- Resolver Negative Cache Table
+
+   dnsResNCacheErrTable OBJECT-TYPE
+       ::= { dnsResNCache 5 }
+
+   dnsResNCacheErrEntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsResNCacheErrStatus
+       ::= { dnsResNCacheErrTable 1 }
+
+   -- Resolver Optional Counters Group
+
+   dnsResOptCounterReferals OBJECT-TYPE
+       ::= { dnsResOptCounter 1 }
+
+   dnsResOptCounterRetrans OBJECT-TYPE
+       ::= { dnsResOptCounter 2 }
+
+   dnsResOptCounterNoResponses OBJECT-TYPE
+       ::= { dnsResOptCounter 3 }
+
+   dnsResOptCounterRootRetrans OBJECT-TYPE
+       ::= { dnsResOptCounter 4 }
+
+   dnsResOptCounterInternals OBJECT-TYPE
+       ::= { dnsResOptCounter 5 }
+
+   dnsResOptCounterInternalTimeOuts OBJECT-TYPE
+       ::= { dnsResOptCounter 6 }
+
+   END
+

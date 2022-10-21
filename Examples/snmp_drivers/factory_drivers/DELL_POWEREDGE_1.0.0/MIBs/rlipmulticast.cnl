@@ -1,0 +1,102 @@
+RADLAN-rlIPMulticast-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN LCLI MIB
+-- Version:    7.40.01.00
+-- Date:       17 Aug 2005
+--
+
+IMPORTS
+    rlIPmulticast                               FROM RADLAN-rlIPMulticast-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI;
+
+
+rlIpmRouterEnable OBJECT-TYPE
+    ::= { rlIPmulticast 1 }
+
+rlIgmp      OBJECT IDENTIFIER ::= { rlIPmulticast 2 }
+
+rlIgmpMibVersion OBJECT-TYPE
+::= { rlIgmp 1 }
+
+rlPim       OBJECT IDENTIFIER ::= { rlIPmulticast 3 }
+
+rlPimMibVersion OBJECT-TYPE
+    ::= { rlPim 2 }
+
+rlPimEnable OBJECT-TYPE
+    ::= { rlPim 7 }
+
+rlIgmpFilter OBJECT IDENTIFIER ::= { rlIPmulticast  6 }
+
+
+rlIgmpFilterTable OBJECT-TYPE
+    ::= { rlIgmpFilter 2 }
+
+rlIgmpFilterEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIgmpFilterStatus
+    ::= { rlIgmpFilterTable 1 }
+
+rlIgmpTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlIgmpTableOverflow_E
+    SEVERITY    WARNING
+    ::= 143
+
+rlPimTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlPimTableOverflow_E
+    SEVERITY    WARNING
+    ::= 144
+
+rlPimSmInterfaceTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmInterfaceTableOverflow_E
+    SEVERITY WARNING
+    ::= 163
+
+rlPimSmNextHopTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmNextHopTableOverflow_E
+    SEVERITY WARNING
+    ::= 164
+
+rlPimSmMulticastRouteTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmMulticastRouteTableOverflow_E
+    SEVERITY WARNING
+    ::= 165
+
+rlPimSmTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmTableOverflow_E
+    SEVERITY WARNING
+    ::= 166
+
+rlPimSmSrcUnreacable  TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmSrcUnreacable_E
+    SEVERITY WARNING
+     ::= 167
+
+rlPimSmParallelPathToLAN  TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmParallelPathToLan_E
+    SEVERITY WARNING
+     ::= 168
+
+rlPimSmNotSMUpstreamNeighbor  TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE   RSG_ErrMsg_code_rlPimSmNotSMUpstreamNeighbor_E
+    SEVERITY WARNING
+    ::= 169
+
+rlIpmAddOutgoingInterfaceFailed TRAP-TYPE
+    ENTERPRISE  rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlIpmAddOutgoingInterfaceFailed_E
+    SEVERITY    WARNING
+    ::=  182
+
+END
+
+

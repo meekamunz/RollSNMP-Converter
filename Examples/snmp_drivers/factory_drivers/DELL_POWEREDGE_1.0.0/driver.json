@@ -1,0 +1,10 @@
+{
+  "includes": [
+    "Dell_PowerEdge_regex.rsnmp"
+  ],
+  "driverName": "PowerEdge",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Dell",
+  "deviceName": "Dell_PowerEdge_regex",
+  "factory": true
+}

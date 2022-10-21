@@ -1,0 +1,153 @@
+-- Copyright Evertz Microsystems Ltd.
+-- 10/10/2000
+-- Confidential
+
+-- Internal MIBs in development
+-- All MIBs are preliminary and subject to change without notice
+
+EVERTZ-DEVELOPMENT-NODE DEFINITIONS ::= BEGIN
+
+IMPORTS 
+	evtzDevelopment
+		FROM EVERTZ-ROOT;
+
+--Node Definitions	
+
+-- a mib for the AVM
+	devAVM			OBJECT IDENTIFIER ::= { evtzDevelopment 1  }
+	devDA2OESD		OBJECT IDENTIFIER ::= { evtzDevelopment 2  }
+	devDA2EOSD		OBJECT IDENTIFIER ::= { evtzDevelopment 3  }
+	devDC			OBJECT IDENTIFIER ::= { evtzDevelopment 4  }
+    devEvertzProduct        OBJECT IDENTIFIER ::= { evtzDevelopment 5  }
+    devFC                   OBJECT IDENTIFIER ::= { evtzDevelopment 6  }
+    devCARD              OBJECT IDENTIFIER ::= { evtzDevelopment 7  }
+    devAVC                  OBJECT IDENTIFIER ::= { evtzDevelopment 8  }
+    devQUATTRO              OBJECT IDENTIFIER ::= { evtzDevelopment 9  }
+    devVAT                  OBJECT IDENTIFIER ::= { evtzDevelopment 10 }
+    devMT                   OBJECT IDENTIFIER ::= { evtzDevelopment 11 }
+    devVAR                  OBJECT IDENTIFIER ::= { evtzDevelopment 12 }
+    devMR                   OBJECT IDENTIFIER ::= { evtzDevelopment 13 }
+    devET                   OBJECT IDENTIFIER ::= { evtzDevelopment 14 }
+	devCDM                  OBJECT IDENTIFIER ::= { evtzDevelopment 15 }
+	devCVR			OBJECT IDENTIFIER ::= { evtzDevelopment 16 }
+	devCVT			OBJECT IDENTIFIER ::= { evtzDevelopment 17 }
+	devBPX			OBJECT IDENTIFIER ::= { evtzDevelopment 18 }
+	devCCM			OBJECT IDENTIFIER ::= { evtzDevelopment 19 }
+	devQUATTROM		OBJECT IDENTIFIER ::= { evtzDevelopment 20 }
+	devCOMBO		OBJECT IDENTIFIER ::= { evtzDevelopment 21 }
+	devMB			OBJECT IDENTIFIER ::= { evtzDevelopment 22 }
+	devEO			OBJECT IDENTIFIER ::= { evtzDevelopment 23 }
+	devOE			OBJECT IDENTIFIER ::= { evtzDevelopment 24 }
+    devBPXTR		OBJECT IDENTIFIER ::= { evtzDevelopment 25 }
+	devFSHD			OBJECT IDENTIFIER ::= { evtzDevelopment 26 }
+	devCEM			OBJECT IDENTIFIER ::= { evtzDevelopment 27 }
+    devMTHD         OBJECT IDENTIFIER ::= { evtzDevelopment 28 }
+    devMRHD         OBJECT IDENTIFIER ::= { evtzDevelopment 29 }
+    devVATHD         OBJECT IDENTIFIER ::= { evtzDevelopment 30 }
+    devVARHD         OBJECT IDENTIFIER ::= { evtzDevelopment 31 }
+    devVT4         OBJECT IDENTIFIER ::= { evtzDevelopment 32 }
+    devVR4        OBJECT IDENTIFIER ::= { evtzDevelopment 33 }
+    devLT         OBJECT IDENTIFIER ::= { evtzDevelopment 34 }
+    devLR         OBJECT IDENTIFIER ::= { evtzDevelopment 35 }
+    devIT         OBJECT IDENTIFIER ::= { evtzDevelopment 36 }
+    devNCP        OBJECT IDENTIFIER ::= { evtzDevelopment 37 }
+    devOEHD3        OBJECT IDENTIFIER ::= { evtzDevelopment 38 }
+    devEOHD3        OBJECT IDENTIFIER ::= { evtzDevelopment 39 }
+    devEODS3        OBJECT IDENTIFIER ::= { evtzDevelopment 40 }
+    devOEDS3        OBJECT IDENTIFIER ::= { evtzDevelopment 41 }
+    devADCA4        OBJECT IDENTIFIER ::= { evtzDevelopment 42 }
+    devDCDA        OBJECT IDENTIFIER ::= { evtzDevelopment 43 }
+    devVAR2        OBJECT IDENTIFIER ::= { evtzDevelopment 44 }
+    devVAT2        OBJECT IDENTIFIER ::= { evtzDevelopment 45 } 
+    devDLY     OBJECT IDENTIFIER ::= { evtzDevelopment 46 } 
+    devEOSD3     OBJECT IDENTIFIER ::= { evtzDevelopment 47 } 
+    devOESD3     OBJECT IDENTIFIER ::= { evtzDevelopment 48 } 
+    devDACA4     OBJECT IDENTIFIER ::= { evtzDevelopment 49 } 
+    devAD4  OBJECT IDENTIFIER ::= { evtzDevelopment 50 } 
+    devAE4  OBJECT IDENTIFIER ::= { evtzDevelopment 51 }
+    devUCHD OBJECT IDENTIFIER ::= { evtzDevelopment 52 }
+    devAT   OBJECT IDENTIFIER ::= { evtzDevelopment 53 }
+    devAR   OBJECT IDENTIFIER ::= { evtzDevelopment 54 }
+    devDT   OBJECT IDENTIFIER ::= { evtzDevelopment 55 }
+    devADM2 OBJECT IDENTIFIER ::= { evtzDevelopment 56 }
+    devDLYHD    OBJECT IDENTIFIER ::= { evtzDevelopment 57 }
+    devADCA4AV  OBJECT IDENTIFIER ::= { evtzDevelopment 58 }
+    devAM       OBJECT IDENTIFIER ::= { evtzDevelopment 59 }
+    devOO7707 OBJECT IDENTIFIER ::= { evtzDevelopment 60 }
+    devATA     OBJECT IDENTIFIER ::= { evtzDevelopment 61 }
+    devARA      OBJECT IDENTIFIER ::= { evtzDevelopment 62 }
+    devDAC7730 OBJECT IDENTIFIER ::= { evtzDevelopment 63 }
+    devDLYHDSD7743 OBJECT IDENTIFIER ::= { evtzDevelopment 64 }
+    devADCHD7730 OBJECT IDENTIFIER ::= { evtzDevelopment 65 }
+    devAD4HD7721 OBJECT IDENTIFIER ::= { evtzDevelopment 66 }
+    devXC7710   OBJECT IDENTIFIER ::= { evtzDevelopment 67 }
+    devCCMHD7760 OBJECT IDENTIFIER ::= { evtzDevelopment 68 }
+    devCVDR7707 OBJECT IDENTIFIER ::= { evtzDevelopment 69 }
+    devCVDT7707 OBJECT IDENTIFIER ::= { evtzDevelopment 70 }
+    devFSHD7746 OBJECT IDENTIFIER ::= { evtzDevelopment 71 }
+    devCDM7736 OBJECT IDENTIFIER ::= { evtzDevelopment 72 }
+    devCEM7736 OBJECT IDENTIFIER ::= { evtzDevelopment 73 }
+    devVT2HD OBJECT IDENTIFIER ::= {evtzDevelopment 74 }
+    devVR2HD OBJECT IDENTIFIER ::= {evtzDevelopment 75 }
+    devGPSDR OBJECT IDENTIFIER ::= {evtzDevelopment 76 }
+    devGPSDT OBJECT IDENTIFIER ::= {evtzDevelopment 77 }
+    devDSHD7771 OBJECT IDENTIFIER ::= { evtzDevelopment 78 }
+    devCSHD7771 OBJECT IDENTIFIER ::= { evtzDevelopment 79 }
+    devXUDCAES4HD OBJECT IDENTIFIER ::= { evtzDevelopment 80 }
+    devOEE3 OBJECT IDENTIFIER ::= { evtzDevelopment 81 }
+    devEOE3 OBJECT IDENTIFIER ::= { evtzDevelopment 82 }
+    devCD2 OBJECT IDENTIFIER ::= { evtzDevelopment 83 }
+    devDARF OBJECT IDENTIFIER ::= { evtzDevelopment 84 }
+    devCE2 OBJECT IDENTIFIER ::= { evtzDevelopment 85 }
+    devHDC13 OBJECT IDENTIFIER ::= { evtzDevelopment 86 }
+    devUCKF OBJECT IDENTIFIER ::= { evtzDevelopment 87 }
+    devVR8 OBJECT IDENTIFIER ::= { evtzDevelopment 88 }
+    devVT8 OBJECT IDENTIFIER ::= { evtzDevelopment 89 }
+    devAVM2 OBJECT IDENTIFIER ::= { evtzDevelopment 90 }
+    devBPXRF OBJECT IDENTIFIER ::= { evtzDevelopment 91 }
+    devXUCAES4HD OBJECT IDENTIFIER ::= { evtzDevelopment 92 }
+    devDA7 OBJECT IDENTIFIER ::= { evtzDevelopment 93 }
+    devR4X1 OBJECT IDENTIFIER ::= { evtzDevelopment 94 }
+    devCATVT OBJECT IDENTIFIER ::= { evtzDevelopment 95 }
+    devCATVR OBJECT IDENTIFIER ::= { evtzDevelopment 96 }
+    devVMDA7700 OBJECT IDENTIFIER ::= { evtzDevelopment 97 }
+    devOEHD OBJECT IDENTIFIER ::= { evtzDevelopment 98 }
+    devEOHD OBJECT IDENTIFIER ::= { evtzDevelopment 99 }
+    devRD2X2 OBJECT IDENTIFIER ::= { evtzDevelopment 100 }
+    devHDC14 OBJECT IDENTIFIER ::= { evtzDevelopment 101 }
+    devCE7737 OBJECT IDENTIFIER ::= { evtzDevelopment 102 }
+    devRGBR OBJECT IDENTIFIER ::= { evtzDevelopment 103 }
+    devRGBT OBJECT IDENTIFIER ::= { evtzDevelopment 104 }
+    devTG2HD OBJECT IDENTIFIER ::= { evtzDevelopment 105 }
+    devAVM2HD OBJECT IDENTIFIER ::= { evtzDevelopment 106 }
+    devACOHD7700 OBJECT IDENTIFIER ::= { evtzDevelopment 107 }
+    devVMSHD7760 OBJECT IDENTIFIER ::= { evtzDevelopment 108 }
+    devADVT OBJECT IDENTIFIER ::= { evtzDevelopment 109 }
+    devADVR OBJECT IDENTIFIER ::= { evtzDevelopment 110 }
+    devAD8HD7721 OBJECT IDENTIFIER ::= { evtzDevelopment 111 }
+    devAE8HD7721 OBJECT IDENTIFIER ::= { evtzDevelopment 112 }
+    devAD8DDHD7720 OBJECT IDENTIFIER ::= { evtzDevelopment 113 }
+    devFSEAES8HD7746 OBJECT IDENTIFIER ::= { evtzDevelopment 114 }
+    devTG2HDCF7751 OBJECT IDENTIFIER ::= { evtzDevelopment 115 }
+    devNRHD7710 OBJECT IDENTIFIER ::= { evtzDevelopment 116 }
+    devVLPRO OBJECT IDENTIFIER ::= { evtzDevelopment 117 }
+    devAEA47721 OBJECT IDENTIFIER ::= { evtzDevelopment 118 }
+    devVT4HS7707 OBJECT IDENTIFIER ::= { evtzDevelopment 119 }
+    devVR4HS7707 OBJECT IDENTIFIER ::= { evtzDevelopment 120 }
+    devVBIKHD7725 OBJECT IDENTIFIER ::= { evtzDevelopment 121 }
+    devMFCHD7772  OBJECT IDENTIFIER ::= { evtzDevelopment 122 }
+    devMFDHD7772  OBJECT IDENTIFIER ::= { evtzDevelopment 123 }
+    devDD4HD7721  OBJECT IDENTIFIER ::= { evtzDevelopment 124 }
+    devDE4HD7721  OBJECT IDENTIFIER ::= { evtzDevelopment 125 }
+    devFSHD7745  OBJECT IDENTIFIER ::= { evtzDevelopment 126 }
+    devUCHD7711  OBJECT IDENTIFIER ::= { evtzDevelopment 127 }
+    devDVPHD7732 OBJECT IDENTIFIER ::= { evtzDevelopment 128 }
+    devUCKF7710  OBJECT IDENTIFIER ::= { evtzDevelopment 129 }
+    devR2X2HES7700  OBJECT IDENTIFIER ::= { evtzDevelopment 130 }
+    devR2X2HD7700  OBJECT IDENTIFIER ::= { evtzDevelopment 131 }
+    devARC7710  OBJECT IDENTIFIER ::= { evtzDevelopment 132 }
+    devCVR47707 OBJECT IDENTIFIER ::= { evtzDevelopment 133 }
+    devCVT47707 OBJECT IDENTIFIER ::= { evtzDevelopment 134 }
+    devOO2OC7707 OBJECT IDENTIFIER ::= { evtzDevelopment 135 }
+    devDLYASI7780 OBJECT IDENTIFIER ::= { evtzDevelopment 136 }
+END

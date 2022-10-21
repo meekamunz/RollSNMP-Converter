@@ -1,0 +1,59 @@
+ISDN-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    OBJECT-TYPE
+            FROM RFC-1212
+    transmission
+            FROM RFC1213-MIB;
+
+isdnMib OBJECT IDENTIFIER ::= { transmission 20 }
+isdnMibObjects  OBJECT IDENTIFIER ::= { isdnMib 1 }
+isdnBasicRateGroup OBJECT IDENTIFIER ::= { isdnMibObjects 1 } -- yes
+isdnBearerGroup OBJECT IDENTIFIER ::= { isdnMibObjects 2 }
+isdnSignalingGroup OBJECT IDENTIFIER ::= { isdnMibObjects 3 }-- yes
+isdnEndpointGroup OBJECT IDENTIFIER ::= { isdnMibObjects 4 } -- yes
+isdnDirectoryGroup OBJECT IDENTIFIER ::= { isdnMibObjects 5 }
+isdnMibTrapPrefix OBJECT IDENTIFIER ::= { isdnMib 2 }
+isdnMibTraps    OBJECT IDENTIFIER ::= { isdnMibTrapPrefix 0 }
+isdnMibConformance OBJECT IDENTIFIER ::= { isdnMib 3 }
+isdnMibCompliances OBJECT IDENTIFIER ::= { isdnMibConformance 1 }
+isdnMibGroups   OBJECT IDENTIFIER ::= { isdnMibConformance 2 }
+
+isdnBasicRateTable OBJECT-TYPE
+    ::= { isdnBasicRateGroup 1 }
+
+isdnBasicRateEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { isdnBasicRateTable 1 }
+
+isdnSignalingTable OBJECT-TYPE
+    ::= { isdnSignalingGroup 2 }
+
+isdnSignalingEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME isdnSignalingStatus
+    ::= { isdnSignalingTable 1 }
+
+isdnSignalingStatsTable OBJECT-TYPE
+    ::= { isdnSignalingGroup 3 }
+
+isdnSignalingStatsEntry OBJECT-TYPE
+    AUGMENTS {isdnSignalingEntry}
+    ::= { isdnSignalingStatsTable 1 }
+
+isdnEndpointTable OBJECT-TYPE
+    ::= { isdnEndpointGroup 2 }
+
+isdnEndpointEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME isdnEndpointStatus
+    ::= { isdnEndpointTable 1 }
+
+isdnMibCallInformation TRAP-TYPE
+    ENTERPRISE isdnMibTrapPrefix
+    ERRCODE     RSG_ErrMsg_code_isdnMibCallInformation_E
+    SEVERITY    WARNING
+    ::= 1
+
+END
+

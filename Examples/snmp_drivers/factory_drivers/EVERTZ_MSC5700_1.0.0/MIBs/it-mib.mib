@@ -1,0 +1,543 @@
+-- Copyright Evertz Microsystems Ltd.
+-- Confidential 
+
+IT-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS        
+
+	exprIT                      
+		FROM EVERTZ-EXPERIMENTAL-NODE        
+	OBJECT-TYPE                
+		FROM RFC-1212;
+
+	itInstanceInfo	OBJECT IDENTIFIER ::= { exprIT 2 }	
+	itControl		OBJECT IDENTIFIER ::= { exprIT 3 }
+    itMonitor       OBJECT IDENTIFIER ::= { exprIT 4 }
+	itNotification		OBJECT IDENTIFIER ::= { exprIT 5 }	
+	itTraps			OBJECT IDENTIFIER ::= { exprIT 6 }
+
+-- beginning of IT Instance Information table       
+
+	instanceTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  
+			This table contains information and objects
+			related to the instance information.                    
+		"        
+	::= { itInstanceInfo 1 }        
+
+	instanceEntry OBJECT-TYPE                
+		SYNTAX InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+			This entry object type is used to access the
+			objects contained in this table.
+		"                
+		INDEX { itInstance }        
+	::= { instanceTable 1 }        
+
+	InstanceEntry ::= SEQUENCE {                
+		itInstance	INTEGER       
+	}        
+
+	itInstance OBJECT-TYPE                
+		SYNTAX  INTEGER ( 2..15 )                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                        
+			This object is a main index for the card and
+			is used to index everything in this table.
+		"        
+	::= { instanceEntry 1 }        
+
+-- end of it Instance Information table    
+-- beginning of it Control table       
+
+	itControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ItControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		    This control is used for the IT parameters,
+        "        
+	::= { itControl 1 }        
+
+	itControlEntry OBJECT-TYPE                
+		SYNTAX ItControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { channelIndex, itInstance }        
+	::= { itControlTable 1 }        
+
+	ItControlEntry ::= SEQUENCE {                
+        channelIndex               INTEGER,
+        interfaceProfile            INTEGER,
+        audioDetectionThreshold     INTEGER,
+        audioGain                   INTEGER
+    }
+	
+    channelIndex OBJECT-TYPE
+        SYNTAX INTEGER ( 1..8 )
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the channel index parameter and it has a range from 
+            1 to 8. 
+            Note: for the IT-3 cards, the range is from 1 to 3.
+        "
+    ::= { itControlEntry 1 }
+
+    interfaceProfile OBJECT-TYPE                
+		SYNTAX  INTEGER { channelNotPresent(1),
+                telexMatrix(2),
+                clearComMatrix(3),
+                telexPartyline(4),
+                clearComPartyline(5)
+		}                
+		ACCESS  read-write                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+		    This control allows the user to set the Interface Profile
+            It has options of being Telex Matrix, ClearCom Matrix, 
+            Telex Partyline and ClearCom Partyline.
+            Note: If it is an invalid channel, it will return 
+            channelNotPresent. For example, if it is an IT-3 card, and a
+            get is done on the 4th channel of this parameter, the value
+            returned would be channelNotPresent.  In addition, you cannot
+            set a value of channelNotPresent for this parameter.
+        "        
+	::= { itControlEntry 2 }        
+    
+    audioDetectionThreshold OBJECT-TYPE
+        SYNTAX INTEGER ( -128..127 )
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This control allows the user to set the Audio Detection Threshold
+            and it has a range of -128 to 127 and it is indexed on 3 channels.  
+            The range in the card for Telex or ClearCom Matrix Profiles is
+            from -30 to +10dB and for Telex or ClearCom Partyline Profiles the
+            range is -40 to +0dB.
+            Note: If it is an invalid channel, the value returned would be
+            0.
+        "
+    ::= { itControlEntry 3 }
+    
+    audioGain OBJECT-TYPE
+        SYNTAX INTEGER ( -128..127 )
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Audio Gain Parameter and it is indexed on 3 channels.
+            The range is from -128..127.  The range in the card is -10 to +10dB
+            for Telex or ClearCom Matrix Profiles and -5 to +5dB for Telex
+            or ClearCom Partyline Profiles.  The values are incremented in
+            0.5dB intervals.
+            Note: If it is an invalid channel, the value returned would be 
+            0.
+        "
+    ::= { itControlEntry 4 }
+-- end of it it control table
+-- beginning of it DataControl table       
+
+	itDataControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ItDataControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		    This control table is used for the IT Data Parameters
+        "        
+	::= { itControl 2 }        
+
+	itDataControlEntry OBJECT-TYPE                
+		SYNTAX ItDataControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { channelIndex, itInstance }        
+	::= { itDataControlTable 1 }        
+
+	ItDataControlEntry ::= SEQUENCE {                
+        dataTermination             INTEGER,
+        dataFailsafeBias            INTEGER
+    }
+    
+    dataTermination OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1), 
+                notActive(2),
+                active(3)
+        }        
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Data Termination Parameter and it can either be
+            Not Active or Active.
+            Note: If it is an invalid channel, then channelNotPresent will
+            be returned.  In addition, you cannot set a value of 
+            channelNotPresent for this parameter.
+        "
+    ::= { itDataControlEntry 1 }
+    
+    dataFailsafeBias OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1),
+                    notActive(2),
+                    active(3)
+        }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Data Failsafe Bias and it can either be Not Active
+            or Active.
+            Note: If it is an invalid channel, then channelNotPresent will
+            be returned.  In addition, you cannot set a value of
+            channelNotPresent for this parameter.
+        "
+    ::= { itDataControlEntry 2 }
+
+-- end of itDataControlTable
+-- beginning of it optical Control table       
+
+	opticalControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF OpticalControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+			This table contains optical control information
+			and control objects.
+		"        
+	::= { itControl 3 }        
+
+	opticalControlEntry OBJECT-TYPE                
+		SYNTAX OpticalControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { itInstance }        
+	::= { opticalControlTable 1 }        
+
+	OpticalControlEntry ::= SEQUENCE {                
+		opticalPower	            INTEGER,
+        opticalPowerAlarmThreshold  INTEGER
+    }
+	opticalPower OBJECT-TYPE                
+		SYNTAX  INTEGER ( -128..127 )                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"    
+		    This is the Optical Power Paramater and it has a range of -128 
+            to 127.  The range in the card is from -40 to 10dbm.
+        "        
+	::= { opticalControlEntry 1 }
+
+    opticalPowerAlarmThreshold  OBJECT-TYPE
+        SYNTAX  INTEGER ( -128..127 )
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+        " 
+            This is the Optical Power Alarm Threshold Parameter and it
+            has a range from -128 to 127.  The range in the card is
+            -40 to -10 dbm.
+         "
+     ::= { opticalControlEntry 2 }
+     
+-- end of optical table
+-- beginning of Monitor table       
+
+	monitorTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		    This is the Monitor Table
+        "        
+	::= { itMonitor 1 }        
+
+	monitorEntry OBJECT-TYPE                
+		SYNTAX MonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { itInstance }        
+	::= { monitorTable 1 }        
+
+	MonitorEntry ::= SEQUENCE {                
+        masterJumper        INTEGER,
+        cardIDJumper        INTEGER,
+        cardType            OCTET STRING 
+    }
+
+    masterJumper OBJECT-TYPE
+        SYNTAX INTEGER { local(1),
+                remote(2)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Master Jumper Parameter and it can either be in
+            local or remote mode
+        "
+    ::= { monitorEntry 1 }
+
+    cardIDJumper OBJECT-TYPE
+        SYNTAX INTEGER { cardB(1),
+                cardA(2)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the CARD ID Jumper Parameter and it has options of being
+            Card B or Card A.
+            Note: This parameter is only available on the '7707IT-3' or 
+            '7707IT-8' cards.
+        "
+    ::= { monitorEntry 2 }
+
+    cardType OBJECT-TYPE
+        SYNTAX OCTET STRING (SIZE(12))
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the card type parameter and it can either be 
+            '7707IT-3', '7707IT-3-F2', '7707IT-8' or '7707IT-8-F2'
+        "
+    ::= { monitorEntry 3 }
+-- end of monitor Table    
+-- beginning of it AudioMonitor table       
+
+	itAudioMonitorTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ItAudioMonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		    This table is used for the IT Audio Monitor Parameters
+        "        
+	::= { itMonitor 2 }        
+
+	itAudioMonitorEntry OBJECT-TYPE                
+		SYNTAX ItAudioMonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { channelIndex, itInstance }        
+	::= { itAudioMonitorTable 1 }        
+
+	ItAudioMonitorEntry ::= SEQUENCE {                
+        audioInputStatus    INTEGER,
+        audioOutputStatus   INTEGER
+    }
+	
+    audioInputStatus OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1),
+                signalNotPresent(2),
+                signalPresent(3)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Audio Input Status Parameter and it can either be
+            Signal Not Present or Signal Present.
+            Note: If it is an invalid channel, than channelNotPresent will
+            be returned.
+        "
+    ::= { itAudioMonitorEntry 1 }
+   
+    audioOutputStatus OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1),
+                signalNotPresent(2),
+                signalPresent(3)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Audio Output Status Parameter and it can either be
+            Signal Not Present or Signal Present.
+            Note: If it is an invalid channel, then channelNotPresent will be
+            returned.
+        "
+    ::= { itAudioMonitorEntry 2 }
+
+-- end of it Audio Monitor Table   
+-- beginning of it DataMonitor table       
+
+	itDataMonitorTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ItDataMonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		    This table is used for the IT Data Monitor Table
+        "        
+	::= { itMonitor 3 }        
+
+	itDataMonitorEntry OBJECT-TYPE                
+		SYNTAX ItDataMonitorEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+			This entry object is used to access the objects 
+			in this table.
+		"                
+		INDEX { channelIndex, itInstance }        
+	::= { itDataMonitorTable 1 }        
+
+	ItDataMonitorEntry ::= SEQUENCE {                
+        dataInputStatus    INTEGER,
+        dataOutputStatus   INTEGER
+    }
+
+    dataInputStatus OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1),
+                notActive(2),
+                active(3)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Data Input Status Parameter and it can either be
+            Not Active or Active.
+            Note: If it is an invalid channel, then channelNotPresent will
+            be returned.
+        "
+    ::= { itDataMonitorEntry 1 }
+
+    dataOutputStatus OBJECT-TYPE
+        SYNTAX INTEGER { channelNotPresent(1), 
+                notActive(2),
+                active(3)
+        }        
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+        "
+            This is the Data Output Status Parameter and it can either be
+            Not Active or Active.
+            Note: If it is an invalid channel, then channelNotPresent will
+            be returned.
+        "
+    ::= { itDataMonitorEntry 2 }
+
+-- end of it Data Monitor Table
+-- beginning of it Management Notification table       
+
+	mgmtFaultTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       		
+			This table contains information and objects
+			related to the faults and reporting these faults.	                      
+		"        
+	::= { itNotification 1 }        
+
+	mgmtFaultEntry OBJECT-TYPE                
+		SYNTAX MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                            
+			This entry object type is used to access the
+			objects in this table.
+		"                
+		INDEX { faultName, itInstance }        
+	::= { mgmtFaultTable 1 }        
+
+	MgmtFaultEntry ::= SEQUENCE {                
+		faultName	INTEGER,                
+		sendTrap	INTEGER,
+		faultPresent	INTEGER        
+	}        
+
+	faultName OBJECT-TYPE                
+		SYNTAX  INTEGER { opticalLinkLoss(1),
+                    laserError(2),
+                    opticalPowerAlarmThreshold(3)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+		    This parameter is the index for the faults and it can be
+            Optical Link Loss, Laser Error and Optical Power Alarm Threshold.
+        "        
+	::= { mgmtFaultEntry 1 }        
+
+	sendTrap OBJECT-TYPE                
+		SYNTAX  INTEGER {false(1),
+				 true(2)
+		}                
+		ACCESS  read-write                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"         
+			This control allows the user to set if a certain
+			fault is going to be received or not.  The values 
+			for this object are false and true.              			                   
+		"        
+	::= { mgmtFaultEntry 2 }
+
+	faultPresent OBJECT-TYPE                
+		SYNTAX  INTEGER { false(1),				 			
+				 true(2)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control lets the user read the current state of the fault.
+		    If the value for a fault says false, then there is no errors with
+            that fault.  If the value for a fault says true then there is a 
+            trap present for that fault.
+        "        
+	::= { mgmtFaultEntry 3 }
+
+-- end of it Management Notification table   
+
+END

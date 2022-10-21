@@ -1,0 +1,811 @@
+ISAMANAGER-MIB DEFINITIONS ::= BEGIN
+
+-- Copyright (c) Quantel 2005
+--
+-- Title: ISA Manager MIB
+-- Issue: 2.1
+-- Date:  02/08/2006 DJN
+-- Rvsn:  03/04/2008 KimScott
+--
+
+
+
+IMPORTS
+        quantelProduct                        FROM QUANTEL-MIB
+        DisplayString                         FROM RFC1213-MIB
+        TRAP-TYPE                             FROM RFC-1215
+        OBJECT-TYPE, Integer32,
+        MODULE-IDENTITY                       FROM SNMPv2-SMI;
+
+isaManager MODULE-IDENTITY
+    LAST-UPDATED "200804030001Z"            
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+                  Tel   : +44(0)1635  48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"   
+    DESCRIPTION  "This is the Quantel ISA Manager MIB"
+	REVISION     "200804030001Z"
+	DESCRIPTION  "Fix various syntax errors and add trap variables"
+    ::= { quantelProduct 5 }
+	
+DisplayString ::=
+	OCTET STRING
+
+isaManagerConfig         OBJECT IDENTIFIER ::= { isaManager 1 }
+isaManagerStats          OBJECT IDENTIFIER ::= { isaManager 2 }
+isaManagerTrapVariables  OBJECT IDENTIFIER ::= { isaManager 3 }
+
+-- ===============================================================
+-- isaManagerConfig
+-- ===============================================================
+
+managerStatus OBJECT-TYPE
+    SYNTAX INTEGER
+      {
+      monitor(0),
+      manager(1)
+      }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Manager or Monitor mode."
+    ::= { isaManagerConfig 1 }
+
+-- Pools
+
+poolCount OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of pools."
+    ::= { isaManagerConfig 2 }
+
+poolTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF PoolEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of pool entries."
+    ::= { isaManagerConfig 3 }
+
+    poolEntry OBJECT-TYPE
+        SYNTAX  PoolEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A pool entry containing objects describing
+                     a particular pool."
+        INDEX   { poolIndex }
+        ::= { poolTable 1 }
+
+    PoolEntry ::= SEQUENCE {
+            poolIndex    Integer32,
+            poolName     DisplayString,
+            poolCapacity Integer32,
+            poolFree     Integer32,
+            poolStatus   INTEGER
+            }
+
+        poolIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool ident."
+            ::= { poolEntry 1 }
+
+        poolName OBJECT-TYPE
+            SYNTAX  DisplayString
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool name."
+            ::= { poolEntry 2 }
+
+        poolCapacity OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool capacity in thunks."
+            ::= { poolEntry 3 }
+
+        poolFree OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool free space in thunks."
+            ::= { poolEntry 4 }
+
+        poolStatus OBJECT-TYPE
+            SYNTAX INTEGER
+              {
+              down(0),
+              up(1)
+              }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Status of pool."
+            ::= { poolEntry 5 }
+
+-- Servers
+
+serverCount OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of pools"
+    ::= { isaManagerConfig 4 }
+
+serverTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF ServerEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of server entries."
+    ::= { isaManagerConfig 5 }
+
+    serverEntry OBJECT-TYPE
+        SYNTAX  ServerEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A server entry containing objects describing
+                     a particular server."
+        INDEX   { serverIndex }
+        ::= { serverTable 1 }
+
+    ServerEntry ::= SEQUENCE {
+            serverIndex    Integer32,
+            serverPool     DisplayString
+            }
+
+        serverIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Server ident."
+            ::= { serverEntry 1 }
+
+        serverPool OBJECT-TYPE
+            SYNTAX  DisplayString
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool name to which this server is attached."
+            ::= { serverEntry 2 }
+
+-- Raids
+
+raidCount OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of raids"
+    ::= { isaManagerConfig 6 }
+
+raidTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF RaidEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of raid entries."
+    ::= { isaManagerConfig 7 }
+
+    raidEntry OBJECT-TYPE
+        SYNTAX  RaidEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A raid entry containing objects describing
+                     a particular raid."
+        INDEX   { raidIndex }
+        ::= { raidTable 1 }
+
+    RaidEntry ::= SEQUENCE {
+            raidIndex    Integer32,
+            raidSerial   DisplayString,
+            raidPool     Integer32,
+            raidPosition Integer32
+            }
+
+        raidIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Raid ident."
+            ::= { raidEntry 1 }
+
+        raidSerial OBJECT-TYPE
+            SYNTAX  DisplayString
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Serial number of raid pack."
+            ::= { raidEntry 2 }
+
+        raidPool OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Pool to which this raid is attached."
+            ::= { raidEntry 3 }
+
+        raidPosition OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Position of raid in pool."
+            ::= { raidEntry 4 }
+
+-- Databases
+
+databaseCount OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Number of databases."
+    ::= { isaManagerConfig 8 }
+
+databaseTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF DatabaseEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of database entries."
+    ::= { isaManagerConfig 9 }
+
+    databaseEntry OBJECT-TYPE
+        SYNTAX  DatabaseEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A database entry containing objects describing
+                     a particular database."
+        INDEX   { databaseIndex }
+        ::= { databaseTable 1 }
+
+    DatabaseEntry ::= SEQUENCE {
+            databaseIndex    Integer32,
+            databaseHost     DisplayString,
+            databaseState    INTEGER
+            }
+
+        databaseIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Database ident."
+            ::= { databaseEntry 1 }
+
+        databaseHost OBJECT-TYPE
+            SYNTAX  DisplayString
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Hostname of database."
+            ::= { databaseEntry 2 }
+
+        databaseState OBJECT-TYPE
+            SYNTAX INTEGER
+              {
+              master(1),
+              slave(2),
+              replicating(3),
+              idle(4),
+              dead(5),
+              unknown(9)
+              }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Status of database in Cluster."
+            ::= { databaseEntry 3 }
+
+
+-- ===============================================================
+-- isaManagerStats
+-- ===============================================================
+
+statPools       OBJECT IDENTIFIER ::= { isaManagerStats 1 }
+statDatabases   OBJECT IDENTIFIER ::= { isaManagerStats 2 }
+statRequests    OBJECT IDENTIFIER ::= { isaManagerStats 3 }
+statZones       OBJECT IDENTIFIER ::= { isaManagerStats 4 }
+
+-- Pools
+
+-- Database
+
+statDatabaseTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF StatDatabaseEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of database entries."
+    ::= { statDatabases 1 }
+
+    statDatabaseEntry OBJECT-TYPE
+        SYNTAX  StatDatabaseEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A database entry containing objects describing
+                     a particular database."
+        INDEX   { statDatabaseIndex }
+        ::= { statDatabaseTable 1 }
+
+    StatDatabaseEntry ::= SEQUENCE {
+            statDatabaseIndex    Integer32,
+            statUsedConnections  Integer32,
+            statFreeConnections  Integer32,
+            statDeadConnections  Integer32
+            }
+
+        statDatabaseIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Database ident."
+            ::= { statDatabaseEntry 1 }
+
+        statUsedConnections OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of connections currently in use."
+            ::= { statDatabaseEntry 2 }
+
+        statFreeConnections OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of connections currently free."
+            ::= { statDatabaseEntry 3 }
+
+        statDeadConnections OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of connections awaiting clean up."
+            ::= { statDatabaseEntry 4 }
+
+
+-- Requests Statistics
+
+statReqCorbaZonePortal OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of CORBA requests handled at ZonePortal."
+   ::= { statRequests 1 }
+
+statReqHTTPRequests OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of HTTP requests handled."
+   ::= { statRequests 2 }
+
+statReqSnmpMessageRequests OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of SNMP requests handled."
+   ::= { statRequests 3 }
+
+statReqSnmpTrapsSent OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of SNMP Trap messages sent."
+   ::= { statRequests 4 }
+
+
+statReqClusterReads OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Amount of cluster reads."
+   ::= { statRequests 5 }
+
+statReqClusterWrites OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Amount of cluster writes."
+   ::= { statRequests 6 }
+
+statReqClusterHits OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Amount of cluster hits (reads+writes)."
+   ::= { statRequests 7 }
+
+
+statReqCorbaSpaceManager OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of CORBA requests handled at SpaceManager."
+   ::= { statRequests 8 }
+
+statReqCorbaDirectoryViewer OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Number of CORBA requests handled at DirectoryViewer."
+   ::= { statRequests 9 }
+
+statReqCorbaRequests OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of CORBA requests."
+   ::= { statRequests 10 }
+
+
+statThreadsRunAtUrgent OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads running at urgent priority."
+   ::= { statRequests 11 }
+
+statThreadsRunAtCommunication OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads running at communication priority."
+   ::= { statRequests 12 }
+
+statThreadsRunAtLightweight OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads running at lightweight priority."
+   ::= { statRequests 13 }
+
+statThreadsRunAtHeavyweight OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads running at heavyweight priority."
+   ::= { statRequests 14 }
+
+statThreadsRunAtBackground OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads running at background priority."
+   ::= { statRequests 15 }
+
+statThreadsWaiting OBJECT-TYPE
+   SYNTAX  INTEGER
+   MAX-ACCESS  read-only
+   STATUS  current
+   DESCRIPTION  "Total number of threads waiting."
+   ::= { statRequests 16 }
+
+
+-- Zone Statistics
+
+statZonesTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF StatZoneEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of zone entries."
+    ::= { statZones 1 }
+
+    statZonesEntry OBJECT-TYPE
+        SYNTAX  StatZoneEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A zone entry containing objects describing
+                     a particular zone."
+        INDEX   { statZonesIndex }
+        ::= { statZonesTable 1 }
+
+    StatZoneEntry ::= SEQUENCE {
+            statZonesIndex                  Integer32,
+            statZonesCopyListLen            Integer32,
+            statZonesBrowsePushLen          Integer32,
+            statZonesNewBrowseLen           Integer32,
+            statZonesNewExtRushTimecodesLen Integer32,
+            statZonesNewRushTagsLen         Integer32
+            }
+
+        statZonesIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32768)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Zone ident."
+            ::= { statZonesEntry 1 }
+
+        statZonesCopyListLen OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Length of copy list"
+            ::= { statZonesEntry 2 }
+
+        statZonesBrowsePushLen OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of browse enties to be pushed"
+            ::= { statZonesEntry 3 }
+
+        statZonesNewBrowseLen OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of new browse enties waiting to be pushed"
+            ::= { statZonesEntry 4 }
+
+        statZonesNewExtRushTimecodesLen OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of new ext rush timecode enties waiting to be pushed"
+            ::= { statZonesEntry 5 }
+
+        statZonesNewRushTagsLen OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of new ext rush tags enties waiting to be pushed"
+            ::= { statZonesEntry 6 }
+
+-- ===============================================================================
+-- isaManagerTrapVariables
+-- ===============================================================================
+
+vClipId OBJECT-TYPE
+   SYNTAX  Integer32
+   ACCESS  not-accessible
+   STATUS  current
+   DESCRIPTION "The identifier for a clip"
+   ::= { isaManagerTrapVariables 1 }
+
+vServerId OBJECT-TYPE
+	SYNTAX Integer32
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The identifier for a server"
+	::= { isaManagerTrapVariables 2 }
+
+vPoolId OBJECT-TYPE
+	SYNTAX Integer32
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The identifier for a pool"
+	::= { isaManagerTrapVariables 3 }
+
+vListenerId OBJECT-TYPE
+	SYNTAX Integer32
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The identifier for a listener"
+	::= { isaManagerTrapVariables 4 }
+
+vCopyId OBJECT-TYPE
+	SYNTAX Integer32
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The identifier for a copy"
+	::= { isaManagerTrapVariables 5 }
+
+vManagerName OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The name of a manager"
+	::= { isaManagerTrapVariables 6 }
+
+vDeadManager OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The name of a manager"
+	::= { isaManagerTrapVariables 7 }
+
+vHost OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The name of a host"
+	::= { isaManagerTrapVariables 8 }
+
+vFromTo OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The FromTo range"
+	::= { isaManagerTrapVariables 9 }
+
+vDatabase OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The name of the database"
+	::= { isaManagerTrapVariables 10 }
+
+vReason OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "The reason"
+	::= { isaManagerTrapVariables 11 }
+
+vUnknown OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "Unknown"
+	::= { isaManagerTrapVariables 12 }
+
+vId OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "An identifier"
+	::= { isaManagerTrapVariables 13 }
+
+vPoolName OBJECT-TYPE
+	SYNTAX DisplayString
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "An identifier"
+	::= { isaManagerTrapVariables 14 }
+
+-- ===============================================================================
+-- Traps
+-- ===============================================================================
+
+clipCreated TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vClipId }
+    DESCRIPTION "Clip {1} has just been created."
+    ::= 1
+
+clipModified TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vClipId }
+    DESCRIPTION "Clip {1} has just been modified."
+    ::= 2
+
+clipHidden TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vClipId }
+    DESCRIPTION "Clip {1} has just been made hidden."
+    ::= 3
+
+clipDeleted TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vClipId }
+    DESCRIPTION "Clip {1} has been deleted"
+    ::= 4
+
+serverUp TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vServerId }
+    DESCRIPTION "Server {1} has come up."
+    ::= 5
+
+serverDown TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vServerId }
+    DESCRIPTION "Server {1} has gone down."
+    ::= 6
+
+serverChanged TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vServerId }
+    DESCRIPTION "Server {1} has changed."
+    ::= 7
+
+poolUp TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vPoolId }
+    DESCRIPTION "Pool {1} has come up."
+    ::= 8
+
+poolDown TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vPoolId }
+    DESCRIPTION "Pool {1} has done down."
+    ::= 9
+
+listenerGone TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vListenerId }
+    DESCRIPTION "Listener {1} has gone."
+    ::= 10
+
+copyComplete TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vCopyId }
+    DESCRIPTION "Copy {1} has completed."
+    ::= 11
+
+copyFailed TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vCopyId }
+    DESCRIPTION "Copy {1} has failed."
+    ::= 12
+
+unknown TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vId }
+    DESCRIPTION "A new notification has happened with parameter: {1}."
+    ::= 99
+
+startupManager TRAP-TYPE
+    ENTERPRISE isaManager
+    DESCRIPTION "QuentinManager is starting up."
+    ::= 101
+
+goMonitor TRAP-TYPE
+    ENTERPRISE isaManager
+    DESCRIPTION "QuentinManager has set up and entered Monitor mode."
+    ::= 102
+
+goManager TRAP-TYPE
+    ENTERPRISE isaManager
+    DESCRIPTION "QuentinManager has entered Manager mode."
+    ::= 103
+
+shutdownManager TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vReason }
+    DESCRIPTION "QuentinManager is shutting down because {1}."
+    ::= 104
+
+configChanged TRAP-TYPE
+    ENTERPRISE isaManager
+    DESCRIPTION "The configuration has changed."
+    ::= 105
+
+poolFull TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vPoolName }
+    DESCRIPTION "Pool {1} has reached 95% full."
+    ::= 106
+
+managerDBFailed TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vDeadManager }
+    DESCRIPTION "The manager database {1} has gone down."
+    ::= 107
+
+managerDBStarted TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vManagerName }
+    DESCRIPTION "New database {1} has taken over as master database."
+    ::= 108
+
+managerDBInconsistent TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vDatabase }
+    DESCRIPTION "Database {1} in cluster is inconsistent.
+                 They may required a manual check."
+    ::= 109
+
+dbReplicationStarted TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vFromTo }
+    DESCRIPTION "Start replicating {1}."
+    ::= 110
+
+dbReplicationFailed TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vHost }
+    DESCRIPTION "Replication process failed for {1}."
+    ::= 111
+
+dbReplicationComplete TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vHost }
+    DESCRIPTION "Replication of {1} completed."
+    ::= 112
+
+dbFoundDead TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vHost }
+    DESCRIPTION "Found a dead database on {1}."
+    ::= 113
+
+dbFoundSlave TRAP-TYPE
+    ENTERPRISE isaManager
+    VARIABLES { vHost }
+    DESCRIPTION "A new slave on {1} has been added to the cluster."
+    ::= 114
+
+END

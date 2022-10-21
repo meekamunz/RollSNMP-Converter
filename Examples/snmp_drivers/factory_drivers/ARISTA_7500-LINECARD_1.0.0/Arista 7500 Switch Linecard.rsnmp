@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on Arista DCS-7504 switch at SLP, 24th Aug 2016.
+	The software version of the unit tested is:
+		 4.15.0F-3291468.jerichorel2mike (engineering build)
+	This unit is configured with V2c SNMP, so this config is for V2c SNMP units.  It hasn't been tested
+	and may not work with units configured for V1 SNMP.	
+-->
+<DefinitionGroup>
+		
+	<MIBSource href="drivers/ARISTA_7500-LINECARD_1.0.0/MIBs"/>
+	
+	<!-- Arista doesn't seem to support ascii OIDs, revert to decimal -->
+	
+	<OIDAlias id="MIB2" oid=".1.3.6.1.2.1" >
+		<OIDAlias id="IFX ENTRY" oid=".31.1.1.1">
+			<OIDAlias id="IFX NAME" oid=".1" />
+			<OIDAlias id="IF ALIAS" oid=".18"/>
+			<OIDAlias id="IF HIGH SPEED" oid=".15"/>
+		</OIDAlias>
+		<OIDAlias id="PHYSICAL ENTRY" oid=".47.1.1.1.1" >
+			<OIDAlias id="PHYSICAL DESCRIPTION" oid=".2" />
+		</OIDAlias>
+		<OIDAlias id="ENTITY SENSOR" oid=".99.1.1.1" >
+			<OIDAlias id="PHYSICAL SENSOR VALUE" oid=".4" />
+		</OIDAlias>
+		<OIDAlias id="IF ENTRY" oid=".2.2.1" >
+			<OIDAlias id="IN OCTECTS" oid=".10" />
+			<OIDAlias id="OUT OCTECTS" oid=".16" />
+			<OIDAlias id="IF DESC" oid=".2" />
+		</OIDAlias>
+		<OIDAlias id="DOT1DBRIDGE" oid=".17">
+			<OIDAlias id="DOT1DBASE" oid=".1">
+				<OIDAlias id="DOT1DBASE PORT ENTRY" oid=".4.1">
+					<OIDAlias id="DOT1DBASE PORT INDEX" oid=".2"/>
+				</OIDAlias>
+			</OIDAlias>
+			<OIDAlias id="DOT1QVLAN" oid=".7.1.4">
+				<OIDAlias id="VLAN TABLE" oid=".5.1">
+					<OIDAlias id="PORT VLAN ID" oid=".1" />
+				</OIDAlias>
+			</OIDAlias>
+		</OIDAlias>
+	</OIDAlias>
+	
+	<!-- These OIDS for all Arista Switches -->
+	
+	<OIDAlias id="ARISTA" oid=".1.3.6.1.4.1.30065" >
+		<OIDAlias id="ARISTA MIBS" oid=".3" >
+			<OIDAlias id="ARISTA IF ENTRY" oid=".15.1.1.1" />
+			<OIDAlias id="ARISTA QUEUE" oid=".6.1" />
+		</OIDAlias>
+	</OIDAlias>	
+		
+	<UnitTypeDef typeName="ARISTA_7500-LINECARD_1.0.0" snmpVersion="2C">
+	
+	<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: $</StaticString>
+		</StaticDef>
+		
+		<OIDFilter id="LAN PORTS" dynamic="true" >
+			<OID alias="IF DESC">.#I</OID>
+			<OIDFilterRule regex="^(Ethernet#1\/?\d{0,2}\/?\d?)"/>
+			<OIDSortRule regex="\D*(\d*)/\d*/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/(\d*)/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/\d*/(\d*)" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="SFP LANES" dynamic="true" >
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(Lane \d{1,1} for Xcvr for Ethernet)"/>
+		</OIDFilter>
+		
+		<!-- Awaiting new RSNMP feature - JIRA RLSN-298 -->
+		
+		<OIDFilter id="VLAN PORT INDEX" dynamic="true" >
+			<OID alias="DOT1DBASE PORT INDEX">.#I</OID>
+			<OIDFilterRule regex="#1\d{3,3}" />
+		</OIDFilter>
+		
+		<OIDFilter id="PORT_SENSOR_RX_POWER_LANE_1" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(DOM RX Power Sensor for Ethernet#1\/?[0-9]?[0-9]\/1)"/>
+		</OIDFilter>
+		
+		<OIDFilter id="PORT_SENSOR_RX_POWER_LANE_2" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(DOM RX Power Sensor for Ethernet#1\/?[0-9]?[0-9]\/2)"/>
+		</OIDFilter>
+		
+		<OIDFilter id="PORT_SENSOR_RX_POWER_LANE_3" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(DOM RX Power Sensor for Ethernet#1\/?[0-9]?[0-9]\/3)"/>
+		</OIDFilter>
+		
+		<OIDFilter id="PORT_SENSOR_RX_POWER_LANE_4" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(DOM RX Power Sensor for Ethernet#1\/?[0-9]?[0-9]\/4)"/>
+		</OIDFilter>
+		<!-- These examples reference some of the global translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS NAME" />
+
+		<TranslationDef link="SYS LOCATION" />
+		
+		<!-- These are array translations, so you get one RollCall log field for every OID in the specified range. -->
+		
+		<!-- User Indices:
+		
+		userIndex1 = linecard number
+		userIndex2 = linecard first temperature sensor, in the format [10X006YYY] where X = line card and Y = sensor number
+		userIndex3 = linecard last temperature sensor, in the format [10X006YYY] where X = line card and Y = sensor number
+		userIndex4 = linecard temperature sensor logfield offset
+		
+		NOTE: You will need to MIB walk the unit to determine array values.  Add one UnitInstanceDef per linecard to config.rsnmp
+		
+		-->
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY" pollRate="10" >
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="LAN PORTS" />   
+		</TranslationDef>
+		
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<Array filter="LAN PORTS" />  
+		</TranslationDef>
+		
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" pollRate="2" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<!-- Awaiting new RSNMP feature - JIRA RLSN-298 -->
+		
+		<!--TranslationDef rcLogField="LAN_PORT_%d_VLAN" pollRate="2" >
+			<Array filter="VLAN PORT INDEX" />
+			<OID alias="PORT VLAN ID">.#I</OID>
+			<StringRule />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef-->
+		
+		<!--TranslationDef rcLogField="LAN_PORT_%d_SFP_LANE" pollRate="600" >
+			<Array filter="SFP LANES" />
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<StringRule format="test %s"/>
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef-->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_IN" pollRate="30" >
+			<Array filter="LAN PORTS" />
+			<ExpOID alias="ARISTA IF ENTRY">.5.#I</ExpOID>
+			<comment> convert from bytes/sec to bits/sec </comment>
+			<ConditionRule condition="$1 e 125 &lt;" expression="$1 e 8 * e 100 /" format="%1.2f bits/sec" />
+
+			<comment> convert from bytes/sec to Kbits/sec </comment>
+			<ConditionRule condition="$1 e 125000 &lt;" expression="$1 e 8 * e 1000 /" format="%1.1f Kbits/sec" />
+
+			<comment> convert from bytes/sec to Mbits/sec </comment>
+			<ConditionRule condition="$1 e 125000000 &lt;" expression="$1 e 8 * e 10000000 /" format="%1.1f Mbits/sec" />
+
+			<comment> convert from bytes/sec to Gbits/sec </comment>
+			<ConditionRule condition="$1 e 125000000 &gt;" expression="$1 e 8 * e 1000000000 /" format="%1.2f Gbits/sec" />
+
+			<comment> If previous rules failed somehow, then show as bytes/sec: </comment>
+			<NumRule format="%1.2f bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_OUT" pollRate="30" >
+			<Array filter="LAN PORTS" />
+			<ExpOID alias="ARISTA IF ENTRY">.6.#I</ExpOID>
+			<comment> convert from bytes/sec to bits/sec </comment>
+			<ConditionRule condition="$1 e 125 &lt;" expression="$1 e 8 * e 100 /" format="%1.2f bits/sec" />
+
+			<comment> convert from bytes/sec to Kbits/sec </comment>
+			<ConditionRule condition="$1 e 125000 &lt;" expression="$1 e 8 * e 1000 /" format="%1.1f Kbits/sec" />
+
+			<comment> convert from bytes/sec to Mbits/sec </comment>
+			<ConditionRule condition="$1 e 125000000 &lt;" expression="$1 e 8 * e 10000000 /" format="%1.1f Mbits/sec" />
+
+			<comment> convert from bytes/sec to Gbits/sec </comment>
+			<ConditionRule condition="$1 e 125000000 &gt;" expression="$1 e 8 * e 1000000000 /" format="%1.2f Gbits/sec" />
+
+			<comment> If previous rules failed somehow, then show as bytes/sec: </comment>
+			<NumRule format="%1.2f bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAF_OUT_STATE" pollRate="10" >
+			<Array filter="LAN PORTS" />
+			<ExpOID alias="ARISTA IF ENTRY">.6.#I</ExpOID>	<comment>used bandwidth in octets</comment>
+			<ExpOID alias="IF HIGH SPEED">.#I</ExpOID>			<comment>total bandwidth in bps</comment>
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 85 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="OK: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="WARN: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &gt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="FAIL: %1.3f percent bandwidth used" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAF_IN_STATE" pollRate="10" >
+			<Array filter="LAN PORTS" />
+			<ExpOID alias="ARISTA IF ENTRY">.5.#I</ExpOID>	<comment>used bandwidth in octets</comment>
+			<ExpOID alias="IF HIGH SPEED">.#I</ExpOID>			<comment>total bandwidth in bps</comment>
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 85 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="OK: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &lt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="WARN: %1.3f percent bandwidth used" />
+			<ConditionRule condition="$1 e 8 * e 1000000 / e $2 / e 100 * e 90 &gt;" expression="$1 e 8 * e 1000000 / e $2 / e 100 *" format="FAIL: %1.3f percent bandwidth used" />
+		</TranslationDef>
+		
+		<!-- error and discards specific monitoring -->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.20.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.19.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.14.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.13.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+<!-- AWAIIING NEW FEATURE JIRA RLSN-267
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_DROPPED_INGRESS_PACKETS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="ARISTA QUEUE">.1.1.3.#I.0</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f packets/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f packets/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f packets/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LAN_PORT_%d_DROPPED_EGRESS_PACKETS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.0.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.1.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.2.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.3.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.4.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.5.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.6.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.7.0</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.8.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.9.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.10.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.11.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.12.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.13.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.14.1</ExpOID>
+			<ExpOID alias="ARISTA QUEUE">.2.1.6.#I.15.1</ExpOID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f packets/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f packets/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f packets/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+-->
+		
+		<comment> now some sensors specific to line cards </comment>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_NAME" pollRate="5" >
+			<ExpOID alias="IF ALIAS">.#I</ExpOID>
+			<ExpOID alias="IF DESC">.#I</ExpOID>
+			<Array filter="LAN PORTS" />
+			<ExpressionRule format="$2 : $1" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_PORTNUM" pollRate="600" >
+			<OID alias="IFX NAME">.#I</OID>
+			<Array filter="LAN PORTS" />
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_%d_NAME" pollRate="600" >
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<Array first="#2" last="#3" logFieldOffset="#4" />	
+			<StringRule />
+			<ConstRule format="WARN: No Information" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_%d_CELSIUS" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<Array first="#2" last="#3" logFieldOffset="#4" />	
+			<ConditionRule condition="$1 e 899 &lt;" expression="$1 e 10 /" format="OK: %0.1f Celsius" />
+			<ConditionRule condition="$1 e 1099 &lt;" expression="$1 e 10 /" format="WARN: %0.1f Celsius" />
+			<ConditionRule condition="$1 e 1100 &gt;" expression="$1 e 10 /" format="FAIL: %0.1f Celsius" />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SFP_%d_LANE_1_RX_POWER" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL DESCRIPTION">.#I</ExpOID>
+			<Array filter="PORT_SENSOR_RX_POWER_LANE_1" />
+			<ConditionRule condition="$1 e 1003 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 1099 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18000 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="OK: %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18001 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: HIGH %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 20000 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: HIGH %0.2f dBm : $2" />			
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="SFP_%d_LANE_2_RX_POWER" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL DESCRIPTION">.#I</ExpOID>
+			<Array filter="PORT_SENSOR_RX_POWER_LANE_2" />
+			<ConditionRule condition="$1 e 1003 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 1099 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18000 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="OK: %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18001 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: HIGH %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 20000 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: HIGH %0.2f dBm : $2" />					
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SFP_%d_LANE_3_RX_POWER" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL DESCRIPTION">.#I</ExpOID>
+			<Array filter="PORT_SENSOR_RX_POWER_LANE_3" />
+			<ConditionRule condition="$1 e 1003 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 1099 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18000 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="OK: %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18001 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: HIGH %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 20000 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: HIGH %0.2f dBm : $2" />				
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SFP_%d_LANE_4_RX_POWER" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL DESCRIPTION">.#I</ExpOID>
+			<Array filter="PORT_SENSOR_RX_POWER_LANE_4" />
+			<ConditionRule condition="$1 e 1003 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 1099 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: LOW %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18000 &lt;" expression="$1 e 10000 / e LOG e 10 *" format="OK: %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 18001 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="WARN: HIGH %0.2f dBm : $2" />
+			<ConditionRule condition="$1 e 20000 &gt;" expression="$1 e 10000 / e LOG e 10 *" format="FAIL: HIGH %0.2f dBm : $2" />					
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		</UnitTypeDef>
+
+</DefinitionGroup>

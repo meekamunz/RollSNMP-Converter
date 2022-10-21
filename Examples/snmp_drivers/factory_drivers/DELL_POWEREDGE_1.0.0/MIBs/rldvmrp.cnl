@@ -1,0 +1,57 @@
+RADLAN-rlDvmrp-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN LCLI MIB
+-- Version:    7.40.01.00
+-- Date:       22 Apr 2004
+--
+
+IMPORTS
+    rlDvmrp                                     FROM RADLAN-rlDvmrp-MIB
+    rnd, rndNotifications                       FROM RADLAN-MIB
+    TruthValue, DisplayString, RowStatus        FROM SNMPv2-TC
+    Unsigned32, TimeTicks,
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI;
+
+-- { rlDvmrp 1 } Temporary reserved for dvmrpStdMIB
+
+rlDvmrpMibVersion OBJECT-TYPE
+    ::= { rlDvmrp 2 }
+
+rlDvmrpEnable OBJECT-TYPE
+    ::= { rlDvmrp 3 }
+
+rlDvmrpProbeInterval OBJECT-TYPE
+    ::= { rlDvmrp 4 }
+
+rlDvmrpNeighborTimeOutInterval OBJECT-TYPE
+    ::= { rlDvmrp 5 }
+
+rlDvmrpMinFlashUpdateInterval OBJECT-TYPE
+    ::= { rlDvmrp 6 }
+
+rlDvmrpRouteReportInterval OBJECT-TYPE
+    ::= { rlDvmrp 7 }
+
+rlDvmrpRouteExpirationTime OBJECT-TYPE
+    ::= { rlDvmrp 8 }
+
+rlDvmrpPruneLifetime OBJECT-TYPE
+    ::= { rlDvmrp 9 }
+
+rlDvmrpRouteDesignatedForwarderExtTable OBJECT-TYPE
+    ::= { rlDvmrp 10 }
+
+rlDvmrpRouteDesignatedForwarderExtEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= {rlDvmrpRouteDesignatedForwarderExtTable 1}
+
+rlDvmrpTableOverflow TRAP-TYPE
+    ENTERPRISE rndNotifications
+    ERRCODE     RSG_ErrMsg_code_rlDvmrpTableOverflow_E
+    SEVERITY    WARNING
+    ::= 155
+
+
+END
+
+

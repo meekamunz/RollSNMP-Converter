@@ -1,0 +1,291 @@
+-- Copyright 2002 Evertz Microsystems Ltd.
+-- 05/28/2002
+-- Confidential
+-- Designed by Jay Parlar
+
+OEDS3-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	exprOEDS3
+	FROM EVERTZ-EXPERIMENTAL-NODE
+	OBJECT-TYPE
+		FROM RFC-1212;
+
+	oeds3InstanceInfo OBJECT IDENTIFIER ::= {exprOEDS3 2}
+	oeds3Misc	      OBJECT IDENTIFIER ::= {exprOEDS3 3}
+	oeds3Notification OBJECT IDENTIFIER ::= {exprOEDS3 4}
+	oeds3Traps	  OBJECT IDENTIFIER ::= {exprOEDS3 5}
+
+-- beginning of OE Instance Table
+
+	instanceTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"		
+		This table contains information and objects related to the
+		instance. 
+		"
+	::= {oeds3InstanceInfo 1}
+
+	instanceEntry OBJECT-TYPE
+		SYNTAX InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This entry object is used to access the objects in this table
+		"
+		INDEX { oeds3Instance }
+	::= { instanceTable 1}
+
+	InstanceEntry ::= SEQUENCE {
+		oeds3Instance INTEGER
+	}
+
+	oeds3Instance OBJECT-TYPE
+		SYNTAX INTEGER ( 2..15 )
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"	
+		This object is the main index for this product. Every object is
+		referenced by it.
+		"
+	::= { instanceEntry 1}
+
+-- end of OE InstanceInfo table
+
+-- beginning of OE Misc Control table
+
+	miscControlTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF MiscControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects for setting various
+	values
+	"
+	::= { oeds3Misc 1}
+
+	miscControlEntry OBJECT-TYPE
+	SYNTAX MiscControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in the table
+	"
+	INDEX { oeds3Instance }
+	::= { miscControlTable 1 }
+
+	MiscControlEntry ::= SEQUENCE {
+		jitterJumper INTEGER,
+		testPatternJumper INTEGER,
+		driver2Jumper INTEGER,
+		driver3Jumper INTEGER,
+		driver4Jumper INTEGER
+	}
+
+	jitterJumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			enableAttenuator(1),
+			disableAttenuator(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"		
+		This control is used to enable or disable the attenuator
+		"
+		::= { miscControlEntry 1 }
+
+	testPatternJumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			disablePattern(1),
+			enablePattern(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"		
+		This control is used to enable or disable the test pattern
+		"
+		::= { miscControlEntry 2 }
+
+	driver2Jumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			less250(1),
+			greater250(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control is for the output drive level. For a cable less than 250ft, 
+		choose the lower level, and vice-versa for a cable greater than 250f		
+		"
+		::= { miscControlEntry 3 }
+
+	driver3Jumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			less250(1),
+			greater250(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control is for the output drive level. For a cable less than 250ft, 
+		choose the lower level, and vice-versa for a cable greater than 250f		
+		"
+		::= { miscControlEntry 4 }
+
+	driver4Jumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			less250(1),
+			greater250(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control is for the output drive level. For a cable less than 250ft, 
+		choose the lower level, and vice-versa for a cable greater than 250f		
+		"
+		::= { miscControlEntry 5 }
+
+-- end of Misc Control Table
+-- beginning of miscMonitor Table
+
+	miscMonitorTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF MiscMonitorEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects related to GET-only monitored variables
+	"
+	::= { oeds3Misc 2}
+
+	miscMonitorEntry OBJECT-TYPE
+	SYNTAX MiscMonitorEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in this table
+	"
+	INDEX { oeds3Instance }
+	::= {miscMonitorTable 1}
+
+	MiscMonitorEntry ::= SEQUENCE {
+		opticalPower INTEGER,
+		masterJumper INTEGER
+	}
+
+	opticalPower OBJECT-TYPE
+		SYNTAX INTEGER ( -41..1 )
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control allows the user to read whether or not we are under
+		local or remote control
+		"
+		::= { miscMonitorEntry 1}
+
+
+	masterJumper OBJECT-TYPE
+		SYNTAX INTEGER {
+			localControl(1),
+			remoteControl(2)
+		}
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control allows the user to read whether or not we are under
+		local or remote control
+		"
+		::= { miscMonitorEntry 2}
+
+-- end of misc Monitor Table
+-- beginning of oeds3 Management Notification Table
+
+	mgmtFaultTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF MgmtFaultEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This table contains information and objects related to the
+			faults and their management.
+			"
+		::= { oeds3Notification 1}
+
+	mgmtFaultEntry OBJECT-TYPE
+		SYNTAX MgmtFaultEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This entry object type is used to access the values for this
+			table.
+			"    
+		INDEX { faultName, oeds3Instance }
+	::= { mgmtFaultTable 1 }             
+
+	MgmtFaultEntry ::= SEQUENCE {
+		faultName INTEGER,
+		sendTrap INTEGER,
+		faultPresent INTEGER
+	}
+
+	faultName OBJECT-TYPE
+		SYNTAX INTEGER {signalNotPresent(1),
+			driverFault(2)
+	
+		}
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This object is the main index for this table. The values
+			of the index correspond to the possible faults. The values are 			
+			signalNotPresent and driverFault
+			"
+	::= { mgmtFaultEntry 1 }
+
+	sendTrap OBJECT-TYPE
+		SYNTAX INTEGER {false(1),
+			true(2)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+			"
+			This control allows the user to read or write the control that
+			allows for certain traps to be received.  The value for this 				
+			object are false and true.
+			"
+	::= { mgmtFaultEntry 2 }
+
+	faultPresent OBJECT-TYPE                
+		SYNTAX  INTEGER {
+			false(1),				 			
+			true(2)
+		}                
+		ACCESS  read-only                
+		STATUS  mandatory                
+		DESCRIPTION                        
+		"                      
+			This control lets the user read the status of a trap.
+		"        
+	::= { mgmtFaultEntry 3 }
+-- end of mb Management Notification table 
+
+
+END

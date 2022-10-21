@@ -1,0 +1,30 @@
+-- Copyright (c) Quantel 2005
+--
+-- Title: quantelSeat MIB
+-- Issue: 1.00
+-- Date:  03/01/2007 IdR
+--
+
+quantelSeat-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        quantelProduct                        FROM QUANTEL-MIB
+        DisplayString                         FROM RFC1213-MIB
+        OBJECT-TYPE, Integer32,
+        MODULE-IDENTITY                       FROM SNMPv2-SMI;
+
+quantelSeat MODULE-IDENTITY
+    LAST-UPDATED "200701030000Z"
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"
+    DESCRIPTION  "This is the Quantel Seat MIB"
+
+    ::= { quantelProduct 10 }
+
+END

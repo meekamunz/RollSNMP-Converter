@@ -1,0 +1,49 @@
+
+          PPP-BRIDGE-NCP-MIB-A DEFINITIONS ::= BEGIN
+
+          IMPORTS
+     --          Counter
+     --               FROM RFC1155-SMI
+               ifIndex
+                    FROM RFC1213-MIB
+               OBJECT-TYPE
+                    FROM RFC-1212
+               ppp
+                    FROM PPP-LCP-MIB;
+
+               pppBridge OBJECT IDENTIFIER ::= { ppp 4 }
+
+          pppBridgeTable   OBJECT-TYPE
+               ::= { pppBridge 1 }
+
+
+          pppBridgeEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppBridgeTable 1 }
+
+          pppBridgeConfigTable   OBJECT-TYPE
+               ::= { pppBridge 2 }
+
+
+          pppBridgeConfigEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppBridgeConfigTable 1 }
+
+          pppBridgeMediaTable   OBJECT-TYPE
+               ::= { pppBridge 3 }
+
+
+          pppBridgeMediaEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppBridgeMediaTable 1 }
+
+          pppBridgeMediaConfigTable   OBJECT-TYPE
+               ::= { pppBridge 4 }
+
+
+          pppBridgeMediaConfigEntry   OBJECT-TYPE
+              ROW-STATUS-TYPE no-status-field
+               ::= { pppBridgeMediaConfigTable 1 }
+
+          END
+

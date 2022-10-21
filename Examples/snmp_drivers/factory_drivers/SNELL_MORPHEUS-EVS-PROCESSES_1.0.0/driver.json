@@ -1,0 +1,8 @@
+{
+  "includes": ["MorpheusEVSProcesses.rsnmp"],
+  "driverName": "Morpheus-EVS-processes",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Snell",
+  "deviceName": "MorpheusEVSProcesses",
+  "factory": true
+}

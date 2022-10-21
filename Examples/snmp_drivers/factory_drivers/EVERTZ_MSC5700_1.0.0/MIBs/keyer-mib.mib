@@ -1,0 +1,5012 @@
+-- Copyright 2012 Evertz Microsystems Ltd.
+-- Mon Jun 04 16:16:22 2012
+-- Confidential
+KEYER-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprKEYER
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+      
+    keyerVideo OBJECT IDENTIFIER ::= { miniexprKEYER 2}
+    keyerTime OBJECT IDENTIFIER ::= { miniexprKEYER 3}
+    keyerNetwork OBJECT IDENTIFIER ::= { miniexprKEYER 4}
+    keyerGeneral OBJECT IDENTIFIER ::= { miniexprKEYER 5}
+    keyerDsk OBJECT IDENTIFIER ::= { miniexprKEYER 6}
+    keyerMatte OBJECT IDENTIFIER ::= { miniexprKEYER 7}
+    keyerGpio OBJECT IDENTIFIER ::= { miniexprKEYER 8}
+    keyerTemperature OBJECT IDENTIFIER ::= { miniexprKEYER 9}
+    keyerTransition OBJECT IDENTIFIER ::= { miniexprKEYER 10}
+    keyerEas OBJECT IDENTIFIER ::= { miniexprKEYER 11}
+    keyerAudio OBJECT IDENTIFIER ::= { miniexprKEYER 12}
+    keyerFrontPanel OBJECT IDENTIFIER ::= { miniexprKEYER 13}
+    keyerNotify OBJECT IDENTIFIER ::= { miniexprKEYER 14}
+    keyerTraps OBJECT IDENTIFIER ::= { miniexprKEYER 15}
+
+
+        
+    videoStandard OBJECT-TYPE
+      SYNTAX INTEGER ( 0..63 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " A GUI programmer should associate a selection list of video standards with the following integers 
+  (when the user selects a video standard, the GUI programmer sends the associated integer to the keyer, and when the 
+  user receives an integer from the keyer in request to GET the current video standard, 
+  the GUI programmer displays the associated video standard to the user)
+  NB: The apostrophes are NOT part of the video standard
+  '720p/59.94'		<=>	0
+  '1080i/59.94'		<=>	1
+  '1080p/29.97'		<=>	2
+  '1080p/29.97sF'	<=>	3
+  '1080i/50'		<=>	4
+  '1080p/25'		<=>	5
+  '1080p/25sF'		<=>	6
+  '1080p/23.98'		<=>	7
+  '1080p/23.98sF'	<=> 8
+  '1035i/59.94'		<=>	9
+  '480p/59.94'		<=> 10
+  '720p/60'			<=>	11
+  '720p/50'			<=>	12
+  '720p/30'			<=>	13
+  '720p/29.97'		<=> 14
+  '720p/25'			<=>	15
+  '720p/24'			<=>	16
+  '720p/23.98'		<=>	17
+  '1035i/60'		<=>	18
+  '1080i/60'		<=>	20
+  '1080p/30'		<=>	21
+  '1080p/24'		<=>	22
+  '1080p/30sF'		<=> 23
+  '1080p/24sF'		<=>	24
+  '480p/60'			<=>	25
+  '1080p/60 B'      <=> 26
+  '1080p/59.94 B'   <=> 27
+  '1080p/50 B'      <=> 28
+  '1080p/60 A'      <=> 29
+  '1080p/59.94 A'   <=> 30
+  '1080p/50 A'      <=> 31
+  '525i'			<=>	61
+  '16x9 525i'		<=>	62
+  '625i'			<=>	63
+  
+  The GUI programmer should warn the user that changing the standard from an HD standard to an SD standard (or vice-versa)
+  will cause the system to reboot.(This statement does not apply to the 7725DSKLG, which can only show either HD or SD
+  standards, but not both at the same time.) 
+  
+  PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, QMC-2-MG
+  hide '480p60' and '480p59.94'
+
+  PRODUCT: 7725DSKLG 
+  if the video standard is '525i','16x9 525i' or '625i' hide all of the
+  other video standards
+  if the video standard is not '525i','16x9 525i' or '625i' then hide these three 
+  and present the rest of the standards to to the user
+
+
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  The DSK2 series of keyers can run both HD and SD. As such, the GUI programmer should present ALL possible video
+  standards in a selection list.
+
+   "
+    ::= { keyerVideo 1 }
+
+        
+    referenceType OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  
+  RANGE RESTRICTIONS:
+  
+  For all keyers except for the 7825DSK2 series, only the integer inputs 0 and 3 are valid. Input 0 is the 
+  video input and input 3 is the GenLock reference. 
+  For the DSK2 series (7825DSK2LGHD, 7825DSK2LGSD,7825DSK2LGHDSD and 7825DSK2HDSD) there are three possible
+  places to input the Genlock signal-the back plate, and from one of two frames. The back plate is identified with 
+  the integer value 3, the Genlock from the first frame input is identified with integer 1 and the Genlock from the 
+  second frame input is identified with integer 2.
+  
+  When the keyer type is NOT one of (7825DSK2LGHD, 7825DSK2LGSD,7825DSK2LGHDSD and 7825DSK2HDSD) then 
+  a GUI programmer should present the selections 'In Video' and 'In Genlock' to the user. The GUI programmer should associate
+  a GET/SET value of 0 with the 'In Video' selection and a value of 3 with the 'In Genlock' selection.
+  
+  When the keyer type is one of (7825DSK2LGHD, 7825DSK2LGSD,7825DSK2LGHDSD and 7825DSK2HDSD) then a 
+  GUI programmer should present the selections 'In Video', 'Genlock Frame 1', 'Genlock Frame 2' and 'Genlock Backplate'.
+  The GUI programmer should associate a GET/SET value of 0 with the 'In Video' selection, 
+  a value of 1 with the 'Genlock Frame 1' selection,
+  a value of 2 with the 'Genlock Frame 2' selection,
+  and a value of 3 with the 'Genlock Backplate' selection,
+  
+  
+	Notes:1)
+	A software developer writing a GUI application that allows a user to set the vertical offset (control outputVOffset)
+	through the GUI should disable the entry of data when the reference type is 'inVideo' (i.e. item 0) That is, do an 
+	SNMP get() on the referenceType control before allowing data entry, and if the value returned is 0 then disable entry 
+	of data for a new vertical offset.
+
+	Notes:2)
+	When the reference type is 'inVideo', i.e. not in the genlock status, the following limits apply for 
+	the pertinent standards listed:
+	a)SD sofware, standard 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	b)SD software, standard 16 x9, 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	c)SD software, standard 625i
+	Maximum vertical:625
+	Maximum horizontal:1728
+
+	d)HD software, standard 720p/60
+	Maximum vertical:750
+	Maximum horizontal:1650
+
+	e)HD software, standard 1080i/60, 1080i/59.94, 1080p/59.94 A and B, 1080p/60 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	f)HD software, standard 1080p/30
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	g)HD software, standard 1080p/30sF
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	h)HD software, standard 1080i/50, 1080p/50 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	i)HD software, standard 1080p/25
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+	j)HD software, standard 1080p/20sF
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	k)HD software, standard 1080p/24
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+	l)HD software, standard 1080p/24sF
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+
+	m)HD software, standard 1035i/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	n)HD software, standard 480p/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	o)HD software, standard 720p/50
+	Maximum vertical:750
+	Maximum horizontal:1980
+
+	p)HD software, standard 720p/30
+	Maximum vertical:750
+	Maximum horizontal:3300
+
+	q)HD software, standard 720p/25
+	Maximum vertical:750
+	Maximum horizontal:3690
+
+	r)HD software, standard 720p/24
+	Maximum vertical:750
+	Maximum horizontal:4125
+
+	s)HD software, standard 1080p/25sF
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+    "
+    ::= { keyerVideo 2 }
+
+        
+    outputHOffset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..5000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+	Notes:1)
+	  A software developer writing a GUI application that allows a user to set the vertical offset (control outputVOffset)
+	  through the GUI should disable the entry of data when the reference type is 'inVideo' (i.e. item 0.) That is, do an 
+	  SNMP get() on the referenceType control before allowing data entry, and if the value returned is 0 then disable entry 
+	  of data for a new vertical offset.
+
+	Notes:2)
+	When the reference type is 'inVideo', i.e. not in the genlock status, the following limits apply for 
+	the pertinent standards listed:
+	a)SD sofware, standard 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	b)SD software, standard 16 x9, 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	c)SD software, standard 625i
+	Maximum vertical:625
+	Maximum horizontal:1728
+
+	d)HD software, standard 720p/60
+	Maximum vertical:750
+	Maximum horizontal:1650
+
+	e)HD software, standard 1080i/60, 1080i/59.94, 1080p/59.94 A and B, 1080p/60 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	f)HD software, standard 1080p/30
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	g)HD software, standard 1080p/30sF
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	h)HD software, standard 1080i/50, 1080p/50 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	i)HD software, standard 1080p/25
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+	j)HD software, standard 1080p/20sF
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	k)HD software, standard 1080p/24
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+	l)HD software, standard 1080p/24sF
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+
+	m)HD software, standard 1035i/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	n)HD software, standard 480p/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	o)HD software, standard 720p/50
+	Maximum vertical:750
+	Maximum horizontal:1980
+
+	p)HD software, standard 720p/30
+	Maximum vertical:750
+	Maximum horizontal:3300
+
+	q)HD software, standard 720p/25
+	Maximum vertical:750
+	Maximum horizontal:3690
+
+	r)HD software, standard 720p/24
+	Maximum vertical:750
+	Maximum horizontal:4125
+
+	s)HD software, standard 1080p/25sF
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+    "
+    ::= { keyerVideo 3 }
+
+        
+    outputVOffset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..5000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+	Notes:1)
+	  A software developer writing a GUI application that allows a user to set the vertical offset (control outputVOffset)
+	  through the GUI should disable the entry of data when the reference type is 'inVideo' (i.e. item 0.) That is, do an 
+	  SNMP get() on the referenceType control before allowing data entry, and if the value returned is 0 then disable entry 
+	  of data for a new vertical offset.
+
+	Notes:2)
+	When the reference type is 'inVideo', i.e. not in the genlock status, the following limits apply for 
+	the pertinent standards listed:
+	a)SD sofware, standard 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	b)SD software, standard 16 x9, 525i
+	Maximum vertical:525
+	Maximum horizontal:1716
+
+	c)SD software, standard 625i
+	Maximum vertical:625
+	Maximum horizontal:1728
+
+	d)HD software, standard 720p/60
+	Maximum vertical:750
+	Maximum horizontal:1650
+
+	e)HD software, standard 1080i/60, 1080i/59.94, 1080p/59.94 A and B, 1080p/60 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	f)HD software, standard 1080p/30
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	g)HD software, standard 1080p/30sF
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	h)HD software, standard 1080i/50, 1080p/50 A and B
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	i)HD software, standard 1080p/25
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+	j)HD software, standard 1080p/20sF
+	Maximum vertical:1125
+	Maximum horizontal:2640
+
+	k)HD software, standard 1080p/24
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+	l)HD software, standard 1080p/24sF
+	Maximum vertical:1125
+	Maximum horizontal:2750
+
+
+	m)HD software, standard 1035i/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	n)HD software, standard 480p/60
+	Maximum vertical:1125
+	Maximum horizontal:2200
+
+	o)HD software, standard 720p/50
+	Maximum vertical:750
+	Maximum horizontal:1980
+
+	p)HD software, standard 720p/30
+	Maximum vertical:750
+	Maximum horizontal:3300
+
+	q)HD software, standard 720p/25
+	Maximum vertical:750
+	Maximum horizontal:3690
+
+	r)HD software, standard 720p/24
+	Maximum vertical:750
+	Maximum horizontal:4125
+
+	s)HD software, standard 1080p/25sF
+	Maximum vertical:1124
+	Maximum horizontal:2640
+
+    "
+    ::= { keyerVideo 4 }
+
+        
+    getSupportedVideoStandards OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			
+			A GUI programmer uses this control to query the keyer for the current IDs of supported video standards.
+			This control should be used in conjunction with the videoStandard control before displaying a list of 
+			standards that a keyer user can select from.
+			
+			The returned list will be a comma separated list of the video standards supported the the keyer being controlled.
+			Each ID should be associated with the exact string given in the description of the videoStandard control, e.g.
+			'625i' to 63, '1080p/30sF' to 23, etc.
+
+		   "
+    ::= { keyerVideo 5 }
+
+        
+-- Beginning of videoMandatoryInputsTable
+    videoMandatoryInputsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF VideoMandatoryInputsEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION  " The videoMandatoryInputs table. "
+    ::= { keyerVideo 6 }
+
+    videoMandatoryInputsEntry OBJECT-TYPE
+      SYNTAX VideoMandatoryInputsEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoMandatoryInputsIndex }
+    ::= { videoMandatoryInputsTable 1 }
+
+    VideoMandatoryInputsEntry ::= SEQUENCE {
+        videoMandatoryInputsIndex     INTEGER,
+        isMandatoryVideoInput     INTEGER
+    }
+
+
+    
+    videoMandatoryInputsIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Index used to select for video input to configure,
+			0 => Input A
+			1 => Input B
+			2 => Key input
+			3 => Fill input
+			
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			 "
+    ::= { videoMandatoryInputsEntry 1 }
+
+    
+    isMandatoryVideoInput OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Setting the isMandatoryVideoInput value to 1 implies that the input is a mandatory input that must be present
+			before video output is displayed.
+			Setting the isMandatoryVideoInput value to 0 implies that the input is an optional video input that is not 
+			required to be present before video output is displayed.
+			
+			Getting a 1 implies that the video signal is a mandatory input.
+			Getting a 0 implies that the video signal is an optional input.
+			
+			A GUI programmer should present the user the four possible video inputs, A, B, Key & Fill, within a group box that has been
+			entitled something to the effect of 'Mandatory Video Inputs'. Next to each input, there should be a control that
+			allows for boolean selection/presentation (yes/no). When the user selects a 'Yes', for, say, input A, the GUI 
+			programmer sends a 1 to the SNMP agent. When the user selects a 'No', the programmer sends a 0. Sending a 1
+			implies that the user requires that a particular input to be present on all video output. When the SNMP agent sends
+			a 1 to the GUI application, the application should present the user with a 'Yes', and when the SNMP agent sends
+			a 0, the GUI application should present a 'No' to the user.
+
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			 "
+    ::= { videoMandatoryInputsEntry 2 }
+
+-- End of videoMandatoryInputsTable
+
+
+        
+-- Beginning of mandatoryVideoInputsTable
+    mandatoryVideoInputsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MandatoryVideoInputsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mandatoryVideoInputs table. "
+    ::= { keyerVideo 7 }
+
+    mandatoryVideoInputsEntry OBJECT-TYPE
+      SYNTAX MandatoryVideoInputsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mandatoryVideoInputsIndex }
+    ::= { mandatoryVideoInputsTable 1 }
+
+    MandatoryVideoInputsEntry ::= SEQUENCE {
+        mandatoryVideoInputsIndex     INTEGER,
+        isVideoInputMandatory     INTEGER
+    }
+
+
+    
+    mandatoryVideoInputsIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..5 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control applies to both 7725DSKLG and 7825DSK2LG. However, when used
+ 			with a 7725DSKLG, only the values [0, 3] are applicable. The values [4, 5] 
+			(i.e., Key_2, Fill_2) are for 7825DSK2LG only.
+
+			Index used to select for video input to configure,
+			0 => Input A
+			1 => Input B
+			2 => Key_1 input
+			3 => Fill_1 input
+			4 => Key_2 input
+			5 => Fill_2 input
+
+			PRODUCT: 7725DSKLG, 7825DSK2LG
+			 "
+    ::= { mandatoryVideoInputsEntry 1 }
+
+    
+    isVideoInputMandatory OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Please refer to the deprecated table, videoMandatoryInput for the meaning of the values
+
+			PRODUCT: 7725DSKLG, 7825DSK2LG
+			 "
+    ::= { mandatoryVideoInputsEntry 2 }
+
+-- End of mandatoryVideoInputsTable
+
+
+        
+-- Beginning of timeTable
+    timeTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TimeEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The time table. "
+    ::= { keyerTime 1 }
+
+    timeEntry OBJECT-TYPE
+      SYNTAX TimeEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { timeTypeIndex }
+    ::= { timeTable 1 }
+
+    TimeEntry ::= SEQUENCE {
+        timeTypeIndex     INTEGER,
+        hours     INTEGER,
+        minutes     INTEGER,
+        seconds     INTEGER,
+        direction     INTEGER
+    }
+
+
+    
+    timeTypeIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            timer1(1),
+            timer2(2),
+            zone(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { timeEntry 1 }
+
+    
+    hours OBJECT-TYPE
+      SYNTAX INTEGER ( 0..23 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { timeEntry 2 }
+
+    
+    minutes OBJECT-TYPE
+      SYNTAX INTEGER ( 0..59 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { timeEntry 3 }
+
+    
+    seconds OBJECT-TYPE
+      SYNTAX INTEGER ( 0..59 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { timeEntry 4 }
+
+    
+    direction OBJECT-TYPE
+      SYNTAX INTEGER {
+            down(1),
+            up(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { timeEntry 5 }
+
+-- End of timeTable
+
+
+        
+    rtc OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 2 }
+
+        
+    utc OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 3 }
+
+        
+    local OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 4 }
+
+        
+    lDate OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 5 }
+
+        
+    uDate OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 6 }
+
+        
+    rDate OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 7 }
+
+        
+    dstActive OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 8 }
+
+        
+    ltcTimeZone OBJECT-TYPE
+      SYNTAX INTEGER {
+            local(1),
+            utc(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 9 }
+
+        
+    ltcDateEncode OBJECT-TYPE
+      SYNTAX INTEGER {
+            auto(1),
+            skotel(2),
+            smptemjd(3),
+            smptebcd(4),
+            production(5),
+            legacy(6),
+            none(7)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 10 }
+
+        
+    jamRtcFromUtc OBJECT-TYPE
+      SYNTAX INTEGER {
+            cancel(1),
+            confirm(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTime 11 }
+
+        
+    zoneTimeDifference OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(10) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " A SNMP-interface programmer uses this control to set/get the time zone difference on the keyer relative
+			  to a specified time zone. The format expected is '[sign][hours]:[minutes]:[seconds]' for a standard length of
+			  9 characters(excluding a terminating NULL.)
+			  For example, 
+			  -11:34:35 
+			  or 
+			  +11:56:07
+			  Note:
+			  i)All hours, minutes and seconds that work out to a numerical value of a single digit must be sent
+			  with leading zeros, e.g. 7 minutes must be sent as 07, 3 hours must be sent as 03, whereas 45 minutes
+			  will be sent as 45.
+			  
+			  ii)The minimum value for all fields is 0.
+			  ii)The maximum value for the hours field is 11
+			  iii)The maximum value for both the minutes and seconds fiedls is 59.
+			  
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+              PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			   "
+    ::= { keyerTime 12 }
+
+        
+    ltcIsPresent OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " An SNMP programmer uses this control to enable/disable the detection of LTC data. 
+			  =>When setting this control, sending a 1 implies that LTC data detection is to be enabled,
+			    and sending a 0 implies that LTC data detection is disabled.
+			  =>When getting data from this control, a 0 will be reeceived if LTC data detection is not enabled and a 1 will be received if it is.
+			  
+			  =>A GUI programmer should label the control that will display the status of the control 'LTC Presence Detection Enabled'. 
+			  =>The GUI programmer should display a selection list to the user containing the strings 'Yes' and 'No'. 
+			  ==>==>If the user selects 'Yes' then the GUI programmer should send a 1.
+			  ==>==>If the user selects 'No' then the GUI programmer should send a 0.
+			  ==>==>If the user requests an update and a '1' is received then the GUI programmer should display 'Yes'.
+			  ==>==>If the user requests an update and a '0' is received then the GUI programmer should display 'No'.
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerTime 13 }
+
+        
+    networkIP OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerNetwork 1 }
+
+        
+    networkIPSubnetMask OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerNetwork 2 }
+
+        
+    networkIPGateway OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerNetwork 3 }
+
+        
+    networkMacAddress OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerNetwork 4 }
+
+        
+    ntpServer OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerNetwork 5 }
+
+        
+    primaryNameServer OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerNetwork 6 }
+
+        
+    secondaryNameServer OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerNetwork 7 }
+
+        
+    networkIP2 OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: QMC-2-MG
+
+  To set a new network IP for the second network card on the 9700/QMC-2-MG series, the SNMP programmer sends a string in IPV4 format. E.g. 125.25.90.123
+  No terminating token(comma or period) should be sent.
+  
+  When setting the network IP, the minimum value of a part of an IP address is 0 and the maximum value is 255.
+  There must be exactly three dots, as in the example above. A failure to do so will result in a Generic Error message being
+  generated. 
+  The string returned by a GET operation will also return a string in IPV4  format.
+		   "
+    ::= { keyerNetwork 8 }
+
+        
+    networkIP2SubnetMask OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: QMC-2-MG
+  To set a new IP mask for the second network card on the 9700/QMC-2-MG series, the SNMP programmer sends a string in IPV4 format. E.g. 255.255.192.224
+  No terminating token(comma or period) should be sent.
+  
+  When setting the network IP, the minimum value of a part of an IP address is 0 and the maximum value is 255.
+  There must be exactly three dots, as in the example above. A failure to do so will result in a Generic Error message being
+  generated. 
+  The string returned by a GET operation will also return a string in IPV4  format.
+		   "
+    ::= { keyerNetwork 9 }
+
+        
+-- Beginning of portTable
+    portTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF PortEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The port table. "
+    ::= { keyerGeneral 1 }
+
+    portEntry OBJECT-TYPE
+      SYNTAX PortEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { portIndex }
+    ::= { portTable 1 }
+
+    PortEntry ::= SEQUENCE {
+        portIndex     INTEGER,
+        portType     INTEGER
+    }
+
+
+    
+    portIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            serial1(1),
+            serial2(2),
+            serial3(3),
+            serial4(4),
+            serial5(5),
+            serial6(6),
+            serial7(7),
+            serial8(8),
+            serial9(9),
+            serial10(10)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  serial1 is actually labelled: none
+  serial2 is actually labelled: Port A 
+  serial3 is actually labelled: Port B 
+  serial4 is actually labelled: Port C 
+  serial5 is actually labelled: Port D 
+  serial6 is actually labelled: Port E 
+  serial7 is actually labelled: Port F 
+  serial8 is actually labelled: Port G 
+  serial9 is actually labelled: Port H
+  serial10 hide this one
+  
+  PRODUCT: 7725DSKLG 
+  for this product only serial 1-6 is valid and the names should be
+  serial1 is actually labelled: none
+  serial2 is actually labelled: COM A 
+  serial3 is actually labelled: COM B 
+  serial4 is actually labelled: Serial Control
+  serial5 is actually labelled: COM D 
+  serial6 is actually labelled: COM E 
+  serial7 hide this one
+  serial8 hide this one
+  serial9 hide this one
+  serial10 hide this one
+   "
+    ::= { portEntry 1 }
+
+    
+    portType OBJECT-TYPE
+      SYNTAX INTEGER {
+            portType1(1),
+            portType2(2),
+            portType3(3),
+            portType4(4),
+            portType5(5),
+            portType6(6),
+            portType7(7),
+            portType8(8),
+            portType9(9),
+            portType10(10),
+            portType11(11),
+            portType12(12),
+            portType13(13),
+            portType14(14),
+            portType15(15),
+            portType16(16),
+            portType17(17),
+            portType18(18)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   for these products only these are valid and the labels should be:
+     none = (portType1)
+     easCG = (portType2)
+     Temperature = (portType4)
+     Automation = (portType5)
+     Remote Panel = (portType7)
+     M2100 Auto = (portType11)
+     XY Auto = (portType12)
+     NMEA0183 = (portType14)
+     M2100 Server = (portType18) 
+
+   PRODUCT: QMC-2-MG 
+   for this product only these are valid and the labels should be:
+     none = (portType1)
+     easCG = (portType2)
+     Temperature = (portType4)
+     Automation = (portType5)
+     Remote Panel = (portType7)
+     M2100 Auto = (portType11)
+     XY Auto = (portType12)
+     NMEA0183 = (portType14)
+     QMG Configuration = (portType15)
+     QMG Link 0 = (portType16)
+     QMG Link 1 = (portType17)
+     M2100 Server = (portType18) 
+
+
+  PRODUCT: 7725DSKLG 
+  for this product only these parameters are valid and labels should be:
+    none = (portType1)
+    easCG = (portType2)
+    temperature = (portType4)
+    automation = (portType5)
+    controlPanel = (portType6)
+    console = (portType7)
+    m2100Auto = (portType10)
+    xyAuto = (portType11)
+    
+  for the invalid parameters show the word unavailable instead of the correct name
+   "
+    ::= { portEntry 2 }
+
+-- End of portTable
+
+
+        
+-- Beginning of firmwareTable
+    firmwareTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FirmwareEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The firmware table. "
+    ::= { keyerGeneral 2 }
+
+    firmwareEntry OBJECT-TYPE
+      SYNTAX FirmwareEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { firmwareIndex }
+    ::= { firmwareTable 1 }
+
+    FirmwareEntry ::= SEQUENCE {
+        firmwareIndex     INTEGER,
+        firmwareString     OCTET STRING
+    }
+
+
+    
+    firmwareIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            buildNumber(1),
+            bootCode(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { firmwareEntry 1 }
+
+    
+    firmwareString OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { firmwareEntry 2 }
+
+-- End of firmwareTable
+
+
+        
+    upgradeCode OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " please hide this for now
+   "
+    ::= { keyerGeneral 3 }
+
+        
+    recallPreset OBJECT-TYPE
+      SYNTAX INTEGER ( 1..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 4 }
+
+        
+    storePreset OBJECT-TYPE
+      SYNTAX INTEGER ( 1..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 5 }
+
+        
+    exportPreset OBJECT-TYPE
+      SYNTAX INTEGER ( 1..10 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 6 }
+
+        
+    line21Protect OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+  does not exist in HD only works for 525 and 625
+   "
+    ::= { keyerGeneral 7 }
+
+        
+    unitName OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 8 }
+
+        
+    outputMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            pvwPgm(1),
+            pvwKeyFill(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerGeneral 9 }
+
+        
+    keyOutMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            normal(1),
+            inverted(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerGeneral 10 }
+
+        
+    automationDebug OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerGeneral 11 }
+
+        
+    m2100Debug OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerGeneral 12 }
+
+        
+    panelEnable OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " please hide this for now
+   "
+    ::= { keyerGeneral 13 }
+
+        
+    frontPanel OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 14 }
+
+        
+    remotePanel OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerGeneral 15 }
+
+        
+    keyerType OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerGeneral 16 }
+
+        
+    afdCode OBJECT-TYPE
+      SYNTAX INTEGER ( 0..16 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+  PRODUCT: 7825DSK2LG 
+  PRODUCT: 7725DSK-LG-HD
+  PRODUCT: 7825DSK2LGHD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  PRODUCT: HD9725LG, HD9725LGA, QMC-2-MG
+
+  For the above products, access to the afdLogo control from a GUI MUST BE restricted to when the actively executing video standard 
+  is an HD video standard. 
+  A GUI programmer should use the videoStandard control to determine whether the actively executing video standard 
+  is an HD video standard. 
+  Currently the videoStandard control description comprehensively lists supported HD standards to be identified
+  by the integers 0 through 25 BUT EXCLUDING 19.
+  
+  The permitted integers are 0 through 16. A GUI presenter should present the string 'OFF' to the GUI user
+  when the integer 16 is received-16 referrs to the OFF state.
+   "
+    ::= { keyerGeneral 17 }
+
+        
+    afdLogo OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+  PRODUCT: 7825DSK2LG 
+  PRODUCT: 7725DSK-LG-HD
+  PRODUCT: 7825DSK2LGHD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  PRODUCT: HD9725LG, HD9725LGA, QMC-2-MG
+
+  For the above products, access to the afdLogo control from a GUI MUST BE restricted to when the actively executing video standard 
+  is an HD video standard. 
+  A GUI programmer should use the videoStandard control to determine whether the actively executing video standard 
+  is an HD video standard. 
+  Currently the videoStandard control description comprehensively lists supported HD standards to be identified
+  by the integers 0 through 25 BUT EXCLUDING 19.
+  
+  A GUI programmer should only permit entries that are determined to be the names of logos that exist on the keyer.
+   "
+    ::= { keyerGeneral 18 }
+
+        
+    afdMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            dsk(1),
+            logo(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+  PRODUCT: 7825DSK2LG 
+  PRODUCT: 7725DSK-LG-HD
+  PRODUCT: 7825DSK2LGHD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+
+  For the above products, access to the afdLogo control from a GUI MUST BE restricted to when the actively executing video standard 
+  is an HD video standard. 
+  A GUI programmer should use the videoStandard control to determine whether the actively executing video standard 
+  is an HD video standard. 
+  Currently the videoStandard control description comprehensively lists supported HD standards to be identified
+  by the integers 0 through 25 BUT EXCLUDING 19.
+  
+  A GUI programmer should present the string 'DSK' and associate it with with the value 0;any time the user selects 
+  'DSK', then send a zero; anytime a zero is received, display 'DSK' to the user.
+  
+  A GUI programmer should present the string 'LOGO' and associate it with with the value 1;any time the user selects 
+  'LOGO', then send a one; anytime a zero is received, display 'LOGO' to the user.
+   "
+    ::= { keyerGeneral 19 }
+
+        
+    genRebootSystem OBJECT-TYPE
+      SYNTAX INTEGER {
+            reboot(1)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+              PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			   "
+    ::= { keyerGeneral 20 }
+
+        
+    genGenLockStatus OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerGeneral 21 }
+
+        
+    genRouterEnable OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerGeneral 22 }
+
+        
+    genRouterSelect OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerGeneral 23 }
+
+        
+    genMCPEnable OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerGeneral 24 }
+
+        
+-- Beginning of genMCPIPAddressSetupTable
+    genMCPIPAddressSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GenMCPIPAddressSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The genMCPIPAddressSetup table. "
+    ::= { keyerGeneral 25 }
+
+    genMCPIPAddressSetupEntry OBJECT-TYPE
+      SYNTAX GenMCPIPAddressSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { genMCPSetIPAddressIndex }
+    ::= { genMCPIPAddressSetupTable 1 }
+
+    GenMCPIPAddressSetupEntry ::= SEQUENCE {
+        genMCPSetIPAddressIndex     INTEGER,
+        genMCPSetIPAddressData     OCTET STRING
+    }
+
+
+    
+    genMCPSetIPAddressIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..4 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select item to read/modify
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { genMCPIPAddressSetupEntry 1 }
+
+    
+    genMCPSetIPAddressData OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Value retrieved or required-to-be-set-to.
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { genMCPIPAddressSetupEntry 2 }
+
+-- End of genMCPIPAddressSetupTable
+
+
+        
+-- Beginning of genMediaConfigurationTable
+    genMediaConfigurationTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GenMediaConfigurationEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The genMediaConfiguration table. "
+    ::= { keyerGeneral 26 }
+
+    genMediaConfigurationEntry OBJECT-TYPE
+      SYNTAX GenMediaConfigurationEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { genMediaConfigurationIndex }
+    ::= { genMediaConfigurationTable 1 }
+
+    GenMediaConfigurationEntry ::= SEQUENCE {
+        genMediaConfigurationIndex     INTEGER,
+        genMediaConfigurationData     OCTET STRING
+    }
+
+
+    
+    genMediaConfigurationIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..27 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select item to read/modify
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			See the notes on genMediaConfigurationData to limitations on used of indices.		
+			 "
+    ::= { genMediaConfigurationEntry 1 }
+
+    
+    genMediaConfigurationData OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Value retrieved or required-to-be-set-to.
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+            PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+            NOTE TO THE PROGRAMMER: The indexes relating to Outline opacity and crawl color have not been defined for 
+            products HD9725LG, HD9725LGA, 9725LG, 9725LGA and AN9725LG and QMC-2-MG. As a result, an attempt to do an SNMP WALK may
+            result in an error message indicating that the item does not exist. A programmer should deal with this 
+            result in a manner that will not result in a fatal error on the program communicating with the Keyer.
+            
+            As a further note, the programmer should note that 
+            i)Indexes 21 to 26 apply only to the 9700 series of keyers.
+            ii)Index 20 is currently unused, but will be used at a future date to determine file types in a get operation
+            As such, attempting to do a walk will ALWAYS fail. The programmer should design the his/her software in such a
+            way that it does not generate a fatal error if the programmer uses a walk instead of a get operation.
+			
+			When SENDING data to the the keyer, the programmer should restrict inputs to the following ranges:
+            index 1(Horizontal): limits determined dynamically based on the logo
+            index 2(Vertical): limits determined dynamically based on the logo
+			index 3(Gain): 0 to 1000
+			index 4(Fade In): 1 to 600
+			index 5(Hold): 0 to 600
+			index 6(Fade Out):1 to 600
+			index 7(Updown Timer):0 to 2
+			index 8(Crawl Rate):10 to 600 (Remember to divide whatever is received by 10)
+			index 9(Crawl Repeat):0 to 30
+			index 10(Crawl Pause):0 to 30
+			index 11(Font Height):a) If the then-current standard on the keyer is an SD standard 
+								  (standard 525i, standard 16 x9, 525i and standard 625i) then
+								  restrict the ranges to 5 to 100;
+								  b) If the then-current standard on the keyer is an HD standard
+								  restrict the input to 10 to 200;
+            index 12(Font): This input is a string. Restrict the input strings to the known list
+							of fonts. The keyer code does a case-sensitive string compare.								  
+			index 13(Background Opacity):0 to 255
+			index 14 (Foreground Opacity): 0 to 255
+			index 15(Background transparency): each of the comma separated values should range from 0 to 255
+					 e.g. 0,255,13,
+			index 16(Foreground transparency): each of the comma separated values should range from 0 to 255
+					 e.g. 0,255,13,
+			index 17(OL Opacity):0 to 255
+			index 18(OL transparency): each of the comma separated values should range from 0 to 255
+					 e.g. 0,255,98,
+			index 19 (Audio Clip repeats): 0 to 100
+			index 20 Currently unused. At a future date will be used to get the file type
+			
+			REMINDER TO THE PROGRAMMER: Indices 21 to 26 only valid on the 9700 series of keyers. Either way, a walk
+			will fail because index 20 is currently unused on both the 7725 and 9700 series of keyers. Perform a
+			GET operation on the actual OID, not through a WALK operation. Likewise do a SET on a specific OID.
+			
+			index 21 (Logo Layer):-99 to 999
+			index 22 (Logo Quick Fade In:PROGRAMMER, NOTE THAT THIS IS DIFFERENT FROM Fade In): 1 to 120
+			index 23 (Logo Quick Fade In Effect): The programmer will send to the keyer one of values 0 to 8.
+			         On the user interface, the programmer lists the following options for the user to select:
+				 fade (sent as option 0)
+                 wipe l -> r (sent as option 1)
+                 wipe r -> l (sent as option 2)
+                 wipe t -> b (sent as option 3)
+                 wipe b -> t (sent as option 4)
+                 push l -> r (sent as option 5)
+                 push r -> l (sent as option 6)
+                 push t -> b (sent as option 7)
+                 push b -> t (sent as option 8)
+			index 24 (Logo Quick Fade Out:PROGRAMMER, NOTE THAT THIS IS DIFFERENT FROM Fade In): 1 to 120
+			index 25 (Logo Quick Fade Out Effect): The programmer will send to the keyer one of values 0 to 8.
+			         On the user interface, the programmer lists the following options for the user to select:
+				 fade (sent as option 0)
+                 wipe l -> r (sent as option 1)
+                 wipe r -> l (sent as option 2)
+                 wipe t -> b (sent as option 3)
+                 wipe b -> t (sent as option 4)
+                 push l -> r (sent as option 5)
+                 push r -> l (sent as option 6)
+                 push t -> b (sent as option 7)
+                 push b -> t (sent as option 8)
+            index 26 (Crawl mode): The programmer will send the keyer one of values 0 to 2. Likewise, the
+				keyer will send back a value of 0 to 2. On a GUI, the SNMP programmer will associate
+				  a) The string RAMP to the value of 0,
+				  b) The string BAR to the value of 1,				  
+				  c) The string BAR2 to the value of 2.
+            index 27 (z):-1000 to 1000.  Defined for 7825DSK2 only
+			         
+			 "
+    ::= { genMediaConfigurationEntry 2 }
+
+-- End of genMediaConfigurationTable
+
+
+        
+    genGPIPresetSource OBJECT-TYPE
+      SYNTAX INTEGER ( 1..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerGeneral 27 }
+
+        
+-- Beginning of genEASColorsTable
+    genEASColorsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GenEASColorsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The genEASColors table. "
+    ::= { keyerGeneral 28 }
+
+    genEASColorsEntry OBJECT-TYPE
+      SYNTAX GenEASColorsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { genEASColorsIndex }
+    ::= { genEASColorsTable 1 }
+
+    GenEASColorsEntry ::= SEQUENCE {
+        genEASColorsIndex     INTEGER,
+        genEASColorsData     OCTET STRING
+    }
+
+
+    
+    genEASColorsIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..6 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select EAS color property to read/modify for warning, test and watch
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { genEASColorsEntry 1 }
+
+    
+    genEASColorsData OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Value retrieved or required-to-be-set-to.
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+            PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			 "
+    ::= { genEASColorsEntry 2 }
+
+-- End of genEASColorsTable
+
+
+        
+    genAvailableFonts OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(512) )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of using FTP "
+    ::= { keyerGeneral 29 }
+
+        
+-- Beginning of localStorageItemsSetupTable
+    localStorageItemsSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF LocalStorageItemsSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The localStorageItemsSetup table. "
+    ::= { keyerGeneral 30 }
+
+    localStorageItemsSetupEntry OBJECT-TYPE
+      SYNTAX LocalStorageItemsSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { localStorageItemsIndex }
+    ::= { localStorageItemsSetupTable 1 }
+
+    LocalStorageItemsSetupEntry ::= SEQUENCE {
+        localStorageItemsIndex     INTEGER,
+        localStorageItem     INTEGER
+    }
+
+
+    
+    localStorageItemsIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select local storage setup item to configure
+			
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			Use index 0 to SET/GET the 'enable RAID' flag
+			Use index 1 to SET/GET the 'enable pre-caching flag'
+			 "
+    ::= { localStorageItemsSetupEntry 1 }
+
+    
+    localStorageItem OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Value that controls/returns-the-current-setting-of the
+			RAID and pre-caching flags.
+			
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			Use 0  on a SET disable the flag. A 0 on a GET indicates that the flag is disabled.
+			Use 1 on a SET to enable the flag. A 1 on a GET indicates that the flag is enabled.
+			 "
+    ::= { localStorageItemsSetupEntry 2 }
+
+-- End of localStorageItemsSetupTable
+
+
+        
+    xyAutomationDebug OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control is applicable to all keyers with VLPro support.	
+
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, QMG
+  			PRODUCT: 7725DSKLG, 7825DSK2LG 
+ 			 "
+    ::= { keyerGeneral 31 }
+
+        
+    easDebug OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control is applicable to all keyers with VLPro support.	
+
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, QMG
+  			PRODUCT: 7725DSKLG, 7825DSK2LG 
+  			 "
+    ::= { keyerGeneral 32 }
+
+        
+    vancDecode OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            off(2),
+            on(3)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control is applicable to PRODUCT 7825DSK2LG
+                Feature should not be exposed in UI if disabled,
+                else it should be on or off.  When on, feature will
+                decode DID/SDID 0x54,0x30 and display logos corresponding
+                to payload packet value, as enumerated in a config file on CF.
+  			 "
+    ::= { keyerGeneral 33 }
+
+        
+    keyType OBJECT-TYPE
+      SYNTAX INTEGER {
+            input(1),
+            self(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerDsk 1 }
+
+        
+    keyGain OBJECT-TYPE
+      SYNTAX INTEGER ( 50..170 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerDsk 2 }
+
+        
+    keyOffset OBJECT-TYPE
+      SYNTAX INTEGER ( -1023..1023 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerDsk 3 }
+
+        
+    keyThreshold OBJECT-TYPE
+      SYNTAX INTEGER ( 4..1020 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerDsk 4 }
+
+        
+    autoKeyEnable OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerDsk 5 }
+
+        
+    keyTypeLayer2 OBJECT-TYPE
+      SYNTAX INTEGER {
+            input(1),
+            self(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG 
+    	  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+		  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+		  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+		   "
+    ::= { keyerDsk 6 }
+
+        
+    keyGainLayer2 OBJECT-TYPE
+      SYNTAX INTEGER ( 50..170 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG 
+		  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+		  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+		  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+		   "
+    ::= { keyerDsk 7 }
+
+        
+    keyOffsetLayer2 OBJECT-TYPE
+      SYNTAX INTEGER ( -4096..4095 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG 
+		  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+		  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+		  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+		   "
+    ::= { keyerDsk 8 }
+
+        
+    keyThresholdLayer2 OBJECT-TYPE
+      SYNTAX INTEGER ( 4..1020 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG 
+		  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+		  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+		  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+		   "
+    ::= { keyerDsk 9 }
+
+        
+    matteEnable OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerMatte 1 }
+
+        
+    matteAspect OBJECT-TYPE
+      SYNTAX INTEGER {
+            matte133(1),
+            matte235(2),
+            matte185(3),
+            matte177(4),
+            matteUser(5)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of modifyMatteAspect "
+    ::= { keyerMatte 2 }
+
+        
+    matteTop OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerMatte 3 }
+
+        
+    matteBottom OBJECT-TYPE
+      SYNTAX INTEGER ( 0..3000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerMatte 4 }
+
+        
+    mattePreDefinedAspectRatios OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " An SNMP-interface programmer should read this control any time a user wants to
+			  know the what pre-defined Matte Aspect ratios are available for the current video
+			  standard that the keyer is working in. 
+			  The list of available pre-defined selections is sent back to the caller as a comma-delimited string. 
+			  The last entry will not have a terminating comma. 
+			  The programmer is to parse the received string and convert each token into the corresponding
+			  floating-point-number.
+			  
+			  The pre-defined selections are dependent on which video standard (not just SD/HD) that the
+			  keyer is  working in. Since trap notification is considered somewhat unreliable
+			  (and as such was not considered for design), 
+			  it is assumed that the GUI programmer will first determine what standard the keyer is working in,
+			  read this control before displaying the predefined selections to get the available
+			  selections, and then present the available selections to a potential user/consumer of the data. 
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerMatte 5 }
+
+        
+    modifyMatteAspect OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(10) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " An SNMP programmer uses this control in conjunction with the mattePreDefinedAspectRatios to set/get valid
+			  matte aspects for the current working video standard. Since a user of the keyer can change the video
+			  standard at any point in time, the applicable Matte Aspect may also change. As a result, the pre-defined
+			  aspects for that video standard may also change. An SNMP programmer uses the mattePreDefinedAspectRatios
+			  control to determine what values of pre-defined matte aspect ratios are valid for the working standard.
+			  The SNMP programmer selects one of those parameters and then uses this control to set the matte aspect to
+			  any one of the returned allowable matte aspects. Peforming a get will retrieve the currently set matte aspect.
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerMatte 6 }
+
+        
+-- Beginning of gpiTable
+    gpiTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GpiEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION  " Deprecated in favor of table providing access via multiple indexes "
+    ::= { keyerGpio 1 }
+
+    gpiEntry OBJECT-TYPE
+      SYNTAX GpiEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpiIndex }
+    ::= { gpiTable 1 }
+
+    GpiEntry ::= SEQUENCE {
+        gpiIndex     INTEGER,
+        openTransition     INTEGER,
+        openAction     INTEGER,
+        closeTransition     INTEGER,
+        closeAction     INTEGER,
+        logoName     OCTET STRING
+    }
+
+
+    
+    gpiIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..32 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 1 }
+
+    
+    openTransition OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 2 }
+
+    
+    openAction OBJECT-TYPE
+      SYNTAX INTEGER {
+            toggle(1),
+            duckIn(2),
+            duckOut(3),
+            duck(4),
+            allOut(5),
+            timer1(6),
+            timer2(7),
+            none(8),
+            cue(9),
+            in(10),
+            out(11)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 3 }
+
+    
+    closeTransition OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 4 }
+
+    
+    closeAction OBJECT-TYPE
+      SYNTAX INTEGER {
+            toggle(1),
+            duckIn(2),
+            duckOut(3),
+            duck(4),
+            allOut(5),
+            timer1(6),
+            timer2(7),
+            none(8),
+            cue(9),
+            in(10),
+            out(11)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 5 }
+
+    
+    logoName OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpiEntry 6 }
+
+-- End of gpiTable
+
+
+        
+-- Beginning of gpoTable
+    gpoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GpoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The gpo table. "
+    ::= { keyerGpio 2 }
+
+    gpoEntry OBJECT-TYPE
+      SYNTAX GpoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpoIndex }
+    ::= { gpoTable 1 }
+
+    GpoEntry ::= SEQUENCE {
+        gpoIndex     INTEGER,
+        gpoValue     INTEGER
+    }
+
+
+    
+    gpoIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..16 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpoEntry 1 }
+
+    
+    gpoValue OBJECT-TYPE
+      SYNTAX INTEGER {
+            val1(1),
+            val2(2),
+            val3(3),
+            val4(4),
+            val5(5),
+            val6(6),
+            val7(7),
+            val8(8),
+            val9(9),
+            val10(10),
+            val11(11),
+            val12(12),
+            val13(13),
+            val14(14),
+            val15(15),
+            val16(16),
+            val17(17),
+            val18(18),
+            val19(19),
+            val21(21),
+            val22(22),
+            val23(23),
+            val24(24),
+            val25(25),
+            val26(26),
+            val27(27),
+            val28(28),
+            val29(29),
+            val30(30),
+            val31(31),
+            val32(32),
+            val33(33)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of access via multiple indexes "
+    ::= { gpoEntry 2 }
+
+-- End of gpoTable
+
+
+        
+-- Beginning of gpiEnhancedGPISetupTable
+    gpiEnhancedGPISetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GpiEnhancedGPISetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The gpiEnhancedGPISetup table. "
+    ::= { keyerGpio 3 }
+
+    gpiEnhancedGPISetupEntry OBJECT-TYPE
+      SYNTAX GpiEnhancedGPISetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpGPISetupGPIValueIndex, gpGPISetupActionIndex }
+    ::= { gpiEnhancedGPISetupTable 1 }
+
+    GpiEnhancedGPISetupEntry ::= SEQUENCE {
+        gpGPISetupGPIValueIndex     INTEGER,
+        gpGPISetupActionIndex     INTEGER,
+        gpGPISetupOpen     OCTET STRING,
+        gpGPISetupClose     OCTET STRING
+    }
+
+
+    
+    gpGPISetupGPIValueIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..32 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select GPI to use for GPI Setup
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			For the above products
+			a)The maximum range integer accepted is 8. The high bound of 32 is required for the 9000DP4 platform
+			b) a GUI programmer lists the GPI values as the cardinal position in the alphabet, that is:				
+			Associate 1 with A
+			Associate 2 with B
+			Associate 3 with C
+			Associate 4 with D
+			Associate 5 with E
+			Associate 6 with F
+			Associate 7 with G
+			Associate 8 with H
+			
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			a) The maximum range integer accepted is 32.
+			b) A cardinal GPI position is determined by substracting 1 from the range integer
+			c) a GUI product adds a digit 0 in front of any index that is only of one character, that is:				
+			Associate 1 with 00
+			Associate 2 with 01
+			Associate 3 with 02
+			Associate 4 with 03
+			Associate 5 with 04
+			.
+			.
+			.
+			Associate 30 with 29
+			Associate 31 with 30
+			Associate 32 with 31
+			
+			PRODUCT: QMC-2-MG
+			For the above product(QMC-2-MG):
+			a) The maximum range integer accepted is 8. The high bound of 32 is required for the general 9000DP4 platform
+			b) A cardinal GPI position is determined by substracting 1 from the range integer
+			c) a GUI product adds a digit 0 in front of any index that is only of one character, that is:				
+			Associate 1 with 00
+			Associate 2 with 01
+			Associate 3 with 02
+			Associate 4 with 03
+			Associate 5 with 04
+			Associate 6 with 05
+			Associate 7 with 06
+			Associate 8 with 07
+			 "
+    ::= { gpiEnhancedGPISetupEntry 1 }
+
+    
+    gpGPISetupActionIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..4 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select required action to execute for GPI Setup
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			NOTE: 
+			a) for products HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG and QMC-2-MG the only valid values are 1 and 3. Other values will generate
+			an error. As a result of only 1 and 3 being valid, and SNMP WALK will fail on this control for these products.
+			
+			b)For value 3 get/send functionality (logo file name) the same value is used for both the open action and close action. This is different
+			from the 7725 keyers whereby a programmer can set the logo file in the Open action to be different from the logo file for the Close action.
+			A GUI programmer is at liberty to choose how to display the logo that will be used when the action happens.
+			 "
+    ::= { gpiEnhancedGPISetupEntry 2 }
+
+    
+    gpGPISetupOpen OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(257) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, 9725LG
+			
+			The value strings are:
+			0,	1,	2, 	3,	4,		8,	9,		10,	11,		12
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE,  ALL OUT, TIMER1, TIMER2,, BYPASS, NOT BYPASS
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LG
+
+			The value strings are:
+			0,	1,	2, 	3,	4,	5,		6,	7,		8,	9,		10, 11, 12	
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE, DUCK IN, DUCK OUT, DUCK, ALL OUT, TIMER1, TIMER2, BYPASS, NOT BYPASS
+
+
+			PRODUCT: HD9725LGA, 9725LGA
+			PRODUCT: QMC-2-MG
+			
+			The value strings are:
+			0,	1,	2, 	3,	4,	5,		6,	7,		8,	9,		10,	11,		12, 13
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE, DUCK IN, DUCK OUT, DUCK, ALL OUT, TIMER1, TIMER2, BYPASS, NOT BYPASS, IN ALL CUED  
+		 "
+    ::= { gpiEnhancedGPISetupEntry 3 }
+
+    
+    gpGPISetupClose OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(257) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, 9725LG
+			
+			The value strings are:
+			0,	1,	2, 	3,	4,		8,	9,		10,	11,		12
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE,  ALL OUT, TIMER1, TIMER2, BYPASS, NOT BYPASS
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LG
+
+			The value strings are:
+			0,	1,	2, 	3,	4,	5,		6,	7,		8,	9,		10,	11, 12
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE, DUCK IN, DUCK OUT, DUCK, ALL OUT, TIMER1, TIMER2, BYPASS, NOT BYPASS
+
+
+			PRODUCT: HD9725LGA, 9725LGA
+			PRODUCT: QMC-2-MG
+			
+			The value strings are:
+			0,	1,	2, 	3,	4,	5,		6,	7,		8,	9,		10,	11,		12, 13
+
+			the values are interpreted as:
+			NONE, CUE, IN,  OUT, TOGGLE, DUCK IN, DUCK OUT, DUCK, ALL OUT, TIMER1, TIMER2, BYPASS, NOT BYPASS, IN ALL CUED 
+		 "
+    ::= { gpiEnhancedGPISetupEntry 4 }
+
+-- End of gpiEnhancedGPISetupTable
+
+
+        
+-- Beginning of gpoValue9700AndQMCSeriesSetupTable
+    gpoValue9700AndQMCSeriesSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF GpoValue9700AndQMCSeriesSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The gpoValue9700AndQMCSeriesSetup table. "
+    ::= { keyerGpio 4 }
+
+    gpoValue9700AndQMCSeriesSetupEntry OBJECT-TYPE
+      SYNTAX GpoValue9700AndQMCSeriesSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpoValue9700AndQMCSeriesIndex }
+    ::= { gpoValue9700AndQMCSeriesSetupTable 1 }
+
+    GpoValue9700AndQMCSeriesSetupEntry ::= SEQUENCE {
+        gpoValue9700AndQMCSeriesIndex     INTEGER,
+        gpoValue9700AndQMCSeries     OCTET STRING
+    }
+
+
+    
+    gpoValue9700AndQMCSeriesIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..15 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " The name of the control, gpoValue9700AndQMCSeriesIndex, does not indicate the intended applicable products any longer, as
+                7725DSKLG and 7825DSK2LG are also placed under its control.
+  
+			  PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG			  
+			  for these products use the values 0-15
+			  PRODUCT: QMC-2-MG
+			  for this product use the values 0-7
+
+              PRODUCT: 7725DSKLG, 7825DSK2LG:
+                       use values 0-3
+			   "
+    ::= { gpoValue9700AndQMCSeriesSetupEntry 1 }
+
+    
+    gpoValue9700AndQMCSeries OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The name of the control, gpoValue9700AndQMCSeries, does not indicate the intended applicable products any longer, as
+                7725DSKLG and 7825DSK2LG are also placed under its control.
+
+			  PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG			  
+			  PRODUCT: QMC-2-MG
+			  Use this control to set the event that should be monitored by the pertinent GPO port.
+			  There are six to eight states that the GPO can be in(depending on the product.)
+			  1 - None(the GPO does not monitor any objects)
+			  2 - Logo Status (the GPO monitors all logos and generates an event when ANY logo being played has a problem.)
+			  3 - By Pass Status (the GPO monitors the By Pass status of the Keyer)
+			  4 - A specific logo (e.g. say, the file, 'crawl'-The GPO monitors the state of the logo when playing and generates an event when
+				  a critical error occurs while its playing.)
+				  
+		      5 - A reference input signal is present on the keyer
+		      6 - The PGM Input is present on the keyer
+		      7 - The PST Input is present on the keyer (NOTE: QMC-2-MG only)
+		      8 - DVE background is present on the keyer (NOTE: QMC-2-MG only)
+				  
+			  The decision to use  an OctetString to send the information across to the SNMP agent was made because 
+			  when sending information to configure the keyer to monitor a GPO line for state 4 events(monitor a specific logo), 
+			  it will be necessary to send the name of the logo file as well.
+			  
+			  The following operations should be performed:
+			  a)A GUI programmer should present a user with the option 'NONE' in a list box and associate it with state 1
+			  a.1)To SET a GPO to state 1, send the string '1'(no terminating tokens are necessary.) 
+			  a.2)When a GET operation results in the receipt of the string '1' the the GUI programmer should 
+			  display the state of the GPO line as 'NONE'
+			  
+			  b)A GUI programmer should present a user with the option 'General Logo Status' in a list box and associate it with state 2
+			  a.1)To SET a GPO to state 2, send the string '2'(no terminating tokens are necessary.) 
+			  a.2)When a GET operation results in the receipt of the string '2' the the GUI programmer should 
+			  display the state of the GPO line as 'General Logo Status'
+			  
+			  c)A GUI programmer should present a user with the option 'By-Pass Status' in a list box and associate it with state 3
+			  c.1)To SET a GPO to state 3, send the string '3'(no terminating tokens are necessary.) 
+			  c.2)When a GET operation results in the receipt of the string '3' the the GUI programmer should 
+			  display the state of the GPO line as 'By-Pass Status'
+			  
+			  d)A GUI programmer should present a user with the option 'A Specific Logo' in a list box and associate it with state 4
+			  d.1)To SET a GPO to state 4, format a string with the following information:
+			       i)Insert the string '4,'(notice the comma, very important, 
+			         the delimiting token betweeen the state and the name of the logo the GPO line should monitor.) 
+			       ii)append the name of the file that the user wants to monitor on the GPO line after the comma. 
+			        It is best to do this by having a list box of all the available logos. 
+			        This box becomes editable/selectable whenever the user wants to monitor a logo on a GPO(i.e. is in state 4.)The name of
+			         the file selected from the list of available files is appended to the string '4,'.
+			         Example: An example string that might be sent could be '4,crawl1'.
+			       iii)The GUI programmer should make a provision that the user wants to set the state to 4 but does not want to monitor a logo, 
+			         but simply to lock the GPO line resources from being used by another object. 
+			         For this case the GUI programmer should provide the option
+			         '[No logo name supplied]' as a list option, and this string must be sent along with rest of the the SET command string.			  
+			  d.2)When a GET operation results in the receipt of the string '4,<a string>' the the GUI programmer should display the state of the GPO as 
+			      'A Specific Logo'. The GUI programmer should then parse the received string and display it as the focused object in the list of available
+			      logo files. 
+			      The GUI programmer should be prepared to dynamically add the string to the list of available logo files if the name of the 
+			      file retrieved does not exist on the list of available logo files that is created during the preparation of a SET to state 4 operation. 
+			      This scenario may arise if the user of the keyer adds logo files to the keyer after the point in time the last SET to state 4 was done,
+			      or if right after boot up the user does a GET before doing a set.
+
+			  e)A GUI programmer should present a user with the option 'Reference Signal Present' in a list box and associate it with state 5
+			  e.1)To SET a GPO to state 5, send the string '5'(no terminating tokens are necessary.) 
+			  e.2)When a GET operation results in the receipt of the string '5' the the GUI programmer should 
+			  display the state of the GPO line as 'Reference Signal Present'
+
+			  f)A GUI programmer should present a user with the option 'PGM Input Present' in a list box and associate it with state 6
+			  f.1)To SET a GPO to state 6, send the string '6'(no terminating tokens are necessary.) 
+			  f.2)When a GET operation results in the receipt of the string '5' the the GUI programmer should 
+			  display the state of the GPO line as 'PGM Input Present'
+
+			  g)NOTE: THIS APPLIES TO QMC-2-MG ONLY.
+			  A GUI programmer should present a user with the option 'PST Input Present' in a list box and associate it with state 7
+			  g.1)To SET a GPO to state 7, send the string '7'(no terminating tokens are necessary.) 
+			  g.2)When a GET operation results in the receipt of the string '7' the the GUI programmer should 
+			  display the state of the GPO line as 'PGM Input Present'
+
+			  h)NOTE: THIS APPLIES TO QMC-2-MG ONLY.
+			  A GUI programmer should present a user with the option 'DVE Background Present' in a list box and associate it with state 8
+			  h.1)To SET a GPO to state 8, send the string '8'(no terminating tokens are necessary.) 
+			  h.2)When a GET operation results in the receipt of the string '8' the the GUI programmer should 
+			  display the state of the GPO line as 'DVE Background Present'
+
+              i) Note to firmware code: the values below are indices corresponging to the entries in gpo_idx_7725dsklg[]. 
+              
+           PRODUCT: 7725DSKLG, 7825DSK2LG	 
+             1 - none
+             2 - Program Black
+             3 - Program A 
+             4 - Program B 
+             5 - DSK Status
+             6 - Logo Status
+             7 - Media Status
+             8 - Media and Logo Status
+             9 - Voice Over
+             10 - Video A Val
+             11 - Video A Inv
+             12 - Video B Val
+             13 - Video B Inv
+             14 - Video C Val
+             15 - Video V Inv
+             16 - Transition Status
+             17 - ByPass Status
+
+
+             PRODUCT: 7725DSKLG 
+             18 - A specific logo 
+
+             PRODUCT: 7825DSK2LG 
+             18 - DSK2 Status
+             19 - A specific logo 
+         
+			   "
+    ::= { gpoValue9700AndQMCSeriesSetupEntry 2 }
+
+-- End of gpoValue9700AndQMCSeriesSetupTable
+
+
+        
+    temperatureFormat OBJECT-TYPE
+      SYNTAX INTEGER {
+            celsius(1),
+            fahrenheit(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTemperature 1 }
+
+        
+    temperatureSource OBJECT-TYPE
+      SYNTAX INTEGER {
+            metar(1),
+            probe(2),
+            txtFile(3),
+            nmea0183(4),
+            manual(5)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  
+  PRODUCT: 7725DSKLG 
+  hide txtFile and nmea0183 for this product
+   "
+    ::= { keyerTemperature 2 }
+
+        
+    setTemperature OBJECT-TYPE
+      SYNTAX INTEGER ( -40..140 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD
+  
+  NOTE TO THE PROGRAMMER:The limits of input temperature allowed on the keyer will depend on the current units selected to 
+  display the temperature. 
+  a)When the keyer is configured to display the units in Celsius, the limits of temperature  are -40 to 60 degrees.			
+  b)When the keyer is configured to display the units in Farenheit, the limits of temperature  are -40 to 140 degrees.			
+  
+  A GUI programmer should read the 'temperatureFormat' control to determine what format is being used before displaying the maximum and minimum
+  values. An attempt to input values outside these limits within the context of a given format will result in a generic error.
+    "
+    ::= { keyerTemperature 3 }
+
+        
+    setProbeOffset OBJECT-TYPE
+      SYNTAX INTEGER ( -40..140 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD
+  
+  NOTE TO THE PROGRAMMER:The limits of input temperature allowed on the keyer will depend on the current units selected to 
+  display the temperature. 
+  a)When the keyer is configured to display the units in Celsius, the limits of temperature  are -40 to 60 degrees.			
+  b)When the keyer is configured to display the units in Farenheit, the limits of temperature  are -40 to 140 degrees.			
+  
+  A GUI programmer should read the 'temperatureFormat' control to determine what format is being used before displaying the maximum and minimum
+  values. An attempt to input values outside these limits within the context of a given format will result in a generic error.
+    "
+    ::= { keyerTemperature 4 }
+
+        
+    temperatureReadLoss OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " An SNMP programmer uses this control to allow a user of the keyer to decide how to display temperature
+			  measuresuresments if, for whatever reason, the metar nor the probe can provide temperature data. Metar
+			  data is retrieved from an FTP site, and communication over the Ethernet can break down. The temperature
+			  probe may simply stop functioning for one of may reasons. The programmer sets the temperatureReadLoss
+			  control to 1 if the user of the keyer wants the last valid data read to be displayed. If the user does
+			  not want any data to be read, then the GUI input should set this control to 1. The GUI programmer should
+			  ideally display a drop-down box with two selections: Show Blank, Show Last Valid Results. The programmer
+			  then associates the Show Blank with 0 and the Show Last Valid Results with 1.
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+ 			  PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			  PRODUCT: QMC-2-MG
+			   "
+    ::= { keyerTemperature 5 }
+
+        
+    transitionType OBJECT-TYPE
+      SYNTAX INTEGER {
+            cut(1),
+            fade(2),
+            wipe0(3),
+            wipe45(4),
+            wipe90(5),
+            wipe135(6),
+            wipe180(7),
+            wipe225(8),
+            wipe270(9),
+            wipe315(10),
+            blBox(11),
+            brBox(12),
+            tlBox(13),
+            trBox(14),
+            lrCurt(15),
+            tbCurt(16),
+            lrSplit(17),
+            tbSplit(18),
+            boxIn(19),
+            boxOut(20),
+            circleIn(21),
+            circleOut(22),
+            diamondIn(23),
+            diamondOut(24),
+            cutFade(25),
+            fadeFade(26),
+            fadeCut(27)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTransition 1 }
+
+        
+    transitionRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTransition 2 }
+
+        
+    transitionSwapMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            swap(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTransition 3 }
+
+        
+    transitionPause OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTransition 4 }
+
+        
+    programBusChange OBJECT-TYPE
+      SYNTAX INTEGER {
+            hard(1),
+            clean(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG 
+   "
+    ::= { keyerTransition 5 }
+
+        
+-- Beginning of colourTable
+    colourTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF ColourEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION  " Deprecated in favor of genEASColoursData "
+    ::= { keyerEas 1 }
+
+    colourEntry OBJECT-TYPE
+      SYNTAX ColourEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { colourIndex }
+    ::= { colourTable 1 }
+
+    ColourEntry ::= SEQUENCE {
+        colourIndex     INTEGER,
+        red     INTEGER,
+        green     INTEGER,
+        blue     INTEGER
+    }
+
+
+    
+    colourIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            warningBG(1),
+            warningFG(2),
+            watchBG(3),
+            watchFG(4),
+            testBG(5),
+            testFG(6)
+            }
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of genEASColorsIndex "
+    ::= { colourEntry 1 }
+
+    
+    red OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of genEASColorsData "
+    ::= { colourEntry 2 }
+
+    
+    green OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of genEASColorsIndex "
+    ::= { colourEntry 3 }
+
+    
+    blue OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of genEASColorsData "
+    ::= { colourEntry 4 }
+
+-- End of colourTable
+
+
+        
+    easType OBJECT-TYPE
+      SYNTAX INTEGER {
+            rampOn(1),
+            rampOff(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated since new software requirements dictate offering only one mode of EAS "
+    ::= { keyerEas 2 }
+
+        
+    easVPos OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+	PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+	PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+	PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+	PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  An programmer using SNMP to set the vertical position should send the desired
+  integer value in octet string format. Likewise, the programmer should read the returned value as
+  an octet string and convert it into an integer before doing mathematical operations on it.
+  The use of an octet string allows the software to handle a dynamic range of possible limits
+  that are imposed by whatever video standard is active and the selected font. 
+  The server application that implements the easVPos event handler will generate an error if 
+  a value entered is out of the range for that video standard and selected font height,
+  or is not recognized as an integer.
+   "
+    ::= { keyerEas 3 }
+
+        
+    easFont OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(32) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+   "
+    ::= { keyerEas 4 }
+
+        
+    easHeight OBJECT-TYPE
+      SYNTAX INTEGER ( 5..200 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+	PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+	PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+	PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+	PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD		
+
+	The input range 5 to 200 encompasses two font height ranges:
+	a)5 to 100 for the keyer operating in SD
+	b)10 to 200 for the keyer operating in HD
+	A GUI programmer should first detect whether the keyer is operating in SD or HD video before graphing any data.
+
+	A)If the keyer is operating in SD, then the GUI should only allow as inputs the range 5 to 100.
+	Likewise, the GUI should only display values from 5 to 100 or flag an error otherwise.
+
+	B)If the keyer is operating in HD, then the GUI should only allow input values in the range 10 to 200.
+	Likewise, the GUI should only display values from 10 to 200 or flag an error otherwise.
+	 "
+    ::= { keyerEas 5 }
+
+        
+    easRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+  The steps in this parameter are in .1 steps
+  so the range is really 1.0-60.0 in .1 steps
+  and the units are seconds. 
+  However, because the keyer hardware does not currently store floating point numbers, the notes below should be applied
+  to the user interface....
+  A GUI programmer should display an input range of
+  1.0 to 60.0. 
+  When sending data, the GUI programmer should multiply whatever the user inputs by 10.
+  When receiving data, the GUI programmer should multiply whatever is received by 10 before displaying the result to the user.
+
+  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+  For this case, the limits are 1 to 32. No multiplication/division is necessary during a send/get operation.
+  The integer range above is left at 1 to 600 to accomodate the QMG/9700 series hardware.
+    "
+    ::= { keyerEas 6 }
+
+        
+    easDetermineIfEASenabled OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " A SNMP-interface programmer can read this control at any time to determine whether the EAS
+			  option has been enabled on the pertinent keyer. A value of integer '1' will be returned to 
+			  the caller if the EAS option is enabled, otherwise an integer value of '0' will be returned.
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+              PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			   "
+    ::= { keyerEas 7 }
+
+        
+-- Beginning of easGetMaxAndMinVerticalPositionSetupTable
+    easGetMaxAndMinVerticalPositionSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF EasGetMaxAndMinVerticalPositionSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The easGetMaxAndMinVerticalPositionSetup table. "
+    ::= { keyerEas 8 }
+
+    easGetMaxAndMinVerticalPositionSetupEntry OBJECT-TYPE
+      SYNTAX EasGetMaxAndMinVerticalPositionSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { easGetMaxAndMinVerticalPositionIndex }
+    ::= { easGetMaxAndMinVerticalPositionSetupTable 1 }
+
+    EasGetMaxAndMinVerticalPositionSetupEntry ::= SEQUENCE {
+        easGetMaxAndMinVerticalPositionIndex     INTEGER,
+        easGetMaxAndMinVerticalPosition     OCTET STRING
+    }
+
+
+    
+    easGetMaxAndMinVerticalPositionIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to choose whether to retrieve the minimum or maximum EAS vertical position for 
+			the current video standard and font(and associated font height) selected.
+			Choosing index 0 implies that the user wants to retrieve the then-current minimum EAS vertical position.
+			Choosing index 1 implies that the user wants to retrieve the then-current maximum EAS vertical position.
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			 "
+    ::= { easGetMaxAndMinVerticalPositionSetupEntry 1 }
+
+    
+    easGetMaxAndMinVerticalPosition OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " A string representation of the maximum/minimum EAS vertical position for the current video standard and selected font height.
+			Note that this is a read only control. If index 0 is chosen the returned value will be the mininum EAS vertical position, 
+			and if 1 is selected the returned value will be the maximum EAS vertical position.
+			An SNMP programmer should convert this string value to an integer before using it. The choice of using a string value allows the 
+			software to service a dynamic range of maximum/minimum EAS vertical position values even for standards that are not yet implemented.
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+			PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			 "
+    ::= { easGetMaxAndMinVerticalPositionSetupEntry 2 }
+
+-- End of easGetMaxAndMinVerticalPositionSetupTable
+
+
+        
+-- Beginning of audioControlTable
+    audioControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioControl table. "
+    ::= { keyerAudio 1 }
+
+    audioControlEntry OBJECT-TYPE
+      SYNTAX AudioControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioTypeIndex }
+    ::= { audioControlTable 1 }
+
+    AudioControlEntry ::= SEQUENCE {
+        audioTypeIndex     INTEGER,
+        audioSource     INTEGER,
+        audioGain     INTEGER,
+        audioDuck     INTEGER
+    }
+
+
+    
+    audioTypeIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            blackVideo(1),
+            inputVideo(2),
+            audioClip(3),
+            voiceOver(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioControlEntry 1 }
+
+    
+    audioSource OBJECT-TYPE
+      SYNTAX INTEGER {
+            aes1L(1),
+            aes1R(2),
+            aes2L(3),
+            aes2R(4),
+            aes3L(5),
+            aes3R(6),
+            aes4L(7),
+            aes4R(8),
+            aes5L(9),
+            aes5R(10),
+            aes6L(11),
+            aes6R(12),
+            aes7L(13),
+            aes7R(14),
+            aes8L(15),
+            aes8R(16),
+            audioEmb1L(17),
+            audioEmb1R(18),
+            audioEmb2L(19),
+            audioEmb2R(20),
+            audioEmb3L(21),
+            audioEmb3R(22),
+            audioEmb4L(23),
+            audioEmb4R(24),
+            aes1M(25),
+            aes2M(26),
+            aes3M(27),
+            aes4M(28),
+            aes5M(29),
+            aes6M(30),
+            aes7M(31),
+            aes8M(32),
+            audioEmb1M(33),
+            audioEmb2M(34),
+            audioEmb3M(35),
+            audioEmb4M(36),
+            silence(37)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioControlEntry 2 }
+
+    
+    audioGain OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioControlEntry 3 }
+
+    
+    audioDuck OBJECT-TYPE
+      SYNTAX INTEGER ( 0..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioControlEntry 4 }
+
+-- End of audioControlTable
+
+
+        
+-- Beginning of audioEmbControlTable
+    audioEmbControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioEmbControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioEmbControl table. "
+    ::= { keyerAudio 2 }
+
+    audioEmbControlEntry OBJECT-TYPE
+      SYNTAX AudioEmbControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioEmbIndex }
+    ::= { audioEmbControlTable 1 }
+
+    AudioEmbControlEntry ::= SEQUENCE {
+        audioEmbIndex     INTEGER,
+        leftPcm     INTEGER,
+        rightPcm     INTEGER
+    }
+
+
+    
+    audioEmbIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..4 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioEmbControlEntry 1 }
+
+    
+    leftPcm OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioEmbControlEntry 2 }
+
+    
+    rightPcm OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioEmbControlEntry 3 }
+
+-- End of audioEmbControlTable
+
+
+        
+-- Beginning of audioShuffleControlTable
+    audioShuffleControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioShuffleControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioShuffleControl table. "
+    ::= { keyerAudio 3 }
+
+    audioShuffleControlEntry OBJECT-TYPE
+      SYNTAX AudioShuffleControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioShuffleIndex }
+    ::= { audioShuffleControlTable 1 }
+
+    AudioShuffleControlEntry ::= SEQUENCE {
+        audioShuffleIndex     INTEGER,
+        audioShuffle     INTEGER
+    }
+
+
+    
+    audioShuffleIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..16 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioShuffleControlEntry 1 }
+
+    
+    audioShuffle OBJECT-TYPE
+      SYNTAX INTEGER ( 1..16 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { audioShuffleControlEntry 2 }
+
+-- End of audioShuffleControlTable
+
+
+        
+    voInRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of audioVoiceOverInRate "
+    ::= { keyerAudio 4 }
+
+        
+    voOutRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of audioVoiceOverOutRate "
+    ::= { keyerAudio 5 }
+
+        
+    audioMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            mode4plus0(1),
+            mode3plus1(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerAudio 6 }
+
+        
+    audioType OBJECT-TYPE
+      SYNTAX INTEGER {
+            aes(1),
+            embedded(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerAudio 7 }
+
+        
+    audioMix OBJECT-TYPE
+      SYNTAX INTEGER ( 0..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { keyerAudio 8 }
+
+        
+-- Beginning of audioVoiceOverSetupTable
+    audioVoiceOverSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioVoiceOverSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " 
+			This table does not apply to these two keyer types which do not have audio capability: 9725LG, and HD9725LG.	
+			
+			PRODUCT: HD9725LG, 9725LG
+
+			The table applies to these keyer types:
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LG
+			PRODUCT: HD9725LGA, 9725LGA
+			PRODUCT: QMC-2-MG
+		 "
+    ::= { keyerAudio 9 }
+
+    audioVoiceOverSetupEntry OBJECT-TYPE
+      SYNTAX AudioVoiceOverSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioVoiceOverChannelIndex }
+    ::= { audioVoiceOverSetupTable 1 }
+
+    AudioVoiceOverSetupEntry ::= SEQUENCE {
+        audioVoiceOverChannelIndex     INTEGER,
+        triggerVoiceOver     INTEGER,
+        audioVoiceOverIsChannelEnabled     INTEGER
+    }
+
+
+    
+    audioVoiceOverChannelIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..2 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Index to select channel to use for Voice-Over Setup
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+ 	        PRODUCT: 7825DSK2LG
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+            PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			 "
+    ::= { audioVoiceOverSetupEntry 1 }
+
+    
+    triggerVoiceOver OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " An SNMP programmer uses this control to enable, disable or toggle the voice-over data to the sound mixer.
+			  This control assumes that the source, gain and duckout of voice-over data to the sound mixer have been set.
+			  These control can have three values based on what the SNMP programmer desires to achieve.
+			  1. To enable the sound mixer to receive voice-over data, the SNMP programmer sends a value of 1
+			  2. To disable the sound mixer from receiving voice-over data, the SNMP programmer sends a value of 0
+			  3. To toggle the sound-mixer between the current state of enabling and disabling of voice-over data, the 
+			     SNMP programmer sends a value of 2.
+			  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			  ::IMPORTANT NOTE 1: BEFORE doing a SET operation on this control, the SNMP programmer SHOULD IDEALLY do a SET 
+			  ::operation on the voInRate and voOutRate controls, the controls that determine the rate at which the voice-over 
+			  ::blends into/out of the audio data in the sound mixer. This may not be necessary if the value of voice-over In 
+			  ::and Out rates are already known, but for the case where a user may set the values on a GUI, it is important that
+			  ::the In and Out rates are set before the triggering action(one of enable/disable/toggle) is called.
+			  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			  ::IMPORTANT NOTE 2: This control is essentially a write-only control. Do not attempt to read its value. It has
+			  ::a read value only to allow SNMP to discover the indexes.
+			  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			  ::IMPORTANT NOTE 3: This MIB has been indexed for two indices corresponding to the PREVIEW input/output and the
+			  ::program input/output. 
+			  ::However none of the current keyers use the preview channel for voice-over audio data processing in any significant 
+			  ::way.
+			  ::The current software/hardware configuration is such that the preview input/output can only be enabled for 
+			  ::voice-over if the program input/output is enabled as well. In this case, the preview channel still
+			  ::cannot process the audio data independently but receives a copy of the data processed on the program channel.
+			  ::For this reason, for the current hardware/software configuration, an SNMP GUI programmer should not include GUI
+			  ::controls pertaining to index 1(index 1 corresponds to the preview input/output). That is, the GUI should not
+			  ::present to the user inputs that allow the configuration of index 1.
+			  ::Index 1 will be left in the MIB to permit future enhanceability of the code should there be a requirement to 
+			  ::have preview and program channel both carrying independent audio data.
+			  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+	          PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+			   "
+    ::= { audioVoiceOverSetupEntry 2 }
+
+    
+    audioVoiceOverIsChannelEnabled OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control is used to determine whether a channel is enabled for voice-over input. Use index 1 to
+		  determine if the preview channel is enabled and index 2 to determine if the program channel is enabled.
+		  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		  ::IMPORTANT ADDENDUM: This MIB has been indexed for two indices corresponding to the PREVIEW input/output and the
+		  ::PROGRAM input/output. 
+		  ::However none of the current keyers use the preview channel for voice-over audio data processing in any significant 
+		  ::way.
+		  ::The current software/hardware configuration is such that the preview input/output can only be enabled for 
+		  ::voice-over if the program input/output is enabled as well. In this case, the preview channel still
+		  ::cannot process the audio data independently but receives a copy of the data processed on the program channel.
+		  ::For this reason, for the current hardware/software configuration, an SNMP GUI programmer should not include GUI
+		  ::controls pertaining to index 1(index 1 corresponds to the preview input/output). That is, the GUI should not
+		  ::present to the user inputs that allow the configuration of index 1.
+		  ::Index 1 will be left in the MIB to permit future enhanceability of the code should there be a requirement to 
+		  ::have preview and program channel both carrying independent audio data.
+		  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		  This control is meant to be used as an aid for SNMP GUI programmers determine whether or not voice-over is enabled
+		  on either of the PROGRAM/PREVIEW channels. A GUI programmer can provide hints to the user of the GUI the active
+		  state of the channel in reference to voice-over:whether or not voice-over is enabled on that channel. Based on the
+		  current state, the user can decide whether or not to trigger voice-over audio (which is done using the 
+		  'triggerVoiceOver' control.
+		  For example, a user can display that the voice-over is enabled by setting a GUI box to green color. 
+		  The same GUI box could be set to red to indicate that the voice-over is disabled. 
+		  The functions responsible for displaying the box color should read(GET) the current value before displaying color, 
+		  and especially after doing a toggle. 
+		  This is so that if hardware/firmware conditions prevent the voice-over being triggered, 
+		  the SNMP GUI code will acurately affect the state of the keyer.
+		  PLEASE KEEP IN MIND, FOR THE CURRENT HW/SW CONFIGURATION, THE PROGRAM CHANNEL IS THE ONLY CHANNEL THAT ONE CAN RELIABLY
+		  TRIGGER VOICE-OVER. A GUI PROGRAMMER SHOULD NOT PRESENT INPUTS THAT ALLOW THE USER TO TRIGGER VOICE-OVER ON THE 
+		  PREVIEW CHANNEL. THAT IS, THE PROGRAMMER SHOULD ONLY USE INDEX 2.
+		  
+		  PRODUCT: 7825DSK2LG
+		  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+		  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+		  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+		  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+          PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+		   "
+    ::= { audioVoiceOverSetupEntry 3 }
+
+-- End of audioVoiceOverSetupTable
+
+
+        
+    audioVoiceOverInRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control does not apply to these two keyer types which do not have audio capability: 9725LG, and HD9725LG.	
+			
+			PRODUCT: HD9725LG, 9725LG
+
+			The control applies to these keyer types:
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LG
+			PRODUCT: HD9725LGA, 9725LGA
+			PRODUCT: QMC-2-MG
+
+			This control is used to set the rate in fields at which the voice-over audio is faded up to its target gain
+		 "
+    ::= { keyerAudio 10 }
+
+        
+    audioVoiceOverOutRate OBJECT-TYPE
+      SYNTAX INTEGER ( 1..600 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control does not apply to these two keyer types which do not have audio capability: 9725LG, and HD9725LG.	
+			
+			PRODUCT: HD9725LG, 9725LG
+
+			The control applies to these keyer types:
+
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LG
+			PRODUCT: HD9725LGA, 9725LGA
+			PRODUCT: QMC-2-MG
+
+			This control is used to set the rate in fields at which the voice-over audio is faded from its initial gain down to silence
+		 "
+    ::= { keyerAudio 11 }
+
+        
+-- Beginning of mixerBackgroundAudioSetupTable
+    mixerBackgroundAudioSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MixerBackgroundAudioSetupEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION  " Deprecated in May, 2009, to use a new table with 16 channel audio support "
+    ::= { keyerAudio 12 }
+
+    mixerBackgroundAudioSetupEntry OBJECT-TYPE
+      SYNTAX MixerBackgroundAudioSetupEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { layerBackgroundAudioIndex, busBackgroundAudioIndex, backgroundAudioParameterIndex }
+    ::= { mixerBackgroundAudioSetupTable 1 }
+
+    MixerBackgroundAudioSetupEntry ::= SEQUENCE {
+        layerBackgroundAudioIndex     INTEGER,
+        busBackgroundAudioIndex     INTEGER,
+        backgroundAudioParameterIndex     INTEGER,
+        backgroundAudioParameter     OCTET STRING
+    }
+
+
+    
+    layerBackgroundAudioIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..8 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				This control has a dual usage, depending on whether one is considering the input or output channels(which can be independent of 
+				each other.)
+				
+				i) From the audio 'Output' aspect:
+				A programmer uses this control to decide which audio mixer is having its background-audio electrical input 
+				(an unfortunate coincidence of use of the word 'input' in this context)configured.
+				The indices correspond to the following mixer selections.
+				1 => Audio Mixer on Layer 1, left channel
+				2 => Audio Mixer on Layer 1, right channel
+				3 => Audio Mixer on Layer 2, left channel
+				4 => Audio Mixer on Layer 2, right channel
+				5 => Audio Mixer on Layer 3, left channel
+				6 => Audio Mixer on Layer 3, right channel
+				7 => Audio Mixer on Layer 4, left channel
+				8 => Audio Mixer on Layer 4, right channel
+				
+				
+				ii)From the audio 'Input' aspect:
+				The indices correspond to the identifiers of each of the embedded audio source inputs on each bus. Each bus can have 8 embedded
+				electrical audio-data input sources. 
+				In practice this usually means four physical audio sources, with each audio source producing stereo-a left channel and a right channel, 
+				so that there is a total of 8 electrical audio-data inputs.
+				1 => Embedded audio source 1, left channel
+				2 => Embedded audio source 1, right channel
+				3 => Embedded audio source 2, left channel
+				4 => Embedded audio source 2, right channel
+				5 => Embedded audio source 3, left channel
+				6 => Embedded audio source 3, right channel
+				7 => Embedded audio source 4, left channel
+				8 => Embedded audio source 4, right channel
+				
+			   "
+    ::= { mixerBackgroundAudioSetupEntry 1 }
+
+    
+    busBackgroundAudioIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				This control is used to select the bus to either configure or retrieve data from. Source, Gain and PCM flag parameters on 
+				each bus are independent of each other.
+				0 => Source Black
+				1 => Bus A
+				2 => Bus B
+				For the case of retrieving the PCM flag setting, only Bus A (1) and Bus B (2) are valid bus values.
+				
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				This control is used to select the bus to either configure or retrieve data from. Source, Gain and PCM flag parameters on 
+				each bus are independent of each other.
+				0 => Source Black
+				1 => Bus A(Or 'Input' bus)
+				For the case of retrieving the PCM flag setting, only Bus A (1, also called the 'Input' bus) is valid.
+
+			   "
+    ::= { mixerBackgroundAudioSetupEntry 2 }
+
+    
+    backgroundAudioParameterIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				A programmer uses this control to decide the background audio parameter to retrieve or set.
+				A value of 1 implies retrieving/setting the Background Audio Source
+				A value of 2 implies retrieving/setting the Background Audio Gain
+				A value of 3 implies retrieving/setting the Background Audio PCM flag
+				
+			   "
+    ::= { mixerBackgroundAudioSetupEntry 3 }
+
+    
+    backgroundAudioParameter OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				
+				A programmer uses this control in conjunction with controls layerBackgroundAudioIndex,
+				busBackgroundAudioIndex and backgroundAudioParameterIndex to SET/GET one of the Source, Gain and PCM-flag
+				parameters. 
+				
+				i)
+				A GUI programmer should set layerToConfigureWithBackgroundAudioIndex to the numerical ID of the mixer to configured.
+				See layerToConfigureWithBackgroundAudioIndex for more info.
+				
+				ii)A GUI programmer should set busToConfigureForBackgroundAudioIndex to the numerical ID of the bus whose multiplexers
+				are being configured. See busToConfigureForBackgroundAudioIndex for more info.
+				
+				iii)A GUI programmer should set backgroundAudioParameterIndex to the numerical ID of the parameter that is to be set or retrieved.
+				See backgroundAudioParameterIndex for more info.
+
+				iv.1)
+				When backgroundAudioParameterIndex is 1 (i.e. send/retrieve Source)a programmer uses this control to send/retrieve
+				the Source. On the SNMP agent, integers are associated with the various embedded audio sources. GUI programmers
+				should send these integers as two-character strings on a SET operation, and should intepret the current audio source
+				by translating the received two-character string to the name of the associated source.
+				The integers used and the associated embedded audio sources are listed below:
+				 0	 => AES5L
+				 1	 => AES5R
+				 2	 => AES6L
+				 3	 => AES6R
+				 4	 => AES7L
+				 5	 => AES7R
+				 6	 => AES8L
+				 7	 => AES8R
+				 8	 => AES1L
+				 9	 => AES1R
+				10	 => AES2L
+				11	 => AES2R
+				12	 => AES3L
+				13	 => AES3R
+				14	 => AES4L
+				15	 => AES4R
+				16   =>	AEMB1L    
+				17   => AEMB1R    
+				18	 => AEMB2L    
+				19	 => AEMB2R    
+				20	 => AEMB3L    
+				21   => AEMB3R    
+				22   => AEMB4L    
+				23   => AEMB4R
+------------------------------------------------------------------------------------------------------------------------
+				--NOTE- BEGIN 7725/7825 SPECIFIC: 
+				THE VALUES BELOW ONLY APPLY TO THE 7725/7825 KEYER SERIES(BOTH DSK AND DSK2), BECAUSE THEY HAVE MORE
+				THAN ONE INPUT/OUTPUT BUS
+				24   => BEMB1L    
+				25   => BEMB1R    
+				26   => BEMB2L    
+				27   => BEMB2R    
+				28   => BEMB3L    
+				29   => BEMB3R    
+				30   => BEMB4L    
+				31   => BEMB4R    
+
+				48   => AEMB1M    
+				49   => AEMB2M    
+				50   => AEMB3M    
+				51   => AEMB4M    
+				52   => BEMB1M    
+				53   => BEMB2M    
+				54   => BEMB3M    
+				55   => BEMB4M
+				--NOTE- END 7725/7825 SPECIFIC: 
+				THE VALUES ABOVE ONLY APPLY TO THE 7725/7825 KEYER SERIES(BOTH DSK AND DSK2), BECAUSE THEY HAVE MORE
+				THAN ONE INPUT/OUTPUT BUS
+------------------------------------------------------------------------------------------------------------------------
+				XXX   => silence 
+				XXX depends on whether the keyer is part of the 7725/7825 series of keyers or the QMG/9700 series of keyers.
+				For the 7725/7825 series of keyers, XXX = 56.
+				For the QMG/9700 series of keyers, XXX = 64.
+				
+				A GUI programmer should present a selection list that allows the user to desired input source for background
+				audio. The software then selects the associated numerical ID when building up its SNMP SET operation. The numerical
+				ID is then converted to the two-character equivalent string, that is then sent to the SNMP agent. 
+				When the GUI user performs a GET operation, the GUI programmer should display the string associated with the
+				two character string that is received. E.g. is the string '50' is received it implies that the source 'AEMB3M' is the
+				current source.
+				
+				iv.2)
+				When backgroundAudioParameterIndex is 2 (i.e. send/retrieve Gain)a programmer uses this control to send/retrieve 
+				the gain of the background audio input source. The current keyer hardware uses a gain range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+
+				iv.3)
+				When backgroundAudioParameterIndex is 3 (i.e. send/retrieve the PCM flag of an audio source)
+				a programmer uses this control to set/retrieve the Is-PCM flag of an embedded audio source FROM THE INPUT ASPECT.
+				THAT IS, USE THIS CONTROL IN CONJUNCTION WITH layerBackgroundAudioIndex.
+				To SET the Is-PCM flag of an embedded audio source, the programmer first sets the value of layerBackgroundAudioIndex
+				to the input data channel as per the description notes for that control. 
+				For example to set the embedded audio source, right channel,  
+				the programmer sets the value of layerBackgroundAudioIndex to 6. Next, the programmer sets the value of this control
+				(backgroundAudioParameter) to character '0' for false and character '1' for true. The programmer then sends this value
+				back to the user.
+				
+				Remember to keep in mind that
+				--only the 7725/7825 keyers have multiple input buses, therefore the choice of AEMBx and BEMBx where x is the channel
+				applies only to the 7725/7825 keyers. All other keyers will only have the selection of AEMBx available.
+				---On the 7725/7825 keyers, Source Black does not have any associated embedded audio. 
+				The SNMP coding has been designed to generate an error if a request is made to set/get the value of Source Black.
+				
+				iv.3.a)A GUI programmer should present the user a general subsection containing a column listing of all the audio sources. Next
+				to each listed item, on a second column, the GUI programmer should present an input selection list (the second column
+				should be subtitled 'Is-PCM flag') containing the strings 'Yes' and 'No'
+				The 'Yes'/'No' sub-titles represent the active state of audio source on the first column, 
+				i.e. Is-PCM may be 'Yes' or it may be 'No'.
+				
+				For example, assume that the user did a get on BEMB4L(layerBackgroundAudioIndex was set to 6, 
+				and busBackgroundAudioIndex was set to 2, i.e. bus B, and backgroundAudioParameterIndex is 3.)
+				Then if on the SNMP user side a value of '1' is received, The BEMB4L status of PCM-flag should be presented by a
+				'Yes', otherwise if a '0' is received it should be presented by a 'No'.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::TIP::
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::The SNMP GUI programmer may wish to present all the layers and associated buses and their background audio
+				::current input values of source and gain on a single page. 
+				::If this is the case, it is recommended that the GUI programmer
+				::include a 'revert' button, available to the user to revert to the previous settings,
+				::and hidden 'previous_XX' variables for every variable XX displayed on the page. Should the user wish to 
+				::revert to the previous state, the SNMP programmer sends(re-SETS)all the values of previous_XX for all the
+				::controls on that page.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			   "
+    ::= { mixerBackgroundAudioSetupEntry 4 }
+
+-- End of mixerBackgroundAudioSetupTable
+
+
+        
+-- Beginning of mixerVoiceOverAudioSetupTable
+    mixerVoiceOverAudioSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MixerVoiceOverAudioSetupEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION  " Deprecated to use the new one with 16 channel audio support "
+    ::= { keyerAudio 13 }
+
+    mixerVoiceOverAudioSetupEntry OBJECT-TYPE
+      SYNTAX MixerVoiceOverAudioSetupEntry
+        ACCESS not-accessible
+        STATUS deprecated
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { layerToConfigureWithVoiceOverAudioIndex, typeOfVoiceOverToConfigureForVoiceOverAudioIndex, voiceoverAudioParameterIndex }
+    ::= { mixerVoiceOverAudioSetupTable 1 }
+
+    MixerVoiceOverAudioSetupEntry ::= SEQUENCE {
+        layerToConfigureWithVoiceOverAudioIndex     INTEGER,
+        typeOfVoiceOverToConfigureForVoiceOverAudioIndex     INTEGER,
+        voiceoverAudioParameterIndex     INTEGER,
+        voiceoverAudioParameter     OCTET STRING
+    }
+
+
+    
+    layerToConfigureWithVoiceOverAudioIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..8 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				A programmer uses this control to decide which audio mixer is having its input voice-over audio configured.
+				The indices correspond to the following mixer selections.
+				1 => Audio Mixer on Layer 1, left channel
+				2 => Audio Mixer on Layer 1, right channel
+				3 => Audio Mixer on Layer 2, left channel
+				4 => Audio Mixer on Layer 2, right channel
+				5 => Audio Mixer on Layer 3, left channel
+				6 => Audio Mixer on Layer 3, right channel
+				7 => Audio Mixer on Layer 4, left channel
+				8 => Audio Mixer on Layer 4, right channel
+			   "
+    ::= { mixerVoiceOverAudioSetupEntry 1 }
+
+    
+    typeOfVoiceOverToConfigureForVoiceOverAudioIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				A programmer uses this control to decide which  type of voice-over is having its audio mixer being 
+				configured for background audio.
+				The indices correspond to the following voiceover selections.
+				0 => DSK(NOT AVAILABLE ON THE HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG & QMC-2-MG)
+				1 => Audio-Clip
+				2 => Voice-over(note,the name 'Voice-over' is somewhat confusing, but it is the formal name of the third
+				     type of voice over input.)
+				NOTE: DSK functionality as a voiceover has not been implemented on the current keyers. The ID is currently defined on 
+				the keyer firmware for future expandability. However, all calls to set DSK voiceover parameters will fail as such
+				functionality is currently not existent.
+
+			   "
+    ::= { mixerVoiceOverAudioSetupEntry 2 }
+
+    
+    voiceoverAudioParameterIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-only
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				A programmer uses this control to decide the voiceover audio parameter to retrieve or set.
+				A value of 1 implies retrieving/setting the voiceover Audio Source
+				A value of 2 implies retrieving/setting the voiceover Audio Gain
+				A value of 3 implies retrieving/setting the voice Audio Duck
+				
+			   "
+    ::= { mixerVoiceOverAudioSetupEntry 3 }
+
+    
+    voiceoverAudioParameter OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				
+				A programmer uses this control in conjunction with controls layerToConfigureWithBackgroundAudioIndex,
+				busToConfigureForBackgroundAudioIndex and backgroundAudioParameterIndex to SET/GET one of the Source, Gain and PCM-flag
+				parameters. 
+				
+				i)
+				A GUI programmer should set layerToConfigureWithVoiceoverAudioIndex to the numerical ID of the layer to configured.
+				See layerToConfigureWithVoiceoverAudioIndex for more info.
+				
+				ii)A GUI programmer should set typeOfVoiceOverToConfigureForVoiceOverAudioIndex to the numerical ID of the type of voice over
+				being configured. See typeOfVoiceOverToConfigureForVoiceOverAudioIndex for more info.
+				
+				iii)A GUI programmer should set voiceoverAudioParameterIndex to the numerical ID of the parameter that is to be set or retrieved.
+				See backgroundAudioParameterIndex for more info.
+
+				iv.1)
+				When voiceoverAudioParameterIndex is 1 (i.e. send/retrieve Source)a programmer uses this control to set/retrieve
+				the voice over Source. On the SNMP agent, integers are associated with the various embedded audio sources. 
+				GUI programmers should send these integers as character strings on a SET operation, 
+				and should intepret the current audio source
+				by translating the received character string to the name of the associated source.
+				The integers used and the associated embedded audio sources are listed below:
+
+                iv.1.a) Integers associated with audio sources when the input voiceover audio source is of type DSK do not exist. 
+                DSK voiceover functionality does not currently exist on the keyers, but has been defined for future expandability.
+                
+                iv.1.b) Integers associated with audio sources when the input voiceover audio source is of type Audio Clip are listed below. 
+                Note that the audio sources have names that contain the string 'CLIP'.
+                Names have the string 'CLIP' are only available when the type of voice-over input selected is the clip audio input.
+               (Integer)   (String GUI programmer displays)
+				24			=> CLIP1L (QMG/9700 series only)   
+				25			=> CLIP1R (QMG/9700 series only)   
+				32			=> CLIP1L (7725/7825 series only)   
+				33			=> CLIP1R (7725/7825 series only)    
+				34			=> CLIP2L (7725/7825 series only)    
+				35			=> CLIP2R (7725/7825 series only) 
+-----------------------------------------------------------------------------------------------------------------------------------
+				---NOTE-CAUTION BEGIN: THE VALUES BELOW HAVE BEEN INCLUDED FOR COMPLETENESS OF DOCUMENTATION AS FAR AS AUDIO STANDARDS PERTAINING
+				TO MIXERS ON KEYERS ARE CONCERNED. HOWEVER THE CURRENT KEYERS DO NOT HAVE THE HARDWARE RESOURCES TO HANDLE THESE
+				EXTRA CLIPS. DO NOT INCLUDE THESE VALUES IN THE SELECTIONS AVAILABLE TO A GUI USER.    
+				36			=> CLIP3L    
+				37			=> CLIP3R    
+				38			=> CLIP4L    
+				39			=> CLIP4R    
+				56			=> CLIP1M
+				57			=> CLIP2M
+				58			=> CLIP3M
+				59			=> CLIP4M				
+				---NOTE-CAUTION END: THE VALUES ABOVE HAVE BEEN INCLUDED FOR COMPLETENESS OF DOCUMENTATION AS FAR AS AUDIO STANDARDS PERTAINING
+				TO MIXERS ON KEYERS ARE CONCERNED. HOWEVER THE CURRENT KEYERS DO NOT HAVE THE HARDWARE RESOURCES TO HANDLE THESE
+				EXTRA CLIPS. DO NOT INCLUDE THESE VALUES IN THE SELECTIONS AVAILABLE TO A GUI USER.    
+-----------------------------------------------------------------------------------------------------------------------------------
+                iv.1.c) Integers associated with audio sources when the input voiceover audio source is of type Voice Over are listed below. 
+				 0	 => AES5L
+				 1	 => AES5R
+				 2	 => AES6L
+				 3	 => AES6R
+				 4	 => AES7L
+				 5	 => AES7R
+				 6	 => AES8L
+				 7	 => AES8R
+				 8	 => AES1L
+				 9	 => AES1R
+				10	 => AES2L
+				11	 => AES2R
+				12	 => AES3L
+				13	 => AES3R
+				14	 => AES4L
+				15	 => AES4R
+				16   =>	AEMB1L    
+				17   => AEMB1R    
+				18	 => AEMB2L    
+				19	 => AEMB2R    
+				20	 => AEMB3L    
+				21   => AEMB3R    
+				22   => AEMB4L    
+				23   => AEMB4R  
+--BEGIN-BELOW ONLY AVAILABLE ON THE 7725/7825 KEYERS-----				  
+				24   => BEMB1L    
+				25   => BEMB1R    
+				26   => BEMB2L    
+				27   => BEMB2R    
+				28   => BEMB3L    
+				29   => BEMB3R    
+				30   => BEMB4L    
+				31   => BEMB4R    
+				48   => AEMB1M    
+				49   => AEMB2M    
+				50   => AEMB3M    
+				51   => AEMB4M    
+				52   => BEMB1M    
+				53   => BEMB2M    
+				54   => BEMB3M    
+				55   => BEMB4M
+--END-ABOVE ONLY AVAILABLE ON THE 7725/7825 KEYERS-----				  
+				XXX   => silence
+				XXX will depend on whether the one is programming the CLIP input or the DSK and Voice-Over inputs.
+				a)
+				For the 7725/7825 keyer series, for the DSK and Voice-Over inputs, the value of XXX is always 56.
+				For the 7725/7825 keyer series, for the CLIP input, the value of XXX will depend on whether or not the router is enabled.
+				(To determine whether the router is enabled, do a GET operation on the genRouterEnable control.)
+				For the 7725/7825 keyer series, if the router is enabled, then the value of XXX will be 12.
+				For the 7725/7825 keyer series, if the router is NOT enabled, the value of XXX will 56.
+				For example, for the 7725/7825 keyer series, to set the clip input source to 'silence' when the router is enabled, 
+				send a 12, otherwise send a 56.
+				b)
+				For the QMG/9700 series of keyers, the value of silence is always 64, regardless of whether the input is
+				the voiceover or the audioclip input.
+				
+				
+				A GUI programmer should present a selection list that allows the user to desired input source for voiceover
+				audio. The software then selects the associated numerical ID when building up its SNMP SET operation. The numerical
+				ID is then converted to the character equivalent string, that is then sent to the SNMP agent. 
+				When the GUI user performs a GET operation, the GUI programmer should display the string associated with the
+				character string that is received. E.g. is the string '50' is received it implies that the source 'AEMB3M' is the
+				current source.
+				==>When creating the list of selections for audio clip, only the source strings containing the 'CLIP' string
+				should be included in the list. 
+				This is because the clip input is intended to carry pre-recorded video data and the associated audio clips, 
+				not real-time video and the associated embedded audio.
+				==>When creating the list of selections for the keyer and voice-over, the source strings containing 'CLIP' 
+				should NOT be included in the list.
+				This is because the keyer and the voice-over inputs are intended to carry video and the associated embedded audio, 
+				not video clips and the associated audio.
+
+				iv.2)
+				When voiceoverAudioParameterIndex is 2 (i.e. send/retrieve Gain)a programmer uses this control to send/retrieve 
+				the gain of the voiceover audio input source. The current keyer hardware uses a gain range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+
+				iv.3)
+				When voiceoverAudioParameterIndex is 3 (i.e. set/retrieve Duck) a programmer uses this control to send/retrieve 
+				the duck of the voiceover audio input source. The current keyer hardware uses a duck range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::TIP::
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::The SNMP GUI programmer may wish to present all the layers and their current input voice-over
+				::values of source, gain and duck, on a single page. If this is the case, it is recommended that the GUI programmer
+				::include a 'revert' button, available to the user to revert to the previous settings,
+				::and hidden 'previous_XX' variables for every variable XX displayed on the page. Should the user wish to 
+				::revert to the previous state, the SNMP programmer sends(re-SETS) all the values of previous_XX for all the
+				::controls on that page.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			   "
+    ::= { mixerVoiceOverAudioSetupEntry 4 }
+
+-- End of mixerVoiceOverAudioSetupTable
+
+
+        
+    audioVoiceOverInMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            cut(1),
+            fade(2),
+            cutFade(3),
+            fadeFade(4),
+            fadeCut(5)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			This control is used to select the type of mode that the voice-over audio will blend into the existing audio when
+			triggered in. A GUI programmer should present a selection box with the following names and send the associated enumerated 
+			integer:
+			val(1)(i.e. cut)==> The programmer presents 'Cut'
+			val(2)(i.e. fade)==> The programmer presents 'Fade'
+			val(3)(i.e. cutFade)==> The programmer presents 'Cut-Fade'
+			val(4)(i.e. fadeFade)==> The programmer presents 'Fade-Fade'
+			val(5)(i.e. fadeCut)==> The programmer presents 'Fade-Cut'
+			For example, if GUI user selects 'Cut' the SNMP programmer should send integer 1 to the SNMP agent. 
+			Likewise, if the SNMP agent does a get and receives a 1, then it should present the string 'Cut' to the user.
+			 "
+    ::= { keyerAudio 14 }
+
+        
+    audioVoiceOverOutMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            cut(1),
+            fade(2),
+            cutFade(3),
+            fadeFade(4),
+            fadeCut(5)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			This control is used to select the type of mode that the voice-over audio will recede out the existing audio when
+			toggled out. A GUI programmer should present a selection box with the above names and send the associated enumerated 
+			integer:
+			val(1)(i.e. cut)==> The programmer presents 'Cut'
+			val(2)(i.e. fade)==> The programmer presents 'Fade'
+			val(3)(i.e. cutFade)==> The programmer presents 'Cut-Fade'
+			val(4)(i.e. fadeFade)==> The programmer presents 'Fade-Fade'
+			val(5)(i.e. fadeCut)==> The programmer presents 'Fade-Cut'
+
+			For example, if GUI user selects 'Cut' the SNMP programmer should send integer 1 to the SNMP agent. 
+			Likewise, if the SNMP agent does a get and receives a 1, then it should present the string 'Cut' to the user.
+			 "
+    ::= { keyerAudio 15 }
+
+        
+    audioClipFadeDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 100..15000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			This control is used to set the audio clip fade duration on the voice-over input of the audio mixers. 
+			Audio Clip duration on the keyer is used in floating point format. 
+			As an optimization, the request to send/get this control is done using an integer that represents 10 times
+			the actual value of the floating number that will be used by the keyer. An SNMP GUI programmer must present an input
+			selection range of 10.0 to 1500.0. The programmer must then multiply the input value by 10 and send it as an integer.
+			Likewise, the SNMP GUI programmer must divide by 10 any integer received from the keyer to get the actual audio clip
+			duration.
+			 "
+    ::= { keyerAudio 16 }
+
+        
+    bypassEmbeddedAudioProcessing OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG
+			PRODUCT: QMC-2-MG
+			This control is used to enable or disable bypassing of embedded audio processing. To enable bypassing, an SNMP GUI
+			programmer sends a 1 to the SNMP agent, and to disable bypassing, the SNMP programmer should send a 0. The SNMP GUI
+			programmer should present a selection list entitled something to the effect of 'Bypass Embedded Audio Processing?'.
+			The programmer should then present a list of 'Yes' and 'No' to the user. When the user selects 'Yes' the GUI programmer
+			sends a 1 and when the user selects 'No' the GUI programmer sends a 0. Likewise, when the SNMP agent responds to a
+			GET request with a 1, the GUI programmer should present 'Yes' to the user and when the SNMP agent responds to the GET
+			with a 0, the GUI programmer should present 'No' to the user.
+			 "
+    ::= { keyerAudio 17 }
+
+        
+-- Beginning of backgroundAudioSetupTable
+    backgroundAudioSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF BackgroundAudioSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The backgroundAudioSetup table. "
+    ::= { keyerAudio 18 }
+
+    backgroundAudioSetupEntry OBJECT-TYPE
+      SYNTAX BackgroundAudioSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { backgroundAudioChanIndex, backgroundAudioBusIndex, backgroundAudioParamIndex }
+    ::= { backgroundAudioSetupTable 1 }
+
+    BackgroundAudioSetupEntry ::= SEQUENCE {
+        backgroundAudioChanIndex     INTEGER,
+        backgroundAudioBusIndex     INTEGER,
+        backgroundAudioParamIndex     INTEGER,
+        backgroundAudioParam     OCTET STRING
+    }
+
+
+    
+    backgroundAudioChanIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..16 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LGHD
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				
+				The value specifies the audio output channel:
+				A programmer uses this control to decide which output audio channel is having its background audio input configured:
+
+				1 => Audio output chanenl group 1, pair 1, left channel (referred to as channel 1L)
+				2 => Audio output chanenl group 1, pair 1, right channel (referred to as channel 1R)
+				3 => Audio output chanenl group 1, pair 2, left channel (referred to as channel 2L)
+				4 => Audio output chanenl group 1, pair 2, right channel (referred to as channel 2R)
+				5 => Audio output chanenl group 2, pair 1, left channel (referred to as channel 3L)
+				6 => Audio output chanenl group 2, pair 1, right channel (referred to as channel 3R)
+				7 => Audio output chanenl group 2, pair 2, left channel (referred to as channel 4L)
+				8 => Audio output chanenl group 2, pair 2, right channel (referred to as channel 4R)
+				9 => Audio output chanenl group 3, pair 1, left channel (referred to as channel 5L)
+				10 => Audio output chanenl group 3, pair 1, right channel (referred to as channel 5R)
+				11 => Audio output chanenl group 3, pair 2, left channel (referred to as channel 6L)
+				12 => Audio output chanenl group 3, pair 2, right channel (referred to as channel 6R)
+				13 => Audio output chanenl group 4, pair 1, left channel (referred to as channel 7L)
+				14 => Audio output chanenl group 4, pair 1, right channel (referred to as channel 7R)
+				15 => Audio output chanenl group 4, pair 2, left channel (referred to as channel 8L)
+				16 => Audio output chanenl group 4, pair 2, right channel (referred to as channel 8R)
+
+				PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				1 => Audio output chanenl group 1, pair 1, left channel (referred to as channel 1L)
+				2 => Audio output chanenl group 1, pair 1, right channel (referred to as channel 1R)
+				3 => Audio output chanenl group 1, pair 2, left channel (referred to as channel 2L)
+				4 => Audio output chanenl group 1, pair 2, right channel (referred to as channel 2R)
+				5 => Audio output chanenl group 2, pair 1, left channel (referred to as channel 3L)
+				6 => Audio output chanenl group 2, pair 1, right channel (referred to as channel 3R)
+				7 => Audio output chanenl group 2, pair 2, left channel (referred to as channel 4L)
+				8 => Audio output chanenl group 2, pair 2, right channel (referred to as channel 4R)
+
+			
+			   "
+    ::= { backgroundAudioSetupEntry 1 }
+
+    
+    backgroundAudioBusIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-S
+				PRODUCT: 7825DSK2LG
+
+				This control is used to select the bus to either configure or retrieve data from. Source, Gain and PCM flag parameters on 
+				each bus are independent of each other.
+				0 => Source Black
+				1 => Bus A
+				2 => Bus B
+				For the case of retrieving the PCM flag setting, only Bus A (1) and Bus B (2) are valid bus values.
+
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				This control is used to select the bus to either configure or retrieve data from. Source, Gain and PCM flag parameters on 
+				each bus are independent of each other.
+				0 => Source Black
+				1 => Bus A(Or 'Input' bus)
+				For the case of retrieving the PCM flag setting, only Bus A (1, also called the 'Input' bus) is valid.
+				
+			   "
+    ::= { backgroundAudioSetupEntry 2 }
+
+    
+    backgroundAudioParamIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-S
+				PRODUCT: 7825DSK2LG
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				A programmer uses this control to decide the background audio parameter to retrieve or set.
+				A value of 1 implies retrieving/setting the Background Audio Source
+				A value of 2 implies retrieving/setting the Background Audio Gain
+				A value of 3 implies retrieving/setting the Background Audio PCM flag
+				
+			   "
+    ::= { backgroundAudioSetupEntry 3 }
+
+    
+    backgroundAudioParam OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-S
+				PRODUCT: 7825DSK2LG
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				A programmer uses this control in conjunction with controls backgroundAudioChanIndex,
+				backgroundAudioBusIndex and backgroundAudioParamIndex to SET/GET one of the Source, Gain and PCM-flag
+				parameters. 
+				
+				i)
+				A GUI programmer should set backgroundAudioChanIndex to the numerical ID of the audio channel to be configured.
+				See backgroundAudioChanIndex for more info.
+				
+				ii)A GUI programmer should set backgroundAudioBusIndex to the numerical ID of the bus whose multiplexers
+				are being configured. See backgroundAudBusIndex for more info.
+				
+				iii)A GUI programmer should set backgroundAudioParamIndex to the numerical ID of the parameter that is to be set or retrieved.
+				See backgroundAudioParamIndex for more info.
+
+				iv.1)
+				When backgroundAudioParamIndex is 1 (i.e. send/retrieve Source)a programmer uses this control to send/retrieve
+				the audio Source. On the SNMP agent, integers are associated with the various embedded audio sources. GUI programmers
+				should send these integers as two-character strings on a SET operation, and should intepret the current audio source
+				by translating the received two-character string to the name of the associated source.
+				The integers used and the associated embedded audio sources are listed below:
+
+			
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				 0	 => AES5L
+				 1	 => AES5R
+				 2	 => AES6L
+				 3	 => AES6R
+				 4	 => AES7L
+				 5	 => AES7R
+				 6	 => AES8L
+				 7	 => AES8R
+				 8	 => AES1L
+				 9	 => AES1R
+				10	 => AES2L
+				11	 => AES2R
+				12	 => AES3L
+				13	 => AES3R
+				14	 => AES4L
+				15	 => AES4R
+
+				PRODUCT: 7825DSK2LG, when router is disabled
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				16   =>	AEMB1L    
+				17   => AEMB1R    
+				18	 => AEMB2L    
+				19	 => AEMB2R    
+				20	 => AEMB3L    
+				21   => AEMB3R    
+				22   => AEMB4L    
+				23   => AEMB4R
+				24   =>	AEMB5L    
+				25   => AEMB5R    
+				26	 => AEMB6L    
+			    27	 => AEMB6R    
+				28	 => AEMB7L    
+				29   => AEMB7R    
+				30   => AEMB8L    
+				31   => AEMB8R
+
+				32   => BEMB1L    
+				33   => BEMB1R    
+				34   => BEMB2L    
+				35   => BEMB2R    
+				36   => BEMB3L    
+				37   => BEMB3R    
+				38   => BEMB4L    
+				39   => BEMB4R    
+				40   => BEMB5L    
+				41   => BEMB5R    
+				42   => BEMB6L    
+				43   => BEMB6R    
+				44   => BEMB7L    
+				45   => BEMB7R    
+				46   => BEMB8L    
+				47   => BEMB8R
+
+				128   => silence 
+
+				PRODUCT: 7825DSK2LG, when router is enabled:
+
+				0	=> EMB1L
+				1	=> EMB1R
+				2	=> EMB2L
+				3	=> EMB2R
+				4	=> EMB3L
+				5	=> EMB3R
+				6	=> EMB4L
+				7	=> EMB4R
+				8	=> EMB5L
+				9	=> EMB5R
+				10	=> EMB6L
+				11	=> EMB6R
+				12	=> EMB7L
+				13	=> EMB7R
+				14	=> EMB8L
+				15	=> EMB8R
+
+				
+				20	=> silence
+	
+				PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-S
+
+				when router is disabled:
+
+				16   =>	AEMB1L    
+				17   => AEMB1R    
+				18	 => AEMB2L    
+				19	 => AEMB2R    
+				20	 => AEMB3L    
+				21   => AEMB3R    
+				22   => AEMB4L    
+				23   => AEMB4R
+				24   => BEMB1L    
+				25   => BEMB1R    
+				26   => BEMB2L    
+				27   => BEMB2R    
+				28   => BEMB3L    
+				29   => BEMB3R    
+				30   => BEMB4L    
+				31   => BEMB4R    
+
+				48   => AEMB1M    
+				49   => AEMB2M    
+				50   => AEMB3M    
+				51   => AEMB4M    
+				52   => BEMB1M    
+				53   => BEMB2M    
+				54   => BEMB3M    
+				55   => BEMB4M
+
+
+				56	=> silence
+
+				when router is enabled:
+
+				0	=> EMB1L
+				1	=> EMB1R
+				2	=> EMB2L
+				3	=> EMB2R
+				4	=> EMB3L
+				5	=> EMB3R
+				6	=> EMB4L
+				7	=> EMB4R
+
+				12	=> silence
+
+				A GUI programmer should present a selection list that allows the user to desired input source for background
+				audio. The software then selects the associated numerical ID when building up its SNMP SET operation. The numerical
+				ID is then converted to the two-character equivalent string, that is then sent to the SNMP agent. 
+				When the GUI user performs a GET operation, the GUI programmer should display the string associated with the
+				two character string that is received. E.g. is the string '20' is received it implies that the source 'AEMB3L' is the
+				current source.
+				
+				iv.2)
+				When backgroundAudioParamIndex is 2 (i.e. send/retrieve Gain)a programmer uses this control to send/retrieve 
+				the gain of the background audio input source. The current keyer hardware uses a gain range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+
+				iv.3)
+				When backgroundAudioParamIndex is 3 (i.e. send/retrieve the PCM flag of an audio source)
+				a programmer uses this control to set/retrieve the Is-PCM flag of an embedded audio source FROM THE INPUT ASPECT.
+				THAT IS, USE THIS CONTROL IN CONJUNCTION WITH backgroundAudioChanIndex.
+				To SET the Is-PCM flag of an embedded audio source, the programmer first sets the value of backgroundAudioChanIndex
+				to the input data channel as per the description notes for that control. 
+				For example to set the embedded audio source, right channel,  
+				the programmer sets the value of backgroundAudioChanIndex to 6. Next, the programmer sets the value of this control
+				(backgroundAudioParam) to character '0' for false and character '1' for true. The programmer then sends this value
+				back to the user.
+				
+				---On the 7825 keyers, Source Black does not have any associated embedded audio. 
+				The SNMP coding has been designed to generate an error if a request is made to set/get the value of Source Black.
+				
+				iv.3.a)A GUI programmer should present the user a general subsection containing a column listing of all the audio sources. Next
+				to each listed item, on a second column, the GUI programmer should present an input selection list (the second column
+				should be subtitled 'Is-PCM flag') containing the strings 'Yes' and 'No'
+				The 'Yes'/'No' sub-titles represent the active state of audio source on the first column, 
+				i.e. Is-PCM may be 'Yes' or it may be 'No'.
+				
+				For example, assume that the user did a get on BEMB4L(backgroundAudioChanIndex was set to 7, 
+				and backgroundAudioBusIndex was set to 2, i.e. bus B, and backgroundAudioParamIndex is 3.)
+				Then if on the SNMP user side a value of '1' is received, The BEMB4L status of PCM-flag should be presented by a
+				'Yes', otherwise if a '0' is received it should be presented by a 'No'.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::TIP::
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::The SNMP GUI programmer may wish to present all the layers and associated buses and their background audio
+				::current input values of source and gain on a single page. 
+				::If this is the case, it is recommended that the GUI programmer
+				::include a 'revert' button, available to the user to revert to the previous settings,
+				::and hidden 'previous_XX' variables for every variable XX displayed on the page. Should the user wish to 
+				::revert to the previous state, the SNMP programmer sends(re-SETS)all the values of previous_XX for all the
+				::controls on that page.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			   "
+    ::= { backgroundAudioSetupEntry 4 }
+
+-- End of backgroundAudioSetupTable
+
+
+        
+-- Beginning of audioOverSetupTable
+    audioOverSetupTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF AudioOverSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The audioOverSetup table. "
+    ::= { keyerAudio 19 }
+
+    audioOverSetupEntry OBJECT-TYPE
+      SYNTAX AudioOverSetupEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { audioOverChanIndex, audioOverLayerIndex, audioOverParamIndex }
+    ::= { audioOverSetupTable 1 }
+
+    AudioOverSetupEntry ::= SEQUENCE {
+        audioOverChanIndex     INTEGER,
+        audioOverLayerIndex     INTEGER,
+        audioOverParamIndex     INTEGER,
+        audioOverParam     OCTET STRING
+    }
+
+
+    
+    audioOverChanIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..16 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				A programmer uses this control to decide which audio mixer is having its input voice-over audio configured.
+				The indices correspond to the following mixer selections.
+
+				1 => Audio output chanenl group 1, pair 1, left channel (referred to as channel 1L)
+				2 => Audio output chanenl group 1, pair 1, right channel (referred to as channel 1R)
+				3 => Audio output chanenl group 1, pair 2, left channel (referred to as channel 2L)
+				4 => Audio output chanenl group 1, pair 2, right channel (referred to as channel 2L)
+				5 => Audio output chanenl group 2, pair 1, left channel (referred to as channel 3L)
+				6 => Audio output chanenl group 2, pair 1, right channel (referred to as channel 3R)
+				7 => Audio output chanenl group 2, pair 2, left channel (referred to as channel 4L)
+				8 => Audio output chanenl group 2, pair 2, right channel (referred to as channel 4R)
+				9 => Audio output chanenl group 3, pair 1, left channel (referred to as channel 5L)
+				10 => Audio output chanenl group 3, pair 1, right channel (referred to as channel 5R)
+				11 => Audio output chanenl group 3, pair 2, left channel (referred to as channel 6L)
+				12 => Audio output chanenl group 3, pair 2, right channel (referred to as channel 6R)
+				13 => Audio output chanenl group 4, pair 1, left channel (referred to as channel 7L)
+				14 => Audio output chanenl group 4, pair 1, right channel (referred to as channel 7R)
+				15 => Audio output chanenl group 4, pair 2, left channel (referred to as channel 8L)
+				16 => Audio output chanenl group 4, pair 2, right channel (referred to as chennel 8R)
+
+				PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				1 => Audio output chanenl group 1, pair 1, left channel (referred to as channel 1L)
+				2 => Audio output chanenl group 1, pair 1, right channel (referred to as channel 1R)
+				3 => Audio output chanenl group 1, pair 2, left channel (referred to as channel 2L)
+				4 => Audio output chanenl group 1, pair 2, right channel (referred to as channel 2R)
+				5 => Audio output chanenl group 2, pair 1, left channel (referred to as channel 3L)
+				6 => Audio output chanenl group 2, pair 1, right channel (referred to as channel 3R)
+				7 => Audio output chanenl group 2, pair 2, left channel (referred to as channel 4L)
+				8 => Audio output chanenl group 2, pair 2, right channel (referred to as channel 4R)
+
+
+			   "
+    ::= { audioOverSetupEntry 1 }
+
+    
+    audioOverLayerIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " A programmer uses this control to decide which type of audio over is having its audio mixer 
+				configured for background audio.
+
+				The indices correspond to the following voiceover selections.
+
+				PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LG
+
+				0 => DSK
+				1 => Audio-Clip
+				2 => Voice-over(note,the name 'Voice-over' is somewhat confusing, but it is the formal name of the third
+				     type of voice over input.)
+
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				1 => Audio-Clip
+				2 => Voice-over(note,the name 'Voice-over' is somewhat confusing, but it is the formal name of the third
+				     type of voice over input.)
+			   "
+    ::= { audioOverSetupEntry 2 }
+
+    
+    audioOverParamIndex OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LG
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				A programmer uses this control to decide the voiceover audio parameter to retrieve or set.
+				A value of 1 implies retrieving/setting the audio over Audio Source
+				A value of 2 implies retrieving/setting the audio over Audio Gain
+				A value of 3 implies retrieving/setting the audio over background Audio Duck
+				
+			   "
+    ::= { audioOverSetupEntry 3 }
+
+    
+    audioOverParam OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(15) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+				PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+				PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD	
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+				
+				A programmer uses this control in conjunction with controls audioOverChanIndex, audioOverLayerIndex, and audioOverParamIndex
+				to SET/GET one of the Source, Gain and Duck parameters. 
+				
+				i)
+				A GUI programmer should set audioOverChanIndex to the numerical ID of the audio channel to be configured.
+				See audioOverChanIndex for more info.
+				
+				ii)A GUI programmer should set audioOverLayerIndex to the numerical ID of audio over layer being configured. 
+				See audioOverLayerIndex for more info.
+				
+				iii)A GUI programmer should set audioOverParamIndex to the numerical ID of the parameter that is to be set or retrieved.
+				See audioOverParamIndex for more info.
+
+				iv.1)
+				When audioOverParamIndex is 1 (i.e. send/retrieve Source)a programmer uses this control to set/retrieve
+				the voice over Source. On the SNMP agent, integers are associated with the various embedded audio sources. 
+				GUI programmers should send these integers as character strings on a SET operation, 
+				and should intepret the current audio source
+				by translating the received character string to the name of the associated source.
+
+				The integers used and the associated embedded audio sources are listed below:
+
+                iv.1.a) For audio DSK (when audioOverLayerIndex is 0, apply to all the 7725DSK, and 7825DSK2LG, but not 9725 and QMC-2-MG),
+				 and audio Voiceover(when audioOverLayerIndex is 2): the source intergers are the same as those for backgroundAudioParam.
+                
+				iv.1.b) For audio clip (i.e., when audioOverLayerIndex is 1),
+
+               (Integer)   (String GUI programmer displays)
+
+				PRODUCT: 7825DSK2LG, when router is disabled
+				PRODUCT: HD9725LGA, 9725LGA
+				PRODUCT: QMC-2-MG
+
+				80			=> CLIP1L 
+				81			=> CLIP1R
+				82			=> CLIP2L
+			    83			=> CLIP2R 
+
+				128 		=> silence 
+
+				
+				PRODUCT: 7825DSK2LG, when router is enabled
+				16	=> CLIP1L
+				17	=> CLIP1R
+				18	=> CLIP2L
+				19	=> CLIP2R
+
+				20	=> silence
+
+				PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+				PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+
+				when router is disabled:
+
+				32			=> CLIP1L
+				33			=> CLIP1R
+				34			=> CLIP2L
+				35			=> CLIP2R
+	
+			 	56			=> silence
+	
+				when router is enabled: 
+
+				8	=> CLIP1L
+				9	=> CLIP1R
+				10	=> CLIP2L
+				11	=> CLIP2R
+
+				12	=> silence
+
+				
+				A GUI programmer should present a selection list that allows the user to desired input source for voiceover
+				audio. The software then selects the associated numerical ID when building up its SNMP SET operation. The numerical
+				ID is then converted to the character equivalent string, that is then sent to the SNMP agent. 
+				When the GUI user performs a GET operation, the GUI programmer should display the string associated with the
+				character string that is received. E.g. is the string '50' is received it implies that the source 'AEMB3M' is the
+				current source.
+				==>When creating the list of selections for audio clip, only the source strings containing the 'CLIP' string
+				should be included in the list. 
+				This is because the clip input is intended to carry pre-recorded video data and the associated audio clips, 
+				not real-time video and the associated embedded audio.
+				==>When creating the list of selections for the keyer and voice-over, the source strings containing 'CLIP' 
+				should NOT be included in the list.
+				This is because the keyer and the voice-over inputs are intended to carry video and the associated embedded audio, 
+				not video clips and the associated audio.
+
+				iv.2)
+				When audioOverParamIndex is 2 (i.e. send/retrieve Gain)a programmer uses this control to send/retrieve 
+				the gain of the voiceover audio input source. The current keyer hardware uses a gain range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+
+				iv.3)
+				When audioOverParamIndex is 3 (i.e. set/retrieve Duck) a programmer uses this control to send/retrieve 
+				the duck of the voiceover audio input source. The current keyer hardware uses a duck range of -102.3 to 24.0. 
+				The units are decibels(dB.)
+				Use is made in this implementation of an integer in the range -1023 to 240 as an optimization over sending/receiving 
+				a string that SNMP processing would convert from a string to a floating point number.
+				A GUI programmer should present to a user an input control that allows the user to enter floating numbers in the 
+				range or -102.3 to 24.0. Before performing a SET operation, the GUI programmer multipies the number
+				by 10, and then converts the number to the equivalent string. 
+				Likewise, when performing a GET operation, on receiving a string, the GUI programmer converts the string to an
+				integer (which should be in the range of -1023 to 240 to be valid,) and then divides it by 10 before presenting
+				the result to the user.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::TIP::
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+				::The SNMP GUI programmer may wish to present all the layers and their current input voice-over
+				::values of source, gain and duck, on a single page. If this is the case, it is recommended that the GUI programmer
+				::include a 'revert' button, available to the user to revert to the previous settings,
+				::and hidden 'previous_XX' variables for every variable XX displayed on the page. Should the user wish to 
+				::revert to the previous state, the SNMP programmer sends(re-SETS) all the values of previous_XX for all the
+				::controls on that page.
+				::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			   "
+    ::= { audioOverSetupEntry 4 }
+
+-- End of audioOverSetupTable
+
+
+        
+    fpPreviewBus OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of improved interface "
+    ::= { keyerFrontPanel 1 }
+
+        
+    fpProgramBus OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of improved interface "
+    ::= { keyerFrontPanel 2 }
+
+        
+    fpPGMBusLock OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of improved interface "
+    ::= { keyerFrontPanel 3 }
+
+        
+    fpByPass OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of improved interface "
+    ::= { keyerFrontPanel 4 }
+
+        
+    fpLogoState OBJECT-TYPE
+      SYNTAX INTEGER {
+            off(1),
+            on(2)
+            }
+      ACCESS read-write
+      STATUS deprecated
+      DESCRIPTION " Deprecated in favor of improved interface "
+    ::= { keyerFrontPanel 5 }
+
+        
+    fpPanelControlBypass OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+            PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA, AN9725LG, QMC-2-MG
+           			
+			 "
+    ::= { keyerFrontPanel 6 }
+
+        
+    fpPanelControlPreviewChannelInput OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 7 }
+
+        
+    fpPanelControlPreviewChannelDSK1 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 8 }
+
+        
+    fpPanelControlPreviewChannelDSK2 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 9 }
+
+        
+    fpPanelControlPreviewChannelLogo OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 10 }
+
+        
+    fpPanelControlProgramChannelInput OBJECT-TYPE
+      SYNTAX INTEGER ( 1..3 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 11 }
+
+        
+    fpPanelControlProgramChannelDSK1 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 12 }
+
+        
+    fpPanelControlProgramChannelDSK2 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 13 }
+
+        
+    fpPanelControlProgramChannelLogo OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 14 }
+
+        
+    fpPanelControlTransition OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG
+			PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			 "
+    ::= { keyerFrontPanel 15 }
+
+        
+    fpPanelControlLogopic1 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG "
+    ::= { keyerFrontPanel 16 }
+
+        
+    fpPanelControlLogopic2 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG "
+    ::= { keyerFrontPanel 17 }
+
+        
+    fpPanelControlLogoanim1 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG "
+    ::= { keyerFrontPanel 18 }
+
+        
+    fpPanelControlLogoanim2 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG "
+    ::= { keyerFrontPanel 19 }
+
+        
+    fpPanelControlLogocrawl1 OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: 7825DSK2LG "
+    ::= { keyerFrontPanel 20 }
+
+        
+-- Beginning of mgmtKeyerFaultsTable
+    mgmtKeyerFaultsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtKeyerFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtKeyerFaults table. "
+    ::= { keyerNotify 1 }
+
+    mgmtKeyerFaultsEntry OBJECT-TYPE
+      SYNTAX MgmtKeyerFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { keyerFaultNameIndex }
+    ::= { mgmtKeyerFaultsTable 1 }
+
+    MgmtKeyerFaultsEntry ::= SEQUENCE {
+        keyerFaultNameIndex     INTEGER,
+        keyerFaultStatus     INTEGER,
+        keyerSendTrap     INTEGER
+    }
+
+
+    
+    keyerFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            keyerGenerealError(1),
+            keyerVideoInvalid(2),
+            keyerRerenceUnlock(3),
+            keyerPowerSupply1Error(4),
+            keyerPowerSupply2Error(5),
+            keyerFan1Error(6),
+            keyerFan2Error(7),
+            keyerFan3Error(8),
+            keyerFan4Error(9),
+            keyerFan5Error(10),
+            keyerFan6Error(11),
+            keyerFan7Error(12),
+            keyerFan8Error(13),
+            keyerFan9Error(14),
+            keyerFan10Error(15),
+            keyerFan11Error(16),
+            keyerTemperature1OverError(17),
+            keyerTemperature2OverError(18),
+            keyerTemperature3OverError(19),
+            keyerTemperature4OverError(20),
+            keyerByPassActive(21),
+            keyerInputInvalid1(22),
+            keyerInputInvalid2(23),
+            keyerInputInvalid3(24),
+            keyerInputInvalid4(25),
+            keyerInputInvalid5(26),
+            keyerInputInvalid6(27),
+            keyerAudioInputInvalid1(28),
+            keyerAudioInputInvalid2(29)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION "  "
+    ::= { mgmtKeyerFaultsEntry 1 }
+
+    
+    keyerFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s).  Indexed by fault name and by index.
+  PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  valid traps are 
+  power supply 1 and 2
+  fan status 1, 2, 3 and 4
+  temperature 1,2,3 and 4
+  PRODUCT: 7725DSKLG 
+  there are no valid fault status' right now
+  PRODUCT: 7825DSK2
+  valid traps are
+  reference valid
+  bypass status
+  video input valid 1 through 6, labelled in order from 1 to 6, as PGM A, PGM B, KEY 1, FILL 1, KEY 2, FILL 2
+  that is: keyerRerenceUnlock keyerByPassActive keyerInputInvalid1 through 6
+   "
+    ::= { mgmtKeyerFaultsEntry 2 }
+
+    
+    keyerSendTrap OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " PRODUCT: HD9725LG, HD9725LGA, 9725LG, 9725LGA
+  valid traps are 
+  power supply 1 and 2
+  fan status 1, 2, 3, 4
+  temperature 1,2,3 and 4
+  PRODUCT: 7725DSKLG 
+  there are no valid send traps right now
+  PRODUCT: 7825DSK2
+  valid traps are
+  reference valid
+  bypass status
+  video input valid 1 through 6, labelled in order from 1 to 6, as PGM A, PGM B, KEY 1, FILL 1, KEY 2, FILL 2
+  that is: keyerRerenceUnlock keyerByPassActive keyerInputInvalid1 through 6
+   "
+    ::= { mgmtKeyerFaultsEntry 3 }
+
+-- End of mgmtKeyerFaultsTable
+
+
+        
+    addOrDeleteTrapDestinations OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(256) )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " An SNMP programmer uses this control to add or delete the IPV4 addresses where signficant event notifications 
+			  should be sent. To list the current set of IPV4 addreses that receive event notification, the GUI programmer
+			  sends a GET request. The list of IPV4 addresses that trap notifications are sent to is sent back as a comma-
+			  delimited list. e.g. 10.1.1.20,192.168.192.227  -note that there is no terminating comma or fullstop.
+			  To add an IP address to the set of destinations, the programmer sends a string begining with the + character,
+			  followed by the the string that represents IPV4 address. The string MUST ALSO terminate in a period.
+			  
+			  Adding/Removing Destinations
+			  For example, for simplicity, we will assume that an IPV4 address 192.169.192.227 exists, and we want to add
+			  this to the list of Trap destinations. So the programmer creates the pertinent ascii string 
+			  +192.168.192.227. (note the terminating period)
+			  and sends this string to the keyer in a SET operation. 
+			  To remove this trap destination, the programer sends the same but this time prefixed with the - character, 
+			  once again on the SET operation. That is
+			  -192.168.192.227. (note the terminating period)
+			  An attempt to add a destination when the keyer is already sending out events to a defined 
+			  maximum number of recipients will result in a generic error message being generated. Likewise, an attempt to
+			  delete an IP address that is not existent on the list will also result in an error being generated.
+			  
+			  Listing Current Destinations
+			  The programmer sends a GET request. The application will send back an OCTET STRIMNG of destination IPs. E.g.
+			  192.168.192.227,192.168.10.34,10.10.1.3,10.10.1.5 (note that the last item IS NOT delimited with a period.)
+			  
+			  PRODUCT: 7825DSK2LG
+			  PRODUCT: 7725DSKLG, 7725DSKLGSD, 7725DSKLGHD 
+			  PRODUCT: 7725DSK-LG-HD, 7725DSK-LG-SD
+			  PRODUCT: 7825DSK2LGHD, 7825DSK2LGSD
+			  PRODUCT: 7825DSK2LGHDSD, 7825DSK2HDSD			
+			   "
+    ::= { keyerNotify 2 }
+
+
+END

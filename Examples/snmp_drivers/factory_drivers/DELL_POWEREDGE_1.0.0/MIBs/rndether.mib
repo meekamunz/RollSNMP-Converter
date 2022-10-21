@@ -1,0 +1,70 @@
+rndEthernet  OBJECT IDENTIFIER ::= { rnd 37 }
+rndEthIfTable    OBJECT-TYPE
+    SYNTAX  SEQUENCE  OF RndEthIfEntry
+    ACCESS  not-accessible
+    STATUS  mandatory
+    DESCRIPTION
+      "Ethernet media specific information and configuration of the device 
+       interfaces."
+    ::=  { rndEthernet 1 }
+    
+rndEthIfEntry OBJECT-TYPE
+    SYNTAX  RndEthIfEntry
+    ACCESS  not-accessible
+    STATUS  mandatory
+    DESCRIPTION
+      "Defines the contents of each line in the rndEthIfTable table."
+    INDEX   { rndEthIfIndex }
+    ::=  { rndEthIfTable 1 }
+
+RndEthIfEntry ::= SEQUENCE {
+    rndEthIfIndex         INTEGER,
+    rndEthDuplexMode      INTEGER,
+    rndEthIfSpeed         INTEGER,
+    rndEthTransceiverType INTEGER
+    }
+
+rndEthIfIndex OBJECT-TYPE
+    SYNTAX   INTEGER
+    ACCESS   read-only
+    STATUS   mandatory
+    DESCRIPTION
+     "Index to the rndEthIfTable. The interface defined by a
+     particular value of this index is the same interface as
+     identified by the same value of ifIndex (MIBII)."
+         ::= {  rndEthIfEntry 1  }
+
+    rndEthDuplexMode  OBJECT-TYPE
+      SYNTAX  INTEGER {
+         half(1),
+         full(2)
+        }
+      ACCESS   read-write
+      STATUS   mandatory
+      DESCRIPTION
+        " This variable indicates whether this interface operates in half
+          duplex or full duplex mode."
+         ::= {  rndEthIfEntry 2  }
+
+    rndEthIfSpeed  OBJECT-TYPE
+      SYNTAX  INTEGER {
+         speed10BT(1),
+         speed100BT(2)
+        }
+      ACCESS   read-write
+      STATUS   mandatory
+      DESCRIPTION
+        " This variable indicates whether this interface operates at 10BT 
+          or 100BT speed."
+         ::= {  rndEthIfEntry 3  }
+
+    rndEthTransceiverType  OBJECT-TYPE
+      SYNTAX  INTEGER {
+         regular(1),
+         fiberOptics(2)
+        }
+      ACCESS   read-only
+      STATUS   mandatory
+      DESCRIPTION
+        " This variable indicates the transceiver type of this interface."
+         ::= {  rndEthIfEntry 4  }

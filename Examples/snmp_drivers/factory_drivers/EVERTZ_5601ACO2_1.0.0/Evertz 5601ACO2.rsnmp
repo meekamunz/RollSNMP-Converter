@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- SVN $Id$ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitors
+	Evertz MSC5700.
+
+	It assumes that standard-alias-include.rsnmp and standard-fields-include.rsnmp is already included.
+
+-->
+
+<DefinitionGroup>
+
+	<!-- Additional MIB folders from this library entry.
+		Remember that the path is relative to the config / program directory. -->
+	<MIBSource href="drivers/EVERTZ_5601ACO2_1.0.0/MIBs"/>
+	
+	<OIDAlias id="5601AC2" oid=".iso.org.dod.internet.private.enterprises.evertz.evtzMiniExperimental.miniexprACO25601" >
+		<OIDAlias id="GENERAL STATUS" oid=".aco2GeneralStatus" />
+		<OIDAlias id="ACO2 NOTIFY" oid=".aco2Notify" >
+			<OIDAlias id="PSU" oid=".mgmtFaultPowerSupplyTable.mgmtFaultPowerSupplyEntry" />
+			<OIDAlias id="FAN" oid=".mgmtFaultFanTable.mgmtFaultFanEntry" />
+			<OIDAlias id="ANALOG TEST GEN" oid=".mgmtFaultAnalogTGTable.mgmtFaultAnalogTGEntry" />
+		</OIDAlias>
+		<OIDAlias id="CONTROL" oid=".aco2Control" />
+	</OIDAlias>
+	
+	<UnitTypeDef typeName="EVERTZ_5601ACO2_1.0.0" >
+	
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: Evertz 5601ACO2.rsnmp 3835 2020-12-18 14:49:30Z michaelmunns $</StaticString>
+		</StaticDef>
+
+		<!-- These fields reference some of the global MIB-2 translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+		
+		<!-- Evertz specific custom fields -->
+		
+		<TranslationDef rcLogField="CHANGEOVER_CONTROL_MODE" pollRate="2">
+			<OID alias="CONTROL">.autoManual.0</OID>
+			<NumRule value="1" format="Manual" />
+			<NumRule value="2" format="Auto" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="UNIT_CONTROL_MODE" pollRate="2">
+			<OID alias="CONTROL">.gpiFrontPanel.0</OID>
+			<NumRule value="1" format="Front Panel" />
+			<NumRule value="2" format="GPI" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="OPERATING_MODE" pollRate="120">
+			<OID alias="GENERAL STATUS">.operatingMode.0</OID>
+			<NumRule value="1" format="Auto" />
+			<NumRule value="2" format="Manual - Front Panel" />
+			<NumRule value="3" format="Manual - GPI" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CHANGEOVER_RATE" pollRate="120">
+			<OID alias="GENERAL STATUS">.changeoverRate.0</OID>
+			<NumRule value="1" format="Normal" />
+			<NumRule value="2" format="Fast" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CURRENT_OUTPUT" pollRate="2">
+			<OID alias="GENERAL STATUS">.currentOutput.0</OID>
+			<NumRule value="1" format="Bank A" />
+			<NumRule value="2" format="Bank B" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="OUTPUT_PREFERENCE" pollRate="120">
+			<OID alias="GENERAL STATUS">.bankPreference.0</OID>
+			<NumRule value="1" format="No preference" />
+			<NumRule value="2" format="Bank A" />
+			<NumRule value="3" format="Bank B" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="OUTPUT_STATE" pollRate="10" >
+			<ExpOID alias="GENERAL STATUS">.bankPreference.0</ExpOID>	<!-- $1 -->
+			<ExpOID alias="GENERAL STATUS">.currentOutput.0</ExpOID>	<!-- $2 -->
+			<!-- if $1 = A(2) and $2(1) == A, STATE = OK -->
+			<!-- if $1 = A(2) and $2 == B(2), STATE = WARN -->
+			<!-- if $1 = B(3) and $2 == A(1), STATE = WARN -->
+			<!-- if $1 = B(3) and $2 == B(2), STATE = OK -->
+			<!-- if $1 = Equal(1), STATE = N/A -->
+			<ConditionRule condition="$1 e 2 == e $2 e 1 == AND" format="OK: Using Bank A" />
+			<ConditionRule condition="$1 e 2 == e $2 e 2 == AND" format="WARN: Using Bank B" />
+			<ConditionRule condition="$1 e 3 == e $2 e 1 == AND" format="WARN: Using Bank A" />
+			<ConditionRule condition="$1 e 3 == e $2 e 2 == AND" format="OK: Using Bank B" />
+			<ConditionRule condition="$1 e 1 == e $2 e 1 == AND" format="INFO: No preference, using bank A" />
+			<ConditionRule condition="$1 e 1 == e $2 e 2 == AND" format="INFO: No preference, using bank B" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!-- General System Info -->
+		
+		<TranslationDef rcLogField="FIRMWARE_VERSION" pollRate="600">
+			<OID alias="GENERAL STATUS">.firmwareVersion.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_STATE" pollRate="120">
+			<ExpOID alias="PSU">.powerSupplyIdx.#I</ExpOID>						<!-- $1 -->
+			<ExpOID alias="PSU">.powerSupplyFaultPresent.#I</ExpOID>	<!-- $2 -->
+			<GetNextArray dynamic="true" />
+			
+			<!-- NOTE: MIB walk from device seems to be indicating both PSU 1 and PSU 2 are called powerSupplyRight -->
+			
+			<ConditionRule condition="$1 e 1 == e $2 e 1 == AND" format="OK: Right PSU" />
+			<ConditionRule condition="$1 e 2 == e $2 e 1 == AND" format="OK: Left PSU" />
+			<ConditionRule condition="$1 e 1 == e $2 e 2 == AND" format="WARN: Right PSU" />
+			<ConditionRule condition="$1 e 2 == e $2 e 2 == AND" format="WARN: Left PSU" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d" pollRate="120">
+			<ExpOID alias="FAN">.fanIdx.#I</ExpOID>						<!-- $1 -->
+			<ExpOID alias="FAN">.fanIFaultPresent.#I</ExpOID>	<!-- $2 -->
+			<GetNextArray dynamic="true" />
+			
+			<!-- NOTE: MIB walk from device seems to be indicating all fans are called fanLeftFront -->
+
+			<ConditionRule condition="$1 e 1 == e $2 e 1 == AND" format="OK: Front Left Fan" />
+			<ConditionRule condition="$1 e 2 == e $2 e 1 == AND" format="OK: Rear Left Fan" />
+			<ConditionRule condition="$1 e 3 == e $2 e 1 == AND" format="OK: Front Right Fan" />
+			<ConditionRule condition="$1 e 4 == e $2 e 1 == AND" format="OK: Rear Right Fan" />
+			<ConditionRule condition="$1 e 1 == e $2 e 2 == AND" format="WARN: Front Left Fan" />
+			<ConditionRule condition="$1 e 2 == e $2 e 2 == AND" format="WARN: Rear Left Fan" />
+			<ConditionRule condition="$1 e 3 == e $2 e 2 == AND" format="WARN: Front Right Fan" />
+			<ConditionRule condition="$1 e 4 == e $2 e 2 == AND" format="WARN: Rear Right Fan" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="DOOR_STATUS" pollRate="60">
+			<OID alias="ACO2 NOTIFY">.mgmtFaultDoorTable.mgmtFaultDoorEntry.doorFaultPresent.1</OID>
+			<NumRule value="2" format="OK: Door closed" />
+			<NumRule value="1" format="WARN: Door open" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!-- Fault Tables -->
+		
+		<!--TranslationDef rcLogField="ANALOG_TEST_GEN_%d_STATE" pollRate="60">
+			<ExpOID alias="ANALOG TEST GEN">.analogTGChannelIdx.#I</ExpOID>		<comment> $1 </comment>
+			<ExpOID alias="ANALOG TEST GEN">.analogTGFaultPresent.#I</ExpOID>	<comment> $2 </comment>
+			<GetNextArray dynamic="true" />
+			<ConditionRule condition="$2 e 1 ==" format="OK: Using test gen channel $1" />
+			<ConditionRule condition="$2 e 2 ==" format="WARN: Using test gen channel $1" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef-->
+		
+	</UnitTypeDef>
+
+</DefinitionGroup>

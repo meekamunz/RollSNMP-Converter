@@ -1,0 +1,96 @@
+RADLAN-QOS-SERV-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN POLICY MIB
+-- Version:    7.35
+-- Date:       31 Oct 2003
+--
+
+IMPORTS
+    rlQosServ                                   FROM RADLAN-QOS-SERV
+    OBJECT-TYPE                                 FROM SNMPv2-SMI;
+
+rlQosServTemplateTable OBJECT-TYPE
+    ::= { rlQosServ 1 }
+
+rlQosServTemplateEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServTemplateTable 1 }
+
+
+rlQosServFclTable OBJECT-TYPE
+    ::= { rlQosServ 2 }
+
+rlQosServFclEntry OBJECT-TYPE
+        ROW-STATUS-TYPE v2-status-field
+        STATUS-FIELD-NAME rlQosServFclStatus
+    ::= { rlQosServFclTable 1 }
+
+rlQosServFceTable OBJECT-TYPE
+    ::= { rlQosServ 3 }
+
+rlQosServFceEntry OBJECT-TYPE
+        ROW-STATUS-TYPE v2-status-field
+        STATUS-FIELD-NAME rlQosServFceStatus
+    ::= { rlQosServFceTable 1 }
+
+rlQosServProfileTable OBJECT-TYPE
+    ::= { rlQosServ 4 }
+
+rlQosServProfileEntry OBJECT-TYPE
+        ROW-STATUS-TYPE v2-status-field
+        STATUS-FIELD-NAME rlQosServProfileStatus
+    ::= { rlQosServProfileTable 1 }
+
+rlQosServServiceTable OBJECT-TYPE
+    ::= { rlQosServ 5 }
+
+rlQosServServiceEntry OBJECT-TYPE
+        ROW-STATUS-TYPE v2-status-field
+        STATUS-FIELD-NAME rlQosServServiceStatus
+    ::= { rlQosServServiceTable 1 }
+
+rlQosServServicePriorityTable OBJECT-TYPE
+    ::= { rlQosServ 6 }
+
+rlQosServServicePriorityEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServServicePriorityTable 1 }
+
+rlQosServServiceDefaultMappingTable OBJECT-TYPE
+    ::= { rlQosServ 7 }
+
+rlQosServServiceDefaultMappingEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServServiceDefaultMappingTable 1 }
+
+rlQosServScalingErrorTable OBJECT-TYPE
+    ::= { rlQosServ 8 }
+
+rlQosServScalingErrorEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServScalingErrorTable 1 }
+
+rlQosServFreeSequentialTable OBJECT-TYPE
+    ::= { rlQosServ 9 }
+
+rlQosServFreeSequentialEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServFreeSequentialTable 1 }
+
+rlQosServNameToIndexTable OBJECT-TYPE
+    ::= { rlQosServ 10 }
+
+rlQosServNameToIndexEntry OBJECT-TYPE
+        ROW-STATUS-TYPE v2-status-field
+        STATUS-FIELD-NAME rlQosServNameToIndexStatus
+    ::= { rlQosServNameToIndexTable 1 }
+
+rlQosServIndexToNameTable OBJECT-TYPE
+    ::= { rlQosServ 11 }
+
+rlQosServIndexToNameEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { rlQosServIndexToNameTable 1 }
+
+END
+

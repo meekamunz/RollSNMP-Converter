@@ -1,0 +1,99 @@
+DRAFT-IETF-SYSLOG-DEVICE-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE,
+              Unsigned32, Counter32, Gauge32, snmpModules
+              FROM SNMPv2-SMI
+    RowStatus, TEXTUAL-CONVENTION, TimeStamp
+              FROM SNMPv2-TC
+    InetAddressType, InetAddress
+              FROM INET-ADDRESS-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP
+              FROM SNMPv2-CONF
+    SnmpAdminString
+              FROM SNMP-FRAMEWORK-MIB
+    rlSyslog
+              FROM RADLAN-MIB
+    snmpSyslogDeviceMIB
+              FROM DRAFT-IETF-SYSLOG-DEVICE-MIB;
+
+-- -------------------------------------------------------------
+-- snmpSyslogDeviceMIB  groupings
+-- -------------------------------------------------------------
+
+snmpSyslogDevice          OBJECT IDENTIFIER
+                      ::= { snmpSyslogDeviceMIB 1 }
+
+snmpSyslogCollector          OBJECT IDENTIFIER
+                      ::= { snmpSyslogDeviceMIB 2 }
+
+snmpSyslogApplication     OBJECT IDENTIFIER
+                      ::= { snmpSyslogDeviceMIB 3 }
+
+-- -------------------------------------------------------------
+-- snmpSyslogDevice group
+-- -------------------------------------------------------------
+
+snmpSyslogDeviceMessages OBJECT-TYPE
+    ::= { snmpSyslogDevice 1 }
+
+snmpSyslogDeviceMessagesDropped OBJECT-TYPE
+    ::= { snmpSyslogDevice 2 }
+
+snmpSyslogDeviceLastMessageTime OBJECT-TYPE
+    ::= { snmpSyslogDevice 3 }
+
+snmpSyslogDeviceControl OBJECT-TYPE
+    ::= { snmpSyslogDevice 4 }
+
+-- -------------------------------------------------------------
+-- snmpSyslogCollector table group
+-- -------------------------------------------------------------
+
+snmpSyslogCollectorMaxEntries OBJECT-TYPE
+    ::= { snmpSyslogCollector 1 }
+
+snmpSyslogCollectorNumEntries OBJECT-TYPE
+    ::= { snmpSyslogCollector 2 }
+
+snmpSyslogCollectorTableNextAvailableIndex OBJECT-TYPE
+    ::= { snmpSyslogCollector 3 }
+
+-- -------------------------------------------------------------
+-- snmpSyslogCollector Table
+-- -------------------------------------------------------------
+
+snmpSyslogCollectorTable OBJECT-TYPE
+    ::= { snmpSyslogCollector 4 }
+
+snmpSyslogCollectorEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME snmpSyslogCollectorRowStatus
+    ::= { snmpSyslogCollectorTable 1 }
+
+-- -------------------------------------------------------------
+-- The Syslog Collector Defaults
+-- -------------------------------------------------------------
+
+snmpSyslogCollectorDefaultUdpPort OBJECT-TYPE
+    ::= { snmpSyslogCollector 5 }
+
+snmpSyslogCollectorDefaultFacility OBJECT-TYPE
+    ::= { snmpSyslogCollector 6 }
+
+snmpSyslogCollectorDefaultSeverity OBJECT-TYPE
+    ::= { snmpSyslogCollector 7 }
+
+-- -------------------------------------------------------------
+-- snmpSyslogApplication group
+-- -------------------------------------------------------------
+
+snmpSyslogApplicationTable OBJECT-TYPE
+    ::= { snmpSyslogApplication 1 }
+
+snmpSyslogApplicationEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { snmpSyslogApplicationTable 1 }
+
+END
+

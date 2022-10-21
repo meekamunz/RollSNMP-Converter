@@ -1,0 +1,547 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Fri Nov 09 11:38:05 2007
+-- Confidential
+EQXINPUT-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprEQXINPUT
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+      
+    monitoring OBJECT IDENTIFIER ::= { miniexprEQXINPUT 3}
+    comms OBJECT IDENTIFIER ::= { miniexprEQXINPUT 4}
+    eqxInputSnmpControl OBJECT IDENTIFIER ::= { miniexprEQXINPUT 5}
+    eqxInputNotify OBJECT IDENTIFIER ::= { miniexprEQXINPUT 6}
+    eqxInputTraps OBJECT IDENTIFIER ::= { miniexprEQXINPUT 7}
+
+
+        
+    cardTemperature OBJECT-TYPE
+      SYNTAX INTEGER ( 0..255 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor the on-card temperature (in Celcius). "
+    ::= { monitoring 1 }
+
+        
+-- Beginning of inputStatusTable
+    inputStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF InputStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The inputStatus table. "
+    ::= { monitoring 2 }
+
+    inputStatusEntry OBJECT-TYPE
+      SYNTAX InputStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoInput }
+    ::= { inputStatusTable 1 }
+
+    InputStatusEntry ::= SEQUENCE {
+        videoInput     INTEGER,
+        inputEqBypass     INTEGER,
+        inputStandard     INTEGER
+    }
+
+
+    
+    videoInput OBJECT-TYPE
+      SYNTAX INTEGER {
+            videoInput1(1),
+            videoInput2(2),
+            videoInput3(3),
+            videoInput4(4),
+            videoInput5(5),
+            videoInput6(6),
+            videoInput7(7),
+            videoInput8(8),
+            videoInput9(9),
+            videoInput10(10),
+            videoInput11(11),
+            videoInput12(12),
+            videoInput13(13),
+            videoInput14(14),
+            videoInput15(15),
+            videoInput16(16),
+            videoInput17(17),
+            videoInput18(18)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the video input index, which is used to index various tables. "
+    ::= { inputStatusEntry 1 }
+
+    
+    inputEqBypass OBJECT-TYPE
+      SYNTAX INTEGER {
+            signalEqualised(1),
+            signalBypassed(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor if an input is being equalised or bypassed. "
+    ::= { inputStatusEntry 2 }
+
+    
+    inputStandard OBJECT-TYPE
+      SYNTAX INTEGER {
+            signalAbsent(1),
+            standardUnknown(2),
+            standard143(3),
+            standard177(4),
+            standard270(5),
+            standard360(6),
+            standard540(7),
+            standard1485(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to monitor the input standard if a signal is present or that
+	no signal is present. "
+    ::= { inputStatusEntry 3 }
+
+-- End of inputStatusTable
+
+
+        
+-- Beginning of monStatusTable
+    monStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MonStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The monStatus table. "
+    ::= { monitoring 3 }
+
+    monStatusEntry OBJECT-TYPE
+      SYNTAX MonStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { monOutput }
+    ::= { monStatusTable 1 }
+
+    MonStatusEntry ::= SEQUENCE {
+        monOutput     INTEGER,
+        monitorStandard     INTEGER,
+        inputRoutedToMonitor     INTEGER,
+        timingPlaneSelected     INTEGER
+    }
+
+
+    
+    monOutput OBJECT-TYPE
+      SYNTAX INTEGER {
+            monOutput1(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the monitor output index, which is used to index various tables. "
+    ::= { monStatusEntry 1 }
+
+    
+    monitorStandard OBJECT-TYPE
+      SYNTAX INTEGER {
+            signalAbsent(1),
+            standardUnknown(2),
+            standard143(3),
+            standard177(4),
+            standard270(5),
+            standard360(6),
+            standard540(7),
+            standard1485(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the monitor standard. "
+    ::= { monStatusEntry 2 }
+
+    
+    inputRoutedToMonitor OBJECT-TYPE
+      SYNTAX INTEGER {
+            notConnected(1),
+            input1(2),
+            input2(3),
+            input3(4),
+            input4(5),
+            input5(6),
+            input6(7),
+            input7(8),
+            input8(9),
+            input9(10),
+            input10(11),
+            input11(12),
+            input12(13),
+            input13(14),
+            input14(15),
+            input15(16),
+            input16(17),
+            input17(18),
+            input18(19)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the input routed to the monitoring card. "
+    ::= { monStatusEntry 3 }
+
+    
+    timingPlaneSelected OBJECT-TYPE
+      SYNTAX INTEGER {
+            plane1(1),
+            plane2(2),
+            plane3(3),
+            plane4(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the timing plane in use for this monitoring output. "
+    ::= { monStatusEntry 4 }
+
+-- End of monStatusTable
+
+
+        
+-- Beginning of timingPlaneStatusTable
+    timingPlaneStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TimingPlaneStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The timingPlaneStatus table. "
+    ::= { monitoring 4 }
+
+    timingPlaneStatusEntry OBJECT-TYPE
+      SYNTAX TimingPlaneStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { timingPlane }
+    ::= { timingPlaneStatusTable 1 }
+
+    TimingPlaneStatusEntry ::= SEQUENCE {
+        timingPlane     INTEGER,
+        reference     INTEGER,
+        switchPoint     INTEGER,
+        offset     INTEGER,
+        manualOffset     INTEGER
+    }
+
+
+    
+    timingPlane OBJECT-TYPE
+      SYNTAX INTEGER {
+            timingPlane1(1),
+            timingPlane2(2),
+            timingPlane3(3),
+            timingPlane4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the timing plane index, which is used to index various tables. "
+    ::= { timingPlaneStatusEntry 1 }
+
+    
+    reference OBJECT-TYPE
+      SYNTAX INTEGER {
+            ref625(1),
+            ref525(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the reference in use on this timing plane. "
+    ::= { timingPlaneStatusEntry 2 }
+
+    
+    switchPoint OBJECT-TYPE
+      SYNTAX INTEGER {
+            frame(1),
+            field(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the switch-point in use on this timing plane. "
+    ::= { timingPlaneStatusEntry 3 }
+
+    
+    offset OBJECT-TYPE
+      SYNTAX INTEGER {
+            offset625(1),
+            offset525(2),
+            offset1080i50(3),
+            offset1080i5994(4),
+            offset720p50(5),
+            offset720p5994(6),
+            manual(7)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the video format type use. "
+    ::= { timingPlaneStatusEntry 4 }
+
+    
+    manualOffset OBJECT-TYPE
+      SYNTAX INTEGER ( 0..100000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the offset value in use. "
+    ::= { timingPlaneStatusEntry 5 }
+
+-- End of timingPlaneStatusTable
+
+
+        
+    inputMonitorMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            automatic(1),
+            manual(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to control and view the input monitoring mode. The card can either 
+	operate in automatic (input standards are automatically collected) or in manual mode (signals can be routed to the 
+	input monitoring output). "
+    ::= { monitoring 5 }
+
+        
+-- Beginning of flinkStatusTable
+    flinkStatusTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FlinkStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The flinkStatus table. "
+    ::= { comms 1 }
+
+    flinkStatusEntry OBJECT-TYPE
+      SYNTAX FlinkStatusEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { flinkBus }
+    ::= { flinkStatusTable 1 }
+
+    FlinkStatusEntry ::= SEQUENCE {
+        flinkBus     INTEGER,
+        flinkAddress     INTEGER,
+        flinkRxErrorCount     INTEGER,
+        flinkRxFifoWaterMark     INTEGER,
+        flinkTxFifoWaterMark     INTEGER
+    }
+
+
+    
+    flinkBus OBJECT-TYPE
+      SYNTAX INTEGER {
+            flinkControlBus(1),
+            flinkStatusBus(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the F-Link Bus index, which is used to index various tables. "
+    ::= { flinkStatusEntry 1 }
+
+    
+    flinkAddress OBJECT-TYPE
+      SYNTAX INTEGER ( 0..127 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view this cards F-Link address. "
+    ::= { flinkStatusEntry 2 }
+
+    
+    flinkRxErrorCount OBJECT-TYPE
+      SYNTAX INTEGER ( 0..65535 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link receive error count. "
+    ::= { flinkStatusEntry 3 }
+
+    
+    flinkRxFifoWaterMark OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2048 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link receive FIFO high watermark (FIFO Length = 2048). "
+    ::= { flinkStatusEntry 4 }
+
+    
+    flinkTxFifoWaterMark OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2048 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to view the F-Link transmit FIFO high watermark (FIFO Length = 2048). "
+    ::= { flinkStatusEntry 5 }
+
+-- End of flinkStatusTable
+
+
+        
+    enableSNMPControl OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user enable or disable control via SNMP. The user may wish to disable SNMP
+	control if controlling the card via F-Link. "
+    ::= { eqxInputSnmpControl 1 }
+
+        
+-- Beginning of mgmtFaultVideoTable
+    mgmtFaultVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultVideo table. "
+    ::= { eqxInputNotify 1 }
+
+    mgmtFaultVideoEntry OBJECT-TYPE
+      SYNTAX MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { videoFaultNameIndex, videoInput }
+    ::= { mgmtFaultVideoTable 1 }
+
+    MgmtFaultVideoEntry ::= SEQUENCE {
+        videoFaultNameIndex     INTEGER,
+        videoFaultStatus     INTEGER,
+        sendTrapVideo     INTEGER
+    }
+
+
+    
+    videoFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            signalLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index. "
+    ::= { mgmtFaultVideoEntry 1 }
+
+    
+    videoFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of video fault(s). Indexed by videoFaultNameIndex. "
+    ::= { mgmtFaultVideoEntry 2 }
+
+    
+    sendTrapVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault(s) should generate Trap(s) and which ones should be ignored. Indexed by videoFaultNameIndex. "
+    ::= { mgmtFaultVideoEntry 3 }
+
+-- End of mgmtFaultVideoTable
+
+
+        
+-- Beginning of mgmtFaultMiscTable
+    mgmtFaultMiscTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultMiscEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultMisc table. "
+    ::= { eqxInputNotify 2 }
+
+    mgmtFaultMiscEntry OBJECT-TYPE
+      SYNTAX MgmtFaultMiscEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { miscFaultNameIndex }
+    ::= { mgmtFaultMiscTable 1 }
+
+    MgmtFaultMiscEntry ::= SEQUENCE {
+        miscFaultNameIndex     INTEGER,
+        miscFaultStatus     INTEGER,
+        sendTrapMisc     INTEGER
+    }
+
+
+    
+    miscFaultNameIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            cardOverTemperature(1),
+            rxErrorFlinkControlBus(2),
+            rxOverrunFlinkControlBus(3),
+            txOverrunFlinkControlBus(4),
+            commsQuietFlinkControlBus(5),
+            rxErrorFlinkStatusBus(6),
+            rxOverrunFlinkStatusBus(7),
+            txOverrunFlinkStatusBus(8),
+            commsQuietFlinkStatusBus(9),
+            primaryEthernetLinkDown(10),
+            secondaryEthernetLinkDown(11),
+            fvh50Missing(12),
+            fvh60Missing(13)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index. "
+    ::= { mgmtFaultMiscEntry 1 }
+
+    
+    miscFaultStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check status of fault(s). Indexed by miscFaultNameIndex. "
+    ::= { mgmtFaultMiscEntry 2 }
+
+    
+    sendTrapMisc OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault(s) should generate Trap(s) and which ones should be ignored. Indexed by miscfaultNameIndex. "
+    ::= { mgmtFaultMiscEntry 3 }
+
+-- End of mgmtFaultMiscTable
+
+
+
+END

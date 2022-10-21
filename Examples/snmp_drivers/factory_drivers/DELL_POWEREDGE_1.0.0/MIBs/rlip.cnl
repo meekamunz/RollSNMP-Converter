@@ -1,0 +1,149 @@
+RADLAN-IP-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN IP Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    ipSpec                                                  FROM RADLAN-IP
+    ipAddrEntry                                             FROM IP-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rsIpAddrTable OBJECT-TYPE
+    ::= { ipSpec 1 }
+
+rsIpAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rsIpAdEntStatus
+    DELETE-VALUE      invalid
+     AUGMENTS {ipAddrEntry}
+    ::= { rsIpAddrTable 1 }
+
+rsIpAdEntAddr OBJECT-TYPE
+    ALIAS ipAdEntAddr
+    ::= { rsIpAddrEntry 1 }
+
+rsIpAdEntIfIndex OBJECT-TYPE
+    ALIAS ipAdEntIfIndex
+    ::= { rsIpAddrEntry 2 }
+
+rsIpAdEntNetMask OBJECT-TYPE
+    ALIAS ipAdEntNetMask
+    ::= { rsIpAddrEntry 3 }
+
+rsIpAdEntForwardIpBroadcast OBJECT-TYPE
+    ::= { rsIpAddrEntry 4 }
+
+rsIpAdEntBackupAddr OBJECT-TYPE
+    ::= { rsIpAddrEntry 5 }
+
+rsIpAdEntStatus OBJECT-TYPE
+    ::= { rsIpAddrEntry 6 }
+
+rsIpAdEntBcastAddr OBJECT-TYPE
+    ALIAS ipAdEntBcastAddr
+    ::=   { rsIpAddrEntry 7 }
+
+rsIpAdEntArpServer OBJECT-TYPE
+    ::=   { rsIpAddrEntry 8 }
+
+icmpSpec OBJECT-TYPE
+    ::= { ipSpec 2 }
+
+rsIcmpGenErrMsgEnable OBJECT-TYPE
+    ::= { icmpSpec 1 }
+
+rsIcmpRdTable OBJECT-TYPE
+    ::= { icmpSpec 2 }
+
+rsIcmpRdEntry OBJECT-TYPE
+    ::= { rsIcmpRdTable 1 }
+
+arpSpec OBJECT IDENTIFIER
+    ::= { ipSpec 4 }
+
+rsArpDeleteTable OBJECT-TYPE
+    ::= { arpSpec 1 }
+
+rsArpInactiveTimeOut OBJECT-TYPE
+    ::= { arpSpec 2 }
+
+rsArpProxy OBJECT-TYPE
+    ::= { arpSpec 3 }
+
+rsArpRequestsSent OBJECT-TYPE
+    ::= { arpSpec 4  }
+
+rsArpRepliesSent OBJECT-TYPE
+    ::= { arpSpec 5  }
+
+rsArpProxyRepliesSent OBJECT-TYPE
+    ::= { arpSpec 6  }
+
+tftp OBJECT IDENTIFIER
+    ::= { ipSpec 5 }
+
+rsTftpRetryTimeOut OBJECT-TYPE
+    ::= { tftp 1 }
+
+rsTftpTotalTimeOut OBJECT-TYPE
+    ::= { tftp 2 }
+
+rsSendConfigFile OBJECT-TYPE
+    ::= { tftp 3 }
+
+rsGetConfigFile OBJECT-TYPE
+    ::= { tftp 4 }
+
+rsLoadSoftware OBJECT-TYPE
+    ::= { tftp 5 }
+
+rsFileServerAddress OBJECT-TYPE
+    ::= { tftp 6 }
+
+rsSoftwareDeviceName OBJECT-TYPE
+    ::= { tftp 7 }
+
+rsSoftwareFileAction OBJECT-TYPE
+     ::= {tftp 8 }
+
+rsRipEnable OBJECT-TYPE
+    ::=  { ipSpec 9 }
+
+rsTelnetPassword OBJECT-TYPE
+    ::=  { ipSpec 11 }
+
+rlTranslationNameToIpTable OBJECT-TYPE
+    ::= { ipSpec 12 }
+
+rlTranslationNameToIpEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlTranslationNameToIpTable 1 }
+
+-- Mib for Preferance among routing protocols:
+-- Range value 0..255 .  O is most preferred, 255 never used for forwarding.
+-- only exception is direct which range 0..254 we prevent direct from becoming unreachable
+-- (according to RFC1812  section 5.2.4)
+
+--IP address Table Mib Version
+rlIpAddrTableMibVersion OBJECT-TYPE
+    ::=  { ipSpec 15 }
+
+rlIpCidrRouteExtTable  OBJECT-TYPE
+    ::= {ipSpec 16 }
+
+rlIpCidrRouteExtEntry OBJECT-TYPE
+    ::= {rlIpCidrRouteExtTable  1 }
+
+rlIpStaticRoute OBJECT IDENTIFIER  ::=  { ipSpec 17 }
+
+rlIpStaticRouteTable OBJECT-TYPE
+    ::=  { rlIpStaticRoute 1 }
+
+rlIpStaticRouteEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIpStaticRouteRowStatus
+        ::=  { rlIpStaticRouteTable 1}
+
+END

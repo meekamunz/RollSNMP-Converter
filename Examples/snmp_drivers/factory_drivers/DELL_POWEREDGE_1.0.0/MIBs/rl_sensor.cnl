@@ -1,0 +1,31 @@
+RADLAN-SENSORENTMIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+        entitySensorMIB
+                FROM ENTITY-SENSOR-MIB
+        rlSensor
+                FROM RADLAN-SENSORENTMIB
+        MODULE-IDENTITY, OBJECT-TYPE,
+        Integer32, Unsigned32, mib-2
+                FROM SNMPv2-SMI
+        MODULE-COMPLIANCE, OBJECT-GROUP
+                FROM SNMPv2-CONF
+        entPhySensorEntry
+                FROM ENTITY-SENSOR-MIB
+        TEXTUAL-CONVENTION, TimeStamp
+                FROM SNMPv2-TC
+        entPhysicalIndex, entityPhysicalGroup
+                FROM ENTITY-MIB
+        SnmpAdminString
+                FROM SNMP-FRAMEWORK-MIB;
+
+rlEntPhySensorTable OBJECT-TYPE
+        ::= { rlSensor 1 }
+
+
+rlEntPhySensorEntry OBJECT-TYPE
+     AUGMENTS     {entPhySensorEntry}
+        ::= { rlEntPhySensorTable 1 }
+
+END
+

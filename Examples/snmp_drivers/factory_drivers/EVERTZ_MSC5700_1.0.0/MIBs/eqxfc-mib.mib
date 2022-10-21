@@ -1,0 +1,580 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Confidential
+-- Revision 1
+-- 2007/06/27
+
+EQXFC-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprEQXFC
+        FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+        FROM RFC-1212;
+
+-- AGENT       
+    eqxfcControl      OBJECT IDENTIFIER ::= { miniexprEQXFC 3 }
+    eqxfcNotification OBJECT IDENTIFIER ::= { miniexprEQXFC 4 } 
+    eqxfcTraps        OBJECT IDENTIFIER ::= { miniexprEQXFC 5 }
+
+    fcDesc OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(15))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to associate a name with a frame
+                controler. This is also the name displayed on the 4 segment
+                scrolling display on the controller"
+        ::= { eqxfcControl 1 }
+
+    configured OBJECT-TYPE
+        SYNTAX  INTEGER {
+                noConfig(0),
+                configPresent(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports whether the frame controller has been
+                configured since the last reboot."
+        ::= { eqxfcControl 2 }
+        
+    qlinkActivity OBJECT-TYPE
+        SYNTAX  INTEGER {
+                busInactive(0),
+                busActive(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports whether the frame controller has detected
+                received activity on the Q-link bus."
+        ::= { eqxfcControl 3 }
+        
+    primaryFlinkActivity OBJECT-TYPE
+        SYNTAX  INTEGER {
+                busInactive(0),
+                busActive(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports whether the frame controller has
+                detected received activity on the primary F-link bus."
+        ::= { eqxfcControl 4 }
+        
+    secondaryFlinkActivity OBJECT-TYPE
+        SYNTAX  INTEGER {
+                busInactive(0),
+                busActive(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports whether the frame controller has
+                detected received activity on the secondary F-link bus."
+        ::= { eqxfcControl 5 }
+        
+    qlinkErrors OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports the number of poorly formed frames
+                detected by the frame controller on the Q-link bus."
+        ::= { eqxfcControl 6 }
+        
+    primaryFlinkErrors OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports the number of poorly formed frames
+                detected by the frame controller on the primary F-link bus."
+        ::= { eqxfcControl 7 }
+        
+    secondaryFlinkErrors OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports the number of poorly formed frames
+                detected by the frame controller on the primary F-link bus."
+        ::= { eqxfcControl 8 }
+        
+    quartzErrors OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports the number of poorly formed Quartz
+                frames detected by the frame controller."
+        ::= { eqxfcControl 9 }
+        
+    cardTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF CardEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains parameters pertaining to the
+                cards present within the frame."
+        ::= { eqxfcControl 10 }
+
+    cardEntry OBJECT-TYPE
+        SYNTAX  CardEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { cardSlotIndex }
+        ::= { cardTable 1 }
+
+    CardEntry ::= SEQUENCE {
+        cardSlotIndex           INTEGER,
+        cardType                INTEGER,
+        cardAddress             OCTET STRING (SIZE(16)),
+        cardStatus              INTEGER,
+        cardDepartureCount      INTEGER
+    }
+
+    cardSlotIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..74 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to select a card within the chassis."
+        ::= { cardEntry 1 }
+
+    cardType OBJECT-TYPE
+        SYNTAX  INTEGER {
+                input(0),
+                output(1),
+                monitor(2),
+                crosspoint(3),
+                other(4),
+                fc(5)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the type of card in the indexed slot."
+        ::= { cardEntry 2 }
+
+    cardAddress OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE(16))
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the IP address of the card in the
+                indexed slot."
+        ::= { cardEntry 3 }
+
+    cardStatus OBJECT-TYPE
+        SYNTAX  INTEGER {
+        	notFitted(0),
+                notCommunicating(1),
+                communicating(2)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the presence of a card and the ability
+                to communicate with the card in the indexed slot."
+        ::= { cardEntry 4 }
+
+    cardDepartureCount OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This objects reports the number of departures for the card
+                in the indexed slot."
+        ::= { cardEntry 5 }
+        
+    fanTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF FanEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains parameters pertaining to the
+                fans present within the frame."
+        ::= { eqxfcControl 11 }
+
+    fanEntry OBJECT-TYPE
+        SYNTAX  FanEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { fanIndex }
+        ::= { fanTable 1 }
+
+    FanEntry ::= SEQUENCE {
+        fanIndex                INTEGER,
+        fanStatus               INTEGER,
+        fanTemperature          INTEGER,
+        fanSpeed                INTEGER
+    }
+
+    fanIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..10 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to select a fan within the chassis."
+        ::= { fanEntry 1 }
+        
+    fanStatus OBJECT-TYPE
+        SYNTAX  INTEGER {
+                present(0),
+                missing(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the presence of the indexed fan."
+        ::= { fanEntry 2 }
+
+    fanTemperature OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports, in degrees Celsius, the temperature
+                of the indexed fan.  A value of -1000 indicates the
+                temperature is unable to be obtained."
+        ::= { fanEntry 3 }
+        
+    fanSpeed OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports, in RPM, the speed of the indexed fan.
+                A value of -1 indicates the speed is unable to be obtained."
+        ::= { fanEntry 4 }
+        
+    timingPlaneTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF TimingPlaneEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains parameters pertaining to the
+                timing planes configured within the frame controller."
+        ::= { eqxfcControl 12 }
+
+    timingPlaneEntry OBJECT-TYPE
+        SYNTAX  TimingPlaneEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { timingPlaneIndex }
+        ::= { timingPlaneTable 1 }
+
+    TimingPlaneEntry ::= SEQUENCE {
+        timingPlaneIndex        INTEGER,
+        timingPlaneReference    INTEGER,
+        timingPlaneSwitchPoint  INTEGER,
+        timingPlaneOffset       INTEGER,
+        timingPlaneManualOffset INTEGER,
+        timingPlaneStatus       INTEGER
+    }
+
+    timingPlaneIndex OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..4 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to select a timing plane."
+        ::= { timingPlaneEntry 1 }
+        
+    timingPlaneReference OBJECT-TYPE
+        SYNTAX  INTEGER {
+                r50Hz(0),
+                r5994Hz(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the reference frequency for the
+                indexed timing plane."
+        ::= { timingPlaneEntry 2 }
+        
+    timingPlaneSwitchPoint OBJECT-TYPE
+        SYNTAX  INTEGER {
+                frame(0),
+                field(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the switch point for the indexed
+                timing plane."
+        ::= { timingPlaneEntry 3 }
+        
+    timingPlaneOffset OBJECT-TYPE
+        SYNTAX  INTEGER {
+                o625(0),
+                o525(1),
+                o720p50Hz(2),
+                o720p5994Hz(3),
+                o1080i50Hz(4),
+                o1080i5994Hz(5),
+                manual(6)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the offset for the indexed timing
+                plane."
+        ::= { timingPlaneEntry 4 }
+        
+    timingPlaneManualOffset OBJECT-TYPE
+        SYNTAX  INTEGER
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the manual offset for the indexed
+                timing plane."
+        ::= { timingPlaneEntry 5 }
+        
+    timingPlaneStatus OBJECT-TYPE
+        SYNTAX  INTEGER {
+                inactive(0),
+                active(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object reports the presence of the indexed timing
+                plane."
+        ::= { timingPlaneEntry 6 }
+        
+-- Xpt redundancy control table 
+
+    xptRedundancyTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF XptRedundancyEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This table contains parameters pertaining to the
+                crosspoint redundancy."
+        ::= { eqxfcControl 13 }
+
+    xptRedundancyEntry OBJECT-TYPE
+        SYNTAX  XptRedundancyEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION 
+                "This entry object is used to access the objects in this
+                table."
+        INDEX   { xptRedundancyOutput }
+        ::= { xptRedundancyTable 1 }
+
+    XptRedundancyEntry ::= SEQUENCE {
+        xptRedundancyOutput 	INTEGER,
+        xptActive          	INTEGER,
+        xptRedundancyMode   	INTEGER
+    }
+
+    xptRedundancyOutput OBJECT-TYPE
+        SYNTAX  INTEGER ( 1..576 )
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                "This object is used to select an output within the frame."
+        ::= { xptRedundancyEntry 1 }
+
+    xptActive OBJECT-TYPE
+        SYNTAX  INTEGER {
+                mainXpt(0),
+                redundantXpt(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object controls the crosspoint used for a particular output."
+        ::= { xptRedundancyEntry 2 }
+        
+    xptRedundancyMode OBJECT-TYPE
+        SYNTAX  INTEGER {
+                manualControl(0),
+                automaticControl(1)
+        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                "This object determins the redundant crosspoint control method for an output"
+        ::= { xptRedundancyEntry 3 }
+
+-- Fault management table 
+
+    mgmtFaultTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF MgmtFaultEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION
+                "This table contains information and objects related to the
+                faults and their control."
+        ::= { eqxfcNotification 1 }
+
+    mgmtFaultEntry OBJECT-TYPE
+        SYNTAX  MgmtFaultEntry
+        ACCESS  not-accessible
+        STATUS  mandatory
+        DESCRIPTION
+                "This entry object is used to access the objects in this table."
+        INDEX   { faultName }
+        ::= { mgmtFaultTable 1 }
+
+    MgmtFaultEntry ::= SEQUENCE {
+        faultName               INTEGER,
+        sendTrap                INTEGER,
+        faultPresent            INTEGER
+    }
+
+    faultName OBJECT-TYPE
+        SYNTAX  INTEGER {
+                becomeActive(1),
+                mainAlarm(2),
+                buzzerOn(3),
+                lostCommCardSlot1(4),
+                lostCommCardSlot2(5),
+                lostCommCardSlot3(6),
+                lostCommCardSlot4(7),
+                lostCommCardSlot5(8),
+                lostCommCardSlot6(9),
+                lostCommCardSlot7(10),
+                lostCommCardSlot8(11),
+                lostCommCardSlot9(12),
+                lostCommCardSlot10(13),
+                lostCommCardSlot11(14),
+                lostCommCardSlot12(15),
+                lostCommCardSlot13(16),
+                lostCommCardSlot14(17),
+                lostCommCardSlot15(18),
+                lostCommCardSlot16(19),
+                lostCommCardSlot17(20),
+                lostCommCardSlot18(21),
+                lostCommCardSlot19(22),
+                lostCommCardSlot20(23),
+                lostCommCardSlot21(24),
+                lostCommCardSlot22(25),
+                lostCommCardSlot23(26),
+                lostCommCardSlot24(27),
+                lostCommCardSlot25(28),
+                lostCommCardSlot26(29),
+                lostCommCardSlot27(30),
+                lostCommCardSlot28(31),
+                lostCommCardSlot29(32),
+                lostCommCardSlot30(33),
+                lostCommCardSlot31(34),
+                lostCommCardSlot32(35),
+                lostCommCardSlot33(36),
+                lostCommCardSlot34(37),
+                lostCommCardSlot35(38),
+                lostCommCardSlot36(39),
+                lostCommCardSlot37(40),
+                lostCommCardSlot38(41),
+                lostCommCardSlot39(42),
+                lostCommCardSlot40(43),
+                lostCommCardSlot41(44),
+                lostCommCardSlot42(45),
+                lostCommCardSlot43(46),
+                lostCommCardSlot44(47),
+                lostCommCardSlot45(48),
+                lostCommCardSlot46(49),
+                lostCommCardSlot47(50),
+                lostCommCardSlot48(51),
+                lostCommCardSlot49(52),
+                lostCommCardSlot50(53),
+                lostCommCardSlot51(54),
+                lostCommCardSlot52(55),
+                lostCommCardSlot53(56),
+                lostCommCardSlot54(57),
+                lostCommCardSlot55(58),
+                lostCommCardSlot56(59),
+                lostCommCardSlot57(60),
+                lostCommCardSlot58(61),
+                lostCommCardSlot59(62),
+                lostCommCardSlot60(63),
+                lostCommCardSlot61(64),
+                lostCommCardSlot62(65),
+                lostCommCardSlot63(66),
+                lostCommCardSlot64(67),
+                lostCommCardSlot65(68),
+                lostCommCardSlot66(69),
+                lostCommCardSlot67(70),
+                lostCommCardSlot68(71),
+                lostCommCardSlot69(72),
+                lostCommCardSlot70(73),
+                lostCommCardSlot71(74),
+                lostCommCardSlot72(75),
+                lostCommFan1(76),
+                lostCommFan2(77),
+                lostCommFan3(78),
+                lostCommFan4(79),
+                lostCommFan5(80),
+                lostCommFan6(81),
+                lostCommFan7(82),
+                lostCommFan8(83),
+                lostCommFan9(84),
+                lostCommFan10(85),
+                speedWarningFan1(86),
+                speedWarningFan2(87),
+                speedWarningFan3(88),
+                speedWarningFan4(89),
+                speedWarningFan5(90),
+                speedWarningFan6(91),
+                speedWarningFan7(92),
+                speedWarningFan8(93),
+                speedWarningFan9(94),
+                speedWarningFan10(95),
+                tempWarningFan1(96),
+                tempWarningFan2(97),
+                tempWarningFan3(98),
+                tempWarningFan4(99),
+                tempWarningFan5(100),
+                tempWarningFan6(101),
+                tempWarningFan7(102),
+                tempWarningFan8(103),
+                tempWarningFan9(104),
+                tempWarningFan10(105)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION 
+                "This object is used to index the table.  Each value of this 
+                index corresponds to a particular fault."
+        ::= { mgmtFaultEntry 1 }
+
+    sendTrap OBJECT-TYPE
+        SYNTAX  INTEGER {
+                false(0),
+                true(1)
+        }   
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION 
+                "This object allows the user to control which faults the agent
+                will transmit as traps and which faults the agent will ignore."
+        ::= { mgmtFaultEntry 2 }
+
+    faultPresent OBJECT-TYPE
+        SYNTAX  INTEGER {
+                false(0),
+                true(1)
+        }
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION 
+                "This control allows the user to read the state of a fault.  If
+                the value for a fault says false, then there are no errors with
+                that fault.  If the value for a fault says true, then a fault
+                is present."
+        ::= { mgmtFaultEntry 3 }
+
+END

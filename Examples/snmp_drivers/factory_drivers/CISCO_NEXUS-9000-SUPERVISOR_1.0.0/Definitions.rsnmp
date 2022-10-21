@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id: Definitions.rsnmp 2692 2013-03-08 12:46:50Z SarahWright $ -->
+
+<!--
+	This file MUST be included in any RollSNMP configurations that
+	include any of the following Cisco unit type definitions:
+		Cisco Catalyst 2950 Switch.rsnmp
+		Cisco Catalyst 3750 Switch.rsnmp
+		Cisco 6509 Core Switch Management.rsnmp
+
+-->
+
+<DefinitionGroup>
+
+	<!-- Additional MIB folders from this library entry.
+		Remember that the path is relative to the config / program directory. -->
+	<!-- Removed this for now, because we are not yet using any Cisco specific OIDs.
+		The Cisco V1 definitions clash with our default installed MIBs. -->
+	<MIBSource href="drivers/CISCO_NEXUS-9000-SUPERVISOR_1.0.0/MIBs"/>
+
+	<!-- V2 Cisco mibs: -->
+	<MIBSource href="drivers/CISCO_NEXUS-9000-SUPERVISOR_1.0.0/MIBs"/>
+
+
+	<OIDAlias id="CISCO" oid=".iso.org.dod.internet.private.enterprises.cisco" >
+		<OIDAlias id="Local Table" oid=".2.2.1.1">
+			<OIDAlias id="Port Reason" oid=".20" />
+			<OIDAlias id="Port Connection Desc" oid=".28" />
+		</OIDAlias>
+		<!--iso(1).org(3).dod(6).internet(1).private(4).enterprises(1).cisco(9).local(2).linterfaces(2).lifTable(1).lifEntry(1).locIfReason(20)-->
+		<OIDAlias id="CISCO ENV MON" oid=".ciscoMgmt.ciscoEnvMonMIB">
+			<OIDAlias id="CISCO ENV MON OBJECTS" oid=".ciscoEnvMonObjects">
+				<OIDAlias id="CISCO PSU TABLE" oid=".ciscoEnvMonSupplyStatusTable.ciscoEnvMonSupplyStatusEntry" >
+					<OIDAlias id="CISCO PSU STATE"	oid=".ciscoEnvMonSupplyState" />
+					<OIDAlias id="CISCO PSU DESCR"	oid=".ciscoEnvMonSupplyStatusDescr" />
+					<OIDAlias id="CISCO PSU SOURCE"	oid=".ciscoEnvMonSupplySource" />
+				</OIDAlias>
+				<OIDAlias id="CISCO FAN TABLE" oid=".ciscoEnvMonFanStatusTable.ciscoEnvMonFanStatusEntry" >
+					<OIDAlias id="CISCO FAN STATE"	oid=".ciscoEnvMonFanState" />
+					<OIDAlias id="CISCO FAN DESCR"	oid=".ciscoEnvMonFanStatusDescr" />
+				</OIDAlias>
+				<OIDAlias id="CISCO TEMP TABLE" oid=".ciscoEnvMonTemperatureStatusTable.ciscoEnvMonTemperatureStatusEntry" >
+					<OIDAlias id="CISCO TEMP STATE"	oid=".ciscoEnvMonTemperatureState" />
+					<OIDAlias id="CISCO TEMP DESCR"	oid=".ciscoEnvMonTemperatureStatusDescr" />
+					<OIDAlias id="CISCO TEMP VALUE"	oid=".ciscoEnvMonTemperatureStatusValue" />
+				</OIDAlias>
+			</OIDAlias>
+			<OIDAlias id="CISCO ENV MON TRAP ENABLES" oid=".ciscoEnvMonMIBNotificationEnables" />
+			<OIDAlias id="CISCO ENV MON TRAPS" oid=".ciscoEnvMonMIBNotificationPrefix.ciscoEnvMonMIBNotifications" >
+			</OIDAlias>
+		</OIDAlias>
+	</OIDAlias>
+	
+
+	<!-- Similar to the standard field which we put in all library files -->
+	<!-- Eeek!  How can I do a GlobalStaticDef?!?
+		See bug 2334. -->
+	<!-- warning: pollRate="0" actually polls every second, so don't use this. -->
+	<GlobalTranslationDef pollRate="999999" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Defs version" rcLogField="SNMPCONFIG_" >
+		<OID alias="SYS NAME"/>
+		<ConstRule format="CVS $Id: Definitions.rsnmp 2692 2013-03-08 12:46:50Z SarahWright $" />
+	</GlobalTranslationDef>
+
+
+	<GlobalTranslationDef pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Boot Reason" rcLogField="BOOT_REASON" >
+		<OID alias="CISCO" >.local.lsystem.whyReload.0</OID>
+		<!-- Returns strings such as "power-on", and presumably other cases. -->
+		<StringRule />
+		<ErrorRule format="(N/A)" />
+	</GlobalTranslationDef>
+
+
+	<GlobalTranslationDef pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Version" rcLogField="VERSION" >
+		<OID alias="CISCO" >.ciscoMgmt.ciscoImageMIB.ciscoImageMIBObjects.ciscoImageTable.ciscoImageEntry.ciscoImageString.5</OID>
+		<!-- Returns strings such as "CW_VERSION$12.2(25)SEB1$". -->
+		<StringRule />
+		<ErrorRule format="(N/A)" />
+	</GlobalTranslationDef>
+
+
+	<!-- In some Cisco unit type, this "name" also includes status, so may be polled more often. -->
+	<GlobalTranslationDef rcLogField="PSU_%d_NAME" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco PSU Name Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO PSU DESCR" >.#I</OID>
+		<!--	If this returns a string, it is the name of the PSU.
+				If this returns an error, it means this numbered PSU is not fitted. -->
+		<StringRule />
+		<ErrorRule format="(N/A)" />
+	</GlobalTranslationDef>
+
+<!-- PSU status - moved to each unit type since they are different. -->
+
+<!-- Old numbers - I can't remember where we got these, but they don't match the new units at TPC?!?
+		<NumRule value="1" format="OK No Backup" />
+		<NumRule value="5" format="OK With Backup" />
+		<NumRule value="2" format="FAIL" />
+-->
+<!-- New numbers, obtained from line 517 of revision 1.1 of SNMP Library\Cisco\MIBs\CISCO-ENVMON-MIB-V1SMI.my -->
+<!--
+		<NumRule value="1" format="OK:Normal" />
+-->
+		<!-- This "warning" happens when external DC unit is in standby mode. -->
+<!--
+		<NumRule value="2" format="FAIL:warning (Standby?)" />
+		<NumRule value="3" format="FAIL:critical" />
+		<NumRule value="4" format="FAIL:shutdown" />
+		<NumRule value="5" format="FAIL:notPresent" />
+		<NumRule value="6" format="FAIL:notFunctioning" />
+-->
+
+	<GlobalTranslationDef rcLogField="LAN_PORT_%d_STATUS_REASON" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Port Status Reason Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="Port Reason" >.#I</OID>
+		<!--	If this returns a string, it is the reason of the Ports state.
+				If this returns an error, it means this numbered port is not availiable.-->
+		<StringRule />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+	
+	<GlobalTranslationDef rcLogField="LAN_PORT_%d_CONNECTION_DESCRIPTION" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Port Connection Desc Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="Port Connection Desc" >.#I</OID>
+		<!--	If this returns a string, it describes the equipment that conects to between this port.
+				If this returns an error, it means this numbered port is not availiable.-->
+		<StringRule />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="PSU_%d_SOURCE" pollRate="120" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco PSU Source Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO PSU SOURCE" >.#I</OID>
+		<!--	If this returns a number, it dscribes the source of the PSUs power.
+				If this returns an error, it means this numbered PSU is not fitted.-->
+		<NumRule value="1" format="Unknown" />
+		<NumRule value="2" format="Mains AC supply" />
+		<NumRule value="3" format="DC supply" />
+		<NumRule value="4" format="External power supply" />
+		<NumRule value="5" format="Internal redundant supply" />
+		<NumRule format="WARN:Unknown number %d" />
+		<StringRule format="WARN:Unknown string %s" />
+		<ConstRule format="WARN:Unknown?" />
+		<ErrorRule format="(N/A)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="PSU_DATA_TYPE" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco PSU Data Type" >
+		<OID alias="CISCO ENV MON TRAP ENABLES" >.ciscoEnvMonEnableRedundantSupplyNotification.0</OID>
+		<!--	If this boolean is true, then ciscoEnvMonRedundantSupplyNotification traps will be sent.
+				Anything else, error or otherwise, means they are not being sent.-->
+		<NumRule value="1" format="OK:Traps enabled in agent, polling as backup" />
+		<ConstRule format="WARN:Data polled only - trap disabled in agent? Const" />
+		<ErrorRule format="WARN:Data polled only - trap disabled in agent? Error" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="FAN_%d_NAME" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Fan Name Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO FAN DESCR" >.#I</OID>
+		<!--	If this returns a string, it is the name of the fan.
+				If this returns an error, it means this numbered fan is not fitted.-->
+		<StringRule />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="FAN_%d_STATE" pollRate="60" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Fan State Array" >
+		<Comment>No trap defs are needed, since ciscoEnvMonFanNotification should always contain
+		  this polled field anyway.
+		  With the S&amp;W-owned tier-1 trade show demo Cisco, we get this trap on fan fail,
+		  but not on fan recovery.  Therefore we will detect failed fan quickly, but
+		  it will take until the next poll before we spot a recovered fan.</Comment>
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO FAN STATE" >.#I</OID>
+		<!--	If this returns a number, it is the status of this fan.
+				If this returns an error, it means this numbered fan is not fitted.-->
+		<NumRule value="1" format="OK" />
+		<NumRule value="2" format="FAIL:Fan stopped" />
+		<NumRule value="6" format="FAIL:notFunctioning" />
+		<NumRule format="FAIL:Unknown number: %d" />
+		<StringRule format="FAIL:Unknown string: %s" />
+		<ConstRule format="FAIL:Unknown?" />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="FAN_DATA_TYPE" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Fan Data Type" >
+		<OID alias="CISCO ENV MON TRAP ENABLES" >.ciscoEnvMonEnableFanNotification.0</OID>
+		<!--	If this boolean is true, then ciscoEnvMonFanNotification traps will be sent.
+				Anything else, error or otherwise, means they are not being sent.-->
+		<NumRule value="1" format="OK:Traps enabled in agent, polling as backup" />
+		<ConstRule format="WARN:Data polled only - trap disabled in agent? Const" />
+		<ErrorRule format="WARN:Data polled only - trap disabled in agent? Error" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="TEMP_%d_NAME" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Temp Name Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO TEMP DESCR" >.#I</OID>
+		<!--	If this returns a string, it is the name of the temperature sensor.
+				If this returns an error, it means this numbered temp sensor is not fitted.-->
+		<StringRule />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="TEMP_%d_CELSIUS" pollRate="60" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Temp Value Array" >
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO TEMP VALUE" >.#I</OID>
+		<!--	If this returns a number, it is the value in degrees centigrade.
+				If this returns an error, it means this numbered temp sensor is not fitted.-->
+		<NumRule format="%d C" />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="TEMP_%d_STATE" pollRate="60" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Temp State Array" >
+		<Comment>No trap defs are needed, since something like ?ciscoEnvMon?Temperature?Notification? should hopefully always contain
+		  this polled field anyway.
+		</Comment>
+		<!-- Array size specified in each unit type def using this Global def. -->
+		<OID alias="CISCO TEMP STATE" >.#I</OID>
+		<!--	If this returns a number, it is the status of this sensor.
+				If this returns an error, it means this numbered sensor is not fitted.-->
+		<NumRule value="1" format="OK" />
+		<NumRule value="2" format="FAIL" />
+		<NumRule format="FAIL:Unknown number: %d" />
+		<StringRule format="FAIL:Unknown string: %s" />
+		<ConstRule format="FAIL:Unknown?" />
+		<ErrorRule format="(Not fitted)" />
+	</GlobalTranslationDef>
+
+	<GlobalTranslationDef rcLogField="TEMP_DATA_TYPE" pollRate="600" link="Cisco_Nexus-9000-supervisor_1.0.0::Cisco Temp Data Type" >
+		<OID alias="CISCO ENV MON TRAP ENABLES" >.ciscoEnvMonEnableTemperatureNotification.0</OID>
+		<!--	If this boolean is true, then ciscoEnvMonFanNotification traps will be sent.
+				Anything else, error or otherwise, means they are not being sent.-->
+		<NumRule value="1" format="OK:Traps enabled in agent, polling as backup" />
+		<ConstRule format="WARN:Data polled only - trap disabled in agent? Const" />
+		<ErrorRule format="WARN:Data polled only - trap disabled in agent? Error" />
+	</GlobalTranslationDef>
+
+</DefinitionGroup>

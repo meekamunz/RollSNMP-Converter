@@ -1,0 +1,142 @@
+-- Copyright Evertz Microsystems Ltd.
+-- 10/10/2000
+-- Confidential
+
+-- The first release of a MIB
+-- Changes may occur
+
+EVERTZ-EXPERIMENTAL-NODE DEFINITIONS ::= BEGIN
+
+IMPORTS 
+	evtzExperimental
+		FROM EVERTZ-ROOT;
+
+--Node Definitions	
+
+
+-- a mib for the avm/oesd/eosd/dc
+	exprAVM		OBJECT IDENTIFIER ::= { evtzExperimental 1  }
+	exprDA2OESD	OBJECT IDENTIFIER ::= { evtzExperimental 2  }
+	exprDA2EOSD	OBJECT IDENTIFIER ::= { evtzExperimental 3  }
+	exprDC		OBJECT IDENTIFIER ::= { evtzExperimental 4  }
+    exprAVC         OBJECT IDENTIFIER ::= { evtzExperimental 5  }
+    exprDA2OEHD	OBJECT IDENTIFIER ::= { evtzExperimental 6  }
+    exprDA2EOHD     OBJECT IDENTIFIER ::= { evtzExperimental 7  }
+    exprET          OBJECT IDENTIFIER ::= { evtzExperimental 8  }    
+	exprCDM		OBJECT IDENTIFIER ::= { evtzExperimental 9  }    
+	exprVAT		OBJECT IDENTIFIER ::= { evtzExperimental 10 }  
+	exprVAR		OBJECT IDENTIFIER ::= { evtzExperimental 11 } 
+	exprMT		OBJECT IDENTIFIER ::= { evtzExperimental 12 }
+	exprMR 		OBJECT IDENTIFIER ::= { evtzExperimental 13 }
+	exprQUATTRO OBJECT IDENTIFIER ::= { evtzExperimental 14 } 	
+	exprQ OBJECT IDENTIFIER ::= { evtzExperimental 15 }         
+	exprQUATTROM OBJECT IDENTIFIER ::= { evtzExperimental 16 } 	
+	exprFC OBJECT IDENTIFIER ::= { evtzExperimental 17 } 	
+	exprCVT OBJECT IDENTIFIER ::= { evtzExperimental 18 }         
+	exprCVR OBJECT IDENTIFIER ::= { evtzExperimental 19 }
+	exprBPX OBJECT IDENTIFIER ::= { evtzExperimental 20 }          
+	exprDC2 OBJECT IDENTIFIER ::= { evtzExperimental 21 }        
+	exprMB OBJECT IDENTIFIER ::= { evtzExperimental 22 }          
+	exprANALOGQUATTRO OBJECT IDENTIFIER ::= { evtzExperimental 23 }
+	exprANALOGQUATTROM OBJECT IDENTIFIER ::= { evtzExperimental 24 }
+	exprGPI OBJECT IDENTIFIER ::= { evtzExperimental 25 }          
+	exprCCM OBJECT IDENTIFIER ::= { evtzExperimental 26 }          
+	exprVARA4 OBJECT IDENTIFIER ::= { evtzExperimental 27 }          
+	exprVATA4 OBJECT IDENTIFIER ::= { evtzExperimental 28 }          
+	exprFS OBJECT IDENTIFIER ::= { evtzExperimental 29 }          
+	exprHDC OBJECT IDENTIFIER ::= { evtzExperimental 30 }          
+	exprFSHD OBJECT IDENTIFIER ::= { evtzExperimental 31 }          
+	exprCEM OBJECT IDENTIFIER ::= { evtzExperimental 32 }          
+	exprOEDS3 OBJECT IDENTIFIER ::= { evtzExperimental 33 } 
+	exprEODS3 OBJECT IDENTIFIER ::= { evtzExperimental 34 } 
+	exprOEHD3 OBJECT IDENTIFIER ::= { evtzExperimental 35 } 
+	exprEOHD3 OBJECT IDENTIFIER ::= { evtzExperimental 36 } 
+   	exprADCA4 OBJECT IDENTIFIER ::= { evtzExperimental 37 } 
+	exprDCDA OBJECT IDENTIFIER ::= { evtzExperimental 38 } 
+	exprVAR2 OBJECT IDENTIFIER ::= { evtzExperimental 39 } 
+	exprVAT2 OBJECT IDENTIFIER ::= { evtzExperimental 40 } 
+	exprDLY OBJECT IDENTIFIER ::= { evtzExperimental 41 } 
+	exprEOSD3 OBJECT IDENTIFIER ::= { evtzExperimental 42 } 
+	exprOESD3 OBJECT IDENTIFIER ::= { evtzExperimental 43 } 
+	exprDACA4 OBJECT IDENTIFIER ::= { evtzExperimental 44 } 
+	exprAD4 OBJECT IDENTIFIER ::= { evtzExperimental 45 } 
+	exprAE4 OBJECT IDENTIFIER ::= { evtzExperimental 46 } 
+    exprLT OBJECT IDENTIFIER ::= { evtzExperimental 47 } 
+	exprLR OBJECT IDENTIFIER ::= { evtzExperimental 48 } 
+	exprUCHD OBJECT IDENTIFIER ::= { evtzExperimental 49 }
+    exprCARD OBJECT IDENTIFIER ::= { evtzExperimental 50 }
+	exprVT4 OBJECT IDENTIFIER ::= { evtzExperimental 51 } 
+	exprVR4 OBJECT IDENTIFIER ::= { evtzExperimental 52 }
+    exprADM2 OBJECT IDENTIFIER ::= { evtzExperimental 53 }
+    exprDLYHD OBJECT IDENTIFIER ::= { evtzExperimental 54 }
+    exprAT OBJECT IDENTIFIER ::= { evtzExperimental 55 }
+    exprAR OBJECT IDENTIFIER ::= { evtzExperimental 56 }
+    exprDT OBJECT IDENTIFIER ::= { evtzExperimental 57 }
+    exprADCA4AV OBJECT IDENTIFIER ::= { evtzExperimental 58 }
+    exprAM OBJECT IDENTIFIER ::= { evtzExperimental 59 }
+    exprIT OBJECT IDENTIFIER ::= { evtzExperimental 60 }
+    exprOO7707 OBJECT IDENTIFIER ::= { evtzExperimental 61 }
+    exprDLYHDSD7743 OBJECT IDENTIFIER ::= { evtzExperimental 62 }
+    exprCVDR7707 OBJECT IDENTIFIER ::= { evtzExperimental 63 }
+    exprCVDT7707 OBJECT IDENTIFIER ::= { evtzExperimental 64 }
+    exprXC7710 OBJECT IDENTIFIER ::= { evtzExperimental 65 }
+    exprFSHD7746 OBJECT IDENTIFIER ::= { evtzExperimental 66 }
+    exprCDM7736 OBJECT IDENTIFIER ::= { evtzExperimental 67 }
+    exprCEM7736 OBJECT IDENTIFIER ::= { evtzExperimental 68 }
+    exprVR2HD OBJECT IDENTIFIER ::= { evtzExperimental 69 }
+    exprVT2HD OBJECT IDENTIFIER ::= { evtzExperimental 70 }
+    exprXUDCAES4HD OBJECT IDENTIFIER ::= { evtzExperimental 71 }
+    exprCD2 OBJECT IDENTIFIER ::= { evtzExperimental 72 }
+    exprCE2 OBJECT IDENTIFIER ::= { evtzExperimental 73 }
+    exprHDC13 OBJECT IDENTIFIER ::= { evtzExperimental 74 }
+    exprUCKF OBJECT IDENTIFIER ::= { evtzExperimental 75 }
+    exprDARF OBJECT IDENTIFIER ::= { evtzExperimental 76 }
+    exprBPXRF OBJECT IDENTIFIER ::= { evtzExperimental 77 }
+    exprAD4HD7721 OBJECT IDENTIFIER ::= { evtzExperimental 78 }
+    exprVATHD OBJECT IDENTIFIER ::= { evtzExperimental 79 }
+    exprVARHD OBJECT IDENTIFIER ::= { evtzExperimental 80 }
+    exprCATVT OBJECT IDENTIFIER ::= { evtzExperimental 81 }
+    exprCATVR OBJECT IDENTIFIER ::= { evtzExperimental 82 }
+    exprDA7 OBJECT IDENTIFIER ::= { evtzExperimental 83 }
+    exprAVM2 OBJECT IDENTIFIER ::= { evtzExperimental 84 }
+    exprXUCAES4HD OBJECT IDENTIFIER ::= { evtzExperimental 85 }
+    exprRD2X2 OBJECT IDENTIFIER ::= { evtzExperimental 86 }
+    exprVMDA7700 OBJECT IDENTIFIER ::= { evtzExperimental 87 }
+    exprHDC14 OBJECT IDENTIFIER ::= { evtzExperimental 88 }
+    exprCE7737 OBJECT IDENTIFIER ::= { evtzExperimental 89 }
+    exprVR8 OBJECT IDENTIFIER ::= { evtzExperimental 90 }
+    exprVT8 OBJECT IDENTIFIER ::= { evtzExperimental 91 }
+    exprVLPRO OBJECT IDENTIFIER ::= { evtzExperimental 92 }
+    exprTG2HD OBJECT IDENTIFIER ::= { evtzExperimental 93 }
+    exprACOHD7700 OBJECT IDENTIFIER ::= { evtzExperimental 94 }
+    exprAD8HD7721 OBJECT IDENTIFIER ::= { evtzExperimental 95 }
+    exprAE8HD7721 OBJECT IDENTIFIER ::= { evtzExperimental 96 }
+    exprGPSDR OBJECT IDENTIFIER ::= { evtzExperimental 97 }
+    exprGPSDT OBJECT IDENTIFIER ::= { evtzExperimental 98 }
+    exprFSEAES8HD7746 OBJECT IDENTIFIER ::= { evtzExperimental 99 }
+    exprAD8DDHD7720 OBJECT IDENTIFIER ::= { evtzExperimental 100 }
+    exprCSHD7771    OBJECT IDENTIFIER ::= { evtzExperimental 101 }
+    exprDSHD7771    OBJECT IDENTIFIER ::= { evtzExperimental 102 }
+    exprVT4HS7707   OBJECT IDENTIFIER ::= { evtzExperimental 103 }
+    exprVR4HS7707   OBJECT IDENTIFIER ::= { evtzExperimental 104 }
+    exprARA7707     OBJECT IDENTIFIER ::= { evtzExperimental 105 }
+    exprATA7707     OBJECT IDENTIFIER ::= { evtzExperimental 106 }
+    exprNRHD7710    OBJECT IDENTIFIER ::= { evtzExperimental 107 }
+    exprVLPROAUTORESPONSE    OBJECT IDENTIFIER ::= { evtzExperimental 108 }
+    exprADVT7707    OBJECT IDENTIFIER ::= { evtzExperimental 109 }
+    exprADVR7707    OBJECT IDENTIFIER ::= { evtzExperimental 110 }
+    exprRGBR7707    OBJECT IDENTIFIER ::= { evtzExperimental 111 }
+    exprRGBT7707    OBJECT IDENTIFIER ::= { evtzExperimental 112 }
+    exprUCHD7711    OBJECT IDENTIFIER ::= { evtzExperimental 113 }
+    exprDD4HD7721   OBJECT IDENTIFIER ::= { evtzExperimental 114 }
+    exprDE4HD7721   OBJECT IDENTIFIER ::= { evtzExperimental 115 }
+    exprAVM2HD7760  OBJECT IDENTIFIER ::= { evtzExperimental 116 }
+    exprVMSHD7760   OBJECT IDENTIFIER ::= { evtzExperimental 117 }
+    exprUCKF7710    OBJECT IDENTIFIER ::= { evtzExperimental 118 }
+    exprVBIKHD7725  OBJECT IDENTIFIER ::= { evtzExperimental 119 }
+    exprR2X2HES7700 OBJECT IDENTIFIER ::= { evtzExperimental 120 }
+    exprR2X2HD7700  OBJECT IDENTIFIER ::= { evtzExperimental 121 }
+    exprMFCHD7772   OBJECT IDENTIFIER ::= { evtzExperimental 122 }
+    exprMFDHD7772   OBJECT IDENTIFIER ::= { evtzExperimental 123 }
+    exprR4X1        OBJECT IDENTIFIER ::= { evtzExperimental 124 }
+END

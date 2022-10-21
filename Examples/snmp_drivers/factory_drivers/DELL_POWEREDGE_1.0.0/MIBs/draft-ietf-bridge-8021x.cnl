@@ -1,0 +1,175 @@
+IEEE8021-PAE-MIB-A DEFINITIONS ::= BEGIN
+
+  -- ------------------------------------------------------------
+  -- IEEE 802.1X MIB
+  -- ------------------------------------------------------------
+
+ IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Counter32, Counter64,
+    Unsigned32, TimeTicks                               FROM SNMPv2-SMI
+    MacAddress, TEXTUAL-CONVENTION, TruthValue          FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP                     FROM SNMPv2-CONF
+    SnmpAdminString                                     FROM SNMP-FRAMEWORK-MIB
+    InterfaceIndex                                      FROM IF-MIB
+    ieee8021paeMIB                                      FROM IEEE8021-PAE-MIB;
+
+ paeMIBObjects OBJECT IDENTIFIER ::= { ieee8021paeMIB 1 }
+
+  -- ------------------------------------------------------------
+  -- Textual Conventions
+  -- ------------------------------------------------------------
+
+ PaeControlledDirections ::= TEXTUAL-CONVENTION
+    STATUS      current
+    DESCRIPTION
+        "The control mode values for the Authenticator PAE."
+    SYNTAX      INTEGER {
+                    both(0),
+                    in(1)
+                }
+
+ PaeControlledPortStatus ::= TEXTUAL-CONVENTION
+    STATUS       current
+    DESCRIPTION
+        "The status values of the Authenticator PAE controlled
+        Port."
+    SYNTAX      INTEGER {
+                    authorized(1),
+                    unauthorized(2)
+                }
+
+ PaeControlledPortControl ::= TEXTUAL-CONVENTION
+    STATUS       current
+    DESCRIPTION
+        "The control values of the Authenticator PAE controlled
+        Port."
+    SYNTAX      INTEGER {
+                    forceUnauthorized(1),
+                    auto(2),
+                    forceAuthorized(3)
+                } 
+
+ -- ------------------------------------------------------------
+ -- groups in the PAE MIB
+ -- ------------------------------------------------------------
+
+ dot1xPaeSystem        OBJECT IDENTIFIER ::= { paeMIBObjects 1 }
+ dot1xPaeAuthenticator OBJECT IDENTIFIER ::= { paeMIBObjects 2 }
+ dot1xPaeSupplicant    OBJECT IDENTIFIER ::= { paeMIBObjects 3 }
+
+ --------------------------------------------------------------
+ -- The PAE System Group
+ --------------------------------------------------------------
+
+ dot1xPaeSystemAuthControl OBJECT-TYPE    
+    ::= { dot1xPaeSystem 1 }
+
+ --------------------------------------------------------------
+ -- The PAE Port Table
+ --------------------------------------------------------------
+
+ dot1xPaePortTable OBJECT-TYPE    
+    ::= { dot1xPaeSystem 2 }
+
+ dot1xPaePortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xPaePortTable 1 }
+
+ --------------------------------------------------------------
+ -- The PAE Authenticator Group
+ --------------------------------------------------------------
+
+ --------------------------------------------------------------
+ -- The Authenticator Configuration Table
+ --------------------------------------------------------------
+
+ dot1xAuthConfigTable OBJECT-TYPE    
+    ::= { dot1xPaeAuthenticator 1 }
+
+ dot1xAuthConfigEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xAuthConfigTable 1 }
+
+ dot1xAuthAdminControlledDirections OBJECT-TYPE
+    SYNTAX      PaeControlledDirections
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The current value of the administrative controlled
+        directions parameter for the Port."
+    REFERENCE
+        "9.4.1, Admin Control Mode"
+    ::= { dot1xAuthConfigEntry 3 }
+
+ dot1xAuthKeyTxEnabled OBJECT-TYPE
+    SYNTAX      TruthValue
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The value of the keyTransmissionEnabled constant
+        currently in use by the Authenticator PAE state
+        machine."
+    REFERENCE
+        "9.4.1, keyTransmissionEnabled"
+    ::= { dot1xAuthConfigEntry 14 }
+ 
+ --------------------------------------------------------------
+ -- The Authenticator Statistics Table
+ --------------------------------------------------------------
+
+ dot1xAuthStatsTable OBJECT-TYPE    
+    ::= { dot1xPaeAuthenticator 2 }
+
+ dot1xAuthStatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xAuthStatsTable 1 }
+
+ --------------------------------------------------------------
+ -- The Authenticator Diagnostics Table
+ --------------------------------------------------------------
+
+ dot1xAuthDiagTable OBJECT-TYPE    
+    ::= { dot1xPaeAuthenticator 3 }
+
+ dot1xAuthDiagEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xAuthDiagTable 1 }
+ 
+ --------------------------------------------------------------
+ -- The Authenticator Session Statistics Table
+ --------------------------------------------------------------
+
+ dot1xAuthSessionStatsTable OBJECT-TYPE    
+    ::= { dot1xPaeAuthenticator 4 }
+
+ dot1xAuthSessionStatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xAuthSessionStatsTable 1 }
+ 
+ --------------------------------------------------------------
+ -- The PAE Supplicant Group
+ --------------------------------------------------------------
+
+ --------------------------------------------------------------
+ -- The Supplicant Configuration Table
+ --------------------------------------------------------------
+
+ dot1xSuppConfigTable OBJECT-TYPE    
+    ::= { dot1xPaeSupplicant 1 }
+
+ dot1xSuppConfigEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xSuppConfigTable 1 }
+ 
+ --------------------------------------------------------------
+ -- The Supplicant Statistics Table
+ --------------------------------------------------------------
+
+ dot1xSuppStatsTable OBJECT-TYPE    
+    ::= { dot1xPaeSupplicant 2 }
+
+ dot1xSuppStatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot1xSuppStatsTable 1 }
+ 
+END

@@ -1,0 +1,75 @@
+RADLAN-BGP-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN BGP4 Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rlBgp                                                   FROM RADLAN-BGP
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+ rlBgpMibVersion OBJECT-TYPE
+    ::= { rlBgp 1 }
+
+ rlBgpPeersExtTable OBJECT-TYPE
+     ::= { rlBgp 2 }
+
+ rlBgpPeersExtEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlBgpPeersExtRowStatus
+    ::= { rlBgpPeersExtTable 1 }
+
+ rlBgpClusterId OBJECT-TYPE
+    ::= { rlBgp 3 }
+
+ rlBgpConfederationId OBJECT-TYPE
+    ::= { rlBgp 4 }
+
+ rlBgpEnable   OBJECT-TYPE
+    ::= { rlBgp 5 }
+
+ rlBgpRouteReflectionEnable   OBJECT-TYPE
+    ::= { rlBgp 6 }
+
+ rlBgpASConfederationEnable   OBJECT-TYPE
+    ::= { rlBgp 7 }
+
+ rlBgpRouteFlapDampeningEnable   OBJECT-TYPE
+    ::= { rlBgp 8 }
+
+ rlBgpCommunitiesEnable   OBJECT-TYPE
+    ::= { rlBgp 9 }
+
+ rlBgpCapabilNegotEnable   OBJECT-TYPE
+    ::= { rlBgp 10 }
+
+ rlBgpMedConf OBJECT-TYPE
+    ::= { rlBgp 11 }
+
+ rlBgpLocalPrefConf OBJECT-TYPE
+    ::= { rlBgp 12 }
+
+ rlBgpLocalAsConf OBJECT-TYPE
+    ::= { rlBgp 13 }
+
+ rlBgp4PathAttrExtTable OBJECT-TYPE
+     ::= { rlBgp 14 }
+
+ rlBgpSuppressLimit OBJECT-TYPE
+    ::= { rlBgp 15 }
+
+ rlBgpReuseLimit OBJECT-TYPE
+    ::= { rlBgp 16 }
+
+ rlBgpHalfLifeTime OBJECT-TYPE
+    ::= { rlBgp 17 }
+
+ rlBgpMaxSuppressTime OBJECT-TYPE
+     ::= { rlBgp 18 }
+
+ rlBgp4PathAttrExtEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlBgp4PathAttrExtTable 1 }
+
+END

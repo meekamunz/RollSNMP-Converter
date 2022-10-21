@@ -1,0 +1,8 @@
+{
+  "includes": ["QFX10008 Supervisor.rsnmp"],
+  "driverName": "QFX10008-super",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Juniper",
+  "deviceName": "Juniper QFX10008 Super",
+  "factory": true
+}

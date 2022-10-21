@@ -1,0 +1,636 @@
+DIFF-SERV-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rlExperience                            FROM RADLAN-MIB
+    Unsigned32, Counter32, Counter64,
+    OBJECT-TYPE, MODULE-IDENTITY,
+    zeroDotZero, mib-2                      FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, RowStatus,
+    RowPointer, TestAndIncr                 FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP         FROM SNMPv2-CONF
+    ifIndex                                 FROM IF-MIB
+--  InetEndpointType, InetEndpoint          FROM INET-ENDPOINT-MIB;
+    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
+     diffServMib                            FROM DIFF-SERV-MIB;
+
+
+diffServObjects         OBJECT IDENTIFIER ::= { diffServMib 1 }
+diffServTables          OBJECT IDENTIFIER ::= { diffServMib 2 }
+diffServMIBConformance  OBJECT IDENTIFIER ::= { diffServMib 3 }
+
+-- The tools necessary to perform basic Behavior
+-- Aggregate Classification
+--
+Dscp ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT    "d"
+    STATUS          current
+    DESCRIPTION
+        "The code point used for discriminating a traffic
+         stream."
+    SYNTAX          INTEGER (0..63)
+
+diffServAggregateTable OBJECT-TYPE
+    ::= { diffServTables 1 }
+
+diffServAggregateEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { diffServAggregateTable 1 }
+
+-- The tools for MultiField Classification.
+--
+-- This textual convention has no effect on either the syntax
+-- nor the semantics of any managed object.  Objects defined
+-- using this   convention are always encoded by means of the
+-- rules that   define their primitive type.
+--
+MFClassifierL4Port ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT    "d"
+    STATUS          current
+    DESCRIPTION
+        "A value indicating a Layer-4 protocol  port number."
+    SYNTAX          INTEGER (0..65535)
+
+-- This object allows   a configuring system to obtain a
+-- unique value for diffServClassifierNumber for purposes of
+-- configuration.
+
+diffServMFClassifierUnique OBJECT-TYPE
+    ::= { diffServObjects 1 }
+
+diffServMFClassifierTable OBJECT-TYPE
+    ::= { diffServTables 2 }
+
+diffServMFClassifierEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME diffServMFClassifierStatus
+    ::= { diffServMFClassifierTable 1   }
+
+-- This object allows   a configuring system to obtain a
+-- unique value for diffServClassifierNumber for purposes of
+-- configuration
+
+diffServClassifierUnique OBJECT-TYPE
+    ::= { diffServObjects 2 }
+
+-- The Classifier Table allows us to enumerate the
+-- relationship between arbitrary classifiers   and
+-- the meters   which apply to classified streams.
+
+diffServClassifierTable OBJECT-TYPE
+    ::= { diffServTables 3 }
+
+diffServClassifierEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME diffServClassifierStatus
+    ::= { diffServClassifierTable 1 }
+
+-- This object allows   a configuring system to obtain a
+-- unique value for diffServClassifierNumber for purposes of
+-- configuration
+
+diffServTBMeterUnique   OBJECT-TYPE
+    ::= { diffServObjects 3 }
+
+-- The Meter Table allows us to enumerate the
+-- relationship between  meters and the actions, other
+-- meters, and queues   that result from them.
+
+diffServTBMeterTable OBJECT-TYPE
+    ::= { diffServTables 4 }
+
+diffServTBMeterEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME diffServTBMeterStatus
+    ::= { diffServTBMeterTable 1 }
+
+-- This object allows   a configuring system to obtain a
+-- unique value for diffServActionNumber for purposes   of
+-- configuration
+
+diffServActionUnique OBJECT-TYPE
+    ::= { diffServObjects 4 }
+
+-- The Meter Table allows us to enumerate the
+-- relationship between  meters and the actions, other meters,
+-- and queues   that result from them.
+
+diffServActionTable OBJECT-TYPE
+    ::= { diffServTables 5 }
+
+diffServActionEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME diffServActionStatus
+    ::= { diffServActionTable   1 }
+
+-- This object allows   a configuring system to obtain a
+-- unique value for diffServQueueNumber for purposes of
+-- configuration
+
+diffServQueueUnique OBJECT-TYPE
+    ::= { diffServObjects 5 }
+
+-- The Queue Table allows us to describe queues
+
+diffServQueueTable OBJECT-TYPE
+    ::= { diffServTables 6 }
+
+diffServQueueEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME diffServQueueStatus
+   ::= { diffServQueueTable 1 }
+
+-- MIB Compliance statements.   Three variations of
+-- compliance   are described, for optical, LAN, and low speed
+-- interfaces.  The difference is the   implementation of
+-- diffServActionHCConformingOctets
+-- and diffServActionHCConformingPackets
+
+--diffServMIBCompliances OBJECT IDENTIFIER ::= { diffServMIBConformance 1 }
+--diffServMIBGroups      OBJECT IDENTIFIER ::= { diffServMIBConformance 2 }
+--
+--diffServMIBCompliance MODULE-COMPLIANCE
+--    STATUS          current
+--    DESCRIPTION
+--        "This MIB may be implemented as a read-only or  as a
+--         read-create MIB. As a result, it may be used for
+--         monitoring or for configuration.
+--         Standard compliance implies that the implementation
+--         complies for interfaces for which an interface's octet
+--         counter might wrap at most once an hour, which by the
+--         IFMIB's convention applies to interfaces under 20 MBPS.
+--         It thus applies to any device which might implement a
+--         low speed serial line, Ethernet, Token Ring."
+--    MODULE ##   This Module
+--    MANDATORY-GROUPS { diffServMIBClassifierGroup, diffServMIBMeterGroup,
+--                       diffServMIBQueueGroup, diffServMIBActionGroup
+--
+--        ## note that diffServMIBHCCounterGroup is
+--        ## mandatory for medium and high speed interfaces
+--
+--        ## note that diffServMIBVHCCounterGroup is
+--        ## mandatory for high   speed interfaces
+--
+--        ## note that the diffServMIBStaticGroup is
+--        ## mandatory for implementations that   implement a
+--        ## read-write   or read-create mode.
+--    }
+--
+--    GROUP diffServMIBHCCounterGroup
+--    DESCRIPTION
+--        "This group is  mandatory for those network interfaces
+--         for which the value of the corresponding instance of
+--         ifSpeed is greater than 20,000,000 bits/second."
+--
+--    GROUP diffServMIBVHCCounterGroup
+--    DESCRIPTION
+--        "This group is  mandatory for those network interfaces
+--         for which the value of the corresponding instance of
+--         ifSpeed is greater than 650,000,000 bits/second."
+--
+--    OBJECT diffServClassifierMatchObject
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierSequence
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterInterval
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterBurstSize
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterFailNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterSucceedNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDSCP
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMinThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMaxThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDropPolicy
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMinimumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMaximumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueuePriority
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueNextTCB
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--    ::= { diffServMIBCompliances 1 }
+--
+--diffServMIBVHCCompliance MODULE-COMPLIANCE
+--    STATUS current
+--    DESCRIPTION
+--        "This MIB may be implemented as a read-only or  as a
+--         read-create MIB. As a result, it may be used for
+--         monitoring or for configuration.
+--         Very High Speed compliance implies that the
+--         implementation complies for interfaces for which an
+--         interface's packet or octet counters might wrap more
+--         than once an hour, which by the IFMIB's convention
+--         applies to interfaces over 650 MBPS, or OC-12."
+--    MODULE ##   This Module
+--    MANDATORY-GROUPS { diffServMIBClassifierGroup, diffServMIBMeterGroup,
+--                       diffServMIBQueueGroup, diffServMIBHCCounterGroup,
+--                       diffServMIBVHCCounterGroup, diffServMIBActionGroup
+--
+--        ## note that the diffServMIBStaticGroup is
+--        ## mandatory for implementations that   implement a
+--        ## read-write   or read-create mode.
+--    }
+--
+--
+--    OBJECT diffServClassifierMatchObject
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierSequence
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterInterval
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterBurstSize
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterFailNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterSucceedNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDSCP
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMinThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMaxThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDropPolicy
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMinimumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMaximumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueuePriority
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueNextTCB
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--    ::= { diffServMIBCompliances 2 }
+--
+--diffServMIBHCCompliance MODULE-COMPLIANCE
+--    STATUS current
+--    DESCRIPTION
+--        "This MIB may be implemented as a read-only or  as a
+--         read-create MIB. As a result, it may be used for
+--         monitoring or for configuration.
+--         High Speed compliance implies that the implementation
+--         complies for interfaces for which an interface's octet
+--         counters might wrap more than once an hour, which by
+--         the IFMIB's convention applies to interfaces over 20
+--         MBPS, but under 650 MBPS.  It thus applies to devices
+--         which implement a 100 MBPS Ethernet, FDDI, E3, DS3, or
+--         SONET/SDH interface up to OC-12."
+--    MODULE ##   This Module
+--    MANDATORY-GROUPS { diffServMIBClassifierGroup, diffServMIBMeterGroup,
+--                       diffServMIBQueueGroup, diffServMIBHCCounterGroup,
+--                       diffServMIBActionGroup
+--
+--        ## note that diffServMIBVHCCounterGroup is
+--        ## mandatory for high   speed interfaces
+--
+--        ## note that the diffServMIBStaticGroup is
+--        ## mandatory for implementations that   implement a
+--        ## read-write   or read-create mode.
+--    }
+--
+--    GROUP diffServMIBVHCCounterGroup
+--    DESCRIPTION
+--        "This group is  mandatory for those network interfaces
+--         for which the value of the corresponding instance of
+--         ifSpeed is greater than 650,000,000 bits/second."
+--
+--    OBJECT diffServClassifierMatchObject
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierSequence
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServClassifierStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterInterval
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterBurstSize
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterFailNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterSucceedNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServTBMeterStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionNext
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDSCP
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMinThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionMaxThreshold
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionDropPolicy
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServActionStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMinimumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueMaximumRate
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueuePriority
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueNextTCB
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--
+--    OBJECT diffServQueueStatus
+--    MIN-ACCESS read-only
+--    DESCRIPTION
+--        "Write  access is not required."
+--    ::= { diffServMIBCompliances 3 }
+--
+--diffServMIBClassifierGroup OBJECT-GROUP
+--    OBJECTS { diffServAggregateDSCP,
+--              diffServClassifierMatchObject,
+--              diffServClassifierNext,
+--              diffServClassifierSequence,
+--              diffServClassifierStatus
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "The Classifier Group defines the MIB Objects that
+--         describe a classifier."
+--    ::= { diffServMIBGroups 1   }
+--
+--diffServMIBMeterGroup   OBJECT-GROUP
+--    OBJECTS { diffServTBMeterInterval, diffServTBMeterBurstSize,
+--              diffServTBMeterSucceedNext, diffServTBMeterFailNext,
+--              diffServTBMeterStatus
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "The Meter Group defines the objects used in describing
+--         a meter."
+--    ::= { diffServMIBGroups 2   }
+--
+--diffServMIBActionGroup OBJECT-GROUP
+--    OBJECTS { diffServActionDropPolicy,
+--              diffServActionRandomDrops,
+--              diffServActionTailDrops,
+--              diffServActionMinThreshold,
+--              diffServActionMaxThreshold, diffServActionDSCP,
+--              diffServActionNext,
+--              diffServActionConformingPackets,
+--              diffServActionConformingOctets,
+--              diffServActionStatus
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "The Action Group defines the objects used in
+--         describing an action."
+--    ::= { diffServMIBGroups 3   }
+--
+--diffServMIBHCCounterGroup OBJECT-GROUP
+--    OBJECTS { diffServActionHCConformingOctets
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "At 20,000,000  bits per second or greater, the number
+--         of octets a given class may count can overflow a 32 bit
+--         counter in under an hour.  Therefore, by convention
+--         established in the IFMIB, the 64 bit counter must be
+--         implemented as well."
+--    ::= { diffServMIBGroups 4   }
+--
+--diffServMIBVHCCounterGroup OBJECT-GROUP
+--    OBJECTS { diffServActionHCConformingPackets,
+--              diffServActionHCRandomDrops,
+--              diffServActionHCTailDrops
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "At 650,000,000 bits per second or greater, the number
+--         of packets a given class may count can overflow a 32
+--         bit counter in under an hour.  Therefore, by convention
+--         established in the IFMIB, the 64 bit counter must be
+--         implemented as well."
+--    ::= { diffServMIBGroups 5   }
+--
+--diffServMIBQueueGroup   OBJECT-GROUP
+--    OBJECTS { diffServQueueMinimumRate,
+--              diffServQueueMaximumRate,
+--              diffServQueuePriority, diffServQueueStatus,
+--              diffServQueueNextTCB
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "The Queue Group contains the objects that describe an
+--         interface's queues."
+--    ::= { diffServMIBGroups 6   }
+--
+--diffServMIBStaticGroup OBJECT-GROUP
+--    OBJECTS { diffServClassifierUnique, diffServTBMeterUnique,
+--              diffServQueueUnique, diffServActionUnique
+--    }
+--    STATUS current
+--    DESCRIPTION
+--        "The Static Group contains scalar objects used  in
+--         creating unique enumerations for classifiers, meters,
+--         and queues."
+--    ::= { diffServMIBGroups 7   }
+END

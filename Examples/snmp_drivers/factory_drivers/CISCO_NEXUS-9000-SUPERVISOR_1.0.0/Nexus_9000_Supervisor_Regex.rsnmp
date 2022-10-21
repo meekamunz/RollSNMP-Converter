@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DefinitionGroup>
+
+	<!-- These OIDs are for the Nexus 9000 series switches only -->
+
+	<MIBSource href="drivers/CISCO_NEXUS-9000-SUPERVISOR_1.0.0/MIBs"/>
+	
+	<comment> Some OIDs are not polling using text, reverting to numerical OIDs </comment>
+	
+	<OIDAlias id="INTERNET" oid=".iso.org.dod.internet">
+		<OIDAlias id="MIB2" oid=".mgmt.mib-2" >
+			<OIDAlias id="IF ENTRY" oid=".interfaces.ifTable.ifEntry" >
+				<OIDAlias id="IF DESC" oid=".ifDescr" />
+				<OIDAlias id="OCTETS IN" oid=".ifInOctets" />
+				<OIDAlias id="OCTETS OUT" oid=".ifOutOctets" />
+			</OIDAlias>
+			<OIDAlias id="IF MIB" oid=".ifMIB" >
+				<OIDAlias id="IFX ENTRY" oid=".ifMIBObjects.ifXTable.ifXEntry" >
+					<OIDAlias id="IFX OCTETS IN" oid=".ifHCInOctets" />
+					<OIDAlias id="IFX OCTETS OUT" oid=".ifHCOutOctets" />
+				</OIDAlias>
+			</OIDAlias>
+			<OIDAlias id="DEVICE DESCRIPTION" oid=".25.3.2.1.3" />
+			<OIDAlias id="VRRP" oid=".68.1" />
+			<OIDAlias id="PHYSICAL ENTRY" oid=".47.1.1.1.1" >
+				<OIDAlias id="PHYSICAL DESCRIPTION" oid=".2" />
+				<OIDAlias id="PHYSICAL NAME" oid=".7" />
+				<OIDAlias id="SERIAL NUMBER" oid=".11" />
+			</OIDAlias>
+			<OIDAlias id="ENTITY SENSOR" oid=".99.1.1.1" >
+				<OIDAlias id="PHYSICAL SENSOR VALUE" oid=".4" />
+			</OIDAlias>
+		</OIDAlias>
+		<OIDAlias id="CISCO" oid=".private.enterprises.cisco" >
+			<OIDAlias id="CISCO MGMT" oid=".ciscoMgmt" >
+				<OIDAlias id="CISCO PSU" oid=".117.1.1" >
+					<OIDAlias id="CISCO FRU PSU VALUE" oid=".4.1" />
+					<OIDAlias id="CISCO FRU PSU GROUP" oid=".1.1" />
+					<OIDAlias id="CISCO FRU PSU STATUS" oid=".2.1" />
+				</OIDAlias>
+				<OIDAlias id="CISCO ENTITY" oid=".117.1" >
+					<OIDAlias id="CISCO FAN" oid=".4.1.1.1" />
+				</OIDAlias>
+				<OIDAlias id="CISCO SYSTEM" oid=".ciscoSystemExtMIB.ciscoSystemExtMIBObjects" >
+					<OIDAlias id="CISCO SYS INFO" oid=".ciscoSysInfoGroup" />
+				</OIDAlias>
+				<OIDAlias id="CISCO ENV MON" oid=".ciscoEnvMonMIB">
+					<OIDAlias id="CISCO ENV MON OBJECTS" oid=".ciscoEnvMonObjects">
+						<OIDAlias id="CISCO PSU TABLE" oid=".ciscoEnvMonSupplyStatusTable.ciscoEnvMonSupplyStatusEntry" >
+							<OIDAlias id="CISCO PSU STATE"	oid=".ciscoEnvMonSupplyState" />
+							<OIDAlias id="CISCO PSU DESCR"	oid=".ciscoEnvMonSupplyStatusDescr" />
+							<OIDAlias id="CISCO PSU SOURCE"	oid=".ciscoEnvMonSupplySource" />
+						</OIDAlias>
+						<OIDAlias id="CISCO FAN TABLE" oid=".ciscoEnvMonFanStatusTable.ciscoEnvMonFanStatusEntry" >
+							<OIDAlias id="CISCO FAN STATE"	oid=".ciscoEnvMonFanState" />
+							<OIDAlias id="CISCO FAN DESCR"	oid=".ciscoEnvMonFanStatusDescr" />
+						</OIDAlias>
+						<OIDAlias id="CISCO TEMP TABLE" oid=".ciscoEnvMonTemperatureStatusTable.ciscoEnvMonTemperatureStatusEntry" >
+							<OIDAlias id="CISCO TEMP STATE"	oid=".ciscoEnvMonTemperatureState" />
+							<OIDAlias id="CISCO TEMP DESCR"	oid=".ciscoEnvMonTemperatureStatusDescr" />
+							<OIDAlias id="CISCO TEMP VALUE"	oid=".ciscoEnvMonTemperatureStatusValue" />
+						</OIDAlias>
+					</OIDAlias>
+				</OIDAlias>
+			</OIDAlias>			
+		</OIDAlias>
+	</OIDAlias>
+	
+	<UnitTypeDef typeName="CISCO_NEXUS-9000-SUPERVISOR_1.0.0" snmpVersion="2C">
+		
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+                        <StaticString>1.0</StaticString>
+		</StaticDef>
+		
+		<!-- OID Filters -->
+		
+		<OIDFilter id="LAN PORTS" dynamic="true" >
+			<OID alias="IF DESC">.#I</OID>
+			<OIDFilterRule regex="^(mgmt\d\/?\d?)" />
+			<OIDFilterRule regex="^(loopback\d)" />
+		</OIDFilter>
+		
+		<OIDFilter id="SER NUM" dynamic="true" >
+			<OID alias="SERIAL NUMBER">.#I</OID>
+			<OIDFilterRule regex="^[A-Z]{3}\d" />
+		</OIDFilter>
+		
+		<OIDFilter id="FAN ID" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(Fan Module)" />
+		</OIDFilter>
+		
+		<OIDFilter id="PSU" dynamic="true">
+			<OID alias="PHYSICAL NAME">.#I</OID>
+			<OIDFilterRule regex="^(PowerSupply-\d)$" />
+		</OIDFilter>
+		
+		<!-- These examples reference some of the global translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+		
+		<!-- Cisco specific hardware monitoring -->
+		
+		<TranslationDef rcLogField="SERIAL_NUM_%d" pollRate="600" >
+			<Array filter="SER NUM" />
+			<OID alias="SERIAL NUMBER">.#I</OID>
+			<StringRule />
+			<ConstRule format="WARN: No Information" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CPU_%d_LOAD" pollRate="10" >
+			<GetNextArray dynamic="true" />
+			<OID alias="CISCO SYS INFO">.cseSysCPUUtilization.#I</OID>
+			<NumRule valueMin="90" format="FAIL:%d%% CPU loading" />
+			<NumRule valueMin="75" format="WARN:%d%% CPU loading" />
+			<NumRule format="%d%% CPU loading" />
+			<StringRule format="%s%% CPU loading (str)" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CPU_%d_NAME" pollRate="600" >
+			<GetNextArray dynamic="true" />
+			<OID alias="CISCO SYS INFO">.cseSysCPUUtilization.#I</OID>
+			<comment> Cisco does not report the CPU usage in the same way as Arista, this LogField is
+			to ensure the same screens in MapView can be used for all switch types </comment>
+			<ConstRule format="Average CPU Loading" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="STORAGE_%d_FREE_%%" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<ExpOID alias="CISCO SYS INFO">.cseSysMemoryUtilization.#I</ExpOID>
+			<ConditionRule condition="$1 e 100 =" expression="$1 e 100 - MOD" format="FAIL: %.0f%% free" />
+			<ConditionRule condition="$1 e 89 &lt;" expression="100 e $1 -" format="%.0f%% free" />
+			<ConditionRule condition="$1 e 95 &gt;" expression="100 e $1 -" format="FAIL: %.0f%% free" />
+			<ConditionRule condition="$1 e 90 &gt;" expression="100 e $1 -" format="WARN: %.0f%% free" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="STORAGE_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="CISCO SYS INFO">.cseSysMemoryUtilization.#I</OID>
+			<comment> Cisco does not report the memory usage in the same way as Arista, this LogField is
+			to ensure the same screens in MapView can be used for all switch types </comment>
+			<ConstRule format="Average Memory usage" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d_SPEED" pollRate="120" >
+			<GetNextArray dynamic="true" />
+			<OID alias="CISCO FAN">.#I</OID>
+			<NumRule value="1" format="WARN: Speed unknown" />
+			<NumRule value="2" format="OK: Fan within operating range" />
+			<NumRule value="3" format="FAIL: Fan not running" />
+			<NumRule value="4" format="WARN: Partial failure, replace fan" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d_NAME" pollRate="600" >
+			<Array filter="FAN ID" />
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<StringRule />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_NAME" pollRate="600" >
+			<Array filter="PSU" />
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<StringRule />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_POWER_STATE" pollRate="60" >
+			<Array filter="PSU" />
+			<ExpOID alias="CISCO FRU PSU STATUS">.1.#I</ExpOID> <!-- Desired status -->
+			<ExpOID alias="CISCO FRU PSU STATUS">.2.#I</ExpOID> <!-- Actual status -->
+			<ConditionRule condition="$2 e $1 - e 1 =" format="OK" />
+			<ConditionRule condition="$2 e $1 - e 1 !=" format="WARN: Check Power State" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<!-- Management ports and loopbacks -->
+		
+		<TranslationDef link="PORT NAME ARRAY">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY" >
+			<Array filter="LAN PORTS" />
+		</TranslationDef>	
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_IN" pollRate="2" >
+			<Array filter="LAN PORTS" />
+			<OID alias="IFX OCTETS IN">.#I</OID>
+			<!-- If rate of change is <= 1023 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="1023" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1024, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+		
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_OUT" pollRate="2" >
+			<Array filter="LAN PORTS" />
+			<OID alias="IFX OCTETS OUT">.#I</OID>
+			<!-- If rate of change is <= 1023 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="1023" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1024, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+		
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<!-- Environment monitoring -->
+		
+		<TranslationDef rcLogField="STORAGE_%d_FREE_%%" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<ExpOID alias="CISCO SYS INFO">.cseSysMemoryUtilization.#I</ExpOID>
+			<ConditionRule condition="$1 e 100 =" expression="$1 e 100 - MOD" format="FAIL: %.0f%% free" />
+			<ConditionRule condition="$1 e 89 &lt;" expression="100 e $1 -" format="%.0f%% free" />
+			<ConditionRule condition="$1 e 95 &gt;" expression="100 e $1 -" format="FAIL: %.0f%% free" />
+			<ConditionRule condition="$1 e 90 &gt;" expression="100 e $1 -" format="WARN: %.0f%% free" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="STORAGE_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="CISCO SYS INFO">.cseSysMemoryUtilization.#I</OID>
+			<!-- Cisco does not report the memory usage in the same way as Arista, this LogField is
+			to ensure the same screens in MapView can be used for all switch types -->
+			<ConstRule format="Average Memory usage" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="FAN_%d_NAME" pollRate="600" >
+			<OID alias="CISCO FAN DESCR" >.#I</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this returns a string, it is the name of the fan.
+					If this returns an error, it means this numbered fan is not fitted.-->
+			<StringRule />
+			<ErrorRule format="(Not fitted)" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="FAN_%d_STATE" pollRate="60" >
+			<Comment>No trap defs are needed, since ciscoEnvMonFanNotification should always contain
+			this polled field anyway.
+			With the S&amp;W-owned tier-1 trade show demo Cisco, we get this trap on fan fail,
+			but not on fan recovery.  Therefore we will detect failed fan quickly, but
+			it will take until the next poll before we spot a recovered fan.</Comment>
+			<OID alias="CISCO FAN STATE" >.#I</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this returns a number, it is the status of this fan.
+					If this returns an error, it means this numbered fan is not fitted.-->
+			<NumRule value="1" format="OK" />
+			<NumRule value="2" format="FAIL:Fan stopped" />
+			<NumRule value="6" format="FAIL:notFunctioning" />
+			<NumRule format="FAIL:Unknown number: %d" />
+			<StringRule format="FAIL:Unknown string: %s" />
+			<ConstRule format="FAIL:Unknown?" />
+			<ErrorRule format="(Not fitted)" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="FAN_DATA_TYPE" pollRate="600" >
+			<OID alias="CISCO ENV MON TRAP ENABLES" >.ciscoEnvMonEnableFanNotification.0</OID>
+			<!--	If this boolean is true, then ciscoEnvMonFanNotification traps will be sent.
+					Anything else, error or otherwise, means they are not being sent.-->
+			<NumRule value="1" format="OK:Traps enabled in agent, polling as backup" />
+			<ConstRule format="WARN:Data polled only - trap disabled in agent? Const" />
+			<ErrorRule format="WARN:Data polled only - trap disabled in agent? Error" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="TEMP_%d_NAME" pollRate="600" >
+			<OID alias="CISCO TEMP DESCR" >.#I</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this returns a string, it is the name of the temperature sensor.
+					If this returns an error, it means this numbered temp sensor is not fitted.-->
+			<StringRule />
+			<ErrorRule format="(Not fitted)" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="TEMP_%d_CELSIUS" pollRate="60" >
+			<OID alias="CISCO TEMP VALUE" >.#I</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this returns a number, it is the value in degrees centigrade.
+					If this returns an error, it means this numbered temp sensor is not fitted.-->
+			<NumRule format="%d C" />
+			<ErrorRule format="(Not fitted)" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="TEMP_%d_STATE" pollRate="60" >
+			<Comment>No trap defs are needed, since something like ?ciscoEnvMon?Temperature?Notification? should hopefully always contain
+			this polled field anyway.
+			</Comment>
+			<OID alias="CISCO TEMP STATE" >.#I</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this returns a number, it is the status of this sensor.
+					If this returns an error, it means this numbered sensor is not fitted.-->
+			<NumRule value="1" format="OK" />
+			<NumRule value="2" format="FAIL" />
+			<NumRule format="FAIL:Unknown number: %d" />
+			<StringRule format="FAIL:Unknown string: %s" />
+			<ConstRule format="FAIL:Unknown?" />
+			<ErrorRule format="(Not fitted)" />
+		</TranslationDef>
+	
+		<TranslationDef rcLogField="TEMP_DATA_TYPE" pollRate="600" >
+			<OID alias="CISCO ENV MON TRAP ENABLES" >.ciscoEnvMonEnableTemperatureNotification.0</OID>
+			<GetNextArray dynamic="true" />
+			<!--	If this boolean is true, then ciscoEnvMonFanNotification traps will be sent.
+					Anything else, error or otherwise, means they are not being sent.-->
+			<NumRule value="1" format="OK:Traps enabled in agent, polling as backup" />
+			<ConstRule format="WARN:Data polled only - trap disabled in agent? Const" />
+			<ErrorRule format="WARN:Data polled only - trap disabled in agent? Error" />
+		</TranslationDef>
+		
+	</UnitTypeDef>
+	
+</DefinitionGroup>

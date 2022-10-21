@@ -1,0 +1,47 @@
+RADLAN-LLDP-CNL DEFINITIONS ::= BEGIN
+
+-- Title:                RADLAN LLDP ROS
+--                       Private LLDP MIB
+-- Version:              7.42
+-- Date:                 12 Dec 2005
+
+IMPORTS
+    OBJECT-TYPE, Integer32, Gauge32, Unsigned32,
+    NOTIFICATION-TYPE
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, TruthValue, RowStatus
+        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+    LldpPortList
+        FROM LLDP-MIB
+    Dscp
+        FROM DIFFSERV-DSCP-TC
+    rlLldp
+        FROM RADLAN-LLDP-MIB;
+
+rlLldpObjects          OBJECT IDENTIFIER ::= { rlLldp 1 }
+
+rlLldpConfig           OBJECT IDENTIFIER ::= { rlLldpObjects 1 }
+rlLldpXMedConfig       OBJECT IDENTIFIER ::= { rlLldpObjects 2 }
+
+
+------------------------------------------------------------------------------
+-- LLDP-MED - Local Device Configuration
+------------------------------------------------------------------------------
+---
+--- rlLldpXMedLocMediaPolicyContainerTable: Local Media Policy Container
+---                                         Configuration Table
+---
+---
+
+rlLldpXMedLocMediaPolicyContainerTable   OBJECT-TYPE
+    ::= { rlLldpXMedConfig 1 }
+
+rlLldpXMedLocMediaPolicyContainerEntry   OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlLldpXMedLocMediaPolicyContainerRowStatus
+    ::= { rlLldpXMedLocMediaPolicyContainerTable 1 }
+
+
+END

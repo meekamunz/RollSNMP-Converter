@@ -1,0 +1,19 @@
+RMON2-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Counter32, Integer32,
+--  Gauge32, IpAddress, TimeTicks, mib-2         FROM SNMPv2-SMI
+    Gauge32, IpAddress, TimeTicks                FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, RowStatus, DisplayString, TimeStamp
+                                                 FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP              FROM SNMPv2-CONF
+    ifIndex                                      FROM IF-MIB
+    OwnerString, statistics, history, hosts,
+    matrix, filter, etherStatsEntry, historyControlEntry,
+    hostControlEntry, matrixControlEntry, filterEntry,
+    channelEntry                    FROM RMON-MIB;
+--  tokenRing, tokenRingMLStatsEntry, tokenRingPStatsEntry,
+--  ringStationControlEntry, sourceRoutingStatsEntry
+--                                  FROM TOKEN-RING-RMON-MIB;
+
+END

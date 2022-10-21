@@ -1,0 +1,8 @@
+GENERAL-MIDLEVEL-EXC-CONTROL-FILE
+EXCLUDE rndAlarmInterval
+EXCLUDE rndMonitoredElementsTable
+EXCLUDE rndMibFilesTable
+EXCLUDE rndHardwareConfiguration
+DEFINITIONS ::= BEGIN
+
+END

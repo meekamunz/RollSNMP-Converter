@@ -1,0 +1,258 @@
+   DNS-SERVER-MIB-A DEFINITIONS ::= BEGIN
+
+   IMPORTS
+       MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+       IpAddress, Counter32, Gauge32, mib-2
+           FROM SNMPv2-SMI
+       TEXTUAL-CONVENTION, RowStatus, DisplayString, TruthValue
+           FROM SNMPv2-TC
+       MODULE-COMPLIANCE, OBJECT-GROUP
+           FROM SNMPv2-CONF;
+
+   dns OBJECT-IDENTITY
+       STATUS  current
+       DESCRIPTION
+               "The OID assigned to DNS MIB work by the IANA."
+       ::= { mib-2 32 }
+
+--   dnsServMIB MODULE-IDENTITY
+--       LAST-UPDATED "9401282251Z"
+--       ORGANIZATION "IETF DNS Working Group"
+--       CONTACT-INFO
+--               "       Rob Austein
+--               Postal: Epilogue Technology Corporation
+--                       268 Main Street, Suite 283
+--                       North Reading, MA 10864
+--                       US
+--                  Tel: +1 617 245 0804
+--                  Fax: +1 617 245 8122
+--               E-Mail: sra@epilogue.com
+--
+--                       Jon Saperia
+--               Postal: Digital Equipment Corporation
+--                       110 Spit Brook Road
+--                       ZKO1-3/H18
+--                       Nashua, NH 03062-2698
+--                       US
+--                  Tel: +1 603 881 0480
+--                  Fax: +1 603 881 0120
+--                Email: saperia@zko.dec.com"
+--       DESCRIPTION
+--               "The MIB module for entities implementing the server side
+--               of the Domain Name System (DNS) protocol."
+--      ::= { dns 1 }
+
+   dnsServMIB    OBJECT IDENTIFIER ::= { dns 1 }
+
+   dnsServMIBObjects       OBJECT IDENTIFIER ::= { dnsServMIB 1 }
+
+   -- (Old-style) groups in the DNS server MIB.
+
+   dnsServConfig           OBJECT IDENTIFIER ::= { dnsServMIBObjects 1 }
+   dnsServCounter          OBJECT IDENTIFIER ::= { dnsServMIBObjects 2 }
+   dnsServOptCounter       OBJECT IDENTIFIER ::= { dnsServMIBObjects 3 }
+   dnsServZone             OBJECT IDENTIFIER ::= { dnsServMIBObjects 4 }
+
+
+   -- Server Configuration Group
+
+   dnsServConfigImplementIdent OBJECT-TYPE
+       ::= { dnsServConfig 1 }
+
+   dnsServConfigRecurs  OBJECT-TYPE
+        ::= { dnsServConfig 2 }
+
+   dnsServConfigUpTime OBJECT-TYPE
+       ::= { dnsServConfig 3 }
+
+   dnsServConfigResetTime OBJECT-TYPE
+       ::= { dnsServConfig 4 }
+
+   dnsServConfigReset OBJECT-TYPE
+       ::= { dnsServConfig 5 }
+
+   -- Server Counter Group
+
+   dnsServCounterAuthAns OBJECT-TYPE
+       ::= { dnsServCounter 2 }
+
+   dnsServCounterAuthNoNames OBJECT-TYPE
+       ::= { dnsServCounter 3 }
+
+   dnsServCounterAuthNoDataResps OBJECT-TYPE
+       ::= { dnsServCounter 4 }
+
+   dnsServCounterNonAuthDatas OBJECT-TYPE
+       ::= { dnsServCounter 5 }
+
+   dnsServCounterNonAuthNoDatas OBJECT-TYPE
+       ::= { dnsServCounter 6 }
+
+   dnsServCounterReferrals OBJECT-TYPE
+       ::= { dnsServCounter 7 }
+
+   dnsServCounterErrors OBJECT-TYPE
+       ::= { dnsServCounter 8 }
+
+   dnsServCounterRelNames OBJECT-TYPE
+       ::= { dnsServCounter 9 }
+
+   dnsServCounterReqRefusals OBJECT-TYPE
+       ::= { dnsServCounter 10 }
+
+   dnsServCounterReqUnparses OBJECT-TYPE
+       ::= { dnsServCounter 11 }
+
+   dnsServCounterOtherErrors OBJECT-TYPE
+       ::= { dnsServCounter 12 }
+
+   -- DNS Server Counter Table
+
+   dnsServCounterTable OBJECT-TYPE
+       ::= { dnsServCounter 13 }
+
+   dnsServCounterEntry OBJECT-TYPE
+       ROW-STATUS-TYPE no-status-field
+       ::= { dnsServCounterTable 1 }
+
+
+   -- Server Optional Counter Group
+
+   -- The Server Optional Counter Group is intended for those systems
+   -- which make distinctions between the different sources of the DNS
+   -- queries as defined below.
+   --
+   -- Objects in this group are implemented on servers which distinguish
+   -- between queries which originate from the same host as the server,
+   -- queries from one of an arbitrary group of hosts that are on an
+   -- access list defined by the server, and queries from hosts that do
+   -- not fit either of these descriptions.
+   --
+   -- The objects found in the Server Counter group are totals.  Thus if
+   -- one wanted to identify, for example, the number of queries from
+   -- `remote' hosts which have been given authoritative answers, one
+   -- would subtract the current values of ServOptCounterFriendsAuthAns
+   -- and ServOptCounterSelfAuthAns from servCounterAuthAns.
+   --
+   -- The purpose of these distinctions is to allow for implementations
+   -- to group queries and responses on this basis.  One way in which
+   -- servers may make these distinctions is by looking at the source IP
+   -- address of the DNS query.  If the source of the query is `your
+   -- own' then the query should be counted as `yourself' (local host).
+   -- If the source of the query matches an `access list,' the query
+   -- came from a friend.  What constitutes an `access list' is
+   -- implementation dependent and could be as simple as a rule that all
+   -- hosts on the same IP network as the DNS server are classed
+   -- `friends.'
+   --
+   -- In order to avoid double counting, the following rules apply:
+   --
+   -- 1. No host is in more than one of the three groups defined above.
+   --
+   -- 2. All queries from the local host are always counted in the
+   --    `yourself' group regardless of what the access list, if any,
+   --    says.
+   --
+   -- 3. The access list should not define `your friends' in such a way
+   --    that it includes all hosts.   That is, not everybody is your
+   --    `friend.'
+
+   dnsServOptCounterSelfAuthAns OBJECT-TYPE
+       ::= { dnsServOptCounter 1 }
+
+   dnsServOptCounterSelfAuthNoNames OBJECT-TYPE
+       ::= { dnsServOptCounter 2 }
+
+   dnsServOptCounterSelfAuthNoDataResps OBJECT-TYPE
+       ::= { dnsServOptCounter 3 }
+
+   dnsServOptCounterSelfNonAuthDatas OBJECT-TYPE
+       ::= { dnsServOptCounter 4 }
+
+   dnsServOptCounterSelfNonAuthNoDatas OBJECT-TYPE
+       ::= { dnsServOptCounter 5 }
+
+   dnsServOptCounterSelfReferrals OBJECT-TYPE
+       ::= { dnsServOptCounter 6 }
+
+   dnsServOptCounterSelfErrors OBJECT-TYPE
+       ::= { dnsServOptCounter 7 }
+
+   dnsServOptCounterSelfRelNames OBJECT-TYPE
+       ::= { dnsServOptCounter 8 }
+
+   dnsServOptCounterSelfReqRefusals OBJECT-TYPE
+       ::= { dnsServOptCounter 9 }
+
+   dnsServOptCounterSelfReqUnparses OBJECT-TYPE
+       ::= { dnsServOptCounter 10 }
+
+   dnsServOptCounterSelfOtherErrors OBJECT-TYPE
+       ::= { dnsServOptCounter 11 }
+
+   dnsServOptCounterFriendsAuthAns OBJECT-TYPE
+       ::= { dnsServOptCounter 12 }
+
+   dnsServOptCounterFriendsAuthNoNames OBJECT-TYPE
+       ::= { dnsServOptCounter 13 }
+
+   dnsServOptCounterFriendsAuthNoDataResps OBJECT-TYPE
+       ::= { dnsServOptCounter 14 }
+
+   dnsServOptCounterFriendsNonAuthDatas OBJECT-TYPE
+       ::= { dnsServOptCounter 15 }
+
+   dnsServOptCounterFriendsNonAuthNoDatas OBJECT-TYPE
+       ::= { dnsServOptCounter 16 }
+
+   dnsServOptCounterFriendsReferrals OBJECT-TYPE
+       ::= { dnsServOptCounter 17 }
+
+   dnsServOptCounterFriendsErrors OBJECT-TYPE
+       ::= { dnsServOptCounter 18 }
+
+   dnsServOptCounterFriendsRelNames OBJECT-TYPE
+       ::= { dnsServOptCounter 19 }
+
+   dnsServOptCounterFriendsReqRefusals OBJECT-TYPE
+       ::= { dnsServOptCounter 20 }
+
+   dnsServOptCounterFriendsReqUnparses OBJECT-TYPE
+       ::= { dnsServOptCounter 21 }
+
+   dnsServOptCounterFriendsOtherErrors OBJECT-TYPE
+       ::= { dnsServOptCounter 22 }
+
+   -- Server Zone Group
+
+   -- DNS Management Zone Configuration Table
+
+   -- This table contains zone configuration information.
+
+   dnsServZoneTable OBJECT-TYPE
+       ::= { dnsServZone 1 }
+
+   dnsServZoneEntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsServZoneStatus
+       ::= { dnsServZoneTable 1 }
+
+   -- DNS Zone Source Table
+
+   dnsServZoneSrcTable OBJECT-TYPE
+       ::= { dnsServZone 2 }
+
+   dnsServZoneSrcEntry OBJECT-TYPE
+       ROW-STATUS-TYPE v2-status-field
+       STATUS-FIELD-NAME dnsServZoneSrcStatus
+       ::= { dnsServZoneSrcTable 1 }
+
+   -- Compliances.
+
+--   dnsServMIBCompliances OBJECT IDENTIFIER ::= { dnsServMIB 3 }
+
+--   dnsServMIBCompliance MODULE-COMPLIANCE
+--       ::= { dnsServMIBCompliances 1 }
+
+   END
+

@@ -1,0 +1,851 @@
+--
+-- Title: Quentin Server MIB issue 1.1 (c) Quantel Ltd. 2014-2015
+--
+
+--
+-- Version History
+--
+
+-- 1.0  idr, 14Jan2014            Initial version
+-- 1.1  kk,  04Feb2015            Added disk system and card variables and traps
+
+QUANTEL-QUENTIN-ARTHUR-SERVER-MIB
+
+--FORCE-INCLUDE <mib.h>
+--FORCE-INCLUDE <snmpdefs.h>
+--FORCE-INCLUDE "mibhand.h"
+
+DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY,
+        OBJECT-TYPE,
+        IpAddress,
+        Counter32,
+        Integer32 FROM SNMPv2-SMI
+        DisplayString FROM SNMPv2-TC
+        TRAP-TYPE FROM RFC-1215
+        quantelProduct FROM QUANTEL-MIB
+        ;
+
+-- Module Identification Definition
+
+quantelQuentinServerAV3 MODULE-IDENTITY
+    LAST-UPDATED "201908140000Z"
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NX
+
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"
+    DESCRIPTION "This is the Quentin Arthur V3 Server MIB"
+
+    ::= { quantelProduct 13 }
+
+system           OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 1 }
+videoChannels    OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 2 }
+diskSystem       OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 3 }
+clipnetSystem    OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 4 }
+offlineBrowse    OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 5 }
+cards            OBJECT IDENTIFIER ::= { quantelQuentinServerAV3 6 }
+
+--
+-- System Group
+--
+
+crateTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The current temperature measured in the crate."
+    ::= { system 3 }
+
+maxCrateTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The maximum temperature measured in the crate."
+    ::= { system 4 }
+
+psuStatus OBJECT-TYPE
+    SYNTAX  INTEGER {
+    missing(0),
+    failed(1),
+    ok(2)
+    }
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Current status of power supply."
+    ::= { system 7 }
+
+cpuTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF CpuEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of CPU entries."
+    ::= { system 10 }
+
+    cpuEntry OBJECT-TYPE
+        SYNTAX  CpuEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A CPU entry containing objects describing
+                     a particular CPU core."
+        INDEX   { cpuIndex }
+        ::= { cpuTable 1 }
+
+    CpuEntry ::= SEQUENCE {
+            cpuIndex Integer32,
+            cpuLoad  Integer32 }
+
+        cpuIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each CPU core."
+            ::= { cpuEntry 1 }
+
+        cpuLoad OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating the current load of the CPU core."
+            ::= { cpuEntry 2 }
+
+
+
+--
+-- PCI Card Table
+--
+
+
+cardsNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of Quantel PCIe card present on this system."
+    ::= { cards 1 }
+
+
+cardTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF SlotEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of PCIe card entries."
+    ::= { cards 2 }
+
+    slotEntry OBJECT-TYPE
+        SYNTAX  SlotEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A slot entry containing objects describing a particular slot."
+        INDEX   { slotIndex }
+        ::= { cardTable 1 }
+
+    SlotEntry ::= SEQUENCE {
+            slotIndex  Integer32,
+            slotAddress OCTET STRING,
+            slotContents OCTET STRING,
+            slotTemp Integer32}
+
+        slotIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each slot."
+            ::= { slotEntry 1 }
+
+        slotAddress OBJECT-TYPE
+            SYNTAX OCTET STRING
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "PCIe address (Bus/Device/Function)."
+            ::= { slotEntry 2 }
+
+        slotContents OBJECT-TYPE
+            SYNTAX OCTET STRING
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating what the slot contains."
+            ::= { slotEntry 3 }
+
+        slotTemp OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating the current temperature of the card."
+            ::= { slotEntry 4 }
+
+--
+-- Dylan table
+--
+
+videoDiskEnclosureNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of video disk enclosures present on this system."
+    ::= { diskSystem 1 }
+
+
+videoDiskEnclosureTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF VideoDiskEnclosureEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of video disk enclosure entries."
+    ::= { diskSystem 2 }
+
+    videoDiskEnclosureEntry OBJECT-TYPE
+        SYNTAX  VideoDiskEnclosureEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A video disk enclosure entry containing objects describing a particular dylan."
+        INDEX   { videoDiskEntryIndex }
+        ::= { videoDiskEnclosureTable 1 }
+
+    VideoDiskEnclosureEntry ::= SEQUENCE {
+            videoDiskEntryIndex Integer32,
+            videoDiskControllerIndex  Integer32,
+            videoDiskEnclosureIndex  Integer32,
+            videoDiskEnclosureRaidID OCTET STRING,
+            videoDiskEnclosurePsuStatus INTEGER,
+            videoDiskEnclosureSwitchStatus INTEGER,
+            videoDiskEnclosureFanStatus INTEGER,
+            videoDiskEnclosureTemperatureStatus INTEGER,
+            videoDiskEnclosureOtherStatus INTEGER,
+            videoDiskEnclosureRebuildStatus INTEGER,
+            videoDiskEnclosureRebuildProgress Counter32,
+            videoDiskEnclosureLowestDiskHealth Counter32,
+            videoDiskEnclosureDiskFault Counter32}
+
+        videoDiskEntryIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..16)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each dylan controller."
+            ::= { videoDiskEnclosureEntry 1 }
+
+        videoDiskControllerIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..16)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each dylan controller."
+            ::= { videoDiskEnclosureEntry 2 }
+
+        videoDiskEnclosureIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..16)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each dylan."
+            ::= { videoDiskEnclosureEntry 3 }
+
+        videoDiskEnclosureRaidID OBJECT-TYPE
+            SYNTAX OCTET STRING
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "RAID identification used in ISA."
+            ::= { videoDiskEnclosureEntry 4 }
+
+        videoDiskEnclosurePsuStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            unsupported(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            notInstalled(5),
+            unknown(6),
+            notAvailable(7),
+            noAccess(8)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the power supplies."
+            ::= { videoDiskEnclosureEntry 5 }
+
+        videoDiskEnclosureSwitchStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            unsupported(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            notInstalled(5),
+            unknown(6),
+            notAvailable(7),
+            noAccess(8)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the video disk enclosure switches."
+            ::= { videoDiskEnclosureEntry 6 }
+
+        videoDiskEnclosureFanStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            unsupported(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            notInstalled(5),
+            unknown(6),
+            notAvailable(7),
+            noAccess(8)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the video disk enclosure fans."
+            ::= { videoDiskEnclosureEntry 7 }
+
+        videoDiskEnclosureTemperatureStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            unsupported(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            notInstalled(5),
+            unknown(6),
+            notAvailable(7),
+            noAccess(8)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the video disk enclosure temperature."
+            ::= { videoDiskEnclosureEntry 8 }
+
+        videoDiskEnclosureOtherStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            unsupported(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            notInstalled(5),
+            unknown(6),
+            notAvailable(7),
+            noAccess(8)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of other SES elements within enclosure."
+            ::= { videoDiskEnclosureEntry 9 }
+
+        videoDiskEnclosureRebuildStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            done(0),
+            active(1),
+            failed(2)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the video disk enclosure rebuild."
+            ::= { videoDiskEnclosureEntry 10 }
+
+        videoDiskEnclosureRebuildProgress OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The progress of the lowest disk rebuild in percent.  When no rebuild is in progress, value shall be 100"
+            ::= { videoDiskEnclosureEntry 11 }
+
+        videoDiskEnclosureLowestDiskHealth OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The lowest health value for all disks in the enclosure.  Range from 0(low) to 10(highest)"
+            ::= { videoDiskEnclosureEntry 12 }
+
+        videoDiskEnclosureDiskFault OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Indicates if one or more disks are faulty. A value of 0 means no disks are faulty"
+            ::= { videoDiskEnclosureEntry 13 }
+
+
+
+
+
+--
+-- Video Channels Configuration Group
+--
+
+videoChannelNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of video ports present on this system."
+    ::= { videoChannels 1 }
+
+--
+-- Video Port Table
+--
+
+videoChannelTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF VideoChannelEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of channel entries.  The number of
+                 entries is given by the value of videoChannelNumber."
+    ::= { videoChannels 2 }
+
+    videoChannelEntry OBJECT-TYPE
+        SYNTAX  VideoChannelEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A channel entry containing objects describing
+                     a particular video channel."
+        INDEX   { videoChannelIndex }
+        ::= { videoChannelTable 1 }
+
+    VideoChannelEntry ::= SEQUENCE {
+            videoChannelIndex  Integer32,
+            videoChannelStatus INTEGER,
+            videoChannelPlayedFrames Counter32,
+            videoChannelRecordedFrames Counter32,
+            videoChannelBlackFrames Counter32,
+            videoChannelBadFrames Counter32,
+            videoChannelSignatureErrors Counter32,
+            videoChannelBrowseFramesRecorded Counter32,
+            videoChannelFailedRecordedFrames Counter32,
+            videoChannelAudioGUIDErrors Counter32,
+            videoChannelReset Integer32,
+            videoChannelSpeed Integer32}
+
+        videoChannelIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of videoChannelNumber."
+            ::= { videoChannelEntry 1 }
+
+        videoChannelStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                idle(0),
+                play(1),
+                record(2),
+                offline(3),
+                fault(4),
+                booting(5),
+                playing(6),
+                recording(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the channel."
+            ::= { videoChannelEntry 2 }
+
+        videoChannelPlayedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames played."
+            ::= { videoChannelEntry 3 }
+
+        videoChannelRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames recorded."
+            ::= { videoChannelEntry 4 }
+
+        videoChannelBlackFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of black video frames played."
+            ::= { videoChannelEntry 5 }
+
+        videoChannelBadFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of bad video frames played."
+            ::= { videoChannelEntry 6 }
+
+        videoChannelSignatureErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of read signature errors."
+            ::= { videoChannelEntry 7 }
+
+        videoChannelBrowseFramesRecorded OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of Browse frames recorded."
+            ::= { videoChannelEntry 8 }
+
+        videoChannelFailedRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of frames that failed to be recorded."
+            ::= { videoChannelEntry 9 }
+
+        videoChannelAudioGUIDErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of audio frames played with GUID errors."
+            ::= { videoChannelEntry 10 }
+
+        videoChannelReset OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-write
+            STATUS  current
+            DESCRIPTION  "Resets all counters for this channel."
+            ::= { videoChannelEntry 11 }
+
+        videoChannelSpeed OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The current speed of the channel"
+            ::= { videoChannelEntry 12 }
+
+
+--
+-- Clipnet Ports Configuration Group
+--
+
+clipnetPortNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of clipnet ports present on this system."
+    ::= { clipnetSystem 1 }
+
+clipnetAtomsCopied OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms copied over the clipnet system."
+    ::= { clipnetSystem 2 }
+
+clipnetAtomsAborted OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms aborted over the clipnet system."
+    ::= { clipnetSystem 3 }
+
+clipnetAtomsRetried OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms retried over the clipnet system."
+    ::= { clipnetSystem 4 }
+
+--
+-- Clipnet Port Table
+--
+
+clipnetPortTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF ClipnetPortEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of clipnet port entries.  The number of
+                 entries is given by the value of clipnetPortNumber."
+    ::= { clipnetSystem 5 }
+
+    clipnetPortEntry OBJECT-TYPE
+        SYNTAX  ClipnetPortEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A clipnetport entry containing objects describing
+                     a particular clipnet port."
+        INDEX   { clipnetPortIndex }
+        ::= { clipnetPortTable 1 }
+
+    ClipnetPortEntry ::= SEQUENCE {
+            clipnetPortIndex  Integer32,
+            clipnetPortAddress IpAddress,
+            clipnetPortStatus INTEGER,
+            clipnetPortAtomsRead Counter32,
+            clipnetPortAtomsWritten Counter32,
+            clipnetPortLinkStatus INTEGER,
+            clipnetPortCommsErrors Counter32}
+
+        clipnetPortIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..8)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of clipnetPortNumber."
+            ::= { clipnetPortEntry 1 }
+
+        clipnetPortAddress OBJECT-TYPE
+                SYNTAX  IpAddress
+                MAX-ACCESS read-only
+                STATUS current
+                DESCRIPTION "The IP address of the Clipnet interface."
+            ::= { clipnetPortEntry 2 }
+
+        clipnetPortStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                faulty(0),
+                operational(1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the port."
+            ::= { clipnetPortEntry 3 }
+
+        clipnetPortAtomsRead OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms read."
+            ::= { clipnetPortEntry 4 }
+
+        clipnetPortAtomsWritten OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms written."
+            ::= { clipnetPortEntry 5 }
+
+        clipnetPortLinkStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                linkDown (0),
+                linkUp (1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the ethernet link."
+            ::= { clipnetPortEntry 6 }
+
+        clipnetPortCommsErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The current comms error index."
+            ::= { clipnetPortEntry 7 }
+
+clipnetReset OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-write
+    STATUS  current
+    DESCRIPTION "Reset clipnet system counters."
+    ::= { clipnetSystem 6 }
+
+--
+-- Offline Browse
+--
+
+offlineBrowseActiveRushes OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Number of active offline browse rushes."
+    ::= { offlineBrowse 1 }
+
+offlineBrowsePendingRushes OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Number of offline browse rushes waiting to start."
+    ::= { offlineBrowse 2 }
+
+offlineBrowseTotalFrames OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Number frames in the offline browse queue."
+    ::= { offlineBrowse 3 }
+
+
+--
+-- Traps
+--
+
+--
+-- Server traps
+--
+
+quentinServerFanFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when a fan fails"
+    ::= 1
+quentinServerFanNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when a fan fault is cleared"
+    ::= 2
+serverPasswordExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when a password is close to expiry"
+    ::= 3
+serverPasswordNotExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when a password expiry is cleared"
+    ::= 4
+
+--
+-- Over temperature traps
+--
+
+overTemperatureFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { crateTemperature }
+    DESCRIPTION "Trap is sent when the crate temperature exceeds the maximum set"
+    ::= 12
+overTemperatureNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { crateTemperature }
+    DESCRIPTION "Trap is sent when the over temperature condition is cleared"
+    ::= 13
+
+-- Power supply traps
+psuFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when the power supply has a fault"
+    ::= 14
+psuNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    DESCRIPTION "Trap is sent when the power supply fault condition is cleared"
+    ::= 15
+
+--
+-- Clipnet traps
+--
+
+clipnetSystemLinkFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fails"
+    ::= 40
+clipnetSystemLinkNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fault is cleared"
+    ::= 41
+clipnetSystemCommsFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card detects excessive comms faults"
+    ::= 42
+clipnetSystemCommsNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card comms fault is cleared"
+    ::= 43
+
+--
+-- Card traps
+--
+
+slotFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { slotIndex }
+    DESCRIPTION "Trap is sent when a card has a fault"
+    ::= 60
+slotFaultNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { slotIndex }
+    DESCRIPTION "Trap is sent when a card fault is cleared"
+    ::= 61
+
+--
+-- SAS Enclosure traps
+--
+
+videoDiskPsuFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure power supply fails"
+    ::= 70
+videoDiskPsuNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure power supply fault is cleared"
+    ::= 71
+videoDiskSwitchFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure switch fails"
+    ::= 72
+videoDiskSwitchNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure switch fault is cleared"
+    ::= 73
+videoDiskFanFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure fan fails"
+    ::= 74
+videoDiskFanNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure fan fault is cleared"
+    ::= 75
+videoDiskTemperatureFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure temperature fails"
+    ::= 76
+videoDiskTemperatureNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure temperature fault is cleared"
+    ::= 77
+videoDiskDiskFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure disk fails"
+    ::= 78
+videoDiskDiskNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure disk fault is cleared"
+    ::= 79
+videoDiskLinkFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure SAS link fails"
+    ::= 80
+videoDiskLinkNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure SAS link fault is cleared"
+    ::= 81
+videoDiskRebuilding TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure drive starts rebuilding"
+    ::= 82
+videoDiskNotRebuilding TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure drives stops rebuilding"
+    ::= 83
+videoDiskOffline TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure goes offline"
+    ::= 84
+videoDiskOfflineCleared TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when disk enclosure comes back online"
+    ::= 85
+videoDiskDriveNotReady TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when one or more disk enclosure drives are not in the ready or rebuilding state "
+    ::= 86
+videoDiskDriveNotReadyCleared TRAP-TYPE
+    ENTERPRISE quantelQuentinServerAV3
+    VARIABLES  { videoDiskEntryIndex }
+    DESCRIPTION "Trap is sent when all disk enclosure drives are either ready or rebuilding"
+    ::= 87
+
+END
+

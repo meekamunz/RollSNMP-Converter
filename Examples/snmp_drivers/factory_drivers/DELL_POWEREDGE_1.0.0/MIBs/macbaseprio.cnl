@@ -1,0 +1,44 @@
+RADLAN-MAC-BASE-PRIO-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN MAC BASE PRIO
+-- Version:    7.36
+-- Date:       1 Apr 2004
+--
+IMPORTS
+    OBJECT-TYPE                                 FROM SNMPv2-SMI
+    rnd                                         FROM RADLAN-MIB;
+
+rlMacBasePrio OBJECT IDENTIFIER ::= { rnd 101 }
+
+rlMacBasePrioMibVersion OBJECT-TYPE
+    ::= { rlMacBasePrio 1 }
+
+rlMacBasePrioSupport OBJECT-TYPE
+    ::= { rlMacBasePrio 2 }
+
+rlMacBasePrioForceL3CosEnable   OBJECT-TYPE
+    ::= { rlMacBasePrio 3 }
+
+rlMacBasePrioForceL3CosTable OBJECT-TYPE
+    ::= { rlMacBasePrio 4 }
+
+rlMacBasePrioForceL3CosEntry OBJECT-TYPE
+    STATUS-FIELD-NAME rlMacBasePrioForceL3CosRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { rlMacBasePrioForceL3CosTable 1 }
+
+rlMacBasePrioForceL3CosParamsTable OBJECT-TYPE
+    ::= { rlMacBasePrio 5 }
+
+rlMacBasePrioSADATCEnable   OBJECT-TYPE
+    ::= { rlMacBasePrio 6 }
+
+rlMacBasePrioSADATCTable OBJECT-TYPE
+    ::= { rlMacBasePrio 7 }
+
+rlMacBasePrioSADATCEntry OBJECT-TYPE
+    STATUS-FIELD-NAME rlMacBasePrioSADATCRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { rlMacBasePrioSADATCTable 1 }
+
+END

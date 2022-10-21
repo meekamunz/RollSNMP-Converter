@@ -1,0 +1,167 @@
+-- Copyright 2001 Evertz Microsystems Ltd.
+-- 10/10/2000
+-- Confidential
+-- Preliminary
+
+ET-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS    
+	etInstance, etTraps        FROM ET-MIB    
+	TRAP-TYPE        	FROM RFC-1215;    
+
+	trapFault   OBJECT IDENTIFIER ::= { etTraps 1 }
+
+-- beginning of Optical Link Traps      
+
+	opticalLinkFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION     "
+				Optical Link Not Present
+				"        
+	::= 1000        
+
+	opticalLinkTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Optical link Present
+				"        
+	::= 1001           
+
+-- end of Optical Link Traps
+-- beginning of Laser OK Traps      
+
+	laserOKFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Laser Not OK
+				"        
+	::= 1002     
+
+	laserOKTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Laser OK
+				"        
+	::= 1003          
+
+-- end of Laser OK Traps
+-- beginning of Traps      
+
+	ethernet1LinkStatusFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 1 Link Not Present
+				"        
+	::= 1004       
+
+	ethernet1LinkStatusTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 1 Link Present
+				"        
+	::= 1005         
+
+-- end of Traps
+-- beginning of Traps      
+
+	ethernet2LinkStatusFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 2 Link Not Present
+				"        
+	::= 1006        
+
+	ethernet2LinkStatusTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 2 Link Present
+				"        
+	::= 1007           
+
+-- end of Traps
+-- beginning of Traps      
+
+	ethernet3LinkStatusFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 3 Link Not Present
+				"        
+	::= 1008        
+
+	ethernet3LinkStatusTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 3 Link Present
+				"        
+	::= 1009           
+
+-- end of Traps
+-- beginning of Traps      
+
+	ethernet4LinkStatusFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 4 Link Not Present
+				"        
+	::= 1010       
+
+	ethernet4LinkStatusTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				Ethernet 4 Link Present
+				"        
+	::= 1011           
+
+-- end of Traps
+-- beginning of Traps      
+
+	t1e1j1LinkStatusFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				t1/e1/j1 Link Not Present
+				"        
+	::= 1012        
+
+	t1e1j1LinkStatusTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				t1/e1/j1 Link Present
+				"        
+	::= 1013           
+
+-- end of Traps
+-- beginning of Traps      
+
+	receivedErrorsFalseTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION	"
+				No Transmission Error
+				"        
+	::= 1014        
+
+	receivedErrorsTrueTrap TRAP-TYPE                
+		ENTERPRISE      trapFault                
+		VARIABLES       { etInstance }                
+		DESCRIPTION     "
+				Error In Transmission
+				"        
+	::= 1015           
+
+-- end of Traps	
+
+END

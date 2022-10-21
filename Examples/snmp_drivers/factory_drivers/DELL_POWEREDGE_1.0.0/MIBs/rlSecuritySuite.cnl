@@ -1,0 +1,53 @@
+RADLAN-SECURITY-SUITE-A DEFINITIONS ::= BEGIN
+
+-- Version:    7.42_00
+-- Date:       24 JAN 2006
+
+
+
+IMPORTS
+    rlSecuritySuiteMib                         FROM RADLAN-SECURITY-SUITE
+    OBJECT-TYPE                                FROM SNMPv2-SMI;
+
+
+rlSecuritySuiteGlobalEnable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 1 }
+
+rlSecuritySuiteKnownDoSAttacksTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 2 }
+
+rlSecuritySuiteKnownDoSAttacksDetailsTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 3 }
+
+rlSecuritySuiteReservedMartianAddresses OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 4 }
+
+ rlSecuritySuiteMartianAddrAllTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 5 }
+
+rlSecuritySuiteMartianAddrTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 6 }
+
+rlSecuritySuiteMartianAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME  rlSecuritySuiteMartianAddrStatus
+    ::= { rlSecuritySuiteMartianAddrTable 1 }
+
+rlSecuritySuiteDoSSynAttackTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 7 }
+
+rlSecuritySuiteDoSSynAttackEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlSecuritySuiteDoSSynAttackStatus
+    ::= { rlSecuritySuiteDoSSynAttackTable 1 }
+
+rlSecuritySuiteDenyTypesTable OBJECT-TYPE
+    ::= { rlSecuritySuiteMib 8 }
+
+rlSecuritySuiteDenyTypesEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME  rlSecuritySuiteDenyStatus
+    ::= { rlSecuritySuiteDenyTypesTable 1 }
+
+END
+

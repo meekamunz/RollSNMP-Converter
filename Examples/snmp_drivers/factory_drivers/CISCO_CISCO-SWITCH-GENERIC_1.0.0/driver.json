@@ -1,0 +1,11 @@
+{
+  "includes": [
+    "Definitions.rsnmp",
+    "Cisco_Switch_Generic.rsnmp"
+  ],
+  "manufacturer": "Cisco",
+  "driverName": "Cisco-Switch-Generic",
+  "driverVersion": "1.0.0",
+  "deviceName": "Cisco Switch Generic",
+  "factory": true
+}

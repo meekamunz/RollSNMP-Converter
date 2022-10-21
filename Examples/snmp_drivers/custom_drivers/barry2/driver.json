@@ -1,0 +1,7 @@
+{
+	"includes": ["barry.rsnmp"],
+	"manufacturer": "Barry",
+	"driverName": "BarryTouch",
+	"driverVersion": "2.0.0",
+  "deviceName": "Barry - Barry Touch"
+}

@@ -1,0 +1,192 @@
+RADLAN-IpRouter-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN IP Router Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rip2Spec, ipRedundancy, ipRouteLeaking, ipRipFilter,
+    rlIpRoutingProtPreference, rlOspf                       FROM RADLAN-IP
+    rip2IfConfEntry                                         FROM RFC1389-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+--
+-- RIP
+--
+
+rsRip2IfConfTable OBJECT-TYPE
+    ::= { rip2Spec 1 }
+
+rsRip2IfConfEntry OBJECT-TYPE
+     AUGMENTS     {rip2IfConfEntry}
+    ::= { rsRip2IfConfTable 1 }
+
+rsRip2IfConfAddress OBJECT-TYPE
+    ALIAS rip2IfConfAddress
+    ::= { rsRip2IfConfEntry 1 }
+
+rsRip2IfConfVirtualDis OBJECT-TYPE
+    ::= { rsRip2IfConfEntry 2 }
+
+rsRip2IfConfAutoSend OBJECT-TYPE
+    ::= { rsRip2IfConfEntry 3 }
+
+rlRip2IfConfKeyChain OBJECT-TYPE
+    ::= { rsRip2IfConfEntry  4 }
+
+rlRip2AutoInterfaceCreation OBJECT-TYPE
+    ::=  { rip2Spec 2  }
+
+rlRip2MibVersion OBJECT-TYPE
+    ::=  { rip2Spec 3  }
+
+--
+-- RADLAN Private IP Router Redundancy
+--
+
+ipRedundAdminStatus OBJECT-TYPE
+    ::= { ipRedundancy 1 }
+
+ipRedundOperStatus OBJECT-TYPE
+    ::= { ipRedundancy 2 }
+
+ipRedundRoutersTable OBJECT-TYPE
+     ::= {ipRedundancy 3 }
+
+ipRedundRoutersEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME ipRedundRoutersStatus
+   ::= {ipRedundRoutersTable  1 }
+
+--
+-- IP Routing Protol leaking
+--
+
+ipLeakStaticToRip OBJECT-TYPE
+    ::= { ipRouteLeaking 1 }
+
+ipLeakStaticToOspf OBJECT-TYPE
+    ::= { ipRouteLeaking 2 }
+
+ipLeakOspfToRip OBJECT-TYPE
+    ::= { ipRouteLeaking 3 }
+
+ipLeakRipToOspf OBJECT-TYPE
+    ::= { ipRouteLeaking 4 }
+
+ipLeakExtDirectToOspf   OBJECT-TYPE
+    ::= { ipRouteLeaking 5 }
+
+--
+-- RIP Filters
+--
+
+-- Global RIP filter is defined per IP router.
+
+rsIpRipFilterGlbTable OBJECT-TYPE
+::= { ipRipFilter 1 }
+
+rsIpRipFilterGlbEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE   v1-status-field
+    STATUS-FIELD-NAME rsIpRipFilterGlbStatus
+    DELETE-VALUE      invalid
+::= { rsIpRipFilterGlbTable 1 }
+
+-- Intf RIP filter is defined per IP Interface
+
+rsIpRipFilterLclTable OBJECT-TYPE
+::= { ipRipFilter 2 }
+
+rsIpRipFilterLclEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE   v1-status-field
+    STATUS-FIELD-NAME rsIpRipFilterLclStatus
+    DELETE-VALUE      invalid
+::= { rsIpRipFilterLclTable 1 }
+
+--
+-- Ip Routing Protocol Preference
+--
+
+-- Mib for Preferance among routing protocols:
+-- Range value 0..255 .  O is most preferred, 255 never used for forwarding.
+-- only exception is direct which range 0..254 we prevent direct from becoming unreachable
+-- (according to RFC1812  section 5.2.4)
+
+rlIpRoutingProtPreferenceDirect OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 1}
+
+rlIpRoutingProtPreferenceStatic OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 2}
+
+-- For OSPF:
+rlIpRoutingProtPreferenceOspfInter OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 3}
+
+rlIpRoutingProtPreferenceOspfExt OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 4}
+
+rlIpRoutingProtPreferenceOspfReject OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 5}
+
+--For Rip
+rlIpRoutingProtPreferenceRipNormal OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 6}
+
+rlIpRoutingProtPreferenceRipAggregate OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 7}
+
+rlIpRoutingProtPreferenceBgp OBJECT-TYPE
+    ::= {rlIpRoutingProtPreference 8}
+
+-- We may use it in the future to control
+-- the time scalars new values take effect
+-- rlRoutePrefChangeTakeEffectAT OBJECT-TYPE
+--    ::= {rlIpRoutingProtPreference 9}
+
+--
+-- OSPF
+--
+
+rlOspfMibVersion OBJECT-TYPE
+    ::=  { rlOspf 1  }
+
+rlOspfAutoInterfaceCreation OBJECT-TYPE
+    ::=  { rlOspf 2  }
+
+rlOspfRtrLnkTable OBJECT-TYPE
+    ::=  { rlOspf 4 }
+
+rlOspfRtrLnkEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlOspfRtrLnkTable 1 }
+
+rlOspfNetLnkTable OBJECT-TYPE
+    ::=  { rlOspf 5 }
+
+rlOspfNetLnkEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlOspfNetLnkTable 1 }
+
+rlOspfSumLnkTable OBJECT-TYPE
+    ::=  { rlOspf 6 }
+
+rlOspfSumLnkEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlOspfSumLnkTable 1 }
+
+rlOspfAsbLnkTable OBJECT-TYPE
+    ::=  { rlOspf 7 }
+
+rlOspfAsbLnkEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlOspfAsbLnkTable 1 }
+
+rlOspfAseLnkTable OBJECT-TYPE
+    ::=  { rlOspf 8 }
+
+rlOspfAseLnkEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlOspfAseLnkTable 1 }
+
+END

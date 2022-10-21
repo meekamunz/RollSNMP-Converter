@@ -1,0 +1,10 @@
+{
+  "includes": [
+    "Evertz 5601ACO2.rsnmp"
+  ],
+  "driverName": "5601ACO2",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Evertz",
+  "deviceName": "Evertz 5601ACO2",
+  "factory": true
+}

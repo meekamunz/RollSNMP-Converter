@@ -1,0 +1,57 @@
+SNMPv2-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,
+    TimeTicks, Counter32, snmpModules, mib-2
+        FROM SNMPv2-SMI
+    DisplayString, TestAndIncr, TimeStamp
+        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+   snmpMIB
+       FROM  SNMPv2-MIB;
+
+
+snmpMIBObjects OBJECT IDENTIFIER ::= { snmpMIB 1 }
+
+--  ::= { snmpMIBObjects 1 }        this OID is obsolete
+--  ::= { snmpMIBObjects 2 }        this OID is obsolete
+--  ::= { snmpMIBObjects 3 }        this OID is obsolete
+
+
+
+-- information for notifications
+--
+-- a collection of objects which allow the SNMPv2 entity, when
+-- acting in an agent role, to be configured to generate
+-- SNMPv2-Trap-PDUs.
+
+
+
+
+
+snmpTraps      OBJECT IDENTIFIER ::= { snmpMIBObjects 5 }
+
+coldStart TRAP-TYPE
+    ENTERPRISE snmpTraps
+    ERRCODE    RSG_ErrMsg_code_coldStart_E
+    ::= 1
+
+
+warmStart TRAP-TYPE
+    ENTERPRISE snmpTraps
+    ERRCODE    RSG_ErrMsg_code_warmStart_E
+    ::= 2
+
+-- Note the linkDown NOTIFICATION-TYPE ::= { snmpTraps 3 }
+-- and the linkUp NOTIFICATION-TYPE ::= { snmpTraps 4 }
+-- are defined in RFC 1573
+
+authenticationFailure TRAP-TYPE
+    ENTERPRISE snmpTraps
+    ERRCODE    RSG_ErrMsg_code_authenticationFailure_E
+    ::= 5
+
+
+END
+

@@ -1,0 +1,28 @@
+RADLAN-EMBWEB-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:                RADLAN EMBWEB ROS
+--                       Private EMBWEB MIB
+-- Version:              7.45
+-- Date:                 28 Sep 2006
+
+IMPORTS
+    rlEmbWeb                      FROM RADLAN-MIB
+    OBJECT-TYPE, MODULE-IDENTITY  FROM SNMPv2-SMI
+    TruthValue                    FROM RADLAN-SNMPv2
+    rlEmWebSecurityStatus         FROM RADLAN-EMBWEB-MIB;
+
+
+
+rlEmWebSecurityTable OBJECT-TYPE
+    ::= { rlEmbWeb 3 }
+
+rlEmWebSecurityEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlEmWebSecurityStatus
+    ::= { rlEmWebSecurityTable 1 }
+
+
+
+
+END
+

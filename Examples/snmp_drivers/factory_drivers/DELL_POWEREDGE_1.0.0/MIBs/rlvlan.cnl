@@ -1,0 +1,219 @@
+RADLAN-vlan-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN LCLI MIB
+-- Version:    7.45
+-- Date:       21 Nov 2006
+--
+
+IMPORTS
+    vlan, rnd, rndErrorDesc, rndErrorSeverity   FROM RADLAN-MIB
+    DisplayString                               FROM SNMPv2-TC-v1
+    TruthValue, RowStatus,MacAddress            FROM SNMPv2-TC
+    VlanIndex                                   FROM Q-BRIDGE-MIB
+    ifIndex                                     FROM IF-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI;
+
+
+vlanMibVersion OBJECT-TYPE
+    ::= { vlan 1 }
+
+vlanMaxTableNumber OBJECT-TYPE
+    ::= { vlan 2 }
+
+vlanNameTable OBJECT-TYPE
+    ::= { vlan 21 }
+
+vlanNameEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { vlanNameTable 1 }
+
+vlanPortModeTable OBJECT-TYPE
+    ::= { vlan 22 }
+
+vlanPortModeEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { vlanPortModeTable 1 }
+
+vlanSendUnknownToAllPorts OBJECT-TYPE
+    ::= { vlan 27 }
+
+vlanDefaultSupported OBJECT-TYPE
+    ::= { vlan 29 }
+
+vlanDot1vSupported OBJECT-TYPE
+    ::= { vlan 31 }
+
+vlanDefaultEnabled OBJECT-TYPE
+    ::= { vlan 32 }
+
+vlanSpecialTagTable OBJECT-TYPE
+    ::= { vlan 33 }
+
+vlanSpecialTagEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanSpecialTagStatus
+    ::= { vlanSpecialTagTable 1 }
+
+vlanSpecialTagCurrentTable OBJECT-TYPE
+    ::= { vlan 34 }
+
+vlanSpecialTagCurrentEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { vlanSpecialTagCurrentTable 1 }
+
+vlanPrivateEdgeSupported OBJECT-TYPE
+    ::= { vlan 35 }
+
+vlanPrivateEdgeVersion OBJECT-TYPE
+    ::= { vlan 36 }
+
+vlanPrivateEdgeTable OBJECT-TYPE
+    ::= { vlan 37 }
+
+vlanPrivateEdgeEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanPrivateEdgeStatus
+    ::= { vlanPrivateEdgeTable 1 }
+
+vlanDynamicVlanSupported OBJECT-TYPE
+    ::= { vlan 38 }
+
+vlanDynamicVlanTable OBJECT-TYPE
+    ::= { vlan 39 }
+
+vlanDynamicVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanDynamicVlanStatus
+    ::= { vlanDynamicVlanTable 1 }
+
+vlanPortModeExtTable OBJECT-TYPE
+    ::= { vlan 40 }
+
+vlanPortModeExtEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanPortModeExtStatus
+    ::= { vlanPortModeExtTable 1 }
+
+vlanPrivateSupported OBJECT-TYPE
+    ::= { vlan 41 }
+
+vlanPrivateTable OBJECT-TYPE
+    ::= { vlan 42 }
+
+vlanPrivateEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanPrivateStatus
+    ::= { vlanPrivateTable 1 }
+
+vlanPrivateCommunityTable OBJECT-TYPE
+    ::= { vlan 43 }
+
+vlanPrivateCommunityEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanPrivateCommunityStatus
+    ::= { vlanPrivateCommunityTable 1 }
+
+vlanMulticastTvTable OBJECT-TYPE
+    ::= { vlan 44 }
+
+vlanMulticastTvEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanMulticastTvStatus
+    ::= { vlanMulticastTvTable 1 }
+
+vlanMacBaseVlanGroupTable OBJECT-TYPE
+    ::= { vlan 45 }
+
+vlanMacBaseVlanGroupEntry OBJECT-TYPE
+    STATUS-FIELD-NAME vlanMacBaseVlanGroupRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { vlanMacBaseVlanGroupTable 1 }
+
+vlanMacBaseVlanPortTable OBJECT-TYPE
+    ::= { vlan 46 }
+
+vlanMacBaseVlanPortEntry OBJECT-TYPE
+    STATUS-FIELD-NAME vlanMacBaseVlanPortRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { vlanMacBaseVlanPortTable 1 }
+
+vlanPrivateEdgeGroupTable OBJECT-TYPE
+    ::= { vlan 47 }
+
+vlanPrivateEdgeGroupEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanPrivateEdgeGroupStatus
+    ::= { vlanPrivateEdgeGroupTable 1 }
+
+vlanPrivateEdgeGroupIfIndexTable OBJECT-TYPE
+    ::= { vlan 48 }
+
+vlanSubnetRangeTable OBJECT-TYPE
+    ::= { vlan 49 }
+
+vlanSubnetRangeEntry OBJECT-TYPE
+    STATUS-FIELD-NAME vlanSubnetRangeRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { vlanSubnetRangeTable 1 }
+
+vlanSubnetPortTable OBJECT-TYPE
+    ::= { vlan 50 }
+
+vlanSubnetPortEntry OBJECT-TYPE
+    STATUS-FIELD-NAME vlanSubnetPortRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { vlanSubnetPortTable 1 }
+
+vlanTriplePlayTable OBJECT-TYPE
+    ::= { vlan 51}
+
+vlanTriplePlayEntry OBJECT-TYPE
+    STATUS-FIELD-NAME vlanTriplePlayRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { vlanTriplePlayTable 1 }
+
+vlanTriplePlayMulticastTvTable OBJECT-TYPE
+    ::= { vlan 52}
+
+vlanTriplePlayMulticatTvEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+    ::= { vlanTriplePlayMulticastTvTable 1 }
+
+vlanDefaultExtManagment OBJECT-TYPE
+    ::= { vlan 53 }
+
+-------------------------------
+--  Voice VLAN MIBs definition
+-------------------------------
+vlanVoice  OBJECT IDENTIFIER ::= { vlan 54 }
+
+vlanVoiceAgingTimeout OBJECT-TYPE
+    ::= { vlanVoice 1 }
+
+vlanVoiceTable OBJECT-TYPE
+    ::= { vlanVoice 2 }
+vlanVoiceEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanVoiceRowStatus
+    ::= { vlanVoiceTable 1 }
+
+vlanVoiceOUITable OBJECT-TYPE
+    ::= { vlanVoice 3 }
+vlanVoiceOUIEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vlanVoiceOUIEntryRowStatus
+    ::= { vlanVoiceOUITable 1 }
+
+vlanVoicePortTable OBJECT-TYPE
+    ::= { vlanVoice 4 }
+vlanVoicePortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { vlanVoicePortTable 1 }
+
+vlanVoiceOUISetToDefault OBJECT-TYPE
+    ::= { vlanVoice 5 }
+
+
+END
+
+

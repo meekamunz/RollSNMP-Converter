@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DefinitionGroup>
+
+	<!-- These OIDs are for the Nexus 9000 series switches only -->
+
+	<MIBSource href="drivers/CISCO_NEXUS-9000-LINECARD_1.0.0/MIBs"/>
+	
+	<comment> Some OIDs are not polling using text, reverting to numerical OIDs </comment>
+	
+	<OIDAlias id="INTERNET" oid=".iso.org.dod.internet">
+		<OIDAlias id="MIB2" oid=".mgmt.mib-2" >
+			<OIDAlias id="IF ENTRY" oid=".interfaces.ifTable.ifEntry" >
+				<OIDAlias id="IF SPEED" oid=".ifSpeed" />
+				<OIDAlias id="IF DESC" oid=".ifDescr" />
+				<OIDAlias id="OCTETS IN" oid=".ifInOctets" />
+				<OIDAlias id="OCTETS OUT" oid=".ifOutOctets" />
+			</OIDAlias>
+			<OIDAlias id="IF MIB" oid=".ifMIB" >
+				<OIDAlias id="IFX ENTRY" oid=".ifMIBObjects.ifXTable.ifXEntry" >
+					<OIDAlias id="IFX NAME" oid=".ifName" />
+					<OIDAlias id="IF ALIAS" oid=".ifAlias" />
+					<OIDAlias id="IFX OCTETS IN" oid=".ifHCInOctets" />
+					<OIDAlias id="IFX OCTETS OUT" oid=".ifHCOutOctets" />
+				</OIDAlias>
+			</OIDAlias>
+			<OIDAlias id="DEVICE DESCRIPTION" oid=".25.3.2.1.3" />
+			<OIDAlias id="VRRP" oid=".68.1" />
+			<OIDAlias id="PHYSICAL ENTRY" oid=".47.1.1.1.1" >
+				<OIDAlias id="PHYSICAL DESCRIPTION" oid=".2" />
+				<OIDAlias id="PHYSICAL NAME" oid=".7" />
+				<OIDAlias id="SERIAL NUMBER" oid=".11" />
+			</OIDAlias>
+			<OIDAlias id="ENTITY SENSOR" oid=".99.1.1.1" >
+				<OIDAlias id="PHYSICAL SENSOR VALUE" oid=".4" />
+			</OIDAlias>
+		</OIDAlias>
+		<OIDAlias id="CISCO" oid=".private.enterprises.cisco" >
+			<OIDAlias id="CISCO MGMT" oid=".ciscoMgmt" >
+				<OIDAlias id="VLAN MEMBERSHIP" oid=".ciscoVlanMembershipMIB.ciscoVlanMembershipMIBObjects.vmMembership.vmMembershipTable.vmMembershipEntry" />
+				<OIDAlias id="CISCO PSU" oid=".117.1.1.1.1" />
+				<OIDAlias id="CISCO ENTITY" oid=".117.1" >
+					<OIDAlias id="CISCO FAN" oid=".4.1.1.1" />
+				</OIDAlias>
+				<OIDAlias id="CISCO SYSTEM" oid=".ciscoSystemExtMIB.ciscoSystemExtMIBObjects" >
+					<OIDAlias id="CISCO SYS INFO" oid=".ciscoSysInfoGroup" />
+				</OIDAlias>
+
+			</OIDAlias>			
+		</OIDAlias>
+	</OIDAlias>
+	
+	<UnitTypeDef typeName="CISCO_NEXUS-9000-LINECARD_1.0.0" snmpVersion="2C">
+	
+		<!-- userIndex1 = Linecard prefix number -->
+	
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+                        <StaticString>1.0</StaticString>
+		</StaticDef>
+		
+		<!-- OID Filters -->
+		
+		<OIDFilter id="LAN PORTS" dynamic="true" >
+			<OID alias="IF DESC">.#I</OID>
+			<OIDFilterRule regex="^(Ethernet#1\/?\d{0,2})"/>
+			<OIDFilterRule regex="^(Ethernet#1\/?\d{0,2}\/?\d{0,2})"/>
+			<OIDSortRule regex="\D*(\d*)/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/(\d*)" type="Num"/>
+			<OIDSortRule regex="\D*\d*/\d*/(\d*)" type="Num"/>
+		</OIDFilter>
+			
+		<!-- These examples reference some of the global translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+		
+		<!-- Switchports ports -->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_NAME" pollRate="5" >
+			<ExpOID alias="IF ALIAS">.#I</ExpOID>
+			<ExpOID alias="IF DESC">.#I</ExpOID>
+			<Array filter="LAN PORTS" />
+			<ExpressionRule format="$2 : $1" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_PORTNUM" pollRate="600" >
+			<OID alias="IFX NAME">.#I</OID>
+			<Array filter="LAN PORTS" />
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY" >
+			<Array filter="LAN PORTS" />
+		</TranslationDef>	
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<Array filter="LAN PORTS" />
+		</TranslationDef>
+		
+		<!-- CISCO-VLAN-MEMBERSHIP-MIB not supported on NEXUS 9k -->
+		
+		<!--TranslationDef rcLogField="LAN_PORT_%d_VLAN" pollRate="2" >
+			<Array filter="LAN PORTS" />
+			<OID alias="VLAN MEMBERSHIP">.vmVlan.#I</OID>
+			<StringRule />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef-->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_IN" pollRate="2" >
+			<Array filter="LAN PORTS" />
+			<OID alias="IFX OCTETS IN">.#I</OID>
+			<!-- If rate of change is <= 1023 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="1023" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1024, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+		
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_OUT" pollRate="2" >
+			<Array filter="LAN PORTS" />
+			<OID alias="IFX OCTETS OUT">.#I</OID>
+			<!-- If rate of change is <= 1023 bytes/sec, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" valueMax="1023" format="%d bytes/sec" />
+
+			<!-- Divide rate of change by 1024, to convert from bytes/sec to KBytes/sec.
+			If rate of change is >= 1 KBytes/sec but <= 1023KBytes/sec, then show as KBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0009765625" valueMax="1023" format="%1.1f KBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024, to convert from bytes/sec to MBytes/sec.
+			If rate of change is >= 1 MBytes/sec but <= 1023MBytes/sec, then show as MBytes/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00000095367431640625" valueMax="1023" format="%1.1f MBytes/sec" />
+
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bytes/sec to GBytes/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000000000931322574615478515625" format="%1.1f GBytes/sec" />
+		
+			<!-- If previous rules failed somehow, then show as bytes/sec: -->
+			<NumRule rateOfChange="true" format="%d bytes/sec" />
+
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<!-- Percent bandwidth utilization cannot be monitored on Cisco as octet rate of change need to be calculated -->
+		
+		<!-- error and discards specific monitoring -->
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.20.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.19.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.14.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" />
+			<OID alias="IF ENTRY">.13.#I</OID>
+			<!-- OK up to 1 error every 20 seconds -->
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<!-- WARN up to 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<!-- FAIL after 1 error every 10 seconds -->
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+	
+	</UnitTypeDef>
+	
+</DefinitionGroup>

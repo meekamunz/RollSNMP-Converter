@@ -1,0 +1,227 @@
+IPMROUTE-STD-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, mib-2,
+    Integer32, Counter32, Counter64, Gauge32,
+    IpAddress, TimeTicks, Unsigned32 FROM SNMPv2-SMI
+    RowStatus, TEXTUAL-CONVENTION,
+    TruthValue                       FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP  FROM SNMPv2-CONF
+    SnmpAdminString                  FROM SNMP-FRAMEWORK-MIB
+    InterfaceIndexOrZero,
+    InterfaceIndex                   FROM IF-MIB
+    IANAipRouteProtocol,
+    IANAipMRouteProtocol             FROM IANA-RTPROTO-MIB
+    ipMRouteStdMIB                   FROM IPMROUTE-STD-MIB;
+
+
+-- Textual Conventions
+
+LanguageTag ::= TEXTUAL-CONVENTION
+
+   DISPLAY-HINT "100a"
+   STATUS       current
+   DESCRIPTION
+            "An RFC 1766-style language tag, with all alphabetic
+            characters converted to lowercase.  This restriction is
+            intended to make the lexical ordering imposed by SNMP useful
+            when applied to language tags.  Note that it is
+            theoretically possible for a valid language tag to exceed
+            the allowed length of this syntax, and thus be impossible to
+            represent with this syntax.  Sampling of language tags in
+            current use on the Internet suggests that this limit does
+            not pose a serious problem in practice."
+   SYNTAX       OCTET STRING (SIZE (1..100))
+
+
+-- Top-level structure of the MIB
+
+ipMRouteMIBObjects OBJECT IDENTIFIER ::= { ipMRouteStdMIB 1 }
+
+ipMRoute      OBJECT IDENTIFIER ::= { ipMRouteMIBObjects 1 }
+
+-- the IP Multicast Routing MIB-Group
+--
+-- a collection of objects providing information about
+-- IP Multicast Groups
+
+
+ipMRouteEnable OBJECT-TYPE
+    ::= { ipMRoute 1 }
+
+ipMRouteEntryCount OBJECT-TYPE
+    ::= { ipMRoute 7 }
+
+ipMRouteTable OBJECT-TYPE
+    ::= { ipMRoute 2 }
+
+ipMRouteEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ipMRouteTable 1 }
+
+--
+--  The IP Multicast Routing Next Hop Table
+--
+
+ipMRouteNextHopTable OBJECT-TYPE
+    ::= { ipMRoute 3 }
+
+ipMRouteNextHopEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ipMRouteNextHopTable 1 }
+
+--
+--  The Multicast Routing Interface Table
+--
+
+ipMRouteInterfaceTable OBJECT-TYPE
+    ::= { ipMRoute 4 }
+
+ipMRouteInterfaceEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ipMRouteInterfaceTable 1 }
+
+--
+--  The IP Multicast Scope Boundary Table
+--
+
+ipMRouteBoundaryTable OBJECT-TYPE
+    ::= { ipMRoute 5 }
+
+ipMRouteBoundaryEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME ipMRouteBoundaryStatus
+    ::= { ipMRouteBoundaryTable 1 }
+
+--
+--  The IP Multicast Scope Name Table
+--
+
+ipMRouteScopeNameTable OBJECT-TYPE
+    ::= { ipMRoute 6 }
+
+ipMRouteScopeNameEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME ipMRouteScopeNameStatus
+    ::= { ipMRouteScopeNameTable 1 }
+
+--##conformance information
+--
+--ipMRouteMIBConformance
+--                  OBJECT IDENTIFIER ::= { ipMRouteStdMIB 2 }
+--ipMRouteMIBCompliances
+--                  OBJECT IDENTIFIER ::= { ipMRouteMIBConformance 1 }
+--ipMRouteMIBGroups  OBJECT IDENTIFIER ::= { ipMRouteMIBConformance 2 }
+--
+--## compliance statements
+--
+--ipMRouteMIBCompliance MODULE-COMPLIANCE
+--    STATUS  current
+--    DESCRIPTION
+--            "The compliance statement for the IP Multicast MIB."
+--    MODULE  ## this module
+--    MANDATORY-GROUPS { ipMRouteMIBBasicGroup,
+--                       ipMRouteMIBRouteGroup}
+--
+--        GROUP   ipMRouteMIBBoundaryGroup
+--        DESCRIPTION
+--            "This group is mandatory if the router supports
+--            administratively-scoped multicast address boundaries."
+--
+--        OBJECT      ipMRouteBoundaryStatus
+--        MIN-ACCESS  read-only
+--        DESCRIPTION
+--            "Write access is not required."
+--
+--        OBJECT      ipMRouteScopeNameStatus
+--        MIN-ACCESS  read-only
+--        DESCRIPTION
+--            "Write access is not required."
+--
+--        GROUP   ipMRouteMIBHCInterfaceGroup
+--        DESCRIPTION
+--            "This group is mandatory only for those network interfaces
+--            for which the value of the corresponding instance of ifSpeed
+--            is greater than 20,000,000 bits/second."
+--
+--    ::= { ipMRouteMIBCompliances 1 }
+--
+--## units of conformance
+--
+--ipMRouteMIBBasicGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteEnable, ipMRouteEntryCount,
+--              ipMRouteUpstreamNeighbor, ipMRouteInIfIndex,
+--              ipMRouteUpTime, ipMRouteExpiryTime,
+--              ipMRouteNextHopState,
+--              ipMRouteNextHopUpTime,
+--              ipMRouteNextHopExpiryTime,
+--              ipMRouteNextHopProtocol,
+--              ipMRouteNextHopPkts,
+--              ipMRouteInterfaceTtl,
+--              ipMRouteInterfaceProtocol, ipMRouteInterfaceRateLimit,
+--              ipMRouteInterfaceInMcastOctets,
+--              ipMRouteInterfaceOutMcastOctets,
+--              ipMRouteProtocol
+--            }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support basic management of IP
+--            Multicast routing."
+--    ::= { ipMRouteMIBGroups 1 }
+--
+--ipMRouteMIBHopCountGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteNextHopClosestMemberHops }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of the use of
+--            hop counts in IP Multicast routing."
+--    ::= { ipMRouteMIBGroups 2 }
+--
+--ipMRouteMIBBoundaryGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteBoundaryStatus, ipMRouteScopeNameString,
+--              ipMRouteScopeNameDefault, ipMRouteScopeNameStatus }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of scoped
+--            multicast address boundaries."
+--    ::= { ipMRouteMIBGroups 3 }
+--
+--ipMRouteMIBPktsOutGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteNextHopPkts }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of packet
+--            counters for each outgoing interface entry of a route."
+--    ::= { ipMRouteMIBGroups 4 }
+--
+--ipMRouteMIBHCInterfaceGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteInterfaceHCInMcastOctets,
+--              ipMRouteInterfaceHCOutMcastOctets,
+--              ipMRouteHCOctets }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects providing information specific to
+--            high speed (greater than 20,000,000 bits/second) network
+--            interfaces."
+--    ::= { ipMRouteMIBGroups 5 }
+--
+--ipMRouteMIBRouteGroup OBJECT-GROUP
+--    OBJECTS { ipMRouteRtProto, ipMRouteRtAddress,
+--              ipMRouteRtMask, ipMRouteRtType }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects providing information on the
+--            relationship between multicast routing information, and the
+--            IP Forwarding Table."
+--    ::= { ipMRouteMIBGroups 6 }
+--
+--ipMRouteMIBPktsGroup OBJECT-GROUP
+--    OBJECTS { ipMRoutePkts, ipMRouteDifferentInIfPackets,
+--              ipMRouteOctets }
+--    STATUS  current
+--    DESCRIPTION
+--            "A collection of objects to support management of packet
+--            counters for each forwarding entry."
+--    ::= { ipMRouteMIBGroups 7 }
+
+END

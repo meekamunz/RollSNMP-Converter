@@ -1,0 +1,8 @@
+{
+    "includes": ["KaleidoIP.rsnmp"],
+    "manufacturer": "Grass Valley",
+    "driverName": "Kaleido-IP",
+    "driverVersion": "1.0.0",
+    "deviceName": "Kaleido IP",
+    "factory": true
+}

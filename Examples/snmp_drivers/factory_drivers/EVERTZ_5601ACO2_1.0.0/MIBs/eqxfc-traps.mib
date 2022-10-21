@@ -1,0 +1,1489 @@
+-- Copyright Evertz Microsystems Ltd.
+-- Confidential
+-- 2007/08/24
+
+EQXFC-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	eqxfcTraps
+		FROM EQXFC-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { eqxfcTraps 1 }
+
+-- beginning of traps
+
+    faultBecomeActiveTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller is now active."
+        ::= 1000
+
+    faultBecomeActiveFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller is now standby."
+        ::= 1001
+
+    faultMainAlarmOnTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller's main alarm has turned on."
+        ::= 1002
+
+    faultMainAlarmOnFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller's main alarm has turned off."
+        ::= 1003
+
+    faultBuzzerOnTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller's buzzer has turned on."
+        ::= 1004
+
+    faultBuzzerOnFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller's buzzer has turned off."
+        ::= 1005
+
+    faultLostCommsSlot1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 1."
+        ::= 1006
+
+    faultLostCommsSlot1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 1."
+        ::= 1007
+
+    faultLostCommsSlot2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 2."
+        ::= 1008
+
+    faultLostCommsSlot2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 2."
+        ::= 1009
+
+    faultLostCommsSlot3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 3."
+        ::= 1010
+
+    faultLostCommsSlot3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 3."
+        ::= 1011
+
+    faultLostCommsSlot4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 4."
+        ::= 1012
+
+    faultLostCommsSlot4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 4."
+        ::= 1013
+
+    faultLostCommsSlot5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 5."
+        ::= 1014
+
+    faultLostCommsSlot5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 5."
+        ::= 1015
+
+    faultLostCommsSlot6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 6."
+        ::= 1016
+
+    faultLostCommsSlot6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 6."
+        ::= 1017
+
+    faultLostCommsSlot7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 7."
+        ::= 1018
+
+    faultLostCommsSlot7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 7."
+        ::= 1019
+
+    faultLostCommsSlot8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 8."
+        ::= 1020
+
+    faultLostCommsSlot8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 8."
+        ::= 1021
+
+    faultLostCommsSlot9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 9."
+        ::= 1022
+
+    faultLostCommsSlot9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 9."
+        ::= 1023
+
+    faultLostCommsSlot10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 10."
+        ::= 1024
+
+    faultLostCommsSlot10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 10."
+        ::= 1025
+
+    faultLostCommsSlot11True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 11."
+        ::= 1026
+
+    faultLostCommsSlot11False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 11."
+        ::= 1027
+
+    faultLostCommsSlot12True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 12."
+        ::= 1028
+
+    faultLostCommsSlot12False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 12."
+        ::= 1029
+
+    faultLostCommsSlot13True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 13."
+        ::= 1030
+
+    faultLostCommsSlot13False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 13."
+        ::= 1031
+
+    faultLostCommsSlot14True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 14."
+        ::= 1032
+
+    faultLostCommsSlot14False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 14."
+        ::= 1033
+
+    faultLostCommsSlot15True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 15."
+        ::= 1034
+
+    faultLostCommsSlot15False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 15."
+        ::= 1035
+
+    faultLostCommsSlot16True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 16."
+        ::= 1036
+
+    faultLostCommsSlot16False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 16."
+        ::= 1037
+
+    faultLostCommsSlot17True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 17."
+        ::= 1038
+
+    faultLostCommsSlot17False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 17."
+        ::= 1039
+
+    faultLostCommsSlot18True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 18."
+        ::= 1040
+
+    faultLostCommsSlot18False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 18."
+        ::= 1041
+
+    faultLostCommsSlot19True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 19."
+        ::= 1042
+
+    faultLostCommsSlot19False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 19."
+        ::= 1043
+
+    faultLostCommsSlot20True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 20."
+        ::= 1044
+
+    faultLostCommsSlot20False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 20."
+        ::= 1045
+
+    faultLostCommsSlot21True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 21."
+        ::= 1046
+
+    faultLostCommsSlot21False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in s2lot 1."
+        ::= 1047
+
+    faultLostCommsSlot22True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 22."
+        ::= 1048
+
+    faultLostCommsSlot22False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in s2lot 2."
+        ::= 1049
+
+    faultLostCommsSlot23True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 23."
+        ::= 1050
+
+    faultLostCommsSlot23False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in s2lot 3."
+        ::= 1051
+
+    faultLostCommsSlot24True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 24."
+        ::= 1052
+
+    faultLostCommsSlot24False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 24."
+        ::= 1053
+
+    faultLostCommsSlot25True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 25."
+        ::= 1054
+
+    faultLostCommsSlot25False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 25."
+        ::= 1055
+
+    faultLostCommsSlot26True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 26."
+        ::= 1056
+
+    faultLostCommsSlot26False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 26."
+        ::= 1057
+
+    faultLostCommsSlot27True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 27."
+        ::= 1058
+
+    faultLostCommsSlot27False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 27."
+        ::= 1059
+
+    faultLostCommsSlot28True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 28."
+        ::= 1060
+
+    faultLostCommsSlot28False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 28."
+        ::= 1061
+
+    faultLostCommsSlot29True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 29."
+        ::= 1062
+
+    faultLostCommsSlot29False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 29."
+        ::= 1063
+
+    faultLostCommsSlot30True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 30."
+        ::= 1064
+
+    faultLostCommsSlot30False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 30."
+        ::= 1065
+
+    faultLostCommsSlot31True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 31."
+        ::= 1066
+
+    faultLostCommsSlot31False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 31."
+        ::= 1067
+
+    faultLostCommsSlot32True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 32."
+        ::= 1068
+
+    faultLostCommsSlot32False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 32."
+        ::= 1069
+
+    faultLostCommsSlot33True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 33."
+        ::= 1070
+
+    faultLostCommsSlot33False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 33."
+        ::= 1071
+
+    faultLostCommsSlot34True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 34."
+        ::= 1072
+
+    faultLostCommsSlot34False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 34."
+        ::= 1073
+
+    faultLostCommsSlot35True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 35."
+        ::= 1074
+
+    faultLostCommsSlot35False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 35."
+        ::= 1075
+
+    faultLostCommsSlot36True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 36."
+        ::= 1076
+
+    faultLostCommsSlot36False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 36."
+        ::= 1077
+
+    faultLostCommsSlot37True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 37."
+        ::= 1078
+
+    faultLostCommsSlot37False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 37."
+        ::= 1079
+
+    faultLostCommsSlot38True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 38."
+        ::= 1080
+
+    faultLostCommsSlot38False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 38."
+        ::= 1081
+
+    faultLostCommsSlot39True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 39."
+        ::= 1082
+
+    faultLostCommsSlot39False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 39."
+        ::= 1083
+
+    faultLostCommsSlot40True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 40."
+        ::= 1084
+
+    faultLostCommsSlot40False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 40."
+        ::= 1085
+
+    faultLostCommsSlot41True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 41."
+        ::= 1086
+
+    faultLostCommsSlot41False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 41."
+        ::= 1087
+
+    faultLostCommsSlot42True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 42."
+        ::= 1088
+
+    faultLostCommsSlot42False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 42."
+        ::= 1089
+
+    faultLostCommsSlot43True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 43."
+        ::= 1090
+
+    faultLostCommsSlot43False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 43."
+        ::= 1091
+
+    faultLostCommsSlot44True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 44."
+        ::= 1092
+
+    faultLostCommsSlot44False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 44."
+        ::= 1093
+
+    faultLostCommsSlot45True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 45."
+        ::= 1094
+
+    faultLostCommsSlot45False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 45."
+        ::= 1095
+
+    faultLostCommsSlot46True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 46."
+        ::= 1096
+
+    faultLostCommsSlot46False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 46."
+        ::= 1097
+
+    faultLostCommsSlot47True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 47."
+        ::= 1098
+
+    faultLostCommsSlot47False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 47."
+        ::= 1099
+
+    faultLostCommsSlot48True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 48."
+        ::= 1100
+
+    faultLostCommsSlot48False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 48."
+        ::= 1101
+
+    faultLostCommsSlot49True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 49."
+        ::= 1102
+
+    faultLostCommsSlot49False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 49."
+        ::= 1103
+
+    faultLostCommsSlot50True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 50."
+        ::= 1104
+
+    faultLostCommsSlot50False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 50."
+        ::= 1105
+
+    faultLostCommsSlot51True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 51."
+        ::= 1106
+
+    faultLostCommsSlot51False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 51."
+        ::= 1107
+
+    faultLostCommsSlot52True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 52."
+        ::= 1108
+
+    faultLostCommsSlot52False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 52."
+        ::= 1109
+
+    faultLostCommsSlot53True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 53."
+        ::= 1110
+
+    faultLostCommsSlot53False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 53."
+        ::= 1111
+
+    faultLostCommsSlot54True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 54."
+        ::= 1112
+
+    faultLostCommsSlot54False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 54."
+        ::= 1113
+
+    faultLostCommsSlot55True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 55."
+        ::= 1114
+
+    faultLostCommsSlot55False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 55."
+        ::= 1115
+
+    faultLostCommsSlot56True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 56."
+        ::= 1116
+
+    faultLostCommsSlot56False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 56."
+        ::= 1117
+
+    faultLostCommsSlot57True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 57."
+        ::= 1118
+
+    faultLostCommsSlot57False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 57."
+        ::= 1119
+
+    faultLostCommsSlot58True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 58."
+        ::= 1120
+
+    faultLostCommsSlot58False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 58."
+        ::= 1121
+
+    faultLostCommsSlot59True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 59."
+        ::= 1122
+
+    faultLostCommsSlot59False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 59."
+        ::= 1123
+
+    faultLostCommsSlot60True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 60."
+        ::= 1124
+
+    faultLostCommsSlot60False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 60."
+        ::= 1125
+
+    faultLostCommsSlot61True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 61."
+        ::= 1126
+
+    faultLostCommsSlot61False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 61."
+        ::= 1127
+
+    faultLostCommsSlot62True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 62."
+        ::= 1128
+
+    faultLostCommsSlot62False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 62."
+        ::= 1129
+
+    faultLostCommsSlot63True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 63."
+        ::= 1130
+
+    faultLostCommsSlot63False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 63."
+        ::= 1131
+
+    faultLostCommsSlot64True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 64."
+        ::= 1132
+
+    faultLostCommsSlot64False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 64."
+        ::= 1133
+
+    faultLostCommsSlot65True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 65."
+        ::= 1134
+
+    faultLostCommsSlot65False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 65."
+        ::= 1135
+
+    faultLostCommsSlot66True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 66."
+        ::= 1136
+
+    faultLostCommsSlot66False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 66."
+        ::= 1137
+
+    faultLostCommsSlot67True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 67."
+        ::= 1138
+
+    faultLostCommsSlot67False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 67."
+        ::= 1139
+
+    faultLostCommsSlot68True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 68."
+        ::= 1140
+
+    faultLostCommsSlot68False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 68."
+        ::= 1141
+
+    faultLostCommsSlot69True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 69."
+        ::= 1142
+
+    faultLostCommsSlot69False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 69."
+        ::= 1143
+
+    faultLostCommsSlot70True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 70."
+        ::= 1144
+
+    faultLostCommsSlot70False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 70."
+        ::= 1145
+
+    faultLostCommsSlot71True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 71."
+        ::= 1146
+
+    faultLostCommsSlot71False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 71."
+        ::= 1147
+
+    faultLostCommsSlot72True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with the
+                    card in slot 72."
+        ::= 1148
+
+    faultLostCommsSlot72False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    the card in slot 72."
+        ::= 1149
+
+-- Fan comms
+
+    faultLostCommsFan1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 1."
+        ::= 1150
+
+    faultLostCommsFan1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 1."
+        ::= 1151
+        
+    faultLostCommsFan2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 2."
+        ::= 1152
+        
+    faultLostCommsFan2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 2."
+        ::= 1153
+        
+    faultLostCommsFan3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 3."
+        ::= 1154
+        
+    faultLostCommsFan3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 3."
+        ::= 1155
+        
+    faultLostCommsFan4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 4."
+        ::= 1156
+        
+    faultLostCommsFan4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 4."
+        ::= 1157
+        
+    faultLostCommsFan5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 5."
+        ::= 1158
+        
+    faultLostCommsFan5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 5."
+        ::= 1159
+        
+    faultLostCommsFan6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 6."
+        ::= 1160
+        
+    faultLostCommsFan6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 6."
+        ::= 1161
+
+    faultLostCommsFan7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 7."
+        ::= 1162
+        
+    faultLostCommsFan7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 7."
+        ::= 1163
+        
+    faultLostCommsFan8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 8."
+        ::= 1164
+        
+    faultLostCommsFan8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 8."
+        ::= 1165
+        
+     faultLostCommsFan9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 9."
+        ::= 1166
+        
+    faultLostCommsFan9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 9."
+        ::= 1167
+        
+    faultLostCommsFan10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has lost communication with
+                    fan 10."
+        ::= 1168
+        
+    faultLostCommsFan10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame controller has gained communication with
+                    fan 10."
+        ::= 1169
+
+-- Fan speed
+
+    faultSpeedWarningFan1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 1 speed has moved outside the normal
+                    operating limits."
+        ::= 1170
+        
+    faultSpeedWarningFan1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 1 speed has moved within the normal
+                    operating limits."
+        ::= 1171
+      
+    faultSpeedWarningFan2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 2 speed has moved outside the normal
+                    operating limits."
+        ::= 1172
+        
+    faultSpeedWarningFan2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 3 speed has moved within the normal
+                    operating limits."
+        ::= 1173
+      
+    faultSpeedWarningFan3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 3 speed has moved outside the normal
+                    operating limits."
+        ::= 1174
+        
+    faultSpeedWarningFan3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 3 speed has moved within the normal
+                    operating limits."
+        ::= 1175
+      
+    faultSpeedWarningFan4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 4 speed has moved outside the normal
+                    operating limits."
+        ::= 1176
+        
+    faultSpeedWarningFan4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 4 speed has moved within the normal
+                    operating limits."
+        ::= 1177
+      
+    faultSpeedWarningFan5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 5 speed has moved outside the normal
+                    operating limits."
+        ::= 1178
+        
+    faultSpeedWarningFan5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 5 speed has moved within the normal
+                    operating limits."
+        ::= 1179
+      
+    faultSpeedWarningFan6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 6 speed has moved outside the normal
+                    operating limits."
+        ::= 1180
+        
+    faultSpeedWarningFan6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 6 speed has moved within the normal
+                    operating limits."
+        ::= 1181
+        
+    faultSpeedWarningFan7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 7 speed has moved outside the normal
+                    operating limits."
+        ::= 1182
+        
+    faultSpeedWarningFan7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 7 speed has moved within the normal
+                    operating limits."
+        ::= 1183
+        
+    faultSpeedWarningFan8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 8 speed has moved outside the normal
+                    operating limits."
+        ::= 1184
+        
+    faultSpeedWarningFan8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 8 speed has moved within the normal
+                    operating limits."
+        ::= 1185
+        
+    faultSpeedWarningFan9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 9 speed has moved outside the normal
+                    operating limits."
+        ::= 1186
+        
+    faultSpeedWarningFan9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 9 speed has moved within the normal
+                    operating limits."
+        ::= 1187
+        
+    faultSpeedWarningFan10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 10 speed has moved outside the normal
+                    operating limits."
+        ::= 1188
+        
+    faultSpeedWarningFan10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 10 speed has moved within the normal
+                    operating limits."
+        ::= 1189
+
+-- Fan temperature
+
+    faultTempWarningFan1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 1 temperature has moved outside the
+                    normal operating limits."
+        ::= 1190
+        
+    faultTempWarningFan1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 1 temperature has moved within the
+                    normal operating limits."
+        ::= 1191
+ 
+    faultTempWarningFan2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 2 temperature has moved outside the
+                    normal operating limits."
+        ::= 1192
+        
+    faultTempWarningFan2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 2 temperature has moved within the
+                    normal operating limits."
+        ::= 1193
+     
+    faultTempWarningFan3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 3 temperature has moved outside the
+                    normal operating limits."
+        ::= 1194
+        
+    faultTempWarningFan3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 3 temperature has moved within the
+                    normal operating limits."
+        ::= 1195
+        
+    faultTempWarningFan4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 4 temperature has moved outside the
+                    normal operating limits."
+        ::= 1196
+        
+    faultTempWarningFan4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 4 temperature has moved within the
+                    normal operating limits."
+        ::= 1197
+        
+    faultTempWarningFan5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 5 temperature has moved outside the
+                    normal operating limits."
+        ::= 1198
+        
+    faultTempWarningFan5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 5 temperature has moved within the
+                    normal operating limits."
+        ::= 1199
+        
+    faultTempWarningFan6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 6 temperature has moved outside the
+                    normal operating limits."
+        ::= 1200
+        
+    faultTempWarningFan6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 6 temperature has moved within the
+                    normal operating limits."
+        ::= 1201
+        
+    faultTempWarningFan7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 7 temperature has moved outside the
+                    normal operating limits."
+        ::= 1202
+        
+    faultTempWarningFan7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 7 temperature has moved within the
+                    normal operating limits."
+        ::= 1203
+
+    faultTempWarningFan8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 8 temperature has moved outside the
+                    normal operating limits."
+        ::= 1204
+        
+    faultTempWarningFan8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 8 temperature has moved within the
+                    normal operating limits."
+        ::= 1205
+
+    faultTempWarningFan9True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 9 temperature has moved outside the
+                    normal operating limits."
+        ::= 1206
+        
+    faultTempWarningFan9False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 9 temperature has moved within the
+                    normal operating limits."
+        ::= 1207
+
+    faultTempWarningFan10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 10 temperature has moved outside the
+                    normal operating limits."
+        ::= 1208
+        
+    faultTempWarningFan10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+                    "This frame's fan 10 temperature has moved within the
+                    normal operating limits."
+        ::= 1209
+
+-- end of traps
+
+END

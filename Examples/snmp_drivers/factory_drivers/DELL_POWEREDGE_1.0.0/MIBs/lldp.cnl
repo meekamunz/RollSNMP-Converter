@@ -1,0 +1,190 @@
+LLDP-CNL DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Counter32, NOTIFICATION-TYPE
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, TimeStamp, TruthValue
+        FROM SNMPv2-TC
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+    TimeFilter, ZeroBasedCounter32
+        FROM RMON2-MIB
+    AddressFamilyNumbers
+        FROM IANA-ADDRESS-FAMILY-NUMBERS-MIB
+    lldpMIB
+        FROM LLDP-MIB;
+
+
+lldpNotifications            OBJECT IDENTIFIER ::= { lldpMIB 0 }
+lldpObjects                  OBJECT IDENTIFIER ::= { lldpMIB 1 }
+lldpConformance              OBJECT IDENTIFIER ::= { lldpMIB 2 }
+
+--
+-- LLDP MIB Objects
+--
+
+lldpConfiguration            OBJECT IDENTIFIER ::= { lldpObjects 1 }
+lldpStatistics               OBJECT IDENTIFIER ::= { lldpObjects 2 }
+lldpLocalSystemData          OBJECT IDENTIFIER ::= { lldpObjects 3 }
+lldpRemoteSystemsData        OBJECT IDENTIFIER ::= { lldpObjects 4 }
+lldpExtensions               OBJECT IDENTIFIER ::= { lldpObjects 5 }
+
+
+--
+-- ***********************************************************
+--
+--                  L L D P    C O N F I G
+--
+-- ***********************************************************
+--
+
+
+--
+-- lldpPortConfigTable: LLDP configuration on a per port basis
+--
+
+lldpPortConfigTable   OBJECT-TYPE
+    ::= { lldpConfiguration 6 }
+
+lldpPortConfigEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpPortConfigTable 1 }
+
+
+
+--
+--  ***********************************************************
+--
+--                   L L D P    S T A T S
+--
+--  ***********************************************************
+--
+-- LLDP Stats Group
+
+
+--
+-- TX statistics
+--
+
+lldpStatsTxPortTable  OBJECT-TYPE
+    ::= { lldpStatistics 6 }
+
+lldpStatsTxPortEntry   OBJECT-TYPE
+     ROW-STATUS-TYPE no-status-field
+     ::= { lldpStatsTxPortTable 1 }
+
+
+--
+-- RX statistics
+--
+
+lldpStatsRxPortTable  OBJECT-TYPE
+    ::= { lldpStatistics 7 }
+
+lldpStatsRxPortEntry   OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+     ::= { lldpStatsRxPortTable 1 }
+
+
+
+--  ***********************************************************
+--
+--          L O C A L    S Y S T E M    D A T A
+--
+--  ***********************************************************
+
+
+
+--
+-- lldpLocPortTable : Port specific Local system data
+--
+
+lldpLocPortTable OBJECT-TYPE
+    ::= { lldpLocalSystemData 7 }
+
+lldpLocPortEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { lldpLocPortTable 1 }
+
+
+--
+-- lldpLocManAddrTable : Management addresses of the local system
+--
+
+lldpLocManAddrTable OBJECT-TYPE
+    ::= { lldpLocalSystemData 8 }
+
+lldpLocManAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { lldpLocManAddrTable 1 }
+
+
+--  ***********************************************************
+--
+--          R E M O T E    S Y S T E M S    D A T A
+--
+--  ***********************************************************
+
+lldpRemTable OBJECT-TYPE
+    ::= { lldpRemoteSystemsData 1 }
+
+lldpRemEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpRemTable 1 }
+
+
+--
+-- lldpRemManAddrTable : Management addresses of the remote system
+--
+
+lldpRemManAddrTable OBJECT-TYPE
+    ::= { lldpRemoteSystemsData 2 }
+
+lldpRemManAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { lldpRemManAddrTable 1 }
+
+
+--
+-- lldpRemUnknownTLVTable : Unrecognized TLV information
+--
+lldpRemUnknownTLVTable  OBJECT-TYPE
+    ::= { lldpRemoteSystemsData 3 }
+
+lldpRemUnknownTLVEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpRemUnknownTLVTable 1 }
+
+
+
+------------------------------------------------------------------------------
+-- Remote Systems Extension Table - Organizationally-Defined Information
+------------------------------------------------------------------------------
+lldpRemOrgDefInfoTable OBJECT-TYPE
+    ::= { lldpRemoteSystemsData 4 }
+
+lldpRemOrgDefInfoEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { lldpRemOrgDefInfoTable 1 }
+
+
+--
+-- ***********************************************************
+--
+--        L L D P   M I B   N O T I F I C A T I O N S
+--
+-- ***********************************************************
+--
+
+lldpNotificationPrefix OBJECT IDENTIFIER ::= { lldpNotifications 0 }
+
+lldpRemTablesChange TRAP-TYPE --NOTIFICATION-TYPE
+      ENTERPRISE  lldpNotificationPrefix
+      ERRCODE     RSG_ErrMsg_code_lldpRemTablesChange_E
+      SEVERITY    INFO
+   ::= 1
+
+
+END

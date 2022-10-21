@@ -1,0 +1,189 @@
+EtherLike-MIB-A DEFINITIONS ::= BEGIN
+
+    IMPORTS
+        MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+--      Counter32, mib-2, transmission			FROM SNMPv2-SMI
+        Counter32                     			FROM SNMPv2-SMI
+                   mib-2, transmission          FROM RFC1213-MIB
+
+		MODULE-COMPLIANCE, OBJECT-GROUP			FROM SNMPv2-CONF
+        ifIndex, InterfaceIndex					FROM IF-MIB;
+
+--    etherMIB MODULE-IDENTITY
+--        LAST-UPDATED "9908240400Z"  ## August 24, 1999
+--        ORGANIZATION "IETF Ethernet Interfaces and Hub MIB
+--                     Working Group"
+--        CONTACT-INFO
+--            "WG E-mail: hubmib@hprnd.rose.hp.com
+--          To subscribe: hubmib-request@hprnd.rose.hp.com
+--
+--                 Chair: Dan Romascanu
+--                Postal: Lucent Technologies
+--                        Atidum Technology Park, Bldg. 3
+--                        Tel Aviv 61131
+--                        Israel
+--                   Tel: +972 3 645 8414
+--                E-mail: dromasca@lucent.com
+--
+--               Editor: John Flick
+--               Postal: Hewlett-Packard Company
+--                       8000 Foothills Blvd. M/S 5557
+--                       Roseville, CA 95747-5557
+--                       USA
+--                  Tel: +1 916 785 4018
+--                  Fax: +1 916 785 1199
+--               E-mail: johnf@rose.hp.com
+--
+--               Editor: Jeffrey Johnson
+--               Postal: RedBack Networks
+--                       2570 North First Street, Suite 410
+--                       San Jose, CA, 95131
+--                       USA
+--                  Tel: +1 408 571 2699
+--                  Fax: +1 408 571 2698
+--               E-Mail: jeff@redbacknetworks.com"
+--
+--        DESCRIPTION "The MIB module to describe generic objects for
+--                    Ethernet-like network interfaces.
+--
+--                    The following reference is used throughout this
+--                    MIB module:
+--
+--                    [IEEE 802.3 Std] refers to:
+--                       IEEE Std 802.3, 1998 Edition: 'Information
+--                       technology - Telecommunications and
+--                       information exchange between systems -
+--                       Local and metropolitan area networks -
+--                       Specific requirements - Part 3: Carrier
+--                       sense multiple access with collision
+--                       detection (CSMA/CD) access method and
+--                       physical layer specifications',
+--                       September 1998.
+--
+--                    Of particular interest is Clause 30, '10Mb/s,
+--                    100Mb/s and 1000Mb/s Management'."
+--
+--        REVISION    "9908240400Z"  ## August 24, 1999
+--        DESCRIPTION "Updated to include support for 1000 Mb/sec
+--                     interfaces and full-duplex interfaces.
+--                     This version published as RFC 2665."
+--
+--        REVISION    "9806032150Z"
+--        DESCRIPTION "Updated to include support for 100 Mb/sec
+--                     interfaces.
+--                     This version published as RFC 2358."
+--
+--        REVISION    "9402030400Z"
+--        DESCRIPTION "Initial version, published as RFC 1650."
+--
+--        ::= { mib-2 35 }
+etherMIB OBJECT IDENTIFIER ::= { mib-2 35 }
+
+
+    etherMIBObjects OBJECT IDENTIFIER ::= { etherMIB 1 }
+
+    dot3    OBJECT IDENTIFIER ::= { transmission 7 }
+
+    -- the Ethernet-like Statistics group
+
+    dot3StatsTable OBJECT-TYPE
+    ::= { dot3 2 }
+
+    dot3StatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3StatsTable 1 }
+
+    -- the Ethernet-like Collision Statistics group
+
+    -- Implementation of this group is optional; it is appropriate
+    -- for all systems which have the necessary metering
+
+    dot3CollTable OBJECT-TYPE
+    ::= { dot3 5 }
+
+    dot3CollEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3CollTable 1 }
+
+    dot3ControlTable OBJECT-TYPE
+    ::= { dot3 9 }
+
+    dot3ControlEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3ControlTable 1 }
+
+    dot3PauseTable OBJECT-TYPE
+    ::= { dot3 10 }
+
+    dot3PauseEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { dot3PauseTable 1 }
+
+
+    --  802.3 Tests
+
+    dot3Tests   OBJECT IDENTIFIER ::= { dot3 6 }
+
+    dot3Errors  OBJECT IDENTIFIER ::= { dot3 7 }
+
+    --  TDR Test
+--
+--    dot3TestTdr OBJECT-IDENTITY
+--        STATUS      current
+--        DESCRIPTION "The Time-Domain Reflectometry (TDR) test is
+--                    specific to ethernet-like interfaces of type
+--                    10Base5 and 10Base2.  The TDR value may be
+--                    useful in determining the approximate distance
+--                    to a cable fault.  It is advisable to repeat
+--                    this test to check for a consistent resulting
+--                    TDR value, to verify that there is a fault.
+--
+--                    A TDR test returns as its result the time
+--                    interval, measured in 10 MHz ticks or 100 nsec
+--                    units, between the start of TDR test
+--                    transmission and the subsequent detection of a
+--                    collision or deassertion of carrier.  On
+--                    successful completion of a TDR test, the result
+--                    is stored as the value of an appropriate
+--                    instance of an appropriate vendor specific MIB
+--                    object, and the OBJECT IDENTIFIER of that
+--                    instance is stored in the appropriate instance
+--                    of the appropriate test result code object
+--                    (thereby indicating where the result has been
+--                    stored)."
+--        ::= { dot3Tests 1 }
+--
+--    ## Loopback Test
+--
+--    dot3TestLoopBack OBJECT-IDENTITY
+--        STATUS      current
+--        DESCRIPTION "This test configures the MAC chip and executes
+--                    an internal loopback test of memory, data paths,
+--                    and the MAC chip logic.  This loopback test can
+--                    only be executed if the interface is offline.
+--                    Once the test has completed, the MAC chip should
+--                    be reinitialized for network operation, but it
+--                    should remain offline.
+--
+--                    If an error occurs during a test, the
+--                    appropriate test result object will be set
+--                    to indicate a failure.  The two OBJECT
+--                    IDENTIFIER values dot3ErrorInitError and
+--                    dot3ErrorLoopbackError may be used to provided
+--                    more information as values for an appropriate
+--                    test result code object."
+--        ::= { dot3Tests 2 }
+--
+--    dot3ErrorInitError OBJECT-IDENTITY
+--        STATUS      current
+--        DESCRIPTION "Couldn't initialize MAC chip for test."
+--        ::= { dot3Errors 1 }
+--
+--    dot3ErrorLoopbackError OBJECT-IDENTITY
+--        STATUS      current
+--        DESCRIPTION "Expected data not received (or not received
+--                    correctly) in loopback test."
+--        ::= { dot3Errors 2 }
+
+END
+

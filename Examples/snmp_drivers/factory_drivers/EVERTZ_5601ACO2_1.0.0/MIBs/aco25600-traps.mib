@@ -1,0 +1,851 @@
+-- Copyright 2005 Evertz Microsystems Ltd.
+-- Mon Jul 25 15:02:24 2005
+-- Confidential
+
+ACO25600-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    aco2Traps
+        FROM ACO25600-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { aco2Traps 1 }
+
+
+-- beginning of analogTGLoss BankA trap
+
+    faultanalogTGLossBankAFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog TG Present on BankA"
+    ::= 1000
+    
+    faultanalogTGLossBankATrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog TG Not present on BankA"
+    ::= 1001
+
+-- end of analogTGLoss BankA trap
+
+-- beginning of analogTGLoss BankB trap
+
+    faultanalogTGLossBankBFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog TG Present on BankB"
+    ::= 1002
+    
+    faultanalogTGLossBankBTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog TG Not present on BankB"
+    ::= 1003
+
+-- end of analogTGLoss BankB trap
+
+-- beginning of analogSyncLoss BankAChannel1 trap
+
+    faultanalogSyncLossBankAChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel1"
+    ::= 1004
+    
+    faultanalogSyncLossBankAChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel1"
+    ::= 1005
+
+-- end of analogSyncLoss BankAChannel1 trap
+
+-- beginning of analogSyncLoss BankAChannel2 trap
+
+    faultanalogSyncLossBankAChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel2"
+    ::= 1006
+    
+    faultanalogSyncLossBankAChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel2"
+    ::= 1007
+
+-- end of analogSyncLoss BankAChannel2 trap
+
+-- beginning of analogSyncLoss BankAChannel3 trap
+
+    faultanalogSyncLossBankAChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel3"
+    ::= 1008
+    
+    faultanalogSyncLossBankAChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel3"
+    ::= 1009
+
+-- end of analogSyncLoss BankAChannel3 trap
+
+-- beginning of analogSyncLoss BankAChannel4 trap
+
+    faultanalogSyncLossBankAChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel4"
+    ::= 1010
+    
+    faultanalogSyncLossBankAChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel4"
+    ::= 1011
+
+-- end of analogSyncLoss BankAChannel4 trap
+
+-- beginning of analogSyncLoss BankAChannel5 trap
+
+    faultanalogSyncLossBankAChannel5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel5"
+    ::= 1012
+    
+    faultanalogSyncLossBankAChannel5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel5"
+    ::= 1013
+
+-- end of analogSyncLoss BankAChannel5 trap
+
+-- beginning of analogSyncLoss BankAChannel6 trap
+
+    faultanalogSyncLossBankAChannel6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankA on Channel6"
+    ::= 1014
+    
+    faultanalogSyncLossBankAChannel6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankA on Channel6"
+    ::= 1015
+
+-- end of analogSyncLoss BankAChannel6 trap
+
+-- beginning of analogSyncLoss BankBChannel1 trap
+
+    faultanalogSyncLossBankBChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel1"
+    ::= 1016
+    
+    faultanalogSyncLossBankBChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel1"
+    ::= 1017
+
+-- end of analogSyncLoss BankBChannel1 trap
+
+-- beginning of analogSyncLoss BankBChannel2 trap
+
+    faultanalogSyncLossBankBChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel2"
+    ::= 1018
+    
+    faultanalogSyncLossBankBChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel2"
+    ::= 1019
+
+-- end of analogSyncLoss BankBChannel2 trap
+
+-- beginning of analogSyncLoss BankBChannel3 trap
+
+    faultanalogSyncLossBankBChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel3"
+    ::= 1020
+    
+    faultanalogSyncLossBankBChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel3"
+    ::= 1021
+
+-- end of analogSyncLoss BankBChannel3 trap
+
+-- beginning of analogSyncLoss BankBChannel4 trap
+
+    faultanalogSyncLossBankBChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel4"
+    ::= 1022
+    
+    faultanalogSyncLossBankBChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel4"
+    ::= 1023
+
+-- end of analogSyncLoss BankBChannel4 trap
+
+-- beginning of analogSyncLoss BankBChannel5 trap
+
+    faultanalogSyncLossBankBChannel5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel5"
+    ::= 1024
+    
+    faultanalogSyncLossBankBChannel5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel5"
+    ::= 1025
+
+-- end of analogSyncLoss BankBChannel5 trap
+
+-- beginning of analogSyncLoss BankBChannel6 trap
+
+    faultanalogSyncLossBankBChannel6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Present on BankB on Channel6"
+    ::= 1026
+    
+    faultanalogSyncLossBankBChannel6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Analog Sync Not present on BankB on Channel6"
+    ::= 1027
+
+-- end of analogSyncLoss BankBChannel6 trap
+
+-- beginning of sdiLoss BankASdChannel1 trap
+
+    faultsdiLossBankASdChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Sd on Channel1"
+    ::= 1028
+    
+    faultsdiLossBankASdChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Sd on Channel1"
+    ::= 1029
+
+-- end of sdiLoss BankASdChannel1 trap
+
+-- beginning of sdiLoss BankASdChannel2 trap
+
+    faultsdiLossBankASdChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Sd on Channel2"
+    ::= 1030
+    
+    faultsdiLossBankASdChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Sd on Channel2"
+    ::= 1031
+
+-- end of sdiLoss BankASdChannel2 trap
+
+-- beginning of sdiLoss BankASdChannel3 trap
+
+    faultsdiLossBankASdChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Sd on Channel3"
+    ::= 1032
+    
+    faultsdiLossBankASdChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Sd on Channel3"
+    ::= 1033
+
+-- end of sdiLoss BankASdChannel3 trap
+
+-- beginning of sdiLoss BankASdChannel4 trap
+
+    faultsdiLossBankASdChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Sd on Channel4"
+    ::= 1034
+    
+    faultsdiLossBankASdChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Sd on Channel4"
+    ::= 1035
+
+-- end of sdiLoss BankASdChannel4 trap
+
+-- beginning of sdiLoss BankAHdChannel1 trap
+
+    faultsdiLossBankAHdChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Hd on Channel1"
+    ::= 1036
+    
+    faultsdiLossBankAHdChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Hd on Channel1"
+    ::= 1037
+
+-- end of sdiLoss BankAHdChannel1 trap
+
+-- beginning of sdiLoss BankAHdChannel2 trap
+
+    faultsdiLossBankAHdChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Hd on Channel2"
+    ::= 1038
+    
+    faultsdiLossBankAHdChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Hd on Channel2"
+    ::= 1039
+
+-- end of sdiLoss BankAHdChannel2 trap
+
+-- beginning of sdiLoss BankAHdChannel3 trap
+
+    faultsdiLossBankAHdChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Hd on Channel3"
+    ::= 1040
+    
+    faultsdiLossBankAHdChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Hd on Channel3"
+    ::= 1041
+
+-- end of sdiLoss BankAHdChannel3 trap
+
+-- beginning of sdiLoss BankAHdChannel4 trap
+
+    faultsdiLossBankAHdChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankA on Hd on Channel4"
+    ::= 1042
+    
+    faultsdiLossBankAHdChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankA on Hd on Channel4"
+    ::= 1043
+
+-- end of sdiLoss BankAHdChannel4 trap
+
+-- beginning of sdiLoss BankBSdChannel1 trap
+
+    faultsdiLossBankBSdChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Sd on Channel1"
+    ::= 1044
+    
+    faultsdiLossBankBSdChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Sd on Channel1"
+    ::= 1045
+
+-- end of sdiLoss BankBSdChannel1 trap
+
+-- beginning of sdiLoss BankBSdChannel2 trap
+
+    faultsdiLossBankBSdChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Sd on Channel2"
+    ::= 1046
+    
+    faultsdiLossBankBSdChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Sd on Channel2"
+    ::= 1047
+
+-- end of sdiLoss BankBSdChannel2 trap
+
+-- beginning of sdiLoss BankBSdChannel3 trap
+
+    faultsdiLossBankBSdChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Sd on Channel3"
+    ::= 1048
+    
+    faultsdiLossBankBSdChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Sd on Channel3"
+    ::= 1049
+
+-- end of sdiLoss BankBSdChannel3 trap
+
+-- beginning of sdiLoss BankBSdChannel4 trap
+
+    faultsdiLossBankBSdChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Sd on Channel4"
+    ::= 1050
+    
+    faultsdiLossBankBSdChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Sd on Channel4"
+    ::= 1051
+
+-- end of sdiLoss BankBSdChannel4 trap
+
+-- beginning of sdiLoss BankBHdChannel1 trap
+
+    faultsdiLossBankBHdChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Hd on Channel1"
+    ::= 1052
+    
+    faultsdiLossBankBHdChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Hd on Channel1"
+    ::= 1053
+
+-- end of sdiLoss BankBHdChannel1 trap
+
+-- beginning of sdiLoss BankBHdChannel2 trap
+
+    faultsdiLossBankBHdChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Hd on Channel2"
+    ::= 1054
+    
+    faultsdiLossBankBHdChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Hd on Channel2"
+    ::= 1055
+
+-- end of sdiLoss BankBHdChannel2 trap
+
+-- beginning of sdiLoss BankBHdChannel3 trap
+
+    faultsdiLossBankBHdChannel3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Hd on Channel3"
+    ::= 1056
+    
+    faultsdiLossBankBHdChannel3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Hd on Channel3"
+    ::= 1057
+
+-- end of sdiLoss BankBHdChannel3 trap
+
+-- beginning of sdiLoss BankBHdChannel4 trap
+
+    faultsdiLossBankBHdChannel4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Present on BankB on Hd on Channel4"
+    ::= 1058
+    
+    faultsdiLossBankBHdChannel4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "SDI Video Not present on BankB on Hd on Channel4"
+    ::= 1059
+
+-- end of sdiLoss BankBHdChannel4 trap
+
+-- beginning of aesTGLoss BankABalance trap
+
+    faultaesTGLossBankABalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Present on BankA on Balance"
+    ::= 1060
+    
+    faultaesTGLossBankABalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Not present on BankA on Balance"
+    ::= 1061
+
+-- end of aesTGLoss BankABalance trap
+
+-- beginning of aesTGLoss BankAUnbalance trap
+
+    faultaesTGLossBankAUnbalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Present on BankA on Unbalance"
+    ::= 1062
+    
+    faultaesTGLossBankAUnbalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Not present on BankA on Unbalance"
+    ::= 1063
+
+-- end of aesTGLoss BankAUnbalance trap
+
+-- beginning of aesTGLoss BankBBalance trap
+
+    faultaesTGLossBankBBalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Present on BankB on Balance"
+    ::= 1064
+    
+    faultaesTGLossBankBBalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Not present on BankB on Balance"
+    ::= 1065
+
+-- end of aesTGLoss BankBBalance trap
+
+-- beginning of aesTGLoss BankBUnbalance trap
+
+    faultaesTGLossBankBUnbalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Present on BankB on Unbalance"
+    ::= 1066
+    
+    faultaesTGLossBankBUnbalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "AES TG Not present on BankB on Unbalance"
+    ::= 1067
+
+-- end of aesTGLoss BankBUnbalance trap
+
+-- beginning of darsLoss BankABalance trap
+
+    faultdarsLossBankABalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Present on BankA on Balance"
+    ::= 1068
+    
+    faultdarsLossBankABalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Not present on BankA on Balance"
+    ::= 1069
+
+-- end of darsLoss BankABalance trap
+
+-- beginning of darsLoss BankAUnbalance trap
+
+    faultdarsLossBankAUnbalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Present on BankA on Unbalance"
+    ::= 1070
+    
+    faultdarsLossBankAUnbalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Not present on BankA on Unbalance"
+    ::= 1071
+
+-- end of darsLoss BankAUnbalance trap
+
+-- beginning of darsLoss BankBBalance trap
+
+    faultdarsLossBankBBalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Present on BankB on Balance"
+    ::= 1072
+    
+    faultdarsLossBankBBalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Not present on BankB on Balance"
+    ::= 1073
+
+-- end of darsLoss BankBBalance trap
+
+-- beginning of darsLoss BankBUnbalance trap
+
+    faultdarsLossBankBUnbalanceFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Present on BankB on Unbalance"
+    ::= 1074
+    
+    faultdarsLossBankBUnbalanceTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "DARS Not present on BankB on Unbalance"
+    ::= 1075
+
+-- end of darsLoss BankBUnbalance trap
+
+-- beginning of tenMhzLoss BankA trap
+
+    faulttenMhzLossBankAFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "10 Mhz Present on BankA"
+    ::= 1076
+    
+    faulttenMhzLossBankATrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "10 Mhz Not present on BankA"
+    ::= 1077
+
+-- end of tenMhzLoss BankA trap
+
+-- beginning of tenMhzLoss BankB trap
+
+    faulttenMhzLossBankBFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "10 Mhz Present on BankB"
+    ::= 1078
+    
+    faulttenMhzLossBankBTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "10 Mhz Not present on BankB"
+    ::= 1079
+
+-- end of tenMhzLoss BankB trap
+
+-- beginning of ltcLoss BankAChannel1 trap
+
+    faultltcLossBankAChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Present on BankA on Channel1"
+    ::= 1080
+    
+    faultltcLossBankAChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Not present on BankA on Channel1"
+    ::= 1081
+
+-- end of ltcLoss BankAChannel1 trap
+
+-- beginning of ltcLoss BankAChannel2 trap
+
+    faultltcLossBankAChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Present on BankA on Channel2"
+    ::= 1082
+    
+    faultltcLossBankAChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Not present on BankA on Channel2"
+    ::= 1083
+
+-- end of ltcLoss BankAChannel2 trap
+
+-- beginning of ltcLoss BankBChannel1 trap
+
+    faultltcLossBankBChannel1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Present on BankB on Channel1"
+    ::= 1084
+    
+    faultltcLossBankBChannel1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Not present on BankB on Channel1"
+    ::= 1085
+
+-- end of ltcLoss BankBChannel1 trap
+
+-- beginning of ltcLoss BankBChannel2 trap
+
+    faultltcLossBankBChannel2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Present on BankB on Channel2"
+    ::= 1086
+    
+    faultltcLossBankBChannel2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "LTC Not present on BankB on Channel2"
+    ::= 1087
+
+-- end of ltcLoss BankBChannel2 trap
+
+-- beginning of mscGPIOOutputLevelChanged BankAGpio1 trap
+
+    faultmscGPIOOutputLevelChangedBankAGpio1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Inactive on BankA on Gpio1"
+    ::= 1088
+    
+    faultmscGPIOOutputLevelChangedBankAGpio1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Active on BankA on Gpio1"
+    ::= 1089
+
+-- end of mscGPIOOutputLevelChanged BankAGpio1 trap
+
+-- beginning of mscGPIOOutputLevelChanged BankAGpio2 trap
+
+    faultmscGPIOOutputLevelChangedBankAGpio2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Inactive on BankA on Gpio2"
+    ::= 1090
+    
+    faultmscGPIOOutputLevelChangedBankAGpio2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Active on BankA on Gpio2"
+    ::= 1091
+
+-- end of mscGPIOOutputLevelChanged BankAGpio2 trap
+
+-- beginning of mscGPIOOutputLevelChanged BankBGpio1 trap
+
+    faultmscGPIOOutputLevelChangedBankBGpio1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Inactive on BankB on Gpio1"
+    ::= 1092
+    
+    faultmscGPIOOutputLevelChangedBankBGpio1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Active on BankB on Gpio1"
+    ::= 1093
+
+-- end of mscGPIOOutputLevelChanged BankBGpio1 trap
+
+-- beginning of mscGPIOOutputLevelChanged BankBGpio2 trap
+
+    faultmscGPIOOutputLevelChangedBankBGpio2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Inactive on BankB on Gpio2"
+    ::= 1094
+    
+    faultmscGPIOOutputLevelChangedBankBGpio2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "MSC GPIO Output Active on BankB on Gpio2"
+    ::= 1095
+
+-- end of mscGPIOOutputLevelChanged BankBGpio2 trap
+
+-- beginning of switch2BankA trap
+
+    faultswitch2BankAFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Switched to Bank A"
+    ::= 1096
+    
+    faultswitch2BankATrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Switched from Bank A"
+    ::= 1097
+
+-- end of switch2BankA trap
+
+-- beginning of switch2BankB trap
+
+    faultswitch2BankBFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Switched to Bank B"
+    ::= 1098
+    
+    faultswitch2BankBTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Switched from Bank B"
+    ::= 1099
+
+-- end of switch2BankB trap
+
+-- beginning of powerSupplyfailed PowerSupply1 trap
+
+    faultpowerSupplyfailedPowerSupply1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Supply Ok on PowerSupply1"
+    ::= 1100
+    
+    faultpowerSupplyfailedPowerSupply1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Supply Failure on PowerSupply1"
+    ::= 1101
+
+-- end of powerSupplyfailed PowerSupply1 trap
+
+-- beginning of powerSupplyfailed PowerSupply2 trap
+
+    faultpowerSupplyfailedPowerSupply2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Supply Ok on PowerSupply2"
+    ::= 1102
+    
+    faultpowerSupplyfailedPowerSupply2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power Supply Failure on PowerSupply2"
+    ::= 1103
+
+-- end of powerSupplyfailed PowerSupply2 trap
+
+
+
+
+END

@@ -1,0 +1,79 @@
+RADLAN-rndApplications-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN Application Private Extension
+-- Version:    7.37.0.0
+-- Date:       17 May 2004
+
+IMPORTS
+    rndApplications                                         FROM RADLAN-rndApplications
+    MODULE-IDENTITY, OBJECT-TYPE                            FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                                      FROM SNMPv2-TC;
+
+rndMidLevelManagement  OBJECT IDENTIFIER ::= { rndApplications 2} -- NEW Group
+
+rndAlarmOptions  OBJECT IDENTIFIER ::= { rndMidLevelManagement 2}
+
+rndAlarmEnabling OBJECT-TYPE
+     ::=  { rndAlarmOptions 1 }
+
+rndAlarmInterval OBJECT-TYPE
+     ::=  { rndAlarmOptions 2 }
+
+rndMonitoredElementsTable  OBJECT-TYPE
+    ::= {rndMidLevelManagement 3}
+
+rndMonitoredElementEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rndMonitoredElementStatus
+    ::= {rndMonitoredElementsTable 1}
+
+rndMonitoringTable  OBJECT-TYPE
+    ::= {rndMidLevelManagement 4}
+
+rndMonitoringEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rndMonitoringEntryStatus
+    ::= {rndMonitoringTable 1}
+
+rndMibFilesTable  OBJECT-TYPE
+    ::= {rndMidLevelManagement 5}
+
+rndMibFileEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rndMibFileEntryStatus
+    ::= {rndMibFilesTable 1}
+
+rndHardwareConfiguration OBJECT-TYPE
+    ::= {rndMidLevelManagement 6}
+
+rndEraseSimulatedConfiguration OBJECT-TYPE
+    ::= {rndMidLevelManagement 7}
+
+rndDeleteValuesTable  OBJECT-TYPE
+    ::= {rndMidLevelManagement 8}
+
+rndDeleteValuesEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rndDeleteValueEntryStatus
+    ::= {rndDeleteValuesTable 1}
+
+snmpTesting  OBJECT IDENTIFIER ::= { rndMidLevelManagement 9}
+
+rndSimulatedVariablesTable  OBJECT-TYPE
+    ::= {snmpTesting 1}
+
+rndSimulatedVariablesEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rndSimulatedVariableEntryStatus
+    ::= {rndSimulatedVariablesTable 1}
+
+rsPingMIB OBJECT IDENTIFIER ::= { rndApplications 4} -- NEW Group
+rsPingTable OBJECT-TYPE
+    ::= { rsPingMIB 1 }
+
+rsPingEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rsPingEntryStatus
+    ::= { rsPingTable 1 }
+
+END

@@ -1,0 +1,369 @@
+-- Copyright 2002 Evertz Microsystems Ltd.
+-- 07/02/2002
+-- Confidential
+-- Designed by Jay Parlar
+
+Q-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	exprQ
+	FROM EVERTZ-EXPERIMENTAL-NODE
+	OBJECT-TYPE
+		FROM RFC-1212;
+
+	qInstanceInfo OBJECT IDENTIFIER ::= {exprQ 2}
+	qControl	  OBJECT IDENTIFIER ::= {exprQ 3}
+	qIndexes	  OBJECT IDENTIFIER ::= {exprQ 4}
+	
+
+-- beginning of Q Instance Table
+
+	instanceTable OBJECT-TYPE
+		SYNTAX SEQUENCE OF InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"		
+		This table contains information and objects related to the
+		instance. 
+		"
+	::= {qInstanceInfo 1}
+
+	instanceEntry OBJECT-TYPE
+		SYNTAX InstanceEntry
+		ACCESS not-accessible
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This entry object is used to access the objects in this table
+		"
+		INDEX { qInstance }
+	::= { instanceTable 1}
+
+	InstanceEntry ::= SEQUENCE {
+		qInstance INTEGER
+	}
+
+	qInstance OBJECT-TYPE
+		SYNTAX INTEGER ( 2..15 )
+		ACCESS read-only
+		STATUS mandatory
+		DESCRIPTION
+		"	
+		This object is the main index for this product. Every object is
+		referenced by it.
+		"
+	::= { instanceEntry 1}
+
+-- end of Q InstanceInfo table        
+
+-- Beginning of WindowIndex Table
+
+      windowIndexTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF WindowIndexEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains the windowIndex which is used to reference 
+					other tables in this MIB.
+				    "
+      ::= { qIndexes 1 }
+
+      windowIndexEntry OBJECT-TYPE
+      	SYNTAX WindowIndexEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to reference all the objects in this table.
+                            "
+            INDEX { windowIndex, qInstance }
+      ::= { windowIndexTable 1 }
+
+      WindowIndexEntry ::= SEQUENCE {
+      	windowIndex	INTEGER
+      }     
+      
+      --custom index
+      windowIndex OBJECT-TYPE
+      	SYNTAX INTEGER ( 1..16 )
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					There are one of sixteen possible windows 
+					that this index can represent.  
+                           "
+      ::= { windowIndexEntry 1 }
+
+-- End of windowIndex Table     
+
+-- Beginning of ColourIndex Table
+
+      colourIndexTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF ColourIndexEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains the windowIndex which is used to reference 
+					other tables in this MIB.
+				    "
+      ::= { qIndexes 2 }
+
+     colourIndexEntry OBJECT-TYPE
+      	SYNTAX ColourIndexEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to reference all the objects in this table.
+                            "
+            INDEX { colourIndex, qInstance }
+      ::= { colourIndexTable 1 }
+
+      ColourIndexEntry ::= SEQUENCE {
+      	colourIndex	INTEGER
+      }     
+      
+      --custom index
+      colourIndex OBJECT-TYPE
+      	SYNTAX INTEGER {
+      		colour1(1),
+      		colour2(2),
+      		colour3(3),
+      		colour4(4)   
+         		}
+      		ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					There are one of four possible colours 
+					that this index can represent.  
+                           "
+      ::= { colourIndexEntry 1 }
+
+-- End of colourIndex Table    
+
+
+ 
+-- beginning of  miscControlTable table
+
+	miscControlTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF MiscControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects for misc.
+	control parameters	"
+	::= { qControl 1}
+
+	miscControlEntry OBJECT-TYPE
+	SYNTAX MiscControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in the table
+	"
+	INDEX { qInstance }
+	::= { miscControlTable 1 }
+
+	MiscControlEntry ::= SEQUENCE {
+		layoutPreset INTEGER,
+		defaultColour INTEGER
+		}
+    
+    --9.1
+	layoutPreset OBJECT-TYPE
+		SYNTAX INTEGER (1..14)
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control lets the user choose from one of the 14 factory presets
+		for configuring the display layout of the Multiviewer.		
+		"
+		::= { miscControlEntry 1 }
+    
+    --9.2.1
+	defaultColour OBJECT-TYPE
+		SYNTAX INTEGER {
+			     none(1),
+			     white(2),
+			     gray(3),
+			     yellow(4),
+			     red(5),
+			     green(6),
+			     blue(7),
+			     orange(8),
+			     blackWhite(9),
+			     blackYellow(10),
+			     blackRed(11),
+			     blackGreen(12),
+			     blackBlue(13),
+			     blackOrange(14),
+			     yellowBlue(15),
+			     yellowGreen(16),
+			     yellowRed(17),
+			     whiteBlue(18),
+			     whiteGreen(19),
+			     whiteRed(20)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"      
+		This control allows the user to set the default border color for all borders. 
+		The two color selections in this menu causes the border color to cycle between 
+		both colors thereby appearing to flash on the display.
+		"
+		::= { miscControlEntry 2 }
+        
+        
+-- end of table             
+
+
+
+-- beginning of colour select Table
+
+	colourControlTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF ColourControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table allows for setting window colours	"
+	::= { qControl 2}
+
+	colourControlEntry OBJECT-TYPE
+	SYNTAX ColourControlEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in this table
+	"
+	INDEX { colourIndex, windowIndex, qInstance }
+	::= {colourControlTable 1}
+
+	ColourControlEntry ::= SEQUENCE {
+		selectBorderColour INTEGER,
+		enableBorderColour INTEGER
+	}
+    
+    --9.2.2
+	selectBorderColour OBJECT-TYPE
+		SYNTAX INTEGER {
+			none(1),
+			white(2),
+			gray(3),
+			yellow(4),
+			red(5),
+			green(6),
+			blue(7),
+			orange(8),
+			blackWhite(9),
+			blackYellow(10),
+			blackRed(11),
+			blackGreen(12),
+			blackBlue(13),
+			blackOrange(14),
+			yellowBlue(15),
+			yellowGreen(16),
+			yellowRed(17),
+			whiteBlue(18),
+			whiteGreen(19),
+			whiteRed(20)
+		}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control allows the user to set the border colour
+		for an individual window. Up to four colours can be chosen 
+		for each window.	
+		"
+		::= { colourControlEntry 1}
+	
+	--9.2.3
+	enableBorderColour OBJECT-TYPE
+		SYNTAX INTEGER {
+			off(1),
+			on(2),
+			gpi1(3),
+			gpi2(4),
+			gpi3(5),
+			gpi4(6),
+			gpi5(7),
+			gpi6(8),
+			gpi7(9),
+			gpi8(10),
+			gpi9(11),
+			gpi10(12),
+			gpi11(13),
+			gpi12(14),
+			faultCondition1(15),
+			faultCondition2(16),
+			faultCondition3(17),
+			faultCondition4(18),
+			anyFault(19)
+			}
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control allows the user to enable active picture
+		borders through a GPI interface of via fault conditions
+		"
+		::= { colourControlEntry 2}
+
+-- end of Colour Control Table
+
+--beginning of windowSource table
+
+	windowSourceTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF WindowSourceEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This table contains information and objects for misc.
+	control parameters	"
+	::= { qControl 3}
+
+	windowSourceEntry OBJECT-TYPE
+	SYNTAX WindowSourceEntry
+	ACCESS not-accessible
+	STATUS mandatory
+	DESCRIPTION
+	"
+	This entry object type is used to access the objects in the table
+	"
+	INDEX { windowIndex, qInstance }
+	::= { windowSourceTable 1 }                    
+
+	WindowSourceEntry ::= SEQUENCE {
+		sourceBinding INTEGER
+		}
+     
+    --9.1 
+	sourceBinding OBJECT-TYPE
+		SYNTAX INTEGER (1..16)
+		ACCESS read-write
+		STATUS mandatory
+		DESCRIPTION
+		"
+		This control lets the user assign one of the sixteen sources
+		to one of the sixteen windows.		
+		"
+		::= { windowSourceEntry 1 }
+
+	
+--end of windowSource table
+
+      
+
+END

@@ -1,0 +1,69 @@
+IP-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32,
+    Counter32, IpAddress, mib-2        FROM SNMPv2-SMI
+    PhysAddress                        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP    FROM SNMPv2-CONF
+    ipMIB, ip                          FROM IP-MIB;
+
+-- the IP address table
+
+ipAddrTable OBJECT-TYPE
+    ::= { ip 20 }
+
+ipAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ipAddrTable 1 }
+
+ipAdEntAddr OBJECT-TYPE
+    ::= { ipAddrEntry 1 }
+
+
+ipAdEntIfIndex OBJECT-TYPE
+     FIELD-TO-SET rsIpAdEntIfIndex
+    ::= { ipAddrEntry 2 }
+
+ipAdEntNetMask OBJECT-TYPE
+     FIELD-TO-SET rsIpAdEntNetMask
+    ::= { ipAddrEntry 3 }
+
+ipAdEntBcastAddr OBJECT-TYPE
+     FIELD-TO-SET rsIpAdEntBcastAddr
+    ::= { ipAddrEntry 4 }
+
+
+-- ipRouteTable  ::=   { ip 21 }        obsolete
+
+-- the IP Address Translation table
+
+-- The Address Translation tables contain the IpAddress to
+-- "physical" address equivalences.  Some interfaces do not
+-- use translation tables for determining address
+-- equivalences (e.g., DDN-X.25 has an algorithmic method);
+-- if all interfaces are of this type, then the Address
+-- Translation table is empty, i.e., has zero entries.
+
+ipNetToMediaTable OBJECT-TYPE
+    ::= { ip 22 }
+
+ipNetToMediaEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME ipNetToMediaType
+    DELETE-VALUE      invalid
+    APP-FILENAME    ip\arp\auto\net2med.dtd
+    ::= { ipNetToMediaTable 1 }
+
+ipNetToMediaIfIndex OBJECT-TYPE
+    ::= { ipNetToMediaEntry 1 }
+
+ipNetToMediaPhysAddress OBJECT-TYPE
+    ::= { ipNetToMediaEntry 2 }
+
+ipNetToMediaNetAddress OBJECT-TYPE
+    ::= { ipNetToMediaEntry 3 }
+
+ipNetToMediaType OBJECT-TYPE
+    ::= { ipNetToMediaEntry 4 }
+END
+

@@ -1,0 +1,965 @@
+-- Copyright 2005 Evertz Microsystems Ltd.
+-- Thu Oct 06 13:03:56 2005
+-- Confidential
+GI-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprGI
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+    UTF8String ::= OCTET STRING (SIZE(0..255))
+      
+    giControl OBJECT IDENTIFIER ::= { miniexprGI 3}
+    giNotification OBJECT IDENTIFIER ::= { miniexprGI 4}
+    giTraps OBJECT IDENTIFIER ::= { miniexprGI 5}
+    giAudioControl OBJECT IDENTIFIER ::= { miniexprGI 6}
+
+
+        
+-- Beginning of faultDefinitionVideoTable
+    faultDefinitionVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionVideo table. "
+    ::= { giControl 1 }
+
+    faultDefinitionVideoEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { faultDefinitionVideoTable 1 }
+
+    FaultDefinitionVideoEntry ::= SEQUENCE {
+        inputIndex     INTEGER,
+        videoMissingErrorDuration     INTEGER,
+        videoMissingErrorOnTime     INTEGER
+    }
+
+
+    
+    inputIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            input1(1),
+            input2(2),
+            input3(3),
+            input4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 4.
+           "
+    ::= { faultDefinitionVideoEntry 1 }
+
+    
+    videoMissingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            video is missing or there is an error before a fault occurs.
+            It can have a range from 0 to 120 and in the card from 0 to 60
+            in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 2 }
+
+    
+    videoMissingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the video level is not missing.
+            It has a range from 0 to 120 and in the card from 0 to 60 
+            in 0.5 second increments.
+           "
+    ::= { faultDefinitionVideoEntry 3 }
+
+-- End of faultDefinitionVideoTable
+
+
+        
+-- Beginning of hardwareControlTable
+    hardwareControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF HardwareControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The hardwareControl table. "
+    ::= { giControl 2 }
+
+    hardwareControlEntry OBJECT-TYPE
+      SYNTAX HardwareControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { hardwareControlTable 1 }
+
+    HardwareControlEntry ::= SEQUENCE {
+        systemStatusControl     INTEGER,
+        trapTag     UTF8String
+    }
+
+
+    
+    systemStatusControl OBJECT-TYPE
+      SYNTAX INTEGER {
+            followMaestro(1),
+            followVLPRO(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter will allow the user to select whether the triggers
+            that are sent across PLINK follow Maestro or whether it follows 
+            VLPRO and is filtered according to the sendtrap values.
+            Note: This was added in GI version 2.4
+           "
+    ::= { hardwareControlEntry 1 }
+
+    
+    trapTag OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+            given input which will be assigned to the traps.  This is encoded 
+            as an octet string using the UTF-8 character encoding scheme.  The
+            maximum length of the octet string is 256 characters.
+            Note: This was added in GI version 2.4
+                   "
+    ::= { hardwareControlEntry 2 }
+
+-- End of hardwareControlTable
+
+
+        
+    cardType OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(8) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the type of card and it can either be
+            the 3000GI-2 or 3000GI-4 
+           "
+    ::= { giControl 3 }
+
+        
+-- Beginning of faultDefinitionAudioTable
+    faultDefinitionAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudio table. "
+    ::= { giControl 4 }
+
+    faultDefinitionAudioEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { channelIndex, inputIndex }
+    ::= { faultDefinitionAudioTable 1 }
+
+    FaultDefinitionAudioEntry ::= SEQUENCE {
+        channelIndex     INTEGER,
+        audioMissingErrorDuration     INTEGER,
+        audioMissingErrorOnTime     INTEGER,
+        silenceLevel     INTEGER,
+        silenceDuration     INTEGER,
+        silenceOnTime     INTEGER,
+        overLevel     INTEGER,
+        overDuration     INTEGER,
+        overOnTime     INTEGER,
+        overRatio     INTEGER
+    }
+
+
+    
+    channelIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            channel1(1),
+            channel2(2),
+            channel3(3),
+            channel4(4),
+            channel5(5),
+            channel6(6),
+            channel7(7),
+            channel8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 8.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 1 }
+
+    
+    audioMissingErrorDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..198 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls allows the user to set the amount of time the 
+            audio is missing in seconds before a fault occurs.  The control
+            can have a value from 0 to 198, however, in the card, the range
+            is from 0 to 99 in 0.5 second intervals.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 2 }
+
+    
+    audioMissingErrorOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the audio is not considered missing. 
+            It has a range from 0 to 120 and a range in the card from 
+            0 to 60 in 0.5 second increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 3 }
+
+    
+    silenceLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -96..0 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level under which it
+            is considered to be silent.  The range of this parameter is
+            dependent on the value of audioMode.  If audioMode is 0, 2 or 3 the
+            audio is digital and has a range of of -96 to -20 dB FS. If
+            audioMode is 1 then the audio is analog and has a range of -60 to 0
+            dBr.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 4 }
+
+    
+    silenceDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the
+            audio is silent in seconds before a fault occurs.  This control
+            can have a value of 0.5 to 127 in 0.5 increments therefore this
+            object has a range of 1 to 254.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 5 }
+
+    
+    silenceOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+            will remain active after the audio level is not considered to 
+            be silent. 
+            It has a range from 0 to 120 and a range in the card from 
+            0 to 60 in 0.5 second increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 6 }
+
+    
+    overLevel OBJECT-TYPE
+      SYNTAX INTEGER ( -120..80 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the audio level over which
+            is considered to be over level.  
+            The range of this parameter is dependent on the value of audioMode.
+            If audioMode is 0, 2 or 3 the audio is digital and this object has
+            a range of -30 to 0 dB FS in 1/4 increments.  If audioMode is 1
+            then the audio is analog and has a range of 0 to 20 dBr in 1/4
+            increments.  Therefore, this object has a range of -120 to 80.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioEntry 7 }
+
+    
+    overDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..240 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the duration in number of 
+        consecutive samples that are at or above the over level before a 
+        fault condition exists.  The range of this object is from 0 to 240
+        seconds.
+        Note: This was added in GI version 2.4
+        Note: This has no effect on the GI2
+       "
+    ::= { faultDefinitionAudioEntry 8 }
+
+    
+    overOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the trigger
+        will remain active after the audio is not considered over. 
+        It has a range from 0 to 120 and a range in the card from 
+        0 to 60 in 0.5 second increments.
+        Note: This was added in GI version 2.4
+        Note: This has no effect on the GI2
+       "
+    ::= { faultDefinitionAudioEntry 9 }
+
+    
+    overRatio OBJECT-TYPE
+      SYNTAX INTEGER ( 10..1000 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the Audio Over Ratio and its
+        range is from 10 to 100 and a range in the card from 0.1 to 1 in 
+        1 percent increments.
+        Note: This was added in GI version 2.4
+        Note: This has no effect on the GI2
+       "
+    ::= { faultDefinitionAudioEntry 10 }
+
+-- End of faultDefinitionAudioTable
+
+
+        
+-- Beginning of faultDefinitionAudioPairTable
+    faultDefinitionAudioPairTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioPairEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudioPair table. "
+    ::= { giControl 5 }
+
+    faultDefinitionAudioPairEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioPairEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { pairIndex, inputIndex }
+    ::= { faultDefinitionAudioPairTable 1 }
+
+    FaultDefinitionAudioPairEntry ::= SEQUENCE {
+        pairIndex     INTEGER,
+        phaseReversalLevel     INTEGER,
+        phaseReversalDuration     INTEGER,
+        phaseReversalOnTime     INTEGER,
+        monoDetectionLevel     INTEGER,
+        monoDetectionDuration     INTEGER,
+        monoDetectionOnTime     INTEGER,
+        nonPCMMissingDuration     INTEGER,
+        nonPCMMissingOnTime     INTEGER
+    }
+
+
+    
+    pairIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            audioPair12(1),
+            audioPair34(2),
+            audioPair56(3),
+            audioPair78(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This is the main index in this table.  Every other object in this
+            table is indexed by this index.  It can have input values from 
+            1 to 4.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 1 }
+
+    
+    phaseReversalLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 50..100 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio in seconds under the above level which is
+            considered a fault.  This value is 100 times larger than what the
+            OV actually uses.  The range on the OV is (0.5 to 1.0) and steps
+            in .01 increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 2 }
+
+    
+    phaseReversalDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Duration of audio in seconds under the above level which is 
+            considered a fault.  The value is 2 times larger than that of the
+            OV.  The OV has a range of (0.5..127) with 0.5 increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 3 }
+
+    
+    phaseReversalOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the phase reversal level 
+            is not considered to be reversed.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 4 }
+
+    
+    monoDetectionLevel OBJECT-TYPE
+      SYNTAX INTEGER ( 20..50 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the mono detection level
+            which is considered to be mono.  It has a range from 20 to 50
+            but in the card, the range is from 0.2 to 0.5 in 0.01 increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 5 }
+
+    
+    monoDetectionDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 1..254 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This is the mono detection duration parameter and it has a range 
+            from 1 to 254.  This is the time until which the mono detection
+            is considered a fault based on the mono detection level.  The card
+            has a range from 0 to 127 in increments of 0.5 seconds.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 6 }
+
+    
+    monoDetectionOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the mono level is  
+            is not considered to be mono.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 7 }
+
+    
+    nonPCMMissingDuration OBJECT-TYPE
+      SYNTAX INTEGER ( 0..99 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This is the Loss of NON PCM Audio Duration and it has a range
+            from 0 to 99.  This is the time until which the NON-PCM Audio
+            is considered a fault.  
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 8 }
+
+    
+    nonPCMMissingOnTime OBJECT-TYPE
+      SYNTAX INTEGER ( 0..120 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to set the amount of time the 
+            trigger will remain active after the non pcm audio is  
+            is not considered to be lost.  It has range from 0 to 120 
+            and in the card a range from 0 to 60 in 0.5 second increments.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+           "
+    ::= { faultDefinitionAudioPairEntry 9 }
+
+-- End of faultDefinitionAudioPairTable
+
+
+        
+-- Beginning of mvpIdDefinitionTable
+    mvpIdDefinitionTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mvpIdDefinition table. "
+    ::= { giControl 6 }
+
+    mvpIdDefinitionEntry OBJECT-TYPE
+      SYNTAX MvpIdDefinitionEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mvpIdIndex, inputIndex }
+    ::= { mvpIdDefinitionTable 1 }
+
+    MvpIdDefinitionEntry ::= SEQUENCE {
+        mvpIdIndex     INTEGER,
+        mvpIdValue     UTF8String
+    }
+
+
+    
+    mvpIdIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            mvpId1(1),
+            mvpId2(2),
+            mvpId3(3),
+            mvpId4(4),
+            mvpId5(5),
+            mvpId6(6),
+            mvpId7(7),
+            mvpId8(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This indexes the mvpIdDefinitionTable.  It can have
+                    input values from 1 to 8
+                    Note: This was added in GI version 2.4
+                           "
+    ::= { mvpIdDefinitionEntry 1 }
+
+    
+    mvpIdValue OBJECT-TYPE
+      SYNTAX UTF8String 
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter allows the user to set an alpha numeric tag to a 
+                    given input and id slot.  This is encoded as an octet
+                    string using the UTF-8 character encoding scheme.  The
+                    maximum length of the octet string is 256 characters.
+                    Note: This was added in GI version 2.4
+                           "
+    ::= { mvpIdDefinitionEntry 2 }
+
+-- End of mvpIdDefinitionTable
+
+
+        
+-- Beginning of mgmtFaultVideoTable
+    mgmtFaultVideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultVideo table. "
+    ::= { giNotification 1 }
+
+    mgmtFaultVideoEntry OBJECT-TYPE
+      SYNTAX MgmtFaultVideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameVideo, inputIndex }
+    ::= { mgmtFaultVideoTable 1 }
+
+    MgmtFaultVideoEntry ::= SEQUENCE {
+        faultNameVideo     INTEGER,
+        sendTrapVideo     INTEGER,
+        faultPresentVideo     INTEGER
+    }
+
+
+    
+    faultNameVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            futureUseVid1(1),
+            futureUseVid2(2),
+            lossOfVideo(3),
+            futureUseVid3(4),
+            futureUseVid4(5),
+            futureUseVid5(6),
+            futureUseVid6(7),
+            futureUseVid7(8),
+            futureUseVid8(9),
+            futureUseVid9(10),
+            futureUseVid10(11),
+            futureUseVid11(12),
+            futureUseVid12(13),
+            futureUseVid13(14),
+            futureUseVid14(15),
+            futureUseVid15(16),
+            futureUseVid16(17),
+            futureUseVid17(18),
+            futureUseVid18(19),
+            futureUseVid19(20),
+            futureUseVid20(21),
+            futureUseVid21(22),
+            futureUseVid22(23),
+            futureUseVid23(24),
+            futureUseVid24(25),
+            futureUseVid25(26),
+            futureUseVid26(27),
+            futureUseVid27(28),
+            futureUseVid28(29),
+            futureUseVid29(30),
+            futureUseVid30(31),
+            futureUseVid31(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { mgmtFaultVideoEntry 1 }
+
+    
+    sendTrapVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+                 "
+    ::= { mgmtFaultVideoEntry 2 }
+
+    
+    faultPresentVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: For the 'futureUseVid#' faults, a value of false will be
+            returned.
+             "
+    ::= { mgmtFaultVideoEntry 3 }
+
+-- End of mgmtFaultVideoTable
+
+
+        
+-- Beginning of mgmtFaultAudioTable
+    mgmtFaultAudioTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAudio table. "
+    ::= { giNotification 2 }
+
+    mgmtFaultAudioEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAudioEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameAudio, inputIndex }
+    ::= { mgmtFaultAudioTable 1 }
+
+    MgmtFaultAudioEntry ::= SEQUENCE {
+        faultNameAudio     INTEGER,
+        sendTrapAudio     INTEGER,
+        faultPresentAudio     INTEGER
+    }
+
+
+    
+    faultNameAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            lossOfAudioCH1(1),
+            lossOfAudioCH2(2),
+            lossOfAudioCH3(3),
+            lossOfAudioCH4(4),
+            lossOfAudioCH5(5),
+            lossOfAudioCH6(6),
+            lossOfAudioCH7(7),
+            lossOfAudioCH8(8),
+            audioCH1Silence(9),
+            audioCH2Silence(10),
+            audioCH3Silence(11),
+            audioCH4Silence(12),
+            audioCH5Silence(13),
+            audioCH6Silence(14),
+            audioCH7Silence(15),
+            audioCH8Silence(16),
+            audioCH1Over(17),
+            audioCH2Over(18),
+            audioCH3Over(19),
+            audioCH4Over(20),
+            audioCH5Over(21),
+            audioCH6Over(22),
+            audioCH7Over(23),
+            audioCH8Over(24),
+            phaseReversalLevel12(25),
+            phaseReversalLevel34(26),
+            phaseReversalLevel56(27),
+            phaseReversalLevel78(28),
+            audioMono12(29),
+            audioMono34(30),
+            audioMono56(31),
+            audioMono78(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index
+            Note: This was added in GI version 2.4 
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudioEntry 1 }
+
+    
+    sendTrapAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudioEntry 2 }
+
+    
+    faultPresentAudio OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudioEntry 3 }
+
+-- End of mgmtFaultAudioTable
+
+
+        
+-- Beginning of mgmtFaultAudVidTable
+    mgmtFaultAudVidTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAudVidEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAudVid table. "
+    ::= { giNotification 3 }
+
+    mgmtFaultAudVidEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAudVidEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { faultNameAudVid, inputIndex }
+    ::= { mgmtFaultAudVidTable 1 }
+
+    MgmtFaultAudVidEntry ::= SEQUENCE {
+        faultNameAudVid     INTEGER,
+        sendTrapAudVid     INTEGER,
+        faultPresentAudVid     INTEGER
+    }
+
+
+    
+    faultNameAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            lossOfNonPCMAudio12(1),
+            lossOfNonPCMAudio34(2),
+            lossOfNonPCMAudio56(3),
+            lossOfNonPCMAudio78(4),
+            futureUseAudVid4(5),
+            futureUseAudVid5(6),
+            futureUseAudVid6(7),
+            futureUseAudVid7(8),
+            futureUseAudVid8(9),
+            futureUseAudVid9(10),
+            futureUseAudVid10(11),
+            futureUseAudVid11(12),
+            futureUseAudVid12(13),
+            futureUseAudVid13(14),
+            futureUseAudVid14(15),
+            futureUseAudVid15(16),
+            futureUseAudVid16(17),
+            futureUseAudVid17(18),
+            futureUseAudVid18(19),
+            futureUseAudVid19(20),
+            futureUseAudVid20(21),
+            futureUseAudVid21(22),
+            futureUseAudVid22(23),
+            futureUseAudVid23(24),
+            futureUseAudVid24(25),
+            futureUseAudVid25(26),
+            futureUseAudVid26(27),
+            futureUseAudVid27(28),
+            futureUseAudVid28(29),
+            futureUseAudVid29(30),
+            futureUseAudVid30(31),
+            futureUseAudVid31(32)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudVidEntry 1 }
+
+    
+    sendTrapAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to select which fault the agent
+            will receive and which faults the agent will ignore.  The values
+            for this object are false and true.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudVidEntry 2 }
+
+    
+    faultPresentAudVid OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the state of a fault.  If
+            the value for a fault says false, then there are no errors with
+            that fault.  If the value for a fault says true then there is
+            a trap present for that fault.
+            Note: For the 'futureUseAudVid#' faults, a value of false will be
+            returned.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+             "
+    ::= { mgmtFaultAudVidEntry 3 }
+
+-- End of mgmtFaultAudVidTable
+
+
+        
+    faultAckOn OBJECT-TYPE
+      SYNTAX INTEGER ( 1000..1767 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The value sets the acknowledgement for the trap number given.
+                 Note: This was added in GI version 2.4
+                   "
+    ::= { giNotification 4 }
+
+        
+    faultAckOff OBJECT-TYPE
+      SYNTAX INTEGER ( 1000..1767 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " The value unsets the acknowledgement for the trap number given.
+                 Note: This was added in GI version 2.4
+                   "
+    ::= { giNotification 5 }
+
+        
+-- Beginning of faultDefinitionAudioInfoTable
+    faultDefinitionAudioInfoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FaultDefinitionAudioInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The faultDefinitionAudioInfo table. "
+    ::= { giAudioControl 1 }
+
+    faultDefinitionAudioInfoEntry OBJECT-TYPE
+      SYNTAX FaultDefinitionAudioInfoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { inputIndex }
+    ::= { faultDefinitionAudioInfoTable 1 }
+
+    FaultDefinitionAudioInfoEntry ::= SEQUENCE {
+        audioMode     INTEGER
+    }
+
+
+    
+    audioMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            discreateUnbalancedAES(1),
+            discreateBalancedAnalog(2),
+            disabled(3),
+            discreateBalancedAES(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This control allows the user to read the type of audio that is
+            being processed by the card.
+            Note: This was added in GI version 2.4
+            Note: This has no effect on the GI2
+                   "
+    ::= { faultDefinitionAudioInfoEntry 1 }
+
+-- End of faultDefinitionAudioInfoTable
+
+
+
+END

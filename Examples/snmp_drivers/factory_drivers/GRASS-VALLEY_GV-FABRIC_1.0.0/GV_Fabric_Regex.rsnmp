@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on GV Fabric-16 switch at SLP, 19th Feb 2020.
+	The software version of the unit tested is:
+		 X86_64 3.8.2110 2019-12-08 17:21:20 x86_64
+	This unit is configured with V2c SNMP, so this config is for V2c SNMP units.  It hasn't been tested
+	and may not work with units configured for V1 SNMP.	
+-->
+<DefinitionGroup>
+	
+	<OIDAlias id="MIB2" oid=".1.3.6.1.2.1" >
+		<OIDAlias id="PTP BASE" oid=".241" >
+			<OIDAlias id="PTP BASE CLOCK INFO" oid=".1.2" >
+				<OIDAlias id="CLOCK PARENT INFO" oid=".2.1" >
+					<OIDAlias id="PTP PARENT IDENTITY" oid=".4" />
+					<OIDAlias id="PTP PARENT PRIORITY 1" oid=".9" />
+					<OIDAlias id="PTP PARENT PRIORITY 2" oid=".10" />
+					<OIDAlias id="PTP PARENT CLASS" oid=".11" />
+				</OIDAlias>
+				<OIDAlias id="CLOCK PORT RUNNING TABLE" oid=".9.1" >
+					<OIDAlias id="PTP CLOCK PORT NAME" oid=".5" />
+					<OIDAlias id="PTP CLOCK PORT STATE" oid=".6" />
+				</OIDAlias>
+			</OIDAlias>
+		</OIDAlias>
+		<OIDAlias id="IFX ENTRY" oid=".31.1.1.1">
+			<OIDAlias id="IFX NAME" oid=".1" />
+			<OIDAlias id="IF ALIAS" oid=".18"/>
+			<OIDAlias id="IF HIGH SPEED" oid=".15"/>
+			<OIDAlias id="IFX IN OCTETS" oid=".6"/>
+			<OIDAlias id="IFX OUT OCTETS" oid=".10"/>
+		</OIDAlias>
+		<OIDAlias id="HOST" oid=".25">
+			<OIDAlias id="DEVICE DESCRIPTION" oid=".3.2.1.3" />
+			<OIDAlias id="STORAGE DESCRIPTION" oid=".2.3.1.3" />
+		</OIDAlias>
+		<OIDAlias id="PHYSICAL ENTRY" oid=".47.1.1.1.1" >
+			<OIDAlias id="DEVICE PHYSICAL NAME" oid=".7" />
+			<OIDAlias id="PHYSICAL DESCRIPTION" oid=".2" />
+			<OIDAlias id="SERIAL NUMBER" oid=".11" />
+		</OIDAlias>
+		<OIDAlias id="PHYSICAL ENTRY" oid=".47.1.1.1.1" >
+			<OIDAlias id="PHYSICAL SENSOR UNIT" oid=".6" />
+			<OIDAlias id="PHYSICAL DESCRIPTION" oid=".2" />
+		</OIDAlias>
+		<OIDAlias id="ENTITY SENSOR" oid=".99.1.1.1" >
+			<OIDAlias id="PHYSICAL SENSOR VALUE" oid=".4" />
+			<OIDAlias id="PHYSICAL SENSOR STATUS" oid=".5" />
+		</OIDAlias>
+			<OIDAlias id="IF ENTRY" oid=".2.2.1" >
+				<OIDAlias id="IN OCTECTS" oid=".10" />
+				<OIDAlias id="OUT OCTECTS" oid=".16" />
+				<OIDAlias id="IF DESC" oid=".2" />
+			</OIDAlias>
+	</OIDAlias>
+	
+	<OIDAlias id="MELLANOX" oid=".1.3.6.1.4.1.33049" >
+		<OIDAlias id="MELLANOX SW" oid=".11.1.1.1.1" />
+	</OIDAlias>
+		
+	<UnitTypeDef typeName="GRASS-VALLEY_GV-FABRIC_1.0.0" snmpVersion="2C">
+	
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>1.0</StaticString>
+		</StaticDef>
+		
+		<!-- Filter Arrays -->
+	<!--
+		<OIDFilter id="MELLANOX ACTIVE SW" dynamic="true">
+			<OID alias="MELLANOX SW">.3.#I</OID>
+			<OIDFilterRule regex="1" />
+		</OIDFilter>
+		
+		<OIDFilter id="MELLANOX BOOT SW" dynamic="true">
+			<OID alias="MELLANOX SW">.4.#I</OID>
+			<OIDFilterRule regex="1" />
+		</OIDFilter>
+	-->
+		<OIDFilter id="CPU" dynamic="true" >
+			<OID alias="DEVICE DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(GenuineIntel.*)"/>
+		</OIDFilter>
+		
+		<!--OIDFilter id="PTP PORTS" dynamic="true" >
+			<OID alias="PTP CLOCK PORT NAME">.#I</OID>
+			<OIDFilterRule regex="^(Eth\d{1,2}(\/?))"/>
+			<OIDFilterRule regex="^(Port-Channel\d*)" />
+			<OIDSortRule regex="^Eth" type="Alpha" />
+			<OIDSortRule regex="\D*(\d*)/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/(\d*)" type="Num"/>
+		</OIDFilter-->
+		
+		<OIDFilter id="MGMT PORTS" dynamic="true" >
+			<OID alias="IF DESC">.#I</OID>
+			<OIDFilterRule regex="^(mgmt\d{1,2}(\/?))"/>
+			<OIDSortRule regex="\D*(\d*)/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/(\d*)" type="Num"/>
+		</OIDFilter>
+		
+		<OIDFilter id="LAN PORTS" dynamic="true" >
+			<OID alias="IF DESC">.#I</OID>
+			<OIDFilterRule regex="^(Eth\d{1,2}(\/?))"/>
+			<OIDFilterRule regex="^(mgmt\d{1,2}(\/?))"/>
+			<OIDFilterRule regex="^(Port-Channel\d*)" />
+			<OIDSortRule regex="^(Eth)" type="Alpha" />
+			<OIDSortRule regex="\D*(\d*)/\d*" type="Num"/>
+			<OIDSortRule regex="\D*\d*/(\d*)" type="Num"/>
+			<OIDSortRule regex="^(mgmt)" type="Alpha" />
+		</OIDFilter>
+	
+		<OIDFilter id="FAN" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(MGMT\/FAN\d\/F1)" />
+			<OIDFilterRule regex="^(FAN\d\/FAN\/F\d)" />
+			<OIDFilterRule regex="^(PS\d\/FAN\/F\d)" />
+		</OIDFilter>
+		
+		<OIDFilter id="PSU CURRENT" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(MGMT\/PS\d\/CURRENT)" />
+			<OIDFilterRule regex="^(PS\d\/power-mon\/CONSUMER_CURRENT)" />
+		</OIDFilter>
+		
+		<OIDFilter id="PSU VOLTAGE" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(MGMT\/PS\d\/VOLTAGE)" />
+			<OIDFilterRule regex="^(PS\d\/power-mon\/CONSUMER_VOLTAGE)" />
+		</OIDFilter>
+		
+		<OIDFilter id="PSU POWER" dynamic="true">
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<OIDFilterRule regex="^(MGMT\/PS\d\/POWER)" />
+			<OIDFilterRule regex="^(PS\d\/power-mon\/CONSUMER_POWER)" />
+		</OIDFilter>
+		
+		<OIDFilter id="TEMPERATURE" dynamic="true" >
+			<OID alias="DEVICE PHYSICAL NAME">.#I</OID>
+			<OIDFilterRule regex="^(Temperature Sensor)" />
+		</OIDFilter>
+		
+		<OIDFilter id="STORAGE" exclude="true" dynamic="true">
+			<OID alias="STORAGE DESCRIPTION">.#I</OID>
+			<comment> we don't want to measure cached memory </comment>
+			<OIDFilterRule regex="(Cached memory)" />
+		</OIDFilter>
+
+		<!-- These examples reference some of the global translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS NAME" />
+
+		<TranslationDef link="SYS LOCATION" />
+		
+		<TranslationDef link="CPU ARRAY">
+		    <Array filter="CPU" /> 
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CPU_%d_NAME" pollRate="600">
+			<OID alias="DEVICE DESCRIPTION">.#I</OID>
+			<Array filter="CPU" /> 
+			<StringRule />
+			<ConstRule format="WARN: No Information" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="SERIAL_NUM" pollRate="600" >
+			<OID alias="SERIAL NUMBER">.1</OID>
+			<StringRule />
+			<ConstRule format="WARN: No Information" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef link="DISC NAME ARRAY">
+		    <Array filter="STORAGE" />
+		</TranslationDef>
+
+		<TranslationDef link="DISC SIZE ARRAY">
+		    <Array filter="STORAGE" />
+		</TranslationDef>
+
+		<TranslationDef link="DISC USED ARRAY">
+		    <Array filter="STORAGE" />
+		</TranslationDef>
+
+		<TranslationDef link="DISC FREE PERCENT ARRAY">
+		    <Array filter="STORAGE" />
+		</TranslationDef>
+
+		<TranslationDef link="DISC FREE ARRAY">
+		    <Array filter="STORAGE" />
+		</TranslationDef>
+		
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="LAN PORTS" />    
+		</TranslationDef>
+		
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="PORT TRAFFIC IN ARRAY" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<TranslationDef link="PORT TRAFFIC OUT ARRAY" >
+			<Array filter="LAN PORTS" /> 
+		</TranslationDef>
+		
+		<!-- error and discards specific monitoring -->
+	<!--
+		<TranslationDef rcLogField="VERSION" pollRate="600" >
+			<Array filter="MELLANOX ACTIVE SW" />
+			<OID alias="MELLANOX SW">.2.#I</OID>
+			|<StringRule />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="VERSION_NEXT_BOOT" pollRate="600" >
+			<Array filter="MELLANOX BOOT SW" />
+			<OID alias="MELLANOX SW">.2.#I</OID>
+			|<StringRule />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+	-->
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" /> 
+			<OID alias="IF ENTRY">.20.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_OUTPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" /> 
+			<OID alias="IF ENTRY">.19.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_ERRORS" pollRate="1">
+			<Array filter="LAN PORTS" /> 
+			<OID alias="IF ENTRY">.14.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f errors/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f errors/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f errors/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_INPUT_DISCARDS" pollRate="1">
+			<Array filter="LAN PORTS" /> 
+			<OID alias="IF ENTRY">.13.#I</OID>
+			<comment> OK up to 1 error every 20 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="0" format="OK: %1.2f discards/sec"/>
+			<comment> WARN up to 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" valueMax="1" format="WARN: %1.2f discards/sec"/>
+			<comment> FAIL after 1 error every 10 seconds </comment>
+			<NumRule rateOfChange="true" format="FAIL: %1.2f discards/sec"/>
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_NAME" pollRate="600" >
+			<ExpOID alias="IF ALIAS">.#I</ExpOID>
+			<ExpOID alias="IF DESC">.#I</ExpOID>
+			<Array filter="LAN PORTS" /> 
+			<ExpressionRule format="$2 : $1" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_PORTNUM" pollRate="600" >
+			<OID alias="IFX NAME">.#I</OID>
+			<Array filter="LAN PORTS" /> 
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_%d_NAME" pollRate="600" >
+			<Array filter="TEMPERATURE" />
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<StringRule />
+			<ConstRule format="WARN: No Information" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_%d_CELCIUS" pollRate="60" >
+			<Array filter="TEMPERATURE" />
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ConditionRule condition="$1 e 949 &lt;" expression="$1 e 10 /" format="OK: %0.1f Celcius" />
+			<ConditionRule condition="$1 e 1049 &lt;" expression="$1 e 10 /" format="WARN: %0.1f Celcius" />
+			<ConditionRule condition="$1 e 1050 &gt;" expression="$1 e 10 /" format="FAIL: %0.1f Celcius" />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d_NAME" pollRate="600" >
+			<OID alias="PHYSICAL DESCRIPTION">.#I</OID>
+			<Array filter="FAN" />
+			<StringRule />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_%d_SPEED" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL SENSOR STATUS">.#I</ExpOID>
+			<Array filter="FAN" />
+			<ConditionRule condition="$2 e 1 =" expression="$1 e" format="OK: $1 RPM" />
+			<ConditionRule condition="$2 e 1 !=" expression="$1 e" format="WARN: $1 RPM" />
+			<ConstRule format="%s RPM" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+			
+		<TranslationDef rcLogField="PSU_%d_CURRENT" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL SENSOR STATUS">.#I</ExpOID>
+			<Array filter="PSU CURRENT"/>
+			<ConditionRule condition="$2 e 1 =" expression="$1 e 1000 /" format="OK: %0.2f amps" />
+			<ConditionRule condition="$2 e 1 !=" expression="$1 e 1000 /" format="WARN: %0.2f amps" />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_VOLTAGE" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL SENSOR STATUS">.#I</ExpOID>
+			<Array filter="PSU VOLTAGE"/>
+			<ConditionRule condition="$2 e 1 =" expression="$1 e $1 e =" format="OK: $1 volts DC" />
+			<ConditionRule condition="$2 e 1 !="  expression="$1 e $1 e =" format="WARN: $1 volts DC" />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_POWER" pollRate="60" >
+			<ExpOID alias="PHYSICAL SENSOR VALUE">.#I</ExpOID>
+			<ExpOID alias="PHYSICAL SENSOR STATUS">.#I</ExpOID>
+			<Array filter="PSU POWER"/>
+			<ConditionRule condition="$2 e 1 =" expression="$1 e $1 e =" format="OK: $1 watts" />
+			<ConditionRule condition="$2 e 1 !=" expression="$1 e $1 e =" format="WARN: $1 watts" />
+			<ConstRule format="N/A" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<!-- PTP Monitoring -->
+		
+		<!-- PTPBASE MIB not supported - ticket 00769933 raised with Mellanox
+		
+		<TranslationDef rcLogField="PTP_PARENT_IDENTITY" pollRate="60" >
+			<OID alias="PTP PARENT IDENTITY">.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_PARENT_PRIORITY1" pollRate="60" >
+			<OID alias="PTP PARENT PRIORITY 1">.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_PARENT_PRIORITY2" pollRate="60" >
+			<OID alias="PTP PARENT PRIORITY 2">.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_PARENT_CLASS" pollRate="60" >
+			<OID alias="PTP PARENT CLASS">.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		-->
+		
+		<!-- Unable to use this until we can use nested filters - jira: RLSN-298
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_PTP_CLOCK" pollRate="60" >
+			<OID alias="PTP CLOCK PORT STATE">.#I</OID>
+			<Array filter="PTP PORTS" />
+			<NumRule value="1" format="WARN: Initializing" />
+			<NumRule value="2" format="FAIL: Faulty" />
+			<NumRule value="3" format="WARN: Disabled" />
+			<NumRule value="4" format="WARN: Listening" />
+			<NumRule value="5" format="WARN: preMaster" />
+			<NumRule value="6" format="OK: Master" />
+			<NumRule value="7" format="OK: Passive" />
+			<NumRule value="8" format="WARN: Uncalibrated" />
+			<NumRule value="9" format="OK: Slave" />
+			<ConstRule format="WARN: No data" />
+			<ErrorRule format="FAIL: Error" />
+		</TranslationDef>
+		
+		-->
+		
+	</UnitTypeDef>
+
+</DefinitionGroup>

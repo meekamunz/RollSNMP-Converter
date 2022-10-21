@@ -1,0 +1,402 @@
+-- Copyright 2001 Evertz Microsystems Ltd.
+-- May/22/2001
+-- Confidential
+-- Preliminary
+
+FC-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    locInstance, fcTraps
+        FROM FC-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault   OBJECT IDENTIFIER ::= { fcTraps 1 }
+
+-- beginning of insertion/removal trap slot 2
+
+      insertionSlot2 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been inserted in slot 2."
+      ::= 1000
+
+      removalSlot2 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 2."
+      ::= 1001
+
+-- end of insertion removal trap slot 2 
+-- beginning of insertion/removal trap slot 3
+
+      insertionSlot3 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 3."
+      ::= 1002
+
+      removalSlot3 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 3."
+      ::= 1003
+
+-- end of insertion removal trap slot 3
+-- beginning of insertion/removal trap slot 4
+
+      insertionSlot4 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 4."
+      ::= 1004
+
+      removalSlot4 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 4."
+      ::= 1005
+
+-- end of insertion removal trap slot 4
+-- beginning of insertion/removal trap slot 5
+
+      insertionSlot5 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 5."
+      ::= 1006
+
+      removalSlot5 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 5."
+      ::= 1007
+
+-- end of insertion removal trap slot 5
+-- beginning of insertion/removal trap slot 6
+
+      insertionSlot6 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 6."
+      ::= 1008
+
+      removalSlot6 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 6."
+      ::= 1009
+
+-- end of insertion removal trap slot 6
+-- beginning of insertion/removal trap slot 7
+
+      insertionSlot7 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 7."
+      ::= 1010
+
+      removalSlot7 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 7."
+      ::= 1011
+
+-- end of insertion removal trap slot 7
+-- beginning of insertion/removal trap slot 8
+
+      insertionSlot8 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 8."
+      ::= 1012
+
+      removalSlot8 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 8."
+      ::= 1013
+
+-- end of insertion removal trap slot 8
+-- beginning of insertion/removal trap slot 9
+
+      insertionSlot9 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 9."
+      ::= 1014
+
+      removalSlot9 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 9."
+      ::= 1015
+
+-- end of insertion removal trap slot 9
+-- beginning of insertion/removal trap slot10 
+
+      insertionSlot10 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 10."
+      ::= 1016
+
+      removalSlot10 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 10."
+      ::= 1017
+
+-- end of insertion removal trap slot 10
+-- beginning of insertion/removal trap slot 11
+
+      insertionSlot11 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 11."
+      ::= 1018
+
+      removalSlot11 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 11."
+      ::= 1019
+
+-- end of insertion removal trap slot 11
+-- beginning of insertion/removal trap slot 12
+
+      insertionSlot12 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 12."
+      ::= 1020
+
+      removalSlot12 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 12."
+      ::= 1021
+
+-- end of insertion removal trap slot 12
+-- beginning of insertion/removal trap slot 13
+
+      insertionSlot13 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 13."
+      ::= 1022
+
+      removalSlot13 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 13."
+      ::= 1023
+
+-- end of insertion removal trap slot 13
+-- beginning of insertion/removal trap slot 14
+
+      insertionSlot14 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 14."
+      ::= 1024
+
+      removalSlot14 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 14."
+      ::= 1025
+
+-- end of insertion removal trap slot 14
+-- beginning of insertion/removal trap slot 15 
+
+      insertionSlot15 TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "A card has been inserted in slot 15."
+      ::= 1026
+
+      removalSlot15 TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "A card has been removed from slot 15."
+      ::= 1027
+
+-- end of insertion removal trap slot 15 
+-- beginning of frame status line 
+
+      faultFrameStatusLineFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "frame status is ok"
+      ::= 1028
+
+      faultFrameStatusLineTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "frame status is not ok"
+      ::= 1029
+-- end of frame status line                                                                   
+-- beginning of temperature Over 
+
+      faultTemperatureOverFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "
+                        Temperature Ok
+                        "
+      ::= 1030
+
+      faultTemperatureOverTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Temperature Over
+                      "
+      ::= 1031
+
+-- end of temperature over
+-- beginning of temperature under 
+
+      faultTemperatureUnderFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                        "
+                        Temperature Ok
+                        "
+      ::= 1032
+
+      faultTemperatureUnderTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Temperature Under
+                      "
+      ::= 1033
+
+-- end of temperature under  
+
+-- beginning of powersupply 1 
+
+      faultPowerSupply1NotOkFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES   { locInstance }
+              DESCRIPTION 
+                        "
+                        Power Supply / Fan 1 OK 
+                        "
+      ::= 1034
+
+      faultPowerSupply1NotOkTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Power Supply / Fan 1 Failed
+                      "
+      ::= 1035
+
+-- end of powersupply 1 
+
+-- beginning of powersupply 2 
+
+      faultPowerSupply2NotOkFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES   { locInstance }
+              DESCRIPTION 
+                        "
+                        Power Supply / Fan 2 OK 
+                        "
+      ::= 1036
+
+      faultPowerSupply2NotOkTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Power Supply / Fan 2 Failed
+                      "
+      ::= 1037
+
+-- end of powersupply 2            
+
+-- beginning of rearfan 1 
+
+      faultRearFan1NotOkFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES   { locInstance }
+              DESCRIPTION 
+                        "
+                        Rear Fan 1 OK  (obsolete, VLPro should hide this)
+                        "
+      ::= 1038
+
+      faultRearFan1NotOkTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Rear Fan 1 Failed  (obsolete, VLPro should hide this)
+                      "
+      ::= 1039
+
+-- end of rearfan 1
+
+-- beginning of rearfan 2 
+
+      faultRearFan2NotOkFalse TRAP-TYPE
+      	  ENTERPRISE      trapFault
+              VARIABLES   { locInstance }
+              DESCRIPTION 
+                        "
+                        Rear Fan 2 OK  (obsolete, VLPro should hide this)
+                        "
+      ::= 1040
+
+      faultRearFan2NotOkTrue TRAP-TYPE
+              ENTERPRISE      trapFault
+              VARIABLES       { locInstance }
+              DESCRIPTION 
+                      "
+                      Rear Fan 2 Failed  (obsolete, VLPro should hide this)
+                      "
+      ::= 1041
+
+-- end of rearfan 2
+ 
+
+END

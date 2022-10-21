@@ -1,0 +1,8 @@
+{
+  "includes": ["ICE_SD5_PlusInformant_Regex.rsnmp"],
+  "driverName": "ICE-SD5-plus-informant",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Snell",
+  "deviceName": "ICE_SD5_PlusInformant",
+  "factory": true
+}

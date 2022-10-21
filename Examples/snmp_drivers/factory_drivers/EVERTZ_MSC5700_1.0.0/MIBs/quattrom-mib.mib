@@ -1,0 +1,2699 @@
+-- Copyright 2002 Evertz Microsystems Ltd.
+-- 06/27/2002
+--new/revised implementation of Nima's original quattrom mib
+
+QUATTROM-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	exprQUATTROM
+		FROM EVERTZ-EXPERIMENTAL-NODE
+      OBJECT-TYPE
+            FROM RFC-1212;
+      
+      quattromInstanceInfo	OBJECT IDENTIFIER ::= { exprQUATTROM 2 }
+      quattromQuadrantInfo     OBJECT IDENTIFIER ::= { exprQUATTROM 3 }
+      quattromControl    	OBJECT IDENTIFIER ::= { exprQUATTROM 4 }
+      quattromDisplay          OBJECT IDENTIFIER ::= { exprQUATTROM 5 }
+      quattromNotify           OBJECT IDENTIFIER ::= { exprQUATTROM 6 }
+      quattromTraps	      OBJECT IDENTIFIER ::= { exprQUATTROM 7 }
+
+-- Beginning of QUATTROM Instance Table
+
+	instanceTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF InstanceEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+            		"	
+					This table contains the main index for this MIB, the QUATTROM index.			
+				"
+	::= { quattromInstanceInfo 1 }
+
+      instanceEntry OBJECT-TYPE
+            SYNTAX InstanceEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+            		"                              
+					This entry object is used to access the objects in this table.
+            		"
+            INDEX { quattromInstance }
+	::= { instanceTable 1 }
+
+      InstanceEntry ::= SEQUENCE {
+      	quattromInstance	INTEGER
+      }     
+
+      quattromInstance OBJECT-TYPE
+      	SYNTAX INTEGER ( 2..15 )
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This is the main index in this table and the last index in every other table
+					in this MIB.  Each instance here represents the respectively slot number in the
+					frame. NOTE, the QUATTROM takes up two instances, even though it is referenced by
+					this instance the actual card does not end until the instance + 1 slot.		    
+                           "
+	::= { instanceEntry 1 }
+    
+-- End of QUATTROM Instance Table   
+-- Beginning of Display Control Table
+
+      displayControlTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF DisplayControlEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains display controls. 
+				    "
+      ::= { quattromControl 1 }
+
+      displayControlEntry OBJECT-TYPE
+      	SYNTAX DisplayControlEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object type is used to refernce all of the objects in this table.
+                            "
+            INDEX { quattromInstance }
+      ::= { displayControlTable 1 }
+
+      DisplayControlEntry ::= SEQUENCE {
+      	lossOfVideo			INTEGER
+	      }     
+
+    --8.6 
+	lossOfVideo OBJECT-TYPE
+      	SYNTAX INTEGER {	passInput(1),
+					black(2)
+		}
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    	
+					This control allows the user to choose what is done when there is a loss of video.
+					The user can choose to have the input passed through anyways or the user can choose to
+					pass black.
+                           "
+      ::= { displayControlEntry 1 }
+
+      
+-- End of miscellaneous Control Table      
+-- Beginning of audio Video Control Table
+
+      audioVideoControlTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF AudioVideoControlEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information on audio and video controls.			  
+				    "
+      ::= { quattromControl 2 }
+
+      audioVideoControlEntry OBJECT-TYPE
+      	SYNTAX AudioVideoControlEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object lets the user access the various objects associated with this
+					table.
+                            "
+            INDEX { videoIn, quattromInstance }
+      ::= { audioVideoControlTable 1 }
+
+      AudioVideoControlEntry ::= SEQUENCE {
+      	videoIn			INTEGER,
+		videoVITC			INTEGER,
+		videoPESA			INTEGER,
+		defaultSIDMsg		OCTET STRING,
+		defaultSIDMode		INTEGER,
+		sidColour1Enable		INTEGER,
+		sidColour2Enable		INTEGER,
+		sidColour3Enable		INTEGER,
+		audioSource			INTEGER,
+		tslDisplayAddr			INTEGER,
+        identificationNumber    INTEGER,
+        tallyMode               INTEGER,
+        disableOnScreenFaults   INTEGER
+	}     
+      --custom index
+      videoIn OBJECT-TYPE
+      	SYNTAX INTEGER {	videoSourceA(1),
+					videoSourceB(2),
+					videoSourceC(3),
+					videoSourceD(4)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This is the main index in this table, and in fact for many other tables.
+					Every other object in this table is indexed by this index and the instance 
+					index.  It can have one of four values, video source A, video source B, 
+					video source C and video source D.		    
+                           "
+      ::= { audioVideoControlEntry 1 }
+    
+    --8.2.7.1, 8.2.7.2
+	videoVITC OBJECT-TYPE
+      	SYNTAX INTEGER (6..32)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the VBI
+					line number that contains the VITC information
+					when operating in 525 or 625 video modes.  If the VITC
+					contains SID information, the QUATTROM will
+					automatically decode it, and turn on the SID
+					window if the user has enabled the window.  If
+					there is no VITC SID information, the card
+					will automatically check for the PESA SID,
+					if the wrong line number is set no time code or SID
+					will be decoded. If in 525 mode, a value of 10 to 32 is allowed.
+					In 625 mode, a value of 6 to 32 is allowed
+                          "
+      ::= { audioVideoControlEntry 2 }
+	  
+	  --8.2.7.3, 8.2.7.4    
+      videoPESA OBJECT-TYPE
+      	SYNTAX INTEGER (7..22)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+					This control allows the user to set the VBI line
+					number that contains the PESA SID information when 
+					operating in 525 or 625 video modes.  If the wrong line number 
+					is set, no SID will be decoded.  If there is no PESA SID,
+					the card will automatically check whether a default SID message
+					has been enabled. In 525 mode, a range of 10 to 21 is allowed.
+					In 625 mode, a range of 7 to 22 is allowed. 	    
+                           "
+      ::= { audioVideoControlEntry 3 }
+        
+        --8.2.7.6
+     	defaultSIDMsg OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(15))		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to determine what is
+					displayed in the SID window where there
+					is no incoming SID on the PESA/VITC.  This object
+					can be any string that is no longer than
+					15 characters in length.						
+                           "
+      ::= { audioVideoControlEntry 4 }
+      
+      --8.2.7.5
+      defaultSIDMode OBJECT-TYPE
+      	SYNTAX INTEGER {	disable(1),
+					enable(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control determines if the default SID message
+					will be displayed in the SID window when there is no 
+					incoming SID on the VITC.  The values of this 
+					object are disable and enable.							    
+                           "
+      ::= { audioVideoControlEntry 5 }
+                    
+  
+    --8.2.7.7
+	sidColour1Enable OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+      				on(2),
+					gpi1(3),
+					gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				 
+					This option allows the user to control 
+					the Source ID background color 1 characteristics 
+					through pre-defined GPI.   It can have the following 
+					values: off, gpi1 to gpi12.   
+                           "
+      ::= { audioVideoControlEntry 6 }
+    
+    --8.2.7.7
+	sidColour2Enable OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+      				on(2),
+					gpi1(3),
+					gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)		
+					}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				 
+					This option allows the user to control 
+					the Source ID background color 2 characteristics 
+					through pre-defined GPI.   It can have the following 
+					values: off, gpi1 to gpi12.     
+                           "
+      ::= { audioVideoControlEntry 7 }
+      
+    --8.2.7.7
+	sidColour3Enable OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+      				on(2),
+					gpi1(3),
+					gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+					}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				 
+					This option allows the user to control 
+					the Source ID background color 3 characteristics 
+					through pre-defined GPI.   It can have the following 
+					values: off, gpi1 to gpi12.    
+                           "
+      ::= { audioVideoControlEntry 8 }
+         
+    --8.2.2
+	audioSource OBJECT-TYPE
+      	SYNTAX INTEGER {	group1(1),
+					group2(2),
+					group3(3),
+					group4(4),
+					aesEBU(5)
+		}	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				   
+					Up to 4 groups of audio may be embedded in the incoming
+					SID video.  This control selects which one of the four to monitor.
+					There are four green LEDs under the PCB to indicate
+					which of the four groups are currently present on the
+					input video.  This object can have one of five values, either
+					group1, group2, group3, group 4 or AES/EBU. Note that the 
+					AES/EBU option is only available on 7765QUATTROM-xA versions.
+                           "
+      ::= { audioVideoControlEntry 9 }
+      
+	tslDisplayAddr   OBJECT-TYPE
+          SYNTAX INTEGER (0..126)
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           This menu item allows the user to set the TSL protocol 
+                           address identifying where the Quattrom must look to decode 
+                           the UMD information.  
+                           "
+      ::= { audioVideoControlEntry 10 }
+
+      identificationNumber OBJECT-TYPE
+      	SYNTAX INTEGER (0..255)		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+            "
+            This number is used for protocol addressing.
+            "
+      ::= { audioVideoControlEntry 11 }
+
+      tallyMode OBJECT-TYPE
+      	SYNTAX INTEGER { t1(1),
+                    t2(2),
+                    t1t2(3),
+                    t2t1(4),
+                    t1-(5),
+                    t2-(6),
+                    t1t2-(7),
+                    t2t1-(8)
+                    
+        }		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+            "
+            This control describes how the GPIs drive the Image Video
+            tally state.
+            "
+      ::= { audioVideoControlEntry 12 }
+
+	disableOnScreenFaults OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+				on(2),
+				gpi1(3),
+				gpi2(4),
+				gpi3(5),
+				gpi4(6),
+				gpi5(7),
+				gpi6(8),
+				gpi7(9),
+				gpi8(10),
+				gpi9(11),
+				gpi10(12),
+				gpi11(13),
+				gpi12(14)
+	      }		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+       This menu item allows the user to disable on screen fault 
+       messages per videoIn via external, user-selectable 
+       GPI trigger
+                           "
+      ::= { audioVideoControlEntry 13 }
+     
+-- End of audio video control Table    
+-- Beginning of audio channel Control Table
+
+      channelPairTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF ChannelPairEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "	
+					This table contains information and objects
+					related to the channel pair groupings		
+				    "
+      ::= { quattromControl 3 }
+
+      channelPairEntry OBJECT-TYPE
+      	SYNTAX ChannelPairEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the
+					objects in this table.
+                            "
+            INDEX { channelPair, videoIn, quattromInstance }
+      ::= { channelPairTable 1 }
+
+      ChannelPairEntry ::= SEQUENCE {
+      	channelPair		INTEGER,
+		audioLevelMode	INTEGER,
+		headRoom		INTEGER,
+		ppmMode		INTEGER,
+		clearPeaks		INTEGER	    	
+      }     
+        
+      --custom
+      channelPair OBJECT-TYPE
+      	SYNTAX INTEGER {	channelPair12(1),
+					channelPair34(2),
+					channelPair56(3)					   
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the main index in this table.  Every
+					object in this table is indexed by channel Pair, 
+					then the video In and finally the card instance.
+                           "
+      ::= { channelPairEntry 1 }
+    
+    -- 8.2.3.1
+	audioLevelMode OBJECT-TYPE
+      	SYNTAX INTEGER {	normal(1),
+					sumdiff(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to choose the 
+					audio level mode.  In the normal mode, stereo
+					bar graphs are displayed.  In the Sum + diff
+					mode, bar graph 1 is the absolute value of the
+					sum of both channels and bar graph 2 displays the absolute
+					value of the magnitude of the difference of the 
+					two signals.  This object can have a value of
+					normal or sumdiff.
+                           "
+      ::= { channelPairEntry 2 }
+     
+    --8.2.3.2 
+	headRoom OBJECT-TYPE
+      	SYNTAX INTEGER (0..30)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				
+					This control allows the user to position
+					the 0 dB point for the VU and PPM meters.  For 
+					example, if you set this control to 15dB and the
+					input a signal that is 15 dB FS, then the bar graphs
+					top will be at 0dB.  When you adjust this 
+					level, you are also changing the 0dBr or program
+					reference point on the bar graphs to maintain the
+					relationship.  The headroom is the level difference between a maximum
+					amplitude signal that can be represented in the digital
+					input to a nominal, user defined operating level, 
+					represented in Decibels.  In modern digital studios and braodcast stations 
+					this is on the order of 20 dB.  This object can have a 
+					value of 0 to 30.    
+                           "
+      ::= { channelPairEntry 3 }
+    
+    --8.2.3.3
+	ppmMode OBJECT-TYPE
+      	SYNTAX INTEGER {	din(1),
+					bbc(2),
+					nordicN9(3),
+					aesebu(4)
+		}	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				
+					This control allows the user to select one
+					of four industry standard Peak Program Meter
+					display modes.  When one of these modes is selected
+					a number of items are set to adhere with predefined
+					industry standards.  The items affected include; 
+					meter attack time, meter decay time, min level displayed,
+					max level displayed, analog reference (100%) level and, in some 
+					instances, region colouring and phase graph 
+					representation.  This object can have one of the
+					following values.  din, bbc, nordicN9 and finally
+					aesebu.    
+                           "
+      ::= { channelPairEntry 4 }
+      
+      --8.2.4
+      clearPeaks OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+      				on(2),
+					gpi1(3),
+					gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+				  		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control provides a convenient
+					method of resetting audio peak holds for audio 
+					channel pairs.  The values for this object are
+					off and one of gpi1 to gpi12.    
+                           "
+      ::= { channelPairEntry 5 }
+	  
+-- End of audio channel Table   
+-- Beginning of fault definition Table
+
+      faultDefinitionTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF FaultDefinitionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects
+					related to the fault definitions.
+				    "
+      ::= { quattromControl 4 }
+
+      faultDefinitionEntry OBJECT-TYPE
+      	SYNTAX FaultDefinitionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the
+					objects in this table.
+                            "
+            INDEX { videoIn, quattromInstance }
+      ::= { faultDefinitionTable 1 }
+
+      FaultDefinitionEntry ::= SEQUENCE {
+      	videoInvalidDuration		INTEGER,
+		edhErrorDuration			INTEGER,
+		overLevel				INTEGER,
+		overDuration			INTEGER,
+		silenceLevel			INTEGER,
+		silenceDuration			INTEGER,
+		phaseReversalLevel		INTEGER,
+	      phaseReversalDuration		INTEGER,
+		monoLevel				INTEGER,
+		monoDuration			INTEGER,
+		lossOfCCDuration			INTEGER,
+		lossOfPRDuration			INTEGER,
+		pictureNoiseLevel			INTEGER,
+		pictureFreezeDuration		INTEGER,
+		pictureBlackDuration		INTEGER,	    	
+      	audioInvalidDuration		INTEGER
+      }     
+    
+    --8.2.10.1    
+	videoInvalidDuration OBJECT-TYPE
+      	SYNTAX INTEGER (0..900)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the duration	
+					for which the card ignores glitches on the
+					video signal thereby not displaying fault alert messages.
+					It can have a value of 0 to 900.
+                           "
+      ::= { faultDefinitionEntry 1 }
+	
+	--8.2.10.2
+	edhErrorDuration OBJECT-TYPE
+      	SYNTAX INTEGER (0..127)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					A check sum is calculated for every field of video
+					and compared to the same EDH check sum transmitted in
+					the vertical interval.  If the check sums do not
+					match, then there was at least one bit error in the
+					active picture area of the image.  With this control
+					the user can set an error condition when a number
+					of consecutive fields contain EDH errors.  If set to
+					NA (value 0), this type of fault detection is turned off.  If
+					set to 1, any 'Error Detection and Handling' (EDH) error
+					will be generate an error while large numbers (>20) will 
+					effectively check the presence or absence of edh
+					encoding.  If the video signal has passed through hardware
+					that has modified the picture without re-calculating
+					the edh check sums, then both full field and active picture
+					errors will be generated.  In that case, disable both full
+					field and active picture error detection in the
+					Fault Definitions above.  If the video signal has passed
+					through hardware that has modified the ANC data area
+					without re-calculating the EDH checks sums, then full field 
+					errors will always be generated.  In that case, disable full
+					field error detection and use active picture only.  This object
+					can have a value of 1 to 127. 
+                           "
+      ::= { faultDefinitionEntry 2 }
+    
+    --8.2.10.3
+	overLevel OBJECT-TYPE
+      	SYNTAX INTEGER (-120..0)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the audio level
+					over which is considered to be over level.  This value
+					is expressed in dB FS and can even be used ro detect
+					digital clipping.  If set to 0 dB FS, then if 3 or more 
+					consecutive samples are at digital saturation, then the digital
+					word length has been executed.  This object can have a value
+					of -30 to 0 in 1/4 increments therefore this
+					object has a range of -120 to 0.
+                           "
+      ::= { faultDefinitionEntry 3 }
+    
+    --8.2.10.4
+	overDuration OBJECT-TYPE
+      	SYNTAX INTEGER (3..255)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the duration
+					in number of consecutive samples that are at or above 
+					the 'Over Level' before a fault condition exists.  This object
+					can have a value of 3 to 255.
+                           "
+      ::= { faultDefinitionEntry 4 }
+      
+      --8.2.10.5
+      silenceLevel OBJECT-TYPE
+      	SYNTAX INTEGER (-96..-20)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to ser the audio
+					level under which it is considered to be silent.  This
+					value is expressed in dB FS.  This object can have
+					a value of -96 to -20.
+                           "
+      ::= { faultDefinitionEntry 5 }
+    
+    --8.2.10.6
+	silenceDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..254)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the amount
+					of time the audio is silent in seconds before
+					a fault occurs.  This control can have a value
+					of 0.5 to 127 in 0.5 increments therefore this 
+					object has a range of 1 to 254.
+                           "
+      ::= { faultDefinitionEntry 6 }
+      
+      --8.2.10.7
+      phaseReversalLevel OBJECT-TYPE
+      	SYNTAX INTEGER (50..100)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to set the amount of
+					phase difference before the audio is considered
+					to be out of phase.  This phase reversal is
+					calculated by comparing the difference of the two
+					channels to the average of the two.  If a signal
+					is always out of phase, then the difference between the 
+					two will be high compared to the average of the two.  
+					This corresponds to 1 in this control. If there is only
+					content on one of the channels, then the difference
+					is equivalent to the average of the two channels.  This 
+					corresponds to 0.5 in this control.  The values of this
+					control are 0.5 to 1 in 0.01 increments, therefore the
+					range of this object is from 50 to 100.					
+			         "
+      ::= { faultDefinitionEntry 7 }
+      
+      --8.2.10.8
+      phaseReversalDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..254)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to set the period
+					over which to analyze the audio content for phase
+					reversal.  The values for this control are from
+					0.5 to 127, therefore the range of this object is from
+					1 to 254.		    
+                           "
+      ::= { faultDefinitionEntry 8 }
+    
+    --8.2.10.9
+	monoLevel OBJECT-TYPE
+      	SYNTAX INTEGER (20..50)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to set the level
+					of L/R audio difference under which is considered
+					to be mono.  The values of this control are from
+					0.2 to 0.5 in 0.01 increments therefore this object has
+					a range of 20 to 50.		    
+                           "
+      ::= { faultDefinitionEntry 9 }
+    
+    --8.2.10.10
+	monoDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..254)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				  
+					This control allows the user to set the 
+					duration of mono audio in seconds, which is
+					considered to be a fault.  The values of this
+					control are from 0.5 to 127, therefore this object 
+					has a range of 1 to 254.  
+                           "
+      ::= { faultDefinitionEntry 10 }
+    
+    --8.2.10.11
+	lossOfCCDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..256)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the amount
+					of time in seconds with no primary CC1 captions
+					encoded, which is considered to be a fault.
+					The fault condition will also be generated if the
+					closed caption signal is missing on the input
+					video.  The values of this control are from
+					2 to 512 in 2 second increments therefore this object
+					has a range of 1 to 256.
+                           "
+      ::= { faultDefinitionEntry 11 }
+    
+    --8.2.10.12
+	lossOfPRDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..85)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the amount
+					of time in seconds with no program rating packet
+					encoded in the line 21 XDS data stream, which is
+					considered to be a fault.  This fault condition
+					will also be generated if the closed caption signal
+					is missing on the input video.  The values of this 
+					control are from 1 to 255 in 3 second increments.  
+					Therefore this object has a range of 1 to 85.
+                           "
+      ::= { faultDefinitionEntry 12 }
+    
+    --8.2.10.14
+   	pictureNoiseLevel OBJECT-TYPE
+      	SYNTAX INTEGER (1..10)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the approximate
+					level of noise expected in the video signal feed.  It is
+					used by the freeze detect feature to distinguish
+					motion from background noise on top of a video feed.
+					This object has a range of 1 to 10.
+                           "
+      ::= { faultDefinitionEntry 13 }
+    
+    --8.2.10.14
+	pictureFreezeDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..225)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the duration, 
+					in frames, of video activity under the picture noise
+					level which is considered to be a fault.  The values of 
+					this control are from 6 to 902 in 4 frame increments, therefore
+					the range of this object is from 1 to 225.
+                           "
+      ::= { faultDefinitionEntry 14 }
+      
+      --8.2.10.16
+      pictureBlackDuration OBJECT-TYPE
+      	SYNTAX INTEGER (1..225)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+					This control allows the user to set the duration,
+					in frames, of active picture content below
+					7 IRE which is considered to be a fault.  A fault is
+					generated when the video level within the active
+					picture area falls below the preset black level and remains
+					for the specified duration.  The values for this
+					control are from 4 to 900 in 4 frame increments
+					therefore the range of this object is from 1 to 225				    
+                           "
+      ::= { faultDefinitionEntry 15 }
+	
+	audioInvalidDuration OBJECT-TYPE
+      	SYNTAX INTEGER (0..900)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the duration	
+					for which the card ignores glitches on the
+					audio signal thereby not displaying fault alert messages.
+					It can have a value of 0 to 900.
+                           "
+      ::= { faultDefinitionEntry 16 }
+
+-- End of faultDefinition Table    
+-- Beginning of PowerUpTable
+
+      powerUpTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF PowerUpEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects
+					related to the power-up values.
+				    "
+      ::= { quattromControl 5 }
+
+      powerUpEntry OBJECT-TYPE
+      	SYNTAX PowerUpEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the
+					objects in this table.
+                            "
+            INDEX { lineNumber, videoIn, quattromInstance }
+      ::= { powerUpTable 1 }
+
+      PowerUpEntry ::= SEQUENCE {
+      	lineNumber		INTEGER,
+		powerUpLine			INTEGER
+        }
+
+
+      lineNumber OBJECT-TYPE
+      	SYNTAX INTEGER {	line1(1),
+					line2(2),
+					line3(3)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            This is the main index in this table.  Every other object in this 
+            table is indexed by this index, the video index, and the instance 
+            index.  It can have one of three values: line1, line2, line3.
+            "
+      ::= { powerUpEntry 1 }
+
+
+      powerUpLine OBJECT-TYPE
+      	SYNTAX INTEGER {	noMessage(1),
+					message1(2),
+					message2(3),
+                    message3(4),
+                    message4(5)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            This variable is used to select the message that appears in the
+            line. Each UMD consists of 3 lines. The UMD display cycles through
+            each of these lines using the message duration to determine how
+            long a line should be displayed. These are the lines to display
+            on power-up
+            "
+      ::= { powerUpEntry 2 }
+-- End of PowerUpTable
+-- Beginning of PowerUpMessageTable
+
+      powerUpMessageTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF PowerUpMessageEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects
+					related to the messages.
+				    "
+      ::= { quattromControl 6 }
+
+      powerUpMessageEntry OBJECT-TYPE
+      	SYNTAX PowerUpMessageEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the
+					objects in this table.
+                            "
+            INDEX { messageNumber, videoIn, quattromInstance }
+      ::= { powerUpMessageTable 1 }
+
+      PowerUpMessageEntry ::= SEQUENCE {
+      	messageNumber		INTEGER,
+		message			OCTET STRING,
+        messageDuration INTEGER
+        }
+
+
+      messageNumber OBJECT-TYPE
+      	SYNTAX INTEGER {	message1(1),
+					message2(2),
+					message3(3),
+                    message4(4)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            This is the main index in this table.  Every other object in this 
+            table is indexed by this index, the video index, and the instance 
+            index.  It can have one of four values: message1, message2,
+            message3 and message4.
+            "
+      ::= { powerUpMessageEntry 1 }
+
+
+      message OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(16))	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            Message 4 is also used for protocol addressing. It is called the
+            'identification string' in the Quattrom menu system. These are
+            the messages that can be used on power-up.
+            "
+      ::= { powerUpMessageEntry 2 }
+      
+      messageDuration OBJECT-TYPE
+      	SYNTAX INTEGER (0..255 )		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            0 means forever. Multiply by 0.05 to obtain the number of seconds.
+            This variable specifies how log the message should appear in the
+            UMD before the nest line is displayed.
+            "
+      ::= { powerUpMessageEntry 3 }
+-- End of PowerUpTable
+-- Beginning of TallyTable
+
+      tallyTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF TallyEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects
+					related to the messages.
+				    "
+      ::= { quattromControl 7 }
+
+      tallyEntry OBJECT-TYPE
+      	SYNTAX TallyEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the
+					objects in this table.
+                            "
+            INDEX { tallyNumber, videoIn, quattromInstance }
+      ::= { tallyTable 1 }
+
+      TallyEntry ::= SEQUENCE {
+      	tallyNumber		INTEGER,
+        tally            INTEGER
+        }
+
+
+      tallyNumber  OBJECT-TYPE
+      	SYNTAX INTEGER {	tally1(1),
+					tally2(2)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            This is the main index in this table.  Every other object in this 
+            table is indexed by this index, the video index, and the instance 
+            index.  It can have one of two values: tally1, tally2
+            "
+      ::= { tallyEntry 1 }
+
+
+      
+      tally OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+					on(2),
+					gpi1(3),
+				      gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+  					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+        
+            }		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+            "		
+            Selects which Quattro GPI drives the Image Video Tally.
+            "
+      ::= { tallyEntry 2 }
+-- End of PowerUpTable
+-- beginning of miscControlTable
+    miscControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                    
+		"        
+	::= { quattromControl 8 }        
+
+	miscControlEntry OBJECT-TYPE                
+		SYNTAX MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			             
+		"                
+		INDEX { quattromInstance }        
+	::= { miscControlTable 1 }        
+
+	MiscControlEntry ::= SEQUENCE {                
+        serialPortConfig    INTEGER,
+        outputActiveWindow  INTEGER,
+        baudRate            INTEGER
+    }
+	
+    serialPortConfig  OBJECT-TYPE
+      	SYNTAX INTEGER {	dataLogging(1),
+				tslProtocol(2),
+				probelProtocol(3),
+                imageVideoProtocol(4)
+		}
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                        "
+                        This menu item defines the function of the serial port 
+                        on the back of the QuattroM rear plate module. 
+			"
+      ::= { miscControlEntry 1 }
+
+	outputActiveWindow  OBJECT-TYPE
+      	SYNTAX INTEGER {	safeAction(1),
+				productionAperture(2)
+		}
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                        "
+        This setting allows the user to set the output display in 
+        'underscan mode' to fit the entire active output on the monitor 
+        display. The 'underscan mode' is identified as 'safe mode' in 
+        this menu.	
+			"
+      ::= { miscControlEntry 2 }
+
+      baudRate OBJECT-TYPE
+      	SYNTAX INTEGER {	rate30bps(1),
+				rate600bps(2),
+				rate1200bps(3),
+				rate2400bps(4),
+				rate4800bps(5),
+				rate9600bps(6),
+                rate19200bps(7),
+                rate38400bps(8)
+		}
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                        "	
+                        "
+      ::= { miscControlEntry 3 }
+--end of miscControlTable
+
+-- Beginning of window position Table
+      
+      --All definitions here come from 8.2.9  
+      windowPositionTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF WindowPositionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "			
+					This table contains information and objects
+					related to the window positioning.	
+				    "
+      ::= { quattromDisplay 1 }
+
+      windowPositionEntry OBJECT-TYPE
+      	SYNTAX WindowPositionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object type is used to access all of the
+ 					objects in this table.					
+                            "
+            INDEX { windowName, videoIn, quattromInstance }
+      ::= { windowPositionTable 1 }
+
+      WindowPositionEntry ::= SEQUENCE {
+      	windowName			INTEGER,
+		rowPosition			INTEGER,
+		columnPosition			INTEGER	    	    	
+      }     
+    
+      
+	windowName OBJECT-TYPE
+      	SYNTAX INTEGER {	tc(1),
+					pr(2),
+					xds(3),
+					fault1(4),
+					fault2(5),
+					fault3(6),
+					fault4(7)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the main index in this table, it can
+					have a value of tc, pr, xds, fault1, fault2, 
+					fault3 or fault4.
+                           "
+      ::= { windowPositionEntry 1 }	
+    
+      rowPosition OBJECT-TYPE
+      	SYNTAX INTEGER (0..9)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				
+					This is the vertical position of the windows. 
+					This object can have a value of 0..8 when in 525 mode
+					and 0..9 when in 625 mode.    
+                           "
+      ::= { windowPositionEntry 2 }
+
+      columnPosition OBJECT-TYPE
+      	SYNTAX INTEGER (0..25)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the horizontal position of the windows.
+					 This object can have a value of 0..19 when in 525 mode
+					 and 0..25 when in 625 mode
+                           "
+      ::= { windowPositionEntry 3 }
+	    	     
+-- End of window position table
+--- Beginning of HV delay Table
+
+      hvDelayTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF HvDelayEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related to the
+					H/V Delay controls.
+				    "
+      ::= { quattromDisplay 2 }
+
+      hvDelayEntry OBJECT-TYPE
+      	SYNTAX HvDelayEntry
+      	ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                  
+					This entry object type is used to access all of
+					the objects in this table.            
+                            "
+            INDEX { quattromInstance }
+      ::= { hvDelayTable 1 }
+
+      HvDelayEntry ::= SEQUENCE {
+      	hvStartLine			INTEGER,
+		hvStartPix			INTEGER		 	
+      }     
+    
+    --8.7.1.1, 8.7.1.2    
+	hvStartLine OBJECT-TYPE
+      	SYNTAX INTEGER (5..312)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the
+					starting line with the 525 and 626 line inputs. The values 
+					available when in 525 mode are 8 to 262, while they are
+					5 to 312 when in 625 mode.
+					      "
+      ::= { hvDelayEntry 1 }	            
+	  
+	  --8.7.1.3, 8.7.1.4
+      hvStartPix OBJECT-TYPE
+      	SYNTAX INTEGER (0..431)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the starting pixel .  
+					The values of this control are from 0 to 856 when
+					in 525 mode, and 0 to 862 in 625 mode. This is done in increments
+					of 2, therefore the ranges of this object are from 0 to 428 and
+					0 to 431, respectively.
+					"
+      ::= { hvDelayEntry 2 }
+       	            	            	            
+-- End of HV Delay Table    
+-- Beginning of region colour Table
+
+      regionColourTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF RegionColourEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "		
+					This table contains information and objects related to 
+					the region colours and their control.		
+				    "
+      ::= { quattromDisplay 3 }
+
+      regionColourEntry OBJECT-TYPE
+      	SYNTAX RegionColourEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the objects in this table.
+                            "
+            INDEX { quattromInstance }
+      ::= { regionColourTable 1 }
+
+      RegionColourEntry ::= SEQUENCE {
+      	okColour			INTEGER,
+		okCustomColour		OCTET STRING,
+		warningColour		INTEGER,
+		warningCustomColour	OCTET STRING,
+		errorColour			INTEGER,
+		errorCustomColour		OCTET STRING,
+		backgroundOpacity		INTEGER,
+		barGraphOpacity		INTEGER	
+      }     
+    
+    --8.3.1.1    
+	okColour OBJECT-TYPE
+      	SYNTAX INTEGER {	white(1),
+					black(2),
+					grey(3),
+					yellow(4),
+					red(5),
+					green(6),
+					custom(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the colour
+					of the bottom OK region of level bar graphs.  The user
+					can choose from one of the predefined colours or a custom
+					colour that can be defined by the user.  The values of this object
+					are white, black, grey, yellow, red, green and custom.
+                           "
+      ::= { regionColourEntry 1 }	            
+      
+      --8.3.1.2
+      okCustomColour OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(3))		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the custom
+					OK region colour.  The colour is stored as and octet string
+					with each byte representing one colour.  First character is for
+					Red, second is for Green and the last is for Blue.
+                           "
+      ::= { regionColourEntry 2 }	
+      
+      --8.3.1.1  
+      warningColour OBJECT-TYPE
+      	SYNTAX INTEGER {	white(1),
+					black(2),
+					grey(3),
+					yellow(4),
+					red(5),
+					green(6),
+					custom(7)
+		}			
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the colour of
+					the warning region of the level bar graphs.  The user 
+					can choose from one of the pre defined colours or can choose
+					a custom colour that they can define.			    
+                           "
+      ::= { regionColourEntry 3 }	            
+      
+      --8.3.1.2  
+      warningCustomColour OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(3))		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the custom
+					warning region colour.  The colour is stored as and octet string
+					with each byte representing one colour.  First character is for
+					Red, second is for Green and the last is for Blue.			    
+                           "
+      ::= { regionColourEntry 4 }	  
+      
+      --8.3.1.1  
+      errorColour OBJECT-TYPE
+      	SYNTAX INTEGER {	white(1),
+					black(2),
+					grey(3),
+					yellow(4),
+					red(5),
+					green(6),
+					custom(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the colour of
+					the error region of the level bar graphs.  The user 
+					can choose from one of the pre defined colours or can choose
+					a custom colour that they can define.				    
+                           "
+      ::= { regionColourEntry 5 }	            
+      
+      --8.3.1.2 
+      errorCustomColour OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(3))		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+				           This control allows the user to set the custom
+					error region colour.  The colour is stored as and octet string
+					with each byte representing one colour.  First character is for
+					Red, second is for Green and the last is for Blue.
+                           "
+      ::= { regionColourEntry 6 }	  
+      
+      --8.3.1.3
+      backgroundOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the bar graph
+					background opacity or how much video picture content
+					will be visible through the bar graph backgrounds.  When 
+					set to the minimum value, very little of the bar graph
+					background colour will be visible over the video content.
+					At the maximum value, very little of the background video
+					will be visible through the bar graph.  The values for this control
+					are from 0 to 64.			    
+                           "
+      ::= { regionColourEntry 7 }
+      
+      --8.3.1.4
+      barGraphOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				
+					This control allows the user to set the bar graph foreground
+					opacity or how much video picture content will be visible through
+					the bar graph backgrounds.  When set to the minimum value, very little
+					of the bar graph colour will be visible over the video content.  At
+					the maximum value, very little of the background video will be visible
+					through the bar graph.    
+                           "
+      ::= { regionColourEntry 8 }	            	                                  
+                      	  	             	            	            	            
+-- End of region colour Table  
+-- Beginning of window enable Table
+
+      windowEnableTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF WindowEnableEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "	
+					This table contains information and objects
+					related to the windows and control of them.			
+				    "
+      ::= { quattromDisplay 4 }
+
+      windowEnableEntry OBJECT-TYPE
+      	SYNTAX WindowEnableEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access all of the
+					objects in this table.
+                            "
+            INDEX { windowEnableName, videoIn, quattromInstance }
+      ::= { windowEnableTable 1 }
+
+      WindowEnableEntry ::= SEQUENCE {
+		windowEnableName		INTEGER,
+		windowEnable		INTEGER
+      }     
+    
+    --8.2.8.1 , 8.2.13.1 for hv(9)
+	windowEnableName OBJECT-TYPE
+      	SYNTAX INTEGER {	levelbar12(1),
+					levelbar34(2),
+					levelbar56(3),
+					phasebar12(4),
+					phasebar34(5),
+					phasebar56(6),
+					timecode(7),
+					programRating(8),
+					xds(9),
+					sid(10),
+					hv(11)
+
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the main index for this table it is used to 
+					select which of the windows the user wishes to enable or
+					disable.  The values for this object are, levelbar12, 
+					levelbar34, phasebar12, phasebar34, timecode, programRating, 
+					xds, and sid.  NOTE, the status window is not
+					located in this table as its parameters are different
+					from the rest of the windows.
+                           "
+      ::= { windowEnableEntry 1 }	   
+    --8.2.8.2 - 8.2.8.7
+	windowEnable OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+					on(2),
+					gpi1(3),
+				      gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+  					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+            }		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to enable or disable the
+					selected window.  The window can be enabled one a particular
+					gpi as well.  The values for this object are off, on and 
+					gpi1 to gpi12.	    
+                           "
+      ::= { windowEnableEntry 2 }	                                                 	                                  
+                      	  	             	            	            	            
+-- End of window enable Table   
+-- Beginning of text window Table
+
+      textWindowTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF TextWindowEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "			
+					This table contains information and objects related to
+					the text window.	
+				    "
+      ::= { quattromDisplay 5 }
+
+      textWindowEntry OBJECT-TYPE
+      	SYNTAX TextWindowEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                 
+					This entry object allows the user to access
+					all of the objects in this table.             
+                            "
+            INDEX { quattromInstance }
+      ::= { textWindowTable 1 }
+
+      TextWindowEntry ::= SEQUENCE {
+		textBackgroundOpacity		INTEGER,
+		textOpacity				INTEGER,
+		sidBackgroundColour1		INTEGER,
+		sidBackgroundColour2		INTEGER,
+		sidBackgroundColour3		INTEGER,
+		defaultBackgroundColour		INTEGER		    
+      }             	  
+    
+    --8.3.2.5
+	textBackgroundOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the text window background
+					opacity or how much video picture content will be visible
+					through the window background.  When set to the minimum value, 
+					very little of the window background colour will be visible over the 
+					video content.  At the maximum value, very little of the background
+					video will be visible through the window background.  The values for this 
+					control are from 0 to 64.			    
+                           "
+      ::= { textWindowEntry 1 }
+      
+      --8.3.2.6
+     textOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the text window
+					opacity or how much video picture content will be visible through
+					the text characters.  When set to the minimum value, very little 
+					of the white window text will be visible over the video content.
+					At the maximum value, very little of the background video will be 
+					visible through the white window text.  The values for this
+					control are from 0 to 64.
+                           "
+      ::= { textWindowEntry 2 }                       
+      
+      -- 8.3.2.1                	  	      
+      sidBackgroundColour1 OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+					yellow(3),
+					red(4),
+					green(5),
+					blue(6),
+					orange(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to choose the desired
+					SID/UMD colour around the text.  The values for this
+					object are black, grey, yellow, red, green, orange, 
+					and blue.  This is only for sid background colour 1, as 2 and 3
+					have their own objects.		    
+                           "
+      ::= { textWindowEntry 3 }
+      
+      --8.3.2.2
+      sidBackgroundColour2 OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+					yellow(3),
+					red(4),
+					green(5),
+					blue(6),
+					orange(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to choose the desired
+					SID/UMD colour around the text.  The values for this
+					object are black, grey, yellow, red, green, orange, 
+					and blue.  						
+                           "
+      ::= { textWindowEntry 4 }
+    
+    --8.3.2.3
+	sidBackgroundColour3 OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+				      yellow(3),
+					red(4),
+					green(5),
+					blue(6),
+					orange(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to choose the desired
+					SID/UMD colour around the text.  The values for this
+					object are black, grey, yellow, red, green, orange, 
+					and blue.  			    
+                           "
+      ::= { textWindowEntry 5 }
+    
+    --8.3.2.4
+	defaultBackgroundColour OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+					yellow(3),
+					red(4),
+					green(5),
+					blue(6),
+					orange(7)
+		}	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to set the 
+					default background colour around the text in 
+					the text windows.  The values for this object are
+					black, grey, yellow, red, green, orange, and blue.			    
+                           "
+      ::= { textWindowEntry 6 }                                                                                            
+       	            	            	            
+-- End of text window Table      
+-- Beginning of fault window Table
+
+      faultWindowTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF FaultWindowEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table has information and objects related
+					to the fault window.
+				    "
+      ::= { quattromDisplay 6 }
+
+      faultWindowEntry OBJECT-TYPE
+      	SYNTAX FaultWindowEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                     
+					This entry object lets us access all of the
+					objects in this table.         
+                            "
+            INDEX { quattromInstance }
+      ::= { faultWindowTable 1 }
+
+      FaultWindowEntry ::= SEQUENCE {
+		faultBackgroundColour1		INTEGER,
+		faultBackgroundColour2		INTEGER,
+		faultBackgroundOpacity 		INTEGER,
+		faultTextOpacity			INTEGER	    
+      }             	  
+      
+      --8.3.3.1
+      faultBackgroundColour1 OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+					yellow(3),
+					red(4),
+					green(5),
+				      blue(6),
+					orange(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to select the 
+					background colour around the text in the
+					fault window.  The values for this object are
+					black, grey, yellow, red, green, orange and
+					blue.
+                           "
+      ::= { faultWindowEntry 1 }
+      
+      --8.3.3.1
+      faultBackgroundColour2 OBJECT-TYPE
+      	SYNTAX INTEGER {	black(1),
+					grey(2),
+					yellow(3),
+					red(4),
+					green(5),
+					blue(6),
+					orange(7)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+					This control allows the user to select the background 
+					colour around the text in the fault window.  The values 
+					for this object are black, grey, yellow, red, green, 
+					orange and blue.			                
+                           "
+      ::= { faultWindowEntry 2 }
+      
+      --8.3.3.2
+      faultBackgroundOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+				   "
+      ::= { faultWindowEntry 3 }
+      
+      --8.3.3.3
+      faultTextOpacity OBJECT-TYPE
+      	SYNTAX INTEGER (0..64)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the fault window
+					text opacity, or how much video picture will be 
+					visible through the text characters.  When set to the minimum
+					value, very little of the white window text will be
+					visible over the video content.  At the maximum value, very little
+					of the background video will be visible through the white           
+					window text.
+                           "
+      ::= { faultWindowEntry 4 }
+
+-- End of fault window Table  
+-- Beginning of bar graph Table
+
+      barGraphPairTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF BarGraphPairEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects
+					related to the bar graphs.
+				    "
+      ::= { quattromDisplay 7 }
+
+      barGraphPairEntry OBJECT-TYPE
+      	SYNTAX BarGraphPairEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                           
+					This entry object is used to reference the
+					objects in this table.   
+                            "
+            INDEX { barGraphPair, videoIn, quattromInstance }
+      ::= { barGraphPairTable 1 }
+
+      BarGraphPairEntry ::= SEQUENCE {
+		barGraphPair		INTEGER,
+      	levelType			INTEGER,
+		vuRange			INTEGER,
+		phaseType			INTEGER,
+		errorRegion			INTEGER,
+		warningRegion		INTEGER       	    	
+      }     
+    
+    --custom
+	barGraphPair OBJECT-TYPE
+      	SYNTAX INTEGER {	barGraphs12(1),
+					barGraphs34(2),
+					barGraphs56(3)
+		}	
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+				  "
+                          "
+      ::= { barGraphPairEntry 1 }
+    
+    --8.2.5.1    	  
+	levelType OBJECT-TYPE
+      	SYNTAX INTEGER {	ppm(1),
+					ppmPeak(2),
+					vu(3),
+					vuPeak(4),
+					vuPPM(5)
+		}	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the bar graph
+					to one of five basic types.  The ballistics and 
+					display characteristics of the graphs are configured
+					with other items in this section of the menu
+					structure.  The values of this object are
+					ppm, ppmPeak, vu, vuPeak and vuPPM.
+                           "
+      ::= { barGraphPairEntry 2 }
+    
+    --8.2.5.2
+	vuRange OBJECT-TYPE
+      	SYNTAX INTEGER {	normal(1),
+					extended(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to select the VU
+					display range when vu modes are active.  Most vu
+					meters have two possible ranges.  Normal range
+					which is 3 to -20 and extended range which is
+					3 to -57.  The bar graphs will be re-scaled to
+					represent the selected range.  When using VU and 
+					BBC PPM mode, the vu scale is truncated to 
+					-6dB to match the scaling of BBC mode.  The possible
+					values for this object are normal and extended.
+                           "
+      ::= { barGraphPairEntry 3 }	  
+	
+	--8.2.5.3  
+	phaseType OBJECT-TYPE
+      	SYNTAX INTEGER {	stereo(1),
+					din(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+					This control allows the user to select one of
+					two types of phase bar graphs.  One that has a 
+					focus presenting the amount and L/R distribution
+					of stereo content, and one that presents
+					in-phase/outphase proportions.  The values of this 
+					object are stereo and din.				    
+                           "
+      ::= { barGraphPairEntry 4 }
+	  
+	  --8.2.5.4
+      errorRegion OBJECT-TYPE
+      	SYNTAX INTEGER (-20..-1)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+					This control allows the user to select the 
+					level that an error is occuring.  It is intended
+					to tell the user when the audio signal is getting close
+					to clipping.  The bar graph error region is the area
+					from clipping down to the level selected by this
+					control.  The values for this object are from
+					-20 to -1.				    
+                           "
+      ::= { barGraphPairEntry 5 }
+	  
+	  --8.2.5.5
+      warningRegion OBJECT-TYPE
+      	SYNTAX INTEGER (-40..-2)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to select the 
+					bar graph warning region.  The bar graph warning 
+					region is the area between the OK region and the error 
+					region.  It is intended to indicate when the audio
+					level is approaching the error region.  This control sets the
+					bottom of the warning region.  Normally, it is set to
+					the audio program level.  The upper boundry of this region is
+					always set with the error region control.  This value
+					can not be higher than the error region value.  If the error
+					region is lowered below the value of this parameter, the warning
+					region will also be lowered.  The values of this object are
+					from -40 to -2.	    
+                           "
+      ::= { barGraphPairEntry 6 }	  
+ 
+-- End of bar Graph Table  
+-- Beginning of management Fault table Table
+
+      mgmtFaultTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF MgmtFaultEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related to
+					traps and their control.
+				    "
+      ::= { quattromNotify 1 }
+
+      mgmtFaultEntry OBJECT-TYPE
+      	SYNTAX MgmtFaultEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "
+					This entry object is used to access the 
+					objects in this table.                              
+                            "
+            INDEX { videoInFaults, videoIn, quattromInstance }
+      ::= { mgmtFaultTable 1 }
+
+      MgmtFaultEntry ::= SEQUENCE {
+		videoInFaults			INTEGER,
+		sendTrap				INTEGER,
+		faultPresent			INTEGER
+      }             	  
+      
+      --8.2.11.1 minus the gpi faults, which are indexed differently
+      videoInFaults OBJECT-TYPE
+      	SYNTAX INTEGER {	videoInvalid(1),
+					lossOfAudio(2),
+		          		lossOfAudio12(3),
+					lossOfAudio34(4),
+					lossOfAudio56(5),
+					apEDHError(6),
+				      ffEDHError(7),
+					phaseReversal12(8),
+					phaseReversal34(9),
+					phaseReversal56(10),
+					audioOver12(11),
+					audioOver34(12),
+					audioOver56(13),
+					audioSilence12(14),					
+					audioSilence34(15),
+					audioSilence56(16),
+				      audioMono12(17),
+					audioMono34(18),
+					audioMono56(19),
+					lossOfVITC(20),
+					lossOfSID(21),
+					lossOfProgramRating(22),
+					lossOfCC(23),
+					pictureFreeze(24),
+					pictureBlack(25)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           This index represents all the different Video In faults that
+                           can be configured. It used used for indexing throughout this table.		    
+                           "
+      ::= { mgmtFaultEntry 1 }
+      
+      --custom
+      sendTrap OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set if they 
+					want a certain trap generated or not generated for
+					a particular fault.  The values of this object are
+					false and true.					
+                           "
+      ::= { mgmtFaultEntry 2 }
+      
+      --custom
+      faultPresent OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to check if 
+					a particular fault is present or not present.
+					The values of this object are false and true.	    
+                           "
+      ::= { mgmtFaultEntry 3 }
+
+-- End of management fault Table
+-- Beginning of gpo active state Table
+
+      gpoActiveStateTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF GpoActiveStateEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "	
+					This table contains information and objects 
+					related to gpo controls.			
+				    "
+      ::= { quattromNotify 2 }
+
+      gpoActiveStateEntry OBJECT-TYPE
+      	SYNTAX GpoActiveStateEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                              
+					This entry object is used to access the 
+					objects in this table.
+                            "
+            INDEX { gpoName, quattromInstance }
+      ::= { gpoActiveStateTable 1 }
+
+      GpoActiveStateEntry ::= SEQUENCE {
+		gpoName			INTEGER,
+		gpoActiveState		INTEGER
+      }             	  
+      
+      --custom
+      gpoName OBJECT-TYPE
+      	SYNTAX INTEGER {	gpo1(1),
+					gpo2(2),
+					gpo3(3),
+				      gpo4(4)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the main index in this table. It is used to
+					reference the objects in this table.  It can have a value
+					of gpo1 to gpo4.
+                           "
+      ::= { gpoActiveStateEntry 1 }
+      
+      --8.5
+      gpoActiveState OBJECT-TYPE
+      	SYNTAX INTEGER {	low(1),
+					high(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				
+					This control allows the user to decide whether the
+					general purpose output is active high or low.  
+					The values for this object are high and low.    
+                           "
+      ::= { gpoActiveStateEntry 2 }
+        
+-- End of gpo Active state Table
+-- Beginning of gpo frame status Table
+
+      gpoFrameStatusTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF GpoFrameStatusEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related
+					to the frame status.
+				    "
+      ::= { quattromNotify 3 }
+
+      gpoFrameStatusEntry OBJECT-TYPE
+      	SYNTAX GpoFrameStatusEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                     
+					This entry object is used to access the
+					objects in this table.         
+                            "
+            INDEX { faultNumber, videoIn, quattromInstance }
+      ::= { gpoFrameStatusTable 1 }
+
+      GpoFrameStatusEntry ::= SEQUENCE {
+		gpo1Trigger				INTEGER,
+		gpo2Trigger				INTEGER,
+		gpo3Trigger				INTEGER,
+		gpo4Trigger 			INTEGER,
+		frameStatusTrigger		INTEGER	          
+      }             	  
+      
+      --8.5  
+      gpo1Trigger OBJECT-TYPE
+      	SYNTAX INTEGER {	no(1),
+					yes(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                          "
+					      "
+      ::= { gpoFrameStatusEntry 1 }
+      --8.5
+      gpo2Trigger OBJECT-TYPE
+      	SYNTAX INTEGER {	no(1),
+					yes(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           "
+      ::= { gpoFrameStatusEntry 2 }
+      
+      --8.5
+      gpo3Trigger OBJECT-TYPE
+      	SYNTAX INTEGER {	no(1),
+					yes(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           "
+      ::= { gpoFrameStatusEntry 3 }
+      
+      --8.5
+      gpo4Trigger OBJECT-TYPE
+      	SYNTAX INTEGER {	no(1),
+					yes(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		    
+                           "
+      ::= { gpoFrameStatusEntry 4 }
+    --8.5
+	frameStatusTrigger OBJECT-TYPE
+      	SYNTAX INTEGER {	no(1),
+					yes(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+                           "
+      ::= { gpoFrameStatusEntry 5 }
+
+
+-- End of gpo frame status Table
+-- Beginning of fault display Table
+
+      faultDisplayTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF FaultDisplayEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "		
+					This table has information and objects related
+					to fault display.		
+				    "
+      ::= { quattromNotify 4 }
+
+      faultDisplayEntry OBJECT-TYPE
+      	SYNTAX FaultDisplayEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "                  
+					This entry object allows you to access the
+					objects in this table.            
+                            "
+            INDEX { faultNumber, videoIn, quattromInstance }
+      ::= { faultDisplayTable 1 }
+
+      FaultDisplayEntry ::= SEQUENCE {
+      	faultNumber		INTEGER,
+		faultMessage	OCTET STRING,
+		faultMode		INTEGER,
+		faultBlink		INTEGER,
+		faultDuration	INTEGER,
+		faultClear		INTEGER,
+		faultColour		INTEGER,	
+		faultLogic		INTEGER	
+      }     
+    
+    --custom    
+	faultNumber OBJECT-TYPE
+      	SYNTAX INTEGER (1..4)		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This is the main index in this table.  It can
+					have a value of 1 to 4 representing the four
+					possible faults available on this card.
+                           "
+      ::= { faultDisplayEntry 1 }	
+      
+      --8.2.11.3
+      faultMessage OBJECT-TYPE
+      	SYNTAX OCTET STRING (SIZE(15))		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set the message
+					that is to be displayed when the fault condition
+					is active.  The text of the message can be changed 
+					using the toggle switch, see the, manual for more 
+					datails.  This object can represent a string of length 15.					
+                           "
+      ::= { faultDisplayEntry 2 }        
+	
+	--8.2.11.4
+	faultMode OBJECT-TYPE
+      	SYNTAX INTEGER {	disable(1),
+					enable(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to enable or disable
+					fault condition message display.  When enabled, the fault
+					message will be displayed until the condition is reset.
+					When disabled, it will never be displayed.  Fault condition
+					message duration can be set.  The values of this object
+					are enable and disable.
+                           "
+      ::= { faultDisplayEntry 3 }
+    
+    --8.2.11.6
+	faultBlink OBJECT-TYPE
+      	SYNTAX INTEGER {	disable(1),
+					enable(2)
+		}	
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to determine if
+					the fault condition alert message will blink or
+					remain solid when the fault is active.  When disabled is
+					selected the Fault condition message alert remains solid.  When
+					it is enabled the fault alert message blinks upon activation.
+					This object can have a value of disable or
+					enable.
+                           "
+      ::= { faultDisplayEntry 4 }
+    
+    --8.2.11.7
+	faultDuration OBJECT-TYPE
+      	SYNTAX INTEGER (0..254)		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to set how long the
+					fault condition will be held.  The fault display
+					will be displayed as long as the fault condition is active
+					and the fault mode is set to enable.  The fault condition can
+					either be held until the user clears the condition or until a 
+					programmable timer expires.  This object can have a value of
+					0 to 254, with 0 representing 'Until Reset'	    
+                           "
+      ::= { faultDisplayEntry 5 }
+    
+    --8.2.11.8    	    	    
+	faultClear OBJECT-TYPE
+      	SYNTAX INTEGER {	off(1),
+      				on(2),
+					gpi1(3),
+					gpi2(4),
+					gpi3(5),
+					gpi4(6),
+					gpi5(7),
+					gpi6(8),
+					gpi7(9),
+					gpi8(10),
+					gpi9(11),
+					gpi10(12),
+					gpi11(13),
+					gpi12(14)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "		
+					This control allows the user to externally clear the fault through
+					a predefined gpi.  This object can have a value of off, or gpi1 to gpi12.		    
+                           "
+      ::= { faultDisplayEntry 6 }
+	
+	--8.2.11.5
+	faultColour OBJECT-TYPE
+      	SYNTAX INTEGER {	background1(1),
+					background2(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           This setting displays the background color selections made in the 
+                           Fault burn-in properties' menu. Having two colours allows the user 
+                           to identify between critical and non-critical faults. 		
+				"
+      ::= { faultDisplayEntry 7 }
+
+    faultLogic OBJECT-TYPE
+        SYNTAX INTEGER { or(1),
+                        and(2)
+        }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+        "
+        This option allows the user to group several fault triggers to
+        produce a fault message. For example, if this control is set to
+        AND, and both 'Loss of audio' and 'Frozen video' are selected, then
+        the fault condition message will only appear if both thte Loss of audio
+        AND Frozen video thresholds/durations occur. If this control is set to
+        OR, then the unit reports fault conditions on individual triggers, as
+        they occur.
+        "
+    ::= { faultDisplayEntry 8 }
+ 
+-- End of fault Display Table 
+-- Beginning of management Fault table Table
+
+      mgmtFaultConditionTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF MgmtFaultConditionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related to
+					traps and their control.
+				    "
+      ::= { quattromNotify 5 }
+
+      mgmtFaultConditionEntry OBJECT-TYPE
+      	SYNTAX MgmtFaultConditionEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "
+					This entry object is used to access the 
+					objects in this table.                              
+                            "
+            INDEX { faultConditionName, videoIn, quattromInstance }
+      ::= { mgmtFaultConditionTable 1 }
+
+      MgmtFaultConditionEntry ::= SEQUENCE {
+		faultConditionName		INTEGER,
+		sendTrapCondition			INTEGER,
+		faultPresentCondition		INTEGER
+      }             	  
+
+      faultConditionName OBJECT-TYPE
+      	SYNTAX INTEGER {	faultCondition1(1),
+					faultCondition2(2),
+					faultCondition3(3),
+					faultCondition4(4)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					       Adjusts alert displayed parameters for the four fault conditions.
+                           "
+      ::= { mgmtFaultConditionEntry 1 }
+
+      sendTrapCondition OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set if they 
+					want a certain trap generated or not generated for
+					a particular fault.  The values of this object are
+					false and true.					
+                           "
+      ::= { mgmtFaultConditionEntry 2 }
+
+      faultPresentCondition OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to check if 
+					a particular fault is present or not present.
+					The values of this object are false and true.	    
+                           "
+      ::= { mgmtFaultConditionEntry 3 }
+
+-- End of management fault Table
+-- Beginning of fault Trigger Table
+
+      faultTriggerTable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF FaultTriggerEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related to
+					traps and their control.
+				    "
+      ::= { quattromNotify 6 }
+
+      faultTriggerEntry OBJECT-TYPE
+      	SYNTAX FaultTriggerEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "
+					This entry object is used to access the 
+					objects in this table.                              
+                            "
+            INDEX { faultTriggerName, videoIn, quattromInstance }
+      ::= { faultTriggerTable 1 }
+
+      FaultTriggerEntry ::= SEQUENCE {
+		faultTriggerName			INTEGER,
+		faultConditionTrigger1		INTEGER,
+		faultConditionTrigger2		INTEGER,
+		faultConditionTrigger3		INTEGER,
+		faultConditionTrigger4		INTEGER
+      }             	  
+      
+      --Table 4
+      faultTriggerName OBJECT-TYPE
+      	SYNTAX INTEGER {	videoInvalid(1),
+					lossOfAudio(2),
+		          		lossOfAudio12(3),
+					lossOfAudio34(4),
+					lossOfAudio56(5),
+					apEDHError(6),
+				      ffEDHError(7),
+					phaseReversal12(8),
+					phaseReversal34(9),
+					phaseReversal56(10),
+					audioOver12(11),
+					audioOver34(12),
+					audioOver56(13),
+					audioSilence12(14),					
+					audioSilence34(15),
+					audioSilence56(16),
+				      audioMono12(17),
+					audioMono34(18),
+					audioMono56(19),
+					lossOfVITC(20),
+					lossOfSID(21),
+					lossOfProgramRating(22),
+					lossOfCC(23),
+					pictureFreeze(24),
+					pictureBlack(25),
+					gpi1(26),
+					gpi2(27),
+					gpi3(28),
+					gpi4(29),
+					gpi5(30),
+					gpi6(31),
+					gpi7(32),
+					gpi8(33),
+					gpi9(34),
+					gpi10(35),
+					gpi11(36),
+					gpi12(37)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           This is the list of possible triggers
+					for the four fault conditions, it is also
+					the main index for the table.					    
+                           "
+      ::= { faultTriggerEntry 1 }
+      
+      --8.2.11.9
+      faultConditionTrigger1 OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+							This parameter allows the user to set
+					which possible trigger will contribute
+					to fault condition 1.    
+                           "
+      ::= { faultTriggerEntry 2 }
+    --8.2.11.9
+	faultConditionTrigger2 OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+						This parameter allows the user to set
+					which possible trigger will contribute
+					to fault condition 2.	    
+                           "
+      ::= { faultTriggerEntry 3 }
+    --8.2.11.9
+	faultConditionTrigger3 OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "	
+						  This parameter allows the user to set
+					which possible trigger will contribute
+					to fault condition 3.	    
+                           "
+      ::= { faultTriggerEntry 4 }
+    --8.2.11.9
+	faultConditionTrigger4 OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "
+                           This parameter allows the user to set
+					which possible trigger will contribute
+					to fault condition 4.	
+							    
+                           "
+      ::= { faultTriggerEntry 5 }
+
+-- End of management fault Table
+-- Beginning of management gpi fault Table
+
+      mgmtFaultGPITable OBJECT-TYPE
+      	SYNTAX SEQUENCE OF MgmtFaultGPIEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "				
+					This table contains information and objects related to
+					traps and their control.
+				    "
+      ::= { quattromNotify 7 }
+
+      mgmtFaultGPIEntry OBJECT-TYPE
+      	SYNTAX MgmtFaultGPIEntry
+            ACCESS not-accessible
+            STATUS mandatory
+            DESCRIPTION
+                            "
+					This entry object is used to access the 
+					objects in this table.                              
+                            "
+            INDEX { gpiFaultName, quattromInstance }
+      ::= { mgmtFaultGPITable 1 }
+
+      MgmtFaultGPIEntry ::= SEQUENCE {
+		gpiFaultName			INTEGER,
+		sendTrapGPI				INTEGER,
+		faultPresentGPI			INTEGER
+      }             	  
+      --8.2.11.1
+      gpiFaultName OBJECT-TYPE
+      	SYNTAX INTEGER {	gpi1(1),
+					gpi2(2),
+					gpi3(3),
+					gpi4(4),
+					gpi5(5),
+					gpi6(6),
+					gpi7(7),
+					gpi8(8),
+					gpi9(9),
+					gpi10(10),
+					gpi11(11),
+					gpi12(12)
+		}		
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					       This index contains the possible gpi
+					traps that can occur. NOTE, some cards
+					do not support every gpi, check you manual
+					for more information.
+
+                           "
+      ::= { mgmtFaultGPIEntry 1 }
+
+      sendTrapGPI OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}		
+            ACCESS read-write
+            STATUS mandatory
+            DESCRIPTION 
+                           "				    
+					This control allows the user to set if they 
+					want a certain trap generated or not generated for
+					a particular fault.  The values of this object are
+					false and true.					
+                           "
+      ::= { mgmtFaultGPIEntry 2 }
+
+      faultPresentGPI OBJECT-TYPE
+      	SYNTAX INTEGER {	false(1),
+					true(2)
+		}
+            ACCESS read-only
+            STATUS mandatory
+            DESCRIPTION 
+                           "			
+					This control allows the user to check if 
+					a particular fault is present or not present.
+					The values of this object are false and true.	    
+                           "
+      ::= { mgmtFaultGPIEntry 3 }
+
+-- End of management fault Table
+
+END

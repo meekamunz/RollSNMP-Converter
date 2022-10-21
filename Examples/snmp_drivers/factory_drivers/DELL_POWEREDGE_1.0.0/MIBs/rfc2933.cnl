@@ -1,0 +1,200 @@
+IGMP-STD-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, mib-2, Counter32, Gauge32,
+    Unsigned32, IpAddress, TimeTicks FROM SNMPv2-SMI
+    RowStatus, TruthValue            FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP  FROM SNMPv2-CONF
+    InterfaceIndexOrZero,
+    InterfaceIndex                   FROM IF-MIB
+    igmpStdMIB                       FROM IGMP-STD-MIB;
+igmpMIBObjects  OBJECT IDENTIFIER ::= { igmpStdMIB 1 }
+
+--
+--  The IGMP Interface Table
+--
+
+igmpInterfaceTable OBJECT-TYPE
+    ::= { igmpMIBObjects 1 }
+
+igmpInterfaceEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME igmpInterfaceStatus
+    ::= { igmpInterfaceTable 1 }
+
+--
+--  The IGMP Cache Table
+--
+
+igmpCacheTable OBJECT-TYPE
+    ::= { igmpMIBObjects 2 }
+
+igmpCacheEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME igmpCacheStatus
+    ::= { igmpCacheTable 1 }
+
+-- conformance information
+--
+-- igmpMIBConformance
+--                OBJECT IDENTIFIER ::= { igmpStdMIB 2 }
+-- igmpMIBCompliances
+--                OBJECT IDENTIFIER ::= { igmpMIBConformance 1 }
+-- igmpMIBGroups  OBJECT IDENTIFIER ::= { igmpMIBConformance 2 }
+--
+--
+-- ## compliance statements
+--
+-- igmpV1HostMIBCompliance MODULE-COMPLIANCE
+--     STATUS  current
+--     DESCRIPTION
+--             "The compliance statement for hosts running IGMPv1 and
+--             implementing the IGMP MIB."
+--     MODULE  ## this module
+--     MANDATORY-GROUPS { igmpBaseMIBGroup }
+--
+--     OBJECT     igmpInterfaceStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--
+--     OBJECT     igmpCacheStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--
+--     ::= { igmpMIBCompliances 1 }
+--
+-- igmpV1RouterMIBCompliance MODULE-COMPLIANCE
+--     STATUS  current
+--     DESCRIPTION
+--             "The compliance statement for routers running IGMPv1 and
+--             implementing the IGMP MIB."
+--     MODULE  ## this module
+--       MANDATORY-GROUPS { igmpBaseMIBGroup,
+--                        igmpRouterMIBGroup
+--                      }
+--
+--     OBJECT     igmpInterfaceStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--     OBJECT     igmpCacheStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--     ::= { igmpMIBCompliances 2 }
+--
+-- igmpV2HostMIBCompliance MODULE-COMPLIANCE
+--     STATUS  current
+--     DESCRIPTION
+--             "The compliance statement for hosts running IGMPv2 and
+--             implementing the IGMP MIB."
+--     MODULE  ## this module
+--     MANDATORY-GROUPS { igmpBaseMIBGroup,
+--                        igmpV2HostMIBGroup
+--                      }
+--
+--     OBJECT     igmpInterfaceStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--
+--     OBJECT     igmpCacheStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--
+--     ::= { igmpMIBCompliances 3 }
+--
+-- igmpV2RouterMIBCompliance MODULE-COMPLIANCE
+--     STATUS  current
+--     DESCRIPTION
+--             "The compliance statement for routers running IGMPv2 and
+--             implementing the IGMP MIB."
+--     MODULE  ## this module
+--     MANDATORY-GROUPS { igmpBaseMIBGroup,
+--                        igmpRouterMIBGroup,
+--                        igmpV2RouterMIBGroup
+--                      }
+--
+--     OBJECT     igmpInterfaceStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--     OBJECT     igmpCacheStatus
+--     MIN-ACCESS read-only
+--     DESCRIPTION
+--              "Write access is not required."
+--
+--     ::= { igmpMIBCompliances 4 }
+--
+--
+-- ## units of conformance
+--
+-- igmpBaseMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpCacheSelf,
+--               igmpCacheStatus, igmpInterfaceStatus
+--             }
+--     STATUS  current
+--     DESCRIPTION
+--             "The basic collection of objects providing management of
+--             IGMP version 1 or 2."
+--     ::= { igmpMIBGroups 1 }
+--
+--
+-- igmpRouterMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpCacheUpTime, igmpCacheExpiryTime,
+--               igmpInterfaceJoins, igmpInterfaceGroups,
+--               igmpCacheLastReporter, igmpInterfaceQuerierUpTime,
+--               igmpInterfaceQuerierExpiryTime,
+--               igmpInterfaceQueryInterval
+--             }
+--     STATUS  current
+--     DESCRIPTION
+--             "A collection of additional objects for management of IGMP
+--             version 1 or 2 in routers."
+--     ::= { igmpMIBGroups 2 }
+--
+--
+-- igmpV2HostMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpInterfaceVersion1QuerierTimer }
+--     STATUS  current
+--     DESCRIPTION
+--             "A collection of additional objects for management of IGMP
+--             version 2 in hosts."
+--     ::= { igmpMIBGroups 3 }
+--
+-- igmpHostOptMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpCacheLastReporter, igmpInterfaceQuerier }
+--     STATUS  current
+--     DESCRIPTION
+--             "A collection of optional objects for IGMP hosts.
+--             Supporting this group can be especially useful in an
+--             environment with a router which does not support the IGMP
+--             MIB."
+--     ::= { igmpMIBGroups 4 }
+--
+-- igmpV2RouterMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpInterfaceVersion, igmpInterfaceQuerier,
+--               igmpInterfaceQueryMaxResponseTime,
+--               igmpInterfaceRobustness,
+--               igmpInterfaceWrongVersionQueries,
+--               igmpInterfaceLastMembQueryIntvl,
+--               igmpCacheVersion1HostTimer
+--             }
+--     STATUS  current
+--     DESCRIPTION
+--             "A collection of additional objects for management of IGMP
+--             version 2 in routers."
+--     ::= { igmpMIBGroups 5 }
+--
+-- igmpV2ProxyMIBGroup OBJECT-GROUP
+--     OBJECTS { igmpInterfaceProxyIfIndex }
+--     STATUS  current
+--     DESCRIPTION
+--             "A collection of additional objects for management of IGMP
+--             proxy devices."
+--     ::= { igmpMIBGroups 6 }
+
+END

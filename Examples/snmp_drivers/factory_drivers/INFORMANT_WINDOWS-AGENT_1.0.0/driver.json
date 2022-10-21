@@ -1,0 +1,8 @@
+{
+  "includes": ["Informant Windows Agent Regex.rsnmp"],
+  "driverName": "Windows-Agent",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Informant",
+  "deviceName": "Informant Windows Agent Regex",
+  "factory": true
+}

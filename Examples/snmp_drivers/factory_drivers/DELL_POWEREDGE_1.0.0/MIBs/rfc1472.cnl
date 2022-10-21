@@ -1,0 +1,29 @@
+PPP-SEC-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    OBJECT-TYPE
+            FROM RFC-1212
+    ppp
+            FROM PPP-LCP-MIB;
+
+pppSecurity     OBJECT IDENTIFIER ::= { ppp 2 }
+
+pppSecurityConfigTable OBJECT-TYPE
+    ::= { pppSecurity 2 }
+
+pppSecurityConfigEntry OBJECT-TYPE
+    ROW-STATUS-TYPE   v1-status-field
+    STATUS-FIELD-NAME pppSecurityConfigStatus
+    DELETE-VALUE      invalid
+    ::= { pppSecurityConfigTable 1 }
+
+pppSecuritySecretsTable OBJECT-TYPE
+    ::= { pppSecurity 3 }
+
+pppSecuritySecretsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE   v1-status-field
+    STATUS-FIELD-NAME pppSecuritySecretsStatus
+    DELETE-VALUE      invalid
+    ::= { pppSecuritySecretsTable 1 }
+
+   END

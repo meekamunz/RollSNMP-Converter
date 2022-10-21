@@ -1,0 +1,73 @@
+
+RADLAN-iscsi-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN iSCSI snooping Configuration
+-- Version:    7.45.00.00
+-- Date:       24-June-2007
+--
+
+
+IMPORTS
+    rlIscsiSnoop                                FROM RADLAN-iscsi-MIB
+    OBJECT-TYPE                                 FROM SNMPv2-SMI;
+
+
+
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopEnable OBJECT-TYPE
+    ::= { rlIscsiSnoop 1 }
+
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopAgingTimeOut OBJECT-TYPE
+    ::= { rlIscsiSnoop 2 }
+
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopQosTable OBJECT-TYPE
+    ::= { rlIscsiSnoop 3 }
+
+rlIscsiSnoopQosEntry OBJECT-TYPE
+    ::= { rlIscsiSnoopQosTable 1 }
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopTargetConfigTable OBJECT-TYPE
+    ::= {  rlIscsiSnoop 4 }
+
+rlIscsiSnoopTargetConfigEntry OBJECT-TYPE
+         ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIscsiSnoopTargetConfigStatus
+    ::= { rlIscsiSnoopTargetConfigTable 1 }
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopTargetNameTable OBJECT-TYPE
+    ::= { rlIscsiSnoop 5 }
+
+rlIscsiSnoopTargetNameEntry OBJECT-TYPE
+    ::= { rlIscsiSnoopTargetNameTable 1 }
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopInitiatorNameTable OBJECT-TYPE
+    ::= { rlIscsiSnoop 6 }
+
+rlIscsiSnoopInitiatorNameEntry OBJECT-TYPE
+    ::= { rlIscsiSnoopInitiatorNameTable 1 }
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopSessionTable OBJECT-TYPE
+    ::= { rlIscsiSnoop 7 }
+
+rlIscsiSnoopSessionEntry OBJECT-TYPE
+    ::= { rlIscsiSnoopSessionTable 1 }
+
+-------------------------------------------------------------------------------
+rlIscsiSnoopConnectionTable OBJECT-TYPE
+    ::= { rlIscsiSnoop 8 }
+
+rlIscsiSnoopConnectionEntry OBJECT-TYPE
+    ::= { rlIscsiSnoopConnectionTable 1 }
+
+
+END
+

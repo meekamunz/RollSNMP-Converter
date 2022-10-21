@@ -1,0 +1,4022 @@
+-- Copyright Evertz Microsystems Ltd.
+--
+-- 2008/10/17
+
+LBANDRTR-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	lbandrtrTraps
+		FROM LBANDRTR-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { lbandrtrTraps 1 }
+
+-- beginning of rfInputHigh input1 trap
+
+	faultRfInputHighTrueInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+		    "Power level at Input 1 is high"
+	::= 1000
+
+	faultRfInputHighFalseInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 1 is not high"
+	::= 1001
+
+-- end of rfInputHigh input1 trap
+-- beginning of rfInputHigh input2 trap
+
+	faultRfInputHighTrueInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 2 is high"
+	::= 1002
+
+	faultRfInputHighFalseInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 2 is not high"
+	::= 1003
+
+-- end of rfInputHigh input2 trap
+-- beginning of rfInputHigh input3 trap
+
+	faultRfInputHighTrueInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 3 is high"
+	::= 1004
+
+	faultRfInputHighFalseInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 3 is not high"
+	::= 1005
+
+-- end of rfInputHigh input3 trap
+-- beginning of rfInputHigh input4 trap
+
+	faultRfInputHighTrueInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 4 is high"
+	::= 1006
+
+	faultRfInputHighFalseInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 4 is not high"
+	::= 1007
+
+-- end of rfInputHigh input4 trap
+-- beginning of rfInputHigh input5 trap
+
+	faultRfInputHighTrueInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 5 is high"
+	::= 1008
+
+	faultRfInputHighFalseInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 5 is not high"
+	::= 1009
+
+-- end of rfInputHigh input5 trap
+-- beginning of rfInputHigh input6 trap
+
+	faultRfInputHighTrueInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 6 is high"
+	::= 1010
+
+	faultRfInputHighFalseInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 6 is not high"
+	::= 1011
+
+-- end of rfInputHigh input6 trap
+-- beginning of rfInputHigh input7 trap
+
+	faultRfInputHighTrueInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 7 is high"
+	::= 1012
+
+	faultRfInputHighFalseInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 7 is not high"
+	::= 1013
+
+-- end of rfInputHigh input7 trap
+-- beginning of rfInputHigh input8 trap
+
+	faultRfInputHighTrueInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 8 is high"
+	::= 1014
+
+	faultRfInputHighFalseInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 8 is not high"
+	::= 1015
+
+-- end of rfInputHigh input8 trap
+-- beginning of rfInputHigh input9 trap
+
+	faultRfInputHighTrueInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 9 is high"
+	::= 1016
+
+	faultRfInputHighFalseInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 9 is not high"
+	::= 1017
+
+-- end of rfInputHigh input9 trap
+-- beginning of rfInputHigh input10 trap
+
+	faultRfInputHighTrueInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 10 is high"
+	::= 1018
+
+	faultRfInputHighFalseInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 10 is not high"
+	::= 1019
+
+-- end of rfInputHigh input10 trap
+-- beginning of rfInputHigh input11 trap
+
+	faultRfInputHighTrueInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 11 is high"
+	::= 1020
+
+	faultRfInputHighFalseInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 11 is not high"
+	::= 1021
+
+-- end of rfInputHigh input11 trap
+-- beginning of rfInputHigh input12 trap
+
+	faultRfInputHighTrueInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 12 is high"
+	::= 1022
+
+	faultRfInputHighFalseInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 12 is not high"
+	::= 1023
+
+-- end of rfInputHigh input12 trap
+-- beginning of rfInputHigh input13 trap
+
+	faultRfInputHighTrueInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 13 is high"
+	::= 1024
+
+	faultRfInputHighFalseInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 13 is not high"
+	::= 1025
+
+-- end of rfInputHigh input13 trap
+-- beginning of rfInputHigh input14 trap
+
+	faultRfInputHighTrueInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 14 is high"
+	::= 1026
+
+	faultRfInputHighFalseInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 14 is not high"
+	::= 1027
+
+-- end of rfInputHigh input14 trap
+-- beginning of rfInputHigh input15 trap
+
+	faultRfInputHighTrueInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 15 is high"
+	::= 1028
+
+	faultRfInputHighFalseInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 15 is not high"
+	::= 1029
+
+-- end of rfInputHigh input15 trap
+-- beginning of rfInputHigh input16 trap
+
+	faultRfInputHighTrueInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 16 is high"
+	::= 1030
+
+	faultRfInputHighFalseInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 16 is not high"
+	::= 1031
+
+-- end of rfInputHigh input16 trap
+-- beginning of rfInputHigh input17 trap
+
+	faultRfInputHighTrueInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 17 is high"
+	::= 1032
+
+	faultRfInputHighFalseInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 17 is not high"
+	::= 1033
+
+-- end of rfInputHigh input17 trap
+-- beginning of rfInputHigh input18 trap
+
+	faultRfInputHighTrueInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 18 is high"
+	::= 1034
+
+	faultRfInputHighFalseInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 18 is not high"
+	::= 1035
+
+-- end of rfInputHigh input18 trap
+-- beginning of rfInputHigh input19 trap
+
+	faultRfInputHighTrueInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 19 is high"
+	::= 1036
+
+	faultRfInputHighFalseInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 19 is not high"
+	::= 1037
+
+-- end of rfInputHigh input19 trap
+-- beginning of rfInputHigh input20 trap
+
+	faultRfInputHighTrueInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 20 is high"
+	::= 1038
+
+	faultRfInputHighFalseInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 20 is not high"
+	::= 1039
+
+-- end of rfInputHigh input20 trap
+-- beginning of rfInputHigh input21 trap
+
+	faultRfInputHighTrueInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 21 is high"
+	::= 1040
+
+	faultRfInputHighFalseInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 21 is not high"
+	::= 1041
+
+-- end of rfInputHigh input21 trap
+-- beginning of rfInputHigh input22 trap
+
+	faultRfInputHighTrueInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 22 is high"
+	::= 1042
+
+	faultRfInputHighFalseInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 22 is not high"
+	::= 1043
+
+-- end of rfInputHigh input22 trap
+-- beginning of rfInputHigh input23 trap
+
+	faultRfInputHighTrueInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 23 is high"
+	::= 1044
+
+	faultRfInputHighFalseInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 23 is not high"
+	::= 1045
+
+-- end of rfInputHigh input23 trap
+-- beginning of rfInputHigh input24 trap
+
+	faultRfInputHighTrueInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 24 is high"
+	::= 1046
+
+	faultRfInputHighFalseInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 24 is not high"
+	::= 1047
+
+-- end of rfInputHigh input24 trap
+-- beginning of rfInputHigh input25 trap
+
+	faultRfInputHighTrueInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 25 is high"
+	::= 1048
+
+	faultRfInputHighFalseInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 25 is not high"
+	::= 1049
+
+-- end of rfInputHigh input25 trap
+-- beginning of rfInputHigh input26 trap
+
+	faultRfInputHighTrueInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 26 is high"
+	::= 1050
+
+	faultRfInputHighFalseInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 26 is not high"
+	::= 1051
+
+-- end of rfInputHigh input26 trap
+-- beginning of rfInputHigh input27 trap
+
+	faultRfInputHighTrueInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 27 is high"
+	::= 1052
+
+	faultRfInputHighFalseInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 27 is not high"
+	::= 1053
+
+-- end of rfInputHigh input27 trap
+-- beginning of rfInputHigh input28 trap
+
+	faultRfInputHighTrueInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 28 is high"
+	::= 1054
+
+	faultRfInputHighFalseInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 28 is not high"
+	::= 1055
+
+-- end of rfInputHigh input28 trap
+-- beginning of rfInputHigh input29 trap
+
+	faultRfInputHighTrueInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 29 is high"
+	::= 1056
+
+	faultRfInputHighFalseInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 29 is not high"
+	::= 1057
+
+-- end of rfInputHigh input29 trap
+-- beginning of rfInputHigh input30 trap
+
+	faultRfInputHighTrueInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 30 is high"
+	::= 1058
+
+	faultRfInputHighFalseInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 30 is not high"
+	::= 1059
+
+-- end of rfInputHigh input30 trap
+-- beginning of rfInputHigh input31 trap
+
+	faultRfInputHighTrueInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 31 is high."
+	::= 1060
+
+	faultRfInputHighFalseInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 31 is not high"
+	::= 1061
+
+-- end of rfInputHigh input31 trap
+-- beginning of rfInputHigh input32 trap
+
+	faultRfInputHighTrueInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 32 is high"
+	::= 1062
+
+	faultRfInputHighFalseInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 32 is not high"
+	::= 1063
+
+-- end of rfInputHigh input32 trap
+-- beginning of rfInputHigh input33 trap
+
+	faultRfInputHighTrueInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 33 is high"
+	::= 1064
+
+	faultRfInputHighFalseInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 33 is not high"
+	::= 1065
+
+-- end of rfInputHigh input33 trap
+-- beginning of rfInputHigh input34 trap
+
+	faultRfInputHighTrueInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 34 is high"
+	::= 1066
+
+	faultRfInputHighFalseInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 34 is not high"
+	::= 1067
+
+-- end of rfInputHigh input34 trap
+-- beginning of rfInputHigh input35 trap
+
+	faultRfInputHighTrueInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 35 is high"
+	::= 1068
+
+	faultRfInputHighFalseInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 35 is not high"
+	::= 1069
+
+-- end of rfInputHigh input35 trap
+-- beginning of rfInputHigh input36 trap
+
+	faultRfInputHighTrueInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 36 is high"
+	::= 1070
+
+	faultRfInputHighFalseInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 36 is not high"
+	::= 1071
+
+-- end of rfInputHigh input36 trap
+-- beginning of rfInputHigh input37 trap
+
+	faultRfInputHighTrueInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 37 is high"
+	::= 1072
+
+	faultRfInputHighFalseInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 37 is not high"
+	::= 1073
+
+-- end of rfInputHigh input37 trap
+-- beginning of rfInputHigh input38 trap
+
+	faultRfInputHighTrueInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 38 is high"
+	::= 1074
+
+	faultRfInputHighFalseInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 38 is not high"
+	::= 1075
+
+-- end of rfInputHigh input38 trap
+-- beginning of rfInputHigh input39 trap
+
+	faultRfInputHighTrueInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 39 is high"
+	::= 1076
+
+	faultRfInputHighFalseInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 39 is not high"
+	::= 1077
+
+-- end of rfInputHigh input39 trap
+-- beginning of rfInputHigh input40 trap
+
+	faultRfInputHighTrueInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 40 is high"
+	::= 1078
+
+	faultRfInputHighFalseInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 40 is not high"
+	::= 1079
+
+-- end of rfInputHigh input40 trap
+-- beginning of rfInputHigh input41 trap
+
+	faultRfInputHighTrueInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 41 is high"
+	::= 1080
+
+	faultRfInputHighFalseInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 41 is not high"
+	::= 1081
+
+-- end of rfInputHigh input41 trap
+-- beginning of rfInputHigh input42 trap
+
+	faultRfInputHighTrueInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 42 is high"
+	::= 1082
+
+	faultRfInputHighFalseInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 42 is not high"
+	::= 1083
+
+-- end of rfInputHigh input42 trap
+-- beginning of rfInputHigh input43 trap
+
+	faultRfInputHighTrueInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 43 is high"
+	::= 1084
+
+	faultRfInputHighFalseInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 43 is not high"
+	::= 1085
+
+-- end of rfInputHigh input43 trap
+-- beginning of rfInputHigh input44 trap
+
+	faultRfInputHighTrueInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 44 is high"
+	::= 1086
+
+	faultRfInputHighFalseInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 44 is not high"
+	::= 1087
+
+-- end of rfInputHigh input44 trap
+-- beginning of rfInputHigh input45 trap
+
+	faultRfInputHighTrueInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 45 is high"
+	::= 1088
+
+	faultRfInputHighFalseInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 45 is not high"
+	::= 1089
+
+-- end of rfInputHigh input45 trap
+-- beginning of rfInputHigh input46 trap
+
+	faultRfInputHighTrueInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 46 is high"
+	::= 1090
+
+	faultRfInputHighFalseInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 46 is not high"
+	::= 1091
+
+-- end of rfInputHigh input46 trap
+-- beginning of rfInputHigh input47 trap
+
+	faultRfInputHighTrueInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 47 is high"
+	::= 1092
+
+	faultRfInputHighFalseInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 47 is not high"
+	::= 1093
+
+-- end of rfInputHigh input47 trap
+-- beginning of rfInputHigh input48 trap
+
+	faultRfInputHighTrueInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 48 is high"
+	::= 1094
+
+	faultRfInputHighFalseInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 48 is not high"
+	::= 1095
+
+-- end of rfInputHigh input48 trap
+-- beginning of rfInputHigh input49 trap
+
+	faultRfInputHighTrueInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 49 is high"
+	::= 1096
+
+	faultRfInputHighFalseInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 49 is not high"
+	::= 1097
+
+-- end of rfInputHigh input49 trap
+-- beginning of rfInputHigh input50 trap
+
+	faultRfInputHighTrueInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 50 is high"
+	::= 1098
+
+	faultRfInputHighFalseInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 50 is not high"
+	::= 1099
+
+-- end of rfInputHigh input50 trap
+-- beginning of rfInputHigh input51 trap
+
+	faultRfInputHighTrueInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 51 is high"
+	::= 1100
+
+	faultRfInputHighFalseInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 51 is not high"
+	::= 1101
+
+-- end of rfInputHigh input51 trap
+-- beginning of rfInputHigh input52 trap
+
+	faultRfInputHighTrueInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 52 is high"
+	::= 1102
+
+	faultRfInputHighFalseInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"TPower level at Input 52 is not high"
+	::= 1103
+
+-- end of rfInputHigh input52 trap
+-- beginning of rfInputHigh input53 trap
+
+	faultRfInputHighTrueInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 53 is high"
+	::= 1104
+
+	faultRfInputHighFalseInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 53 is not high"
+	::= 1105
+
+-- end of rfInputHigh input53 trap
+-- beginning of rfInputHigh input54 trap
+
+	faultRfInputHighTrueInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 54 is high"
+	::= 1106
+
+	faultRfInputHighFalseInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 54 is not high"
+	::= 1107
+
+-- end of rfInputHigh input54 trap
+-- beginning of rfInputHigh input55 trap
+
+	faultRfInputHighTrueInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 55 is high"
+	::= 1108
+
+	faultRfInputHighFalseInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 55 is not high"
+	::= 1109
+
+-- end of rfInputHigh input55 trap
+-- beginning of rfInputHigh input56 trap
+
+	faultRfInputHighTrueInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 56 is high"
+	::= 1110
+
+	faultRfInputHighFalseInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"TPower level at Input 56 is not high"
+	::= 1111
+
+-- end of rfInputHigh input56 trap
+-- beginning of rfInputHigh input57 trap
+
+	faultRfInputHighTrueInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 57 is high"
+	::= 1112
+
+	faultRfInputHighFalseInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 57 is not high"
+	::= 1113
+
+-- end of rfInputHigh input57 trap
+-- beginning of rfInputHigh input58 trap
+
+	faultRfInputHighTrueInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 58 is high"
+	::= 1114
+
+	faultRfInputHighFalseInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 58 is not high"
+	::= 1115
+
+-- end of rfInputHigh input58 trap
+-- beginning of rfInputHigh input59 trap
+
+	faultRfInputHighTrueInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 59 is high"
+	::= 1116
+
+	faultRfInputHighFalseInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 59 is not high"
+	::= 1117
+
+-- end of rfInputHigh input59 trap
+-- beginning of rfInputHigh input60 trap
+
+	faultRfInputHighTrueInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 60 is high"
+	::= 1118
+
+	faultRfInputHighFalseInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 60 is not high"
+	::= 1119
+
+-- end of rfInputHigh input60 trap
+-- beginning of rfInputHigh input61 trap
+
+	faultRfInputHighTrueInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 61 is high"
+	::= 1120
+
+	faultRfInputHighFalseInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 61 is not high"
+	::= 1121
+
+-- end of rfInputHigh input61 trap
+-- beginning of rfInputHigh input62 trap
+
+	faultRfInputHighTrueInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 62 is high"
+	::= 1122
+
+	faultRfInputHighFalseInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 62 is not high"
+	::= 1123
+
+-- end of rfInputHigh input62 trap
+-- beginning of rfInputHigh input63 trap
+
+	faultRfInputHighTrueInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 63 is high"
+	::= 1124
+
+	faultRfInputHighFalseInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 63 is not high"
+	::= 1125
+
+-- end of rfInputHigh input63 trap
+-- beginning of rfInputHigh input64 trap
+
+	faultRfInputHighTrueInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 64 is high"
+	::= 1126
+
+	faultRfInputHighFalseInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 64 is not high"
+	::= 1127
+
+-- end of rfInputHigh input64 trap
+-- beginning of rfInputLow input1 trap
+
+	faultRfInputLowTrueInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 1 is low"
+	::= 1128
+
+	faultRfInputLowFalseInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 1 is not low"
+	::= 1129
+
+-- end of rfInputLow input1 trap
+-- beginning of rfInputLow input2 trap
+
+	faultRfInputLowTrueInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 2 is low"
+	::= 1130
+
+	faultRfInputLowFalseInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 2 is not low"
+	::= 1131
+
+-- end of rfInputLow input2 trap
+-- beginning of rfInputLow input3 trap
+
+	faultRfInputLowTrueInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 3 is low"
+	::= 1132
+
+	faultRfInputLowFalseInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 3 is not low"
+	::= 1133
+
+-- end of rfInputLow input3 trap
+-- beginning of rfInputLow input4 trap
+
+	faultRfInputLowTrueInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 4 is low"
+	::= 1134
+
+	faultRfInputLowFalseInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 4 is not low"
+	::= 1135
+
+-- end of rfInputLow input4 trap
+-- beginning of rfInputLow input5 trap
+
+	faultRfInputLowTrueInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 5 is low"
+	::= 1136
+
+	faultRfInputLowFalseInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 5 is not low"
+	::= 1137
+
+-- end of rfInputLow input5 trap
+-- beginning of rfInputLow input6 trap
+
+	faultRfInputLowTrueInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 6 is low"
+	::= 1138
+
+	faultRfInputLowFalseInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 6 is not low"
+	::= 1139
+
+-- end of rfInputLow input6 trap
+-- beginning of rfInputLow input7 trap
+
+	faultRfInputLowTrueInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 7 is low"
+	::= 1140
+
+	faultRfInputLowFalseInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 7 is not low"
+	::= 1141
+
+-- end of rfInputLow input7 trap
+-- beginning of rfInputLow input8 trap
+
+	faultRfInputLowTrueInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 8 is low"
+	::= 1142
+
+	faultRfInputLowFalseInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 8 is not low"
+	::= 1143
+
+-- end of rfInputLow input8 trap
+-- beginning of rfInputLow input9 trap
+
+	faultRfInputLowTrueInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 9 is low"
+	::= 1144
+
+	faultRfInputLowFalseInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 9 is not low"
+	::= 1145
+
+-- end of rfInputLow input9 trap
+-- beginning of rfInputLow input10 trap
+
+	faultRfInputLowTrueInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 10 is low"
+	::= 1146
+
+	faultRfInputLowFalseInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 10 is not low"
+	::= 1147
+
+-- end of rfInputLow input10 trap
+-- beginning of rfInputLow input11 trap
+
+	faultRfInputLowTrueInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 11 is low"
+	::= 1148
+
+	faultRfInputLowFalseInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 11 is not low"
+	::= 1149
+
+-- end of rfInputLow input11 trap
+-- beginning of rfInputLow input12 trap
+
+	faultRfInputLowTrueInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 12 is low"
+	::= 1150
+
+	faultRfInputLowFalseInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 12 is not low"
+	::= 1151
+
+-- end of rfInputLow input12 trap
+-- beginning of rfInputLow input13 trap
+
+	faultRfInputLowTrueInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 13 is low"
+	::= 1152
+
+	faultRfInputLowFalseInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 13 is not low"
+	::= 1153
+
+-- end of rfInputLow input13 trap
+-- beginning of rfInputLow input14 trap
+
+	faultRfInputLowTrueInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 14 is low"
+	::= 1154
+
+	faultRfInputLowFalseInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 14 is not low"
+	::= 1155
+
+-- end of rfInputLow input14 trap
+-- beginning of rfInputLow input15 trap
+
+	faultRfInputLowTrueInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 15 is low"
+	::= 1156
+
+	faultRfInputLowFalseInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 15 is not low"
+	::= 1157
+
+-- end of rfInputLow input15 trap
+-- beginning of rfInputLow input16 trap
+
+	faultRfInputLowTrueInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 16 is low"
+	::= 1158
+
+	faultRfInputLowFalseInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 16 is not low"
+	::= 1159
+
+-- end of rfInputLow input16 trap
+-- beginning of rfInputLow input17 trap
+
+	faultRfInputLowTrueInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 17 is low"
+	::= 1160
+
+	faultRfInputLowFalseInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 17 is not low"
+	::= 1161
+
+-- end of rfInputLow input17 trap
+-- beginning of rfInputLow input18 trap
+
+	faultRfInputLowTrueInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 18 is low"
+	::= 1162
+
+	faultRfInputLowFalseInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 18 is not low"
+	::= 1163
+
+-- end of rfInputLow input18 trap
+-- beginning of rfInputLow input19 trap
+
+	faultRfInputLowTrueInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 19 is low"
+	::= 1164
+
+	faultRfInputLowFalseInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 19 is not low"
+	::= 1165
+
+-- end of rfInputLow input19 trap
+-- beginning of rfInputLow input20 trap
+
+	faultRfInputLowTrueInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 20 is low"
+	::= 1166
+
+	faultRfInputLowFalseInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 20 is not low"
+	::= 1167
+
+-- end of rfInputLow input20 trap
+-- beginning of rfInputLow input21 trap
+
+	faultRfInputLowTrueInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 21 is low"
+	::= 1168
+
+	faultRfInputLowFalseInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 21 is not low"
+	::= 1169
+
+-- end of rfInputLow input21 trap
+-- beginning of rfInputLow input22 trap
+
+	faultRfInputLowTrueInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 22 is low"
+	::= 1170
+
+	faultRfInputLowFalseInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 22 is not low"
+	::= 1171
+
+-- end of rfInputLow input22 trap
+-- beginning of rfInputLow input23 trap
+
+	faultRfInputLowTrueInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 23 is low"
+	::= 1172
+
+	faultRfInputLowFalseInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 23 is not low"
+	::= 1173
+
+-- end of rfInputLow input23 trap
+-- beginning of rfInputLow input24 trap
+
+	faultRfInputLowTrueInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 24 is low"
+	::= 1174
+
+	faultRfInputLowFalseInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 24 is not low"
+	::= 1175
+
+-- end of rfInputLow input24 trap
+-- beginning of rfInputLow input25 trap
+
+	faultRfInputLowTrueInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 25 is low"
+	::= 1176
+
+	faultRfInputLowFalseInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 25 is not low"
+	::= 1177
+
+-- end of rfInputLow input25 trap
+-- beginning of rfInputLow input26 trap
+
+	faultRfInputLowTrueInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 26 is low"
+	::= 1178
+
+	faultRfInputLowFalseInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 26 is not low"
+	::= 1179
+
+-- end of rfInputLow input26 trap
+-- beginning of rfInputLow input27 trap
+
+	faultRfInputLowTrueInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 27 is low"
+	::= 1180
+
+	faultRfInputLowFalseInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 27 is not low"
+	::= 1181
+
+-- end of rfInputLow input27 trap
+-- beginning of rfInputLow input28 trap
+
+	faultRfInputLowTrueInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 28 is low"
+	::= 1182
+
+	faultRfInputLowFalseInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 28 is not low"
+	::= 1183
+
+-- end of rfInputLow input28 trap
+-- beginning of rfInputLow input29 trap
+
+	faultRfInputLowTrueInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 29 is low"
+	::= 1184
+
+	faultRfInputLowFalseInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 29 is not low"
+	::= 1185
+
+-- end of rfInputLow input29 trap
+-- beginning of rfInputLow input30 trap
+
+	faultRfInputLowTrueInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 30 is low"
+	::= 1186
+
+	faultRfInputLowFalseInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 30 is not low"
+	::= 1187
+
+-- end of rfInputLow input30 trap
+-- beginning of rfInputLow input31 trap
+
+	faultRfInputLowTrueInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 31 is low"
+	::= 1188
+
+	faultRfInputLowFalseInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 31 is not low"
+	::= 1189
+
+-- end of rfInputLow input31 trap
+-- beginning of rfInputLow input32 trap
+
+	faultRfInputLowTrueInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 32 is low"
+	::= 1190
+
+	faultRfInputLowFalseInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 32 is not low"
+	::= 1191
+
+-- end of rfInputLow input32 trap
+-- beginning of rfInputLow input33 trap
+
+	faultRfInputLowTrueInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 33 is low"
+	::= 1192
+
+	faultRfInputLowFalseInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 33 is not low"
+	::= 1193
+
+-- end of rfInputLow input33 trap
+-- beginning of rfInputLow input34 trap
+
+	faultRfInputLowTrueInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 34 is low"
+	::= 1194
+
+	faultRfInputLowFalseInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 34 is not low"
+	::= 1195
+
+-- end of rfInputLow input34 trap
+-- beginning of rfInputLow input35 trap
+
+	faultRfInputLowTrueInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 35 is low"
+	::= 1196
+
+	faultRfInputLowFalseInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 35 is not low"
+	::= 1197
+
+-- end of rfInputLow input35 trap
+-- beginning of rfInputLow input36 trap
+
+	faultRfInputLowTrueInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 36 is low"
+	::= 1198
+
+	faultRfInputLowFalseInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 36 is not low"
+	::= 1199
+
+-- end of rfInputLow input36 trap
+-- beginning of rfInputLow input37 trap
+
+	faultRfInputLowTrueInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 37 is low"
+	::= 1200
+
+	faultRfInputLowFalseInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 37 is not low"
+	::= 1201
+
+-- end of rfInputLow input37 trap
+-- beginning of rfInputLow input38 trap
+
+	faultRfInputLowTrueInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 38 is low"
+	::= 1202
+
+	faultRfInputLowFalseInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 38 is not low"
+	::= 1203
+
+-- end of rfInputLow input38 trap
+-- beginning of rfInputLow input39 trap
+
+	faultRfInputLowTrueInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 39 is low"
+	::= 1204
+
+	faultRfInputLowFalseInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 39 is not low"
+	::= 1205
+
+-- end of rfInputLow input39 trap
+-- beginning of rfInputLow input40 trap
+
+	faultRfInputLowTrueInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 40 is low"
+	::= 1206
+
+	faultRfInputLowFalseInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 40 is not low"
+	::= 1207
+
+-- end of rfInputLow input40 trap
+-- beginning of rfInputLow input41 trap
+
+	faultRfInputLowTrueInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 41 is low"
+	::= 1208
+
+	faultRfInputLowFalseInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 41 is not low"
+	::= 1209
+
+-- end of rfInputLow input41 trap
+-- beginning of rfInputLow input42 trap
+
+	faultRfInputLowTrueInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 42 is low"
+	::= 1210
+
+	faultRfInputLowFalseInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 42 is not low"
+	::= 1211
+
+-- end of rfInputLow input42 trap
+-- beginning of rfInputLow input43 trap
+
+	faultRfInputLowTrueInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 43 is low"
+	::= 1212
+
+	faultRfInputLowFalseInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 43 is not low"
+	::= 1213
+
+-- end of rfInputLow input43 trap
+-- beginning of rfInputLow input44 trap
+
+	faultRfInputLowTrueInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 44 is low"
+	::= 1214
+
+	faultRfInputLowFalseInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 44 is not low"
+	::= 1215
+
+-- end of rfInputLow input44 trap
+-- beginning of rfInputLow input45 trap
+
+	faultRfInputLowTrueInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 45 is low"
+	::= 1216
+
+	faultRfInputLowFalseInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 45 is not low"
+	::= 1217
+
+-- end of rfInputLow input45 trap
+-- beginning of rfInputLow input46 trap
+
+	faultRfInputLowTrueInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 46 is low"
+	::= 1218
+
+	faultRfInputLowFalseInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 46 is not low"
+	::= 1219
+
+-- end of rfInputLow input46 trap
+-- beginning of rfInputLow input47 trap
+
+	faultRfInputLowTrueInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 47 is low"
+	::= 1220
+
+	faultRfInputLowFalseInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 47 is not low"
+	::= 1221
+
+-- end of rfInputLow input47 trap
+-- beginning of rfInputLow input48 trap
+
+	faultRfInputLowTrueInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 48 is low"
+	::= 1222
+
+	faultRfInputLowFalseInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 48 is not low"
+	::= 1223
+
+-- end of rfInputLow input48 trap
+-- beginning of rfInputLow input49 trap
+
+	faultRfInputLowTrueInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 49 is low"
+	::= 1224
+
+	faultRfInputLowFalseInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 49 is not low"
+	::= 1225
+
+-- end of rfInputLow input49 trap
+-- beginning of rfInputLow input50 trap
+
+	faultRfInputLowTrueInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 50 is low"
+	::= 1226
+
+	faultRfInputLowFalseInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 50 is not low"
+	::= 1227
+
+-- end of rfInputLow input50 trap
+-- beginning of rfInputLow input51 trap
+
+	faultRfInputLowTrueInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 51 is low"
+	::= 1228
+
+	faultRfInputLowFalseInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 51 is not low"
+	::= 1229
+
+-- end of rfInputLow input51 trap
+-- beginning of rfInputLow input52 trap
+
+	faultRfInputLowTrueInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 52 is low"
+	::= 1230
+
+	faultRfInputLowFalseInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 52 is not low"
+	::= 1231
+
+-- end of rfInputLow input52 trap
+-- beginning of rfInputLow input53 trap
+
+	faultRfInputLowTrueInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 53 is low"
+	::= 1232
+
+	faultRfInputLowFalseInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 53 is not low"
+	::= 1233
+
+-- end of rfInputLow input53 trap
+-- beginning of rfInputLow input54 trap
+
+	faultRfInputLowTrueInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 54 is low"
+	::= 1234
+
+	faultRfInputLowFalseInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 54 is not low"
+	::= 1235
+
+-- end of rfInputLow input54 trap
+-- beginning of rfInputLow input55 trap
+
+	faultRfInputLowTrueInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 55 is low"
+	::= 1236
+
+	faultRfInputLowFalseInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 55 is not low"
+	::= 1237
+
+-- end of rfInputLow input55 trap
+-- beginning of rfInputLow input56 trap
+
+	faultRfInputLowTrueInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 56 is low"
+	::= 1238
+
+	faultRfInputLowFalseInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 56 is not low"
+	::= 1239
+
+-- end of rfInputLow input56 trap
+-- beginning of rfInputLow input57 trap
+
+	faultRfInputLowTrueInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 57 is low"
+	::= 1240
+
+	faultRfInputLowFalseInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 57 is not low"
+	::= 1241
+
+-- end of rfInputLow input57 trap
+-- beginning of rfInputLow input58 trap
+
+	faultRfInputLowTrueInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 58 is low"
+	::= 1242
+
+	faultRfInputLowFalseInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 58 is not low"
+	::= 1243
+
+-- end of rfInputLow input58 trap
+-- beginning of rfInputLow input59 trap
+
+	faultRfInputLowTrueInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 59 is low"
+	::= 1244
+
+	faultRfInputLowFalseInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 59 is not low"
+	::= 1245
+
+-- end of rfInputLow input59 trap
+-- beginning of rfInputLow input60 trap
+
+	faultRfInputLowTrueInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 60 is low"
+	::= 1246
+
+	faultRfInputLowFalseInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 60 is not low"
+	::= 1247
+
+-- end of rfInputLow input60 trap
+-- beginning of rfInputLow input61 trap
+
+	faultRfInputLowTrueInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 61 is low"
+	::= 1248
+
+	faultRfInputLowFalseInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 61 is not low"
+	::= 1249
+
+-- end of rfInputLow input61 trap
+-- beginning of rfInputLow input62 trap
+
+	faultRfInputLowTrueInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 62 is low"
+	::= 1250
+
+	faultRfInputLowFalseInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 62 is not low"
+	::= 1251
+
+-- end of rfInputLow input62 trap
+-- beginning of rfInputLow input63 trap
+
+	faultRfInputLowTrueInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 63 is low"
+	::= 1252
+
+	faultRfInputLowFalseInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 63 is not low"
+	::= 1253
+
+-- end of rfInputLow input63 trap
+-- beginning of rfInputLow input64 trap
+
+	faultRfInputLowTrueInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 64 is low"
+	::= 1254
+
+	faultRfInputLowFalseInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at Input 64 is not low"
+	::= 1255
+
+-- end of rfInputLow input64 trap
+-- beginning of rfInputSquelched input1 trap
+
+	faultRfInputSequelchedTrueInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 1 is squelched"
+	::= 1256
+
+	faultRfInputSequelchedFalseInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 1 is not squelched"
+	::= 1257
+
+-- end of rfInputSquelched input1 trap
+-- beginning of rfInputSquelched input2 trap
+
+	faultRfInputSequelchedTrueInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 2 is squelched"
+	::= 1258
+
+	faultRfInputSequelchedFalseInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 2 is not squelched"
+	::= 1259
+
+-- end of rfInputSquelched input2 trap
+-- beginning of rfInputSquelched input3 trap
+
+	faultRfInputSequelchedTrueInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 3 is squelched"
+	::= 1260
+
+	faultRfInputSequelchedFalseInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 3 is not squelched"
+	::= 1261
+
+-- end of rfInputSquelched input3 trap
+-- beginning of rfInputSquelched input4 trap
+
+	faultRfInputSequelchedTrueInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 4 is squelched"
+	::= 1262
+
+	faultRfInputSequelchedFalseInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 4 is not squelched"
+	::= 1263
+
+-- end of rfInputSquelched input4 trap
+-- beginning of rfInputSquelched input5 trap
+
+	faultRfInputSequelchedTrueInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 5 is squelched"
+	::= 1264
+
+	faultRfInputSequelchedFalseInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 5 is not squelched"
+	::= 1265
+
+-- end of rfInputSquelched input5 trap
+-- beginning of rfInputSquelched input6 trap
+
+	faultRfInputSequelchedTrueInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 6 is squelched"
+	::= 1266
+
+	faultRfInputSequelchedFalseInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 6 is not squelched"
+	::= 1267
+
+-- end of rfInputSquelched input6 trap
+-- beginning of rfInputSquelched input7 trap
+
+	faultRfInputSequelchedTrueInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 7 is squelched"
+	::= 1268
+
+	faultRfInputSequelchedFalseInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 7 is not squelched"
+	::= 1269
+
+-- end of rfInputSquelched input7 trap
+-- beginning of rfInputSquelched input8 trap
+
+	faultRfInputSequelchedTrueInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 8 is squelched"
+	::= 1270
+
+	faultRfInputSequelchedFalseInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 8 is not squelched"
+	::= 1271
+
+-- end of rfInputSquelched input8 trap
+-- beginning of rfInputSquelched input9 trap
+
+	faultRfInputSequelchedTrueInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 9 is squelched"
+	::= 1272
+
+	faultRfInputSequelchedFalseInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 9 is not squelched"
+	::= 1273
+
+-- end of rfInputSquelched input9 trap
+-- beginning of rfInputSquelched input10 trap
+
+	faultRfInputSequelchedTrueInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 10 is squelched"
+	::= 1274
+
+	faultRfInputSequelchedFalseInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 10 is not squelched"
+	::= 1275
+
+-- end of rfInputSquelched input10 trap
+-- beginning of rfInputSquelched input11 trap
+
+	faultRfInputSequelchedTrueInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 11 is squelched"
+	::= 1276
+
+	faultRfInputSequelchedFalseInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 11 is not squelched"
+	::= 1277
+
+-- end of rfInputSquelched input11 trap
+-- beginning of rfInputSquelched input12 trap
+
+	faultRfInputSequelchedTrueInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 12 is squelched"
+	::= 1278
+
+	faultRfInputSequelchedFalseInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 12 is not squelched"
+	::= 1279
+
+-- end of rfInputSquelched input12 trap
+-- beginning of rfInputSquelched input13 trap
+
+	faultRfInputSequelchedTrueInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 13 is squelched"
+	::= 1280
+
+	faultRfInputSequelchedFalseInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 13 is not squelched"
+	::= 1281
+
+-- end of rfInputSquelched input13 trap
+-- beginning of rfInputSquelched input14 trap
+
+	faultRfInputSequelchedTrueInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 14 is squelched"
+	::= 1282
+
+	faultRfInputSequelchedFalseInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 14 is not squelched"
+	::= 1283
+
+-- end of rfInputSquelched input14 trap
+-- beginning of rfInputSquelched input15 trap
+
+	faultRfInputSequelchedTrueInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 15 is squelched"
+	::= 1284
+
+	faultRfInputSequelchedFalseInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 15 is not squelched"
+	::= 1285
+
+-- end of rfInputSquelched input15 trap
+-- beginning of rfInputSquelched input16 trap
+
+	faultRfInputSequelchedTrueInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 16 is squelched"
+	::= 1286
+
+	faultRfInputSequelchedFalseInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 16 is not squelched"
+	::= 1287
+
+-- end of rfInputSquelched input16 trap
+-- beginning of rfInputSquelched input17 trap
+
+	faultRfInputSequelchedTrueInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 17 is squelched"
+	::= 1288
+
+	faultRfInputSequelchedFalseInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 17 is not squelched"
+	::= 1289
+
+-- end of rfInputSquelched input17 trap
+-- beginning of rfInputSquelched input18 trap
+
+	faultRfInputSequelchedTrueInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 18 is squelched"
+	::= 1290
+
+	faultRfInputSequelchedFalseInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 18 is not squelched"
+	::= 1291
+
+-- end of rfInputSquelched input18 trap
+-- beginning of rfInputSquelched input19 trap
+
+	faultRfInputSequelchedTrueInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 19 is squelched"
+	::= 1292
+
+	faultRfInputSequelchedFalseInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 19 is not squelched"
+	::= 1293
+
+-- end of rfInputSquelched input19 trap
+-- beginning of rfInputSquelched input20 trap
+
+	faultRfInputSequelchedTrueInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 20 is squelched"
+	::= 1294
+
+	faultRfInputSequelchedFalseInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 20 is not squelched"
+	::= 1295
+
+-- end of rfInputSquelched input20 trap
+-- beginning of rfInputSquelched input21 trap
+
+	faultRfInputSequelchedTrueInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 21 is squelched"
+	::= 1296
+
+	faultRfInputSequelchedFalseInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 21 is not squelched"
+	::= 1297
+
+-- end of rfInputSquelched input21 trap
+-- beginning of rfInputSquelched input22 trap
+
+	faultRfInputSequelchedTrueInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 22 is squelched"
+	::= 1298
+
+	faultRfInputSequelchedFalseInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 22 is not squelched"
+	::= 1299
+
+-- end of rfInputSquelched input22 trap
+-- beginning of rfInputSquelched input23 trap
+
+	faultRfInputSequelchedTrueInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 23 is squelched"
+	::= 1300
+
+	faultRfInputSequelchedFalseInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 23 is not squelched"
+	::= 1301
+
+-- end of rfInputSquelched input23 trap
+-- beginning of rfInputSquelched input24 trap
+
+	faultRfInputSequelchedTrueInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 24 is squelched"
+	::= 1302
+
+	faultRfInputSequelchedFalseInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 24 is not squelched"
+	::= 1303
+
+-- end of rfInputSquelched input24 trap
+-- beginning of rfInputSquelched input25 trap
+
+	faultRfInputSequelchedTrueInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 25 is squelched"
+	::= 1304
+
+	faultRfInputSequelchedFalseInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 25 is not squelched"
+	::= 1305
+
+-- end of rfInputSquelched input25 trap
+-- beginning of rfInputSquelched input26 trap
+
+	faultRfInputSequelchedTrueInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 26 is squelched"
+	::= 1306
+
+	faultRfInputSequelchedFalseInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 26 is not squelched"
+	::= 1307
+
+-- end of rfInputSquelched input26 trap
+-- beginning of rfInputSquelched input27 trap
+
+	faultRfInputSequelchedTrueInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 27 is squelched"
+	::= 1308
+
+	faultRfInputSequelchedFalseInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 27 is not squelched"
+	::= 1309
+
+-- end of rfInputSquelched input27 trap
+-- beginning of rfInputSquelched input28 trap
+
+	faultRfInputSequelchedTrueInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 28 is squelched"
+	::= 1310
+
+	faultRfInputSequelchedFalseInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 28 is not squelched"
+	::= 1311
+
+-- end of rfInputSquelched input28 trap
+-- beginning of rfInputSquelched input29 trap
+
+	faultRfInputSequelchedTrueInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 29 is squelched"
+	::= 1312
+
+	faultRfInputSequelchedFalseInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 29 is not squelched"
+	::= 1313
+
+-- end of rfInputSquelched input29 trap
+-- beginning of rfInputSquelched input30 trap
+
+	faultRfInputSequelchedTrueInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 30 is squelched"
+	::= 1314
+
+	faultRfInputSequelchedFalseInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 30 is not squelched"
+	::= 1315
+
+-- end of rfInputSquelched input30 trap
+-- beginning of rfInputSquelched input31 trap
+
+	faultRfInputSequelchedTrueInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 31 is squelched"
+	::= 1316
+
+	faultRfInputSequelchedFalseInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 31 is not squelched"
+	::= 1317
+
+-- end of rfInputSquelched input31 trap
+-- beginning of rfInputSquelched input32 trap
+
+	faultRfInputSequelchedTrueInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 32 is squelched"
+	::= 1318
+
+	faultRfInputSequelchedFalseInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 32 is not squelched"
+	::= 1319
+
+-- end of rfInputSquelched input32 trap
+-- beginning of rfInputSquelched input33 trap
+
+	faultRfInputSequelchedTrueInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 33 is squelched"
+	::= 1320
+
+	faultRfInputSequelchedFalseInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 33 is not squelched."
+	::= 1321
+
+-- end of rfInputSquelched input33 trap
+-- beginning of rfInputSquelched input34 trap
+
+	faultRfInputSequelchedTrueInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 34 is squelched"
+	::= 1322
+
+	faultRfInputSequelchedFalseInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 34 is not squelched"
+	::= 1323
+
+-- end of rfInputSquelched input34 trap
+-- beginning of rfInputSquelched input35 trap
+
+	faultRfInputSequelchedTrueInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 35 is squelched"
+	::= 1324
+
+	faultRfInputSequelchedFalseInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 35 is not squelched"
+	::= 1325
+
+-- end of rfInputSquelched input35 trap
+-- beginning of rfInputSquelched input36 trap
+
+	faultRfInputSequelchedTrueInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 36 is squelched"
+	::= 1326
+
+	faultRfInputSequelchedFalseInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 36 is not squelched"
+	::= 1327
+
+-- end of rfInputSquelched input36 trap
+-- beginning of rfInputSquelched input37 trap
+
+	faultRfInputSequelchedTrueInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 37 is squelched"
+	::= 1328
+
+	faultRfInputSequelchedFalseInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 37 is not squelched"
+	::= 1329
+
+-- end of rfInputSquelched input37 trap
+-- beginning of rfInputSquelched input38 trap
+
+	faultRfInputSequelchedTrueInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 38 is squelched"
+	::= 1330
+
+	faultRfInputSequelchedFalseInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 38 is not squelched"
+	::= 1331
+
+-- end of rfInputSquelched input38 trap
+-- beginning of rfInputSquelched input39 trap
+
+	faultRfInputSequelchedTrueInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 39 is squelched"
+	::= 1332
+
+	faultRfInputSequelchedFalseInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 39 is not squelched"
+	::= 1333
+
+-- end of rfInputSquelched input39 trap
+-- beginning of rfInputSquelched input40 trap
+
+	faultRfInputSequelchedTrueInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 40 is squelched"
+	::= 1334
+
+	faultRfInputSequelchedFalseInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 40 is not squelched"
+	::= 1335
+
+-- end of rfInputSquelched input40 trap
+-- beginning of rfInputSquelched input41 trap
+
+	faultRfInputSequelchedTrueInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 41 is squelched"
+	::= 1336
+
+	faultRfInputSequelchedFalseInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 41 is not squelched"
+	::= 1337
+
+-- end of rfInputSquelched input41 trap
+-- beginning of rfInputSquelched input42 trap
+
+	faultRfInputSequelchedTrueInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 42 is squelched"
+	::= 1338
+
+	faultRfInputSequelchedFalseInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 42 is not squelched"
+	::= 1339
+
+-- end of rfInputSquelched input42 trap
+-- beginning of rfInputSquelched input43 trap
+
+	faultRfInputSequelchedTrueInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 43 is squelched"
+	::= 1340
+
+	faultRfInputSequelchedFalseInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 43 is not squelched"
+	::= 1341
+
+-- end of rfInputSquelched input43 trap
+-- beginning of rfInputSquelched input44 trap
+
+	faultRfInputSequelchedTrueInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 44 is squelched"
+	::= 1342
+
+	faultRfInputSequelchedFalseInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 44 is not squelched"
+	::= 1343
+
+-- end of rfInputSquelched input44 trap
+-- beginning of rfInputSquelched input45 trap
+
+	faultRfInputSequelchedTrueInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 45 is squelched"
+	::= 1344
+
+	faultRfInputSequelchedFalseInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 45 is not squelched"
+	::= 1345
+
+-- end of rfInputSquelched input45 trap
+-- beginning of rfInputSquelched input46 trap
+
+	faultRfInputSequelchedTrueInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 46 is squelched"
+	::= 1346
+
+	faultRfInputSequelchedFalseInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 46 is not squelched"
+	::= 1347
+
+-- end of rfInputSquelched input46 trap
+-- beginning of rfInputSquelched input47 trap
+
+	faultRfInputSequelchedTrueInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 47 is squelched"
+	::= 1348
+
+	faultRfInputSequelchedFalseInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 47 is not squelched"
+	::= 1349
+
+-- end of rfInputSquelched input47 trap
+-- beginning of rfInputSquelched input48 trap
+
+	faultRfInputSequelchedTrueInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 48 is squelched"
+	::= 1350
+
+	faultRfInputSequelchedFalseInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 48 is not squelched"
+	::= 1351
+
+-- end of rfInputSquelched input48 trap
+-- beginning of rfInputSquelched input49 trap
+
+	faultRfInputSequelchedTrueInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 49 is squelched"
+	::= 1352
+
+	faultRfInputSequelchedFalseInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 49 is not squelched"
+	::= 1353
+
+-- end of rfInputSquelched input49 trap
+-- beginning of rfInputSquelched input50 trap
+
+	faultRfInputSequelchedTrueInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 50 is squelched"
+	::= 1354
+
+	faultRfInputSequelchedFalseInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 50 is not squelched"
+	::= 1355
+
+-- end of rfInputSquelched input50 trap
+-- beginning of rfInputSquelched input51 trap
+
+	faultRfInputSequelchedTrueInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 51 is squelched"
+	::= 1356
+
+	faultRfInputSequelchedFalseInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 51 is not squelched"
+	::= 1357
+
+-- end of rfInputSquelched input51 trap
+-- beginning of rfInputSquelched input52 trap
+
+	faultRfInputSequelchedTrueInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 52 is squelched"
+	::= 1358
+
+	faultRfInputSequelchedFalseInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 52 is not squelched"
+	::= 1359
+
+-- end of rfInputSquelched input52 trap
+-- beginning of rfInputSquelched input53 trap
+
+	faultRfInputSequelchedTrueInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 53 is squelched"
+	::= 1360
+
+	faultRfInputSequelchedFalseInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 53 is not squelched"
+	::= 1361
+
+-- end of rfInputSquelched input53 trap
+-- beginning of rfInputSquelched input54 trap
+
+	faultRfInputSequelchedTrueInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 54 is squelched"
+	::= 1362
+
+	faultRfInputSequelchedFalseInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 54 is not squelched"
+	::= 1363
+
+-- end of rfInputSquelched input54 trap
+-- beginning of rfInputSquelched input55 trap
+
+	faultRfInputSequelchedTrueInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 55 is squelched"
+	::= 1364
+
+	faultRfInputSequelchedFalseInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 55 is not squelched"
+	::= 1365
+
+-- end of rfInputSquelched input55 trap
+-- beginning of rfInputSquelched input56 trap
+
+	faultRfInputSequelchedTrueInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 56 is squelched"
+	::= 1366
+
+	faultRfInputSequelchedFalseInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 56 is not squelched"
+	::= 1367
+
+-- end of rfInputSquelched input56 trap
+-- beginning of rfInputSquelched input57 trap
+
+	faultRfInputSequelchedTrueInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 57 is squelched"
+	::= 1368
+
+	faultRfInputSequelchedFalseInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 57 is not squelched"
+	::= 1369
+
+-- end of rfInputSquelched input57 trap
+-- beginning of rfInputSquelched input58 trap
+
+	faultRfInputSequelchedTrueInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 58 is squelched"
+	::= 1370
+
+	faultRfInputSequelchedFalseInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 58 is not squelched"
+	::= 1371
+
+-- end of rfInputSquelched input58 trap
+-- beginning of rfInputSquelched input59 trap
+
+	faultRfInputSequelchedTrueInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 59 is squelched"
+	::= 1372
+
+	faultRfInputSequelchedFalseInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 59 is not squelched"
+	::= 1373
+
+-- end of rfInputSquelched input59 trap
+-- beginning of rfInputSquelched input60 trap
+
+	faultRfInputSequelchedTrueInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 60 is squelched"
+	::= 1374
+
+	faultRfInputSequelchedFalseInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 60 is not squelched"
+	::= 1375
+
+-- end of rfInputSquelched input60 trap
+-- beginning of rfInputSquelched input61 trap
+
+	faultRfInputSequelchedTrueInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 61 is squelched"
+	::= 1376
+
+	faultRfInputSequelchedFalseInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 61 is not squelched"
+	::= 1377
+
+-- end of rfInputSquelched input61 trap
+-- beginning of rfInputSquelched input62 trap
+
+	faultRfInputSequelchedTrueInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 62 is squelched"
+	::= 1378
+
+	faultRfInputSequelchedFalseInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 62 is not squelched"
+	::= 1379
+
+-- end of rfInputSquelched input62 trap
+-- beginning of rfInputSquelched input63 trap
+
+	faultRfInputSequelchedTrueInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 63 is squelched"
+	::= 1380
+
+	faultRfInputSequelchedFalseInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 63 is not squelched"
+	::= 1381
+
+-- end of rfInputSquelched input63 trap
+-- beginning of rfInputSquelched input64 trap
+
+	faultRfInputSequelchedTrueInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 64 is squelched"
+	::= 1382
+
+	faultRfInputSequelchedFalseInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Input 64 is not squelched"
+	::= 1383
+
+-- end of rfInputSquelched input64 trap
+-- beginning of rfInputAgcOutOfRange input1 trap
+
+	faultRfInputOutOfRangeTrueInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 1 is out of AGC range"
+	::= 1384
+
+	faultRfInputOutOfRangeFalseInput1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 1 is within AGC range"
+	::= 1385
+
+-- end of rfInputAgcOutOfRange input1 trap
+-- beginning of rfInputAgcOutOfRange input2 trap
+
+	faultRfInputOutOfRangeTrueInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 2 is out of AGC range"
+	::= 1386
+
+	faultRfInputOutOfRangeFalseInput2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 2 is within AGC range"
+	::= 1387
+
+-- end of rfInputAgcOutOfRange input2 trap
+-- beginning of rfInputAgcOutOfRange input3 trap
+
+	faultRfInputOutOfRangeTrueInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 3 is out of AGC range"
+	::= 1388
+
+	faultRfInputOutOfRangeFalseInput3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 3 is within AGC range"
+	::= 1389
+
+-- end of rfInputAgcOutOfRange input3 trap
+-- beginning of rfInputAgcOutOfRange input4 trap
+
+	faultRfInputOutOfRangeTrueInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 4 is out of AGC range"
+	::= 1390
+
+	faultRfInputOutOfRangeFalseInput4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 4 is within AGC range"
+	::= 1391
+
+-- end of rfInputAgcOutOfRange input4 trap
+-- beginning of rfInputAgcOutOfRange input5 trap
+
+	faultRfInputOutOfRangeTrueInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 5 is out of AGC range"
+	::= 1392
+
+	faultRfInputOutOfRangeFalseInput5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 5 is within AGC range"
+	::= 1393
+
+-- end of rfInputAgcOutOfRange input5 trap
+-- beginning of rfInputAgcOutOfRange input6 trap
+
+	faultRfInputOutOfRangeTrueInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 6 is out of AGC range"
+	::= 1394
+
+	faultRfInputOutOfRangeFalseInput6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 6 is within AGC range"
+	::= 1395
+
+-- end of rfInputAgcOutOfRange input6 trap
+-- beginning of rfInputAgcOutOfRange input7 trap
+
+	faultRfInputOutOfRangeTrueInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 7 is out of AGC range"
+	::= 1396
+
+	faultRfInputOutOfRangeFalseInput7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 7 is within AGC range"
+	::= 1397
+
+-- end of rfInputAgcOutOfRange input7 trap
+-- beginning of rfInputAgcOutOfRange input8 trap
+
+	faultRfInputOutOfRangeTrueInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 8 is out of AGC range"
+	::= 1398
+
+	faultRfInputOutOfRangeFalseInput8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 8 is within AGC range"
+	::= 1399
+
+-- end of rfInputAgcOutOfRange input8 trap
+-- beginning of rfInputAgcOutOfRange input9 trap
+
+	faultRfInputOutOfRangeTrueInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 9 is out of AGC range"
+	::= 1400
+
+	faultRfInputOutOfRangeFalseInput9 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 9 is within AGC range"
+	::= 1401
+
+-- end of rfInputAgcOutOfRange input9 trap
+-- beginning of rfInputAgcOutOfRange input10 trap
+
+	faultRfInputOutOfRangeTrueInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 10 is out of AGC range"
+	::= 1402
+
+	faultRfInputOutOfRangeFalseInput10 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 10 is within AGC range"
+	::= 1403
+
+-- end of rfInputAgcOutOfRange input10 trap
+-- beginning of rfInputAgcOutOfRange input11 trap
+
+	faultRfInputOutOfRangeTrueInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 11 is out of AGC range"
+	::= 1404
+
+	faultRfInputOutOfRangeFalseInput11 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 11 is within AGC range"
+	::= 1405
+
+-- end of rfInputAgcOutOfRange input11 trap
+-- beginning of rfInputAgcOutOfRange input12 trap
+
+	faultRfInputOutOfRangeTrueInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 12 is out of AGC range"
+	::= 1406
+
+	faultRfInputOutOfRangeFalseInput12 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 12 is within AGC range"
+	::= 1407                      
+
+-- end of rfInputAgcOutOfRange input12 trap
+-- beginning of rfInputAgcOutOfRange input13 trap
+
+	faultRfInputOutOfRangeTrueInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 13 is out of AGC range"
+	::= 1408
+
+	faultRfInputOutOfRangeFalseInput13 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 13 is within AGC range"
+	::= 1409
+
+-- end of rfInputAgcOutOfRange input13 trap
+-- beginning of rfInputAgcOutOfRange input14 trap
+
+	faultRfInputOutOfRangeTrueInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 14 is out of AGC range"
+	::= 1410
+
+	faultRfInputOutOfRangeFalseInput14 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 14 is within AGC range"
+	::= 1411
+
+-- end of rfInputAgcOutOfRange input14 trap
+-- beginning of rfInputAgcOutOfRange input15 trap
+
+	faultRfInputOutOfRangeTrueInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 15 is out of AGC range"
+	::= 1412
+
+	faultRfInputOutOfRangeFalseInput15 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 15 is within AGC range"
+	::= 1413
+
+-- end of rfInputAgcOutOfRange input15 trap
+-- beginning of rfInputAgcOutOfRange input16 trap
+
+	faultRfInputOutOfRangeTrueInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 16 is out of AGC range"
+	::= 1414
+
+	faultRfInputOutOfRangeFalseInput16 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 16 is within AGC range"
+	::= 1415
+
+-- end of rfInputAgcOutOfRange input16 trap
+-- beginning of rfInputAgcOutOfRange input17 trap
+
+	faultRfInputOutOfRangeTrueInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 17 is out of AGC range"
+	::= 1416
+
+	faultRfInputOutOfRangeFalseInput17 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 17 is within AGC range"
+	::= 1417
+
+-- end of rfInputAgcOutOfRange input17 trap
+-- beginning of rfInputAgcOutOfRange input18 trap
+
+	faultRfInputOutOfRangeTrueInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 18 is out of AGC range"
+	::= 1418
+
+	faultRfInputOutOfRangeFalseInput18 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 18 is within AGC range"
+	::= 1419
+
+-- end of rfInputAgcOutOfRange input18 trap
+-- beginning of rfInputAgcOutOfRange input19 trap
+
+	faultRfInputOutOfRangeTrueInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 19 is out of AGC range"
+	::= 1420
+
+	faultRfInputOutOfRangeFalseInput19 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 19 is within AGC range"
+	::= 1421
+
+-- end of rfInputAgcOutOfRange input19 trap
+-- beginning of rfInputAgcOutOfRange input20 trap
+
+	faultRfInputOutOfRangeTrueInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 20 is out of AGC range"
+	::= 1422
+
+	faultRfInputOutOfRangeFalseInput20 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 20 is within AGC range"
+	::= 1423
+
+-- end of rfInputAgcOutOfRange input20 trap
+-- beginning of rfInputAgcOutOfRange input21 trap
+
+	faultRfInputOutOfRangeTrueInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 21 is out of AGC range"
+	::= 1424
+
+	faultRfInputOutOfRangeFalseInput21 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 21 is within AGC range"
+	::= 1425
+
+-- end of rfInputAgcOutOfRange input21 trap
+-- beginning of rfInputAgcOutOfRange input22 trap
+
+	faultRfInputOutOfRangeTrueInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 22 is out of AGC range"
+	::= 1426
+
+	faultRfInputOutOfRangeFalseInput22 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 22 is within AGC range"
+	::= 1427
+
+-- end of rfInputAgcOutOfRange input22 trap
+-- beginning of rfInputAgcOutOfRange input23 trap
+
+	faultRfInputOutOfRangeTrueInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 23 is out of AGC range"
+	::= 1428
+
+	faultRfInputOutOfRangeFalseInput23 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 23 is within AGC range"
+	::= 1429
+
+-- end of rfInputAgcOutOfRange input23 trap
+-- beginning of rfInputAgcOutOfRange input24 trap
+
+	faultRfInputOutOfRangeTrueInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 24 is out of AGC range"
+	::= 1430
+
+	faultRfInputOutOfRangeFalseInput24 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 24 is within AGC range"
+	::= 1431
+
+-- end of rfInputAgcOutOfRange input24 trap
+-- beginning of rfInputAgcOutOfRange input25 trap
+
+	faultRfInputOutOfRangeTrueInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 25 is out of AGC range"
+	::= 1432
+
+	faultRfInputOutOfRangeFalseInput25 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 25 is within AGC range"
+	::= 1433
+
+-- end of rfInputAgcOutOfRange input25 trap
+-- beginning of rfInputAgcOutOfRange input26 trap
+
+	faultRfInputOutOfRangeTrueInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 26 is out of AGC range"
+	::= 1434
+
+	faultRfInputOutOfRangeFalseInput26 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 26 is within AGC range"
+	::= 1435
+
+-- end of rfInputAgcOutOfRange input26 trap
+-- beginning of rfInputAgcOutOfRange input27 trap
+
+	faultRfInputOutOfRangeTrueInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 27 is out of AGC range"
+	::= 1436
+
+	faultRfInputOutOfRangeFalseInput27 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 27 is within AGC range"
+	::= 1437
+
+-- end of rfInputAgcOutOfRange input27 trap
+-- beginning of rfInputAgcOutOfRange input28 trap
+
+	faultRfInputOutOfRangeTrueInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 28 is out of AGC range"
+	::= 1438
+
+	faultRfInputOutOfRangeFalseInput28 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 28 is within AGC range"
+	::= 1439
+
+-- end of rfInputAgcOutOfRange input28 trap
+-- beginning of rfInputAgcOutOfRange input29 trap
+
+	faultRfInputOutOfRangeTrueInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 29 is out of AGC range"
+	::= 1440
+
+	faultRfInputOutOfRangeFalseInput29 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 29 is within AGC range"
+	::= 1441
+
+-- end of rfInputAgcOutOfRange input29 trap
+-- beginning of rfInputAgcOutOfRange input30 trap
+
+	faultRfInputOutOfRangeTrueInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 30 is out of AGC range"
+	::= 1442
+
+	faultRfInputOutOfRangeFalseInput30 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 30 is within AGC range"
+	::= 1443
+
+-- end of rfInputAgcOutOfRange input30 trap
+-- beginning of rfInputAgcOutOfRange input31 trap
+
+	faultRfInputOutOfRangeTrueInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 31 is out of AGC range"
+	::= 1444
+
+	faultRfInputOutOfRangeFalseInput31 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 31 is within AGC range"
+	::= 1445
+
+-- end of rfInputAgcOutOfRange input31 trap
+-- beginning of rfInputAgcOutOfRange input32 trap
+
+	faultRfInputOutOfRangeTrueInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 32 is out of AGC range"
+	::= 1446
+
+	faultRfInputOutOfRangeFalseInput32 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 32 is within AGC range"
+	::= 1447
+
+-- end of rfInputAgcOutOfRange input32 trap
+-- beginning of rfInputAgcOutOfRange input33 trap
+
+	faultRfInputOutOfRangeTrueInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 33 is out of AGC range"
+	::= 1448
+
+	faultRfInputOutOfRangeFalseInput33 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 33 is within AGC range"
+	::= 1449
+
+-- end of rfInputAgcOutOfRange input33 trap
+-- beginning of rfInputAgcOutOfRange input34 trap
+
+	faultRfInputOutOfRangeTrueInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 34 is out of AGC range"
+	::= 1450
+
+	faultRfInputOutOfRangeFalseInput34 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 34 is within AGC range"
+	::= 1451
+
+-- end of rfInputAgcOutOfRange input34 trap
+-- beginning of rfInputAgcOutOfRange input35 trap
+
+	faultRfInputOutOfRangeTrueInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 35 is out of AGC range"
+	::= 1452
+
+	faultRfInputOutOfRangeFalseInput35 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 35 is within AGC range"
+	::= 1453
+
+-- end of rfInputAgcOutOfRange input35 trap
+-- beginning of rfInputAgcOutOfRange input36 trap
+
+	faultRfInputOutOfRangeTrueInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 36 is out of AGC range"
+	::= 1454
+
+	faultRfInputOutOfRangeFalseInput36 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 36 is within AGC range"
+	::= 1455
+
+-- end of rfInputAgcOutOfRange input36 trap
+-- beginning of rfInputAgcOutOfRange input37 trap
+
+	faultRfInputOutOfRangeTrueInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 37 is out of AGC range"
+	::= 1456
+
+	faultRfInputOutOfRangeFalseInput37 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 37 is within AGC range"
+	::= 1457
+
+-- end of rfInputAgcOutOfRange input37 trap
+-- beginning of rfInputAgcOutOfRange input38 trap
+
+	faultRfInputOutOfRangeTrueInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 38 is out of AGC range"
+	::= 1458
+
+	faultRfInputOutOfRangeFalseInput38 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 38 is within AGC range"
+	::= 1459
+
+-- end of rfInputAgcOutOfRange input38 trap
+-- beginning of rfInputAgcOutOfRange input39 trap
+
+	faultRfInputOutOfRangeTrueInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 39 is out of AGC range"
+	::= 1460
+
+	faultRfInputOutOfRangeFalseInput39 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 39 is within AGC range"
+	::= 1461
+
+-- end of rfInputAgcOutOfRange input39 trap
+-- beginning of rfInputAgcOutOfRange input40 trap
+
+	faultRfInputOutOfRangeTrueInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 40 is out of AGC range"
+	::= 1462
+
+	faultRfInputOutOfRangeFalseInput40 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 40 is within AGC range"
+	::= 1463
+
+-- end of rfInputAgcOutOfRange input40 trap
+-- beginning of rfInputAgcOutOfRange input41 trap
+
+	faultRfInputOutOfRangeTrueInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 41 is out of AGC range"
+	::= 1464
+
+	faultRfInputOutOfRangeFalseInput41 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 41 is within AGC range"
+	::= 1465
+
+-- end of rfInputAgcOutOfRange input41 trap
+-- beginning of rfInputAgcOutOfRange input42 trap
+
+	faultRfInputOutOfRangeTrueInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 42 is out of AGC range"
+	::= 1466
+
+	faultRfInputOutOfRangeFalseInput42 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 42 is within AGC range"
+	::= 1467
+
+-- end of rfInputAgcOutOfRange input42 trap
+-- beginning of rfInputAgcOutOfRange input43 trap
+
+	faultRfInputOutOfRangeTrueInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 43 is out of AGC range"
+	::= 1468
+
+	faultRfInputOutOfRangeFalseInput43 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 43 is within AGC range"
+	::= 1469
+
+-- end of rfInputAgcOutOfRange input43 trap
+-- beginning of rfInputAgcOutOfRange input44 trap
+
+	faultRfInputOutOfRangeTrueInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 44 is out of AGC range"
+	::= 1470
+
+	faultRfInputOutOfRangeFalseInput44 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 44 is within AGC range"
+	::= 1471
+
+-- end of rfInputAgcOutOfRange input44 trap
+-- beginning of rfInputAgcOutOfRange input45 trap
+
+	faultRfInputOutOfRangeTrueInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 45 is out of AGC range"
+	::= 1472
+
+	faultRfInputOutOfRangeFalseInput45 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 45 is within AGC range"
+	::= 1473
+
+-- end of rfInputAgcOutOfRange input45 trap
+-- beginning of rfInputAgcOutOfRange input46 trap
+
+	faultRfInputOutOfRangeTrueInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 46 is out of AGC range"
+	::= 1474
+
+	faultRfInputOutOfRangeFalseInput46 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 46 is within AGC range"
+	::= 1475
+
+-- end of rfInputAgcOutOfRange input46 trap
+-- beginning of rfInputAgcOutOfRange input47 trap
+
+	faultRfInputOutOfRangeTrueInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 47 is out of AGC range"
+	::= 1476
+
+	faultRfInputOutOfRangeFalseInput47 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 47 is within AGC range"
+	::= 1477
+
+-- end of rfInputAgcOutOfRange input47 trap
+-- beginning of rfInputAgcOutOfRange input48 trap
+
+	faultRfInputOutOfRangeTrueInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 48 is out of AGC range"
+	::= 1478
+
+	faultRfInputOutOfRangeFalseInput48 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 48 is within AGC range"
+	::= 1479
+
+-- end of rfInputAgcOutOfRange input48 trap
+-- beginning of rfInputAgcOutOfRange input49 trap
+
+	faultRfInputOutOfRangeTrueInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 49 is out of AGC range"
+	::= 1480
+
+	faultRfInputOutOfRangeFalseInput49 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 49 is within AGC range"
+	::= 1481
+
+-- end of rfInputAgcOutOfRange input49 trap
+-- beginning of rfInputAgcOutOfRange input50 trap
+
+	faultRfInputOutOfRangeTrueInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 50 is out of AGC range"
+	::= 1482
+
+	faultRfInputOutOfRangeFalseInput50 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 50 is within AGC range"
+	::= 1483
+
+-- end of rfInputAgcOutOfRange input50 trap
+-- beginning of rfInputAgcOutOfRange input51 trap
+
+	faultRfInputOutOfRangeTrueInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 51 is out of AGC range"
+	::= 1484
+
+	faultRfInputOutOfRangeFalseInput51 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 51 is within AGC range"
+	::= 1485
+
+-- end of rfInputAgcOutOfRange input51 trap
+-- beginning of rfInputAgcOutOfRange input52 trap
+
+	faultRfInputOutOfRangeTrueInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 52 is out of AGC range"
+	::= 1486
+
+	faultRfInputOutOfRangeFalseInput52 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 52 is within AGC range"
+	::= 1487
+
+-- end of rfInputAgcOutOfRange input52 trap
+-- beginning of rfInputAgcOutOfRange input53 trap
+
+	faultRfInputOutOfRangeTrueInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 53 is out of AGC range"
+	::= 1488
+
+	faultRfInputOutOfRangeFalseInput53 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 53 is within AGC range"
+	::= 1489
+
+-- end of rfInputAgcOutOfRange input53 trap
+-- beginning of rfInputAgcOutOfRange input54 trap
+
+	faultRfInputOutOfRangeTrueInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 54 is out of AGC range"
+	::= 1490
+
+	faultRfInputOutOfRangeFalseInput54 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 54 is within AGC range"
+	::= 1491
+
+-- end of rfInputAgcOutOfRange input54 trap
+-- beginning of rfInputAgcOutOfRange input55 trap
+
+	faultRfInputOutOfRangeTrueInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 55 is out of AGC range"
+	::= 1492
+
+	faultRfInputOutOfRangeFalseInput55 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 55 is within AGC range"
+	::= 1493
+
+-- end of rfInputAgcOutOfRange input55 trap
+-- beginning of rfInputAgcOutOfRange input56 trap
+
+	faultRfInputOutOfRangeTrueInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 56 is out of AGC range"
+	::= 1494
+
+	faultRfInputOutOfRangeFalseInput56 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 56 is within AGC range"
+	::= 1495
+
+-- end of rfInputAgcOutOfRange input56 trap
+-- beginning of rfInputAgcOutOfRange input57 trap
+
+	faultRfInputOutOfRangeTrueInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 57 is out of AGC range"
+	::= 1496
+
+	faultRfInputOutOfRangeFalseInput57 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 57 is within AGC range"
+	::= 1497
+
+-- end of rfInputAgcOutOfRange input57 trap
+-- beginning of rfInputAgcOutOfRange input58 trap
+
+	faultRfInputOutOfRangeTrueInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 58 is out of AGC range"
+	::= 1498
+
+	faultRfInputOutOfRangeFalseInput58 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 58 is within AGC range"
+	::= 1499
+
+-- end of rfInputAgcOutOfRange input58 trap
+-- beginning of rfInputAgcOutOfRange input59 trap
+
+	faultRfInputOutOfRangeTrueInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 59 is out of AGC range"
+	::= 1500
+
+	faultRfInputOutOfRangeFalseInput59 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 59 is within AGC range"
+	::= 1501
+
+-- end of rfInputAgcOutOfRange input59 trap
+-- beginning of rfInputAgcOutOfRange input60 trap
+
+	faultRfInputOutOfRangeTrueInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 60 is out of AGC range"
+	::= 1502
+
+	faultRfInputOutOfRangeFalseInput60 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 60 is within AGC range"
+	::= 1503
+
+-- end of rfInputAgcOutOfRange input60 trap
+-- beginning of rfInputAgcOutOfRange input61 trap
+
+	faultRfInputOutOfRangeTrueInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 61 is out of AGC range"
+	::= 1504
+
+	faultRfInputOutOfRangeFalseInput61 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 61 is within AGC range"
+	::= 1505
+
+-- end of rfInputAgcOutOfRange input61 trap
+-- beginning of rfInputAgcOutOfRange input62 trap
+
+	faultRfInputOutOfRangeTrueInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 62 is out of AGC range"
+	::= 1506
+
+	faultRfInputOutOfRangeFalseInput62 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 62 is within AGC range"
+	::= 1507
+
+-- end of rfInputAgcOutOfRange input62 trap
+-- beginning of rfInputAgcOutOfRange input63 trap
+
+	faultRfInputOutOfRangeTrueInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 63 is out of AGC range"
+	::= 1508
+
+	faultRfInputOutOfRangeFalseInput63 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 63 is within AGC range"
+	::= 1509
+
+-- end of rfInputAgcOutOfRange input63 trap
+-- beginning of rfInputAgcOutOfRange input64 trap
+
+	faultRfInputOutOfRangeTrueInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 64 is out of AGC range"
+	::= 1510
+
+	faultRfInputOutOfRangeFalseInput64 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power level at input 64 is within AGC range"
+	::= 1511
+
+-- end of rfInputAgcOutOfRange input64 trap
+-- beginning of cardLostCommunication slot1 trap
+
+	faultLostCommunicationTrueSlot1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 1."
+	::= 1512
+
+	faultLostCommunicationFalseSlot1 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 1 is active."
+	::= 1513
+
+-- end of cardLostCommunication slot1 trap
+-- beginning of cardLostCommunication slot2 trap
+
+	faultLostCommunicationTrueSlot2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 2."
+	::= 1514
+
+	faultLostCommunicationFalseSlot2 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 2 is active."
+	::= 1515
+
+-- end of cardLostCommunication slot2 trap
+-- beginning of cardLostCommunication slot3 trap
+
+	faultLostCommunicationTrueSlot3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 3."
+	::= 1516
+
+	faultLostCommunicationFalseSlot3 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 3 is active."
+	::= 1517
+
+-- end of cardLostCommunication slot3 trap
+-- beginning of cardLostCommunication slot4 trap
+
+	faultLostCommunicationTrueSlot4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 4."
+	::= 1518
+
+	faultLostCommunicationFalseSlot4 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 4 is active."
+	::= 1519
+
+-- end of cardLostCommunication slot4 trap
+-- beginning of cardLostCommunication slot5 trap
+
+	faultLostCommunicationTrueSlot5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 5."
+	::= 1520
+
+	faultLostCommunicationFalseSlot5 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 5 is active."
+	::= 1521
+
+-- end of cardLostCommunication slot5 trap
+-- beginning of cardLostCommunication slot6 trap
+
+	faultLostCommunicationTrueSlot6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 6."
+	::= 1522
+
+	faultLostCommunicationFalseSlot6 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 6 is active."
+	::= 1523
+
+-- end of cardLostCommunication slot6 trap
+-- beginning of cardLostCommunication slot7 trap
+
+	faultLostCommunicationTrueSlot7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 7."
+	::= 1524
+
+	faultLostCommunicationFalseSlot7 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 7 is active."
+	::= 1525
+
+-- end of cardLostCommunication slot7 trap
+-- beginning of cardLostCommunication slot8 trap
+
+	faultLostCommunicationTrueSlot8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has lost communication with
+			the card in slot 8."
+	::= 1526
+
+	faultLostCommunicationFalseSlot8 TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"The frame controller has started communicating
+			with the card is slot 8 is active."
+	::= 1527
+
+-- end of cardLostCommunication slot8 trap
+-- beginning of powerSupplyUnit1 trap
+
+	faultPsu1True TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power supply unit 1 is experiencing a fault."
+	::= 1528
+
+	faultPsu1False TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power suppy unit 1 is ok."
+	::= 1529
+
+-- end of powerSupplyUnit1 trap
+-- beginning of powerSupplyUnit2 trap
+
+	faultPsu2True TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power supply unit 2 is experiencing a fault."
+	::= 1530
+
+	faultPsu2False TRAP-TYPE
+		ENTERPRISE	trapFault
+		DESCRIPTION
+			"Power suppy unit 2 is ok."
+	::= 1531
+
+-- end of powerSupplyUnit2 trap
+
+END

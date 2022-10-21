@@ -1,0 +1,951 @@
+-- Copyright 2005 Evertz Microsystems Ltd.
+-- Mon Jul 25 15:02:33 2005
+-- Confidential
+ACO25600-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprACO25600
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+      
+    aco2GeneralStatus OBJECT IDENTIFIER ::= { miniexprACO25600 2}
+    aco2Notify OBJECT IDENTIFIER ::= { miniexprACO25600 3}
+    aco2Traps OBJECT IDENTIFIER ::= { miniexprACO25600 4}
+
+
+        
+    operatingMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            auto(1),
+            manualFrontPanel(2),
+            manualGPI(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show operating mode the 5600ACO2. "
+    ::= { aco2GeneralStatus 1 }
+
+        
+    gpiInputMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            single(1),
+            dual(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show GPIO input mode the 5600ACO2. "
+    ::= { aco2GeneralStatus 2 }
+
+        
+    changeoverRate OBJECT-TYPE
+      SYNTAX INTEGER {
+            normal(1),
+            fast(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show AutoChangerover rate the 5600ACO2. "
+    ::= { aco2GeneralStatus 3 }
+
+        
+    bankAPriority OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show Bank A Priority. "
+    ::= { aco2GeneralStatus 4 }
+
+        
+    darsMonitoring OBJECT-TYPE
+      SYNTAX INTEGER {
+            balorUnbal(1),
+            balandUnbal(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show DARS monitoring. "
+    ::= { aco2GeneralStatus 5 }
+
+        
+    aesMonitoring OBJECT-TYPE
+      SYNTAX INTEGER {
+            balorUnbal(1),
+            balandUnbal(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show AES monitoring. "
+    ::= { aco2GeneralStatus 6 }
+
+        
+    mscGPIMonitoring OBJECT-TYPE
+      SYNTAX INTEGER {
+            notMonitored(1),
+            monitored(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show MSC GPIO output monitoring. "
+    ::= { aco2GeneralStatus 7 }
+
+        
+    sdiMonitoring OBJECT-TYPE
+      SYNTAX INTEGER {
+            normalMonitoring(1),
+            noSDImonitoring(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show SDI monitoring. "
+    ::= { aco2GeneralStatus 8 }
+
+        
+    changeoverLockout OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show Changeover lockout. "
+    ::= { aco2GeneralStatus 9 }
+
+        
+    currentOutput OBJECT-TYPE
+      SYNTAX INTEGER {
+            bankA(1),
+            bankB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show current output of 5600ACO2. "
+    ::= { aco2GeneralStatus 10 }
+
+        
+-- Beginning of mscGPIOOutputTable
+    mscGPIOOutputTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MscGPIOOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mscGPIOOutput table. "
+    ::= { aco2GeneralStatus 11 }
+
+    mscGPIOOutputEntry OBJECT-TYPE
+      SYNTAX MscGPIOOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { outputBankIdx, gpioIdx }
+    ::= { mscGPIOOutputTable 1 }
+
+    MscGPIOOutputEntry ::= SEQUENCE {
+        gpioIdx     INTEGER,
+        mscGPIOOutputStatus     INTEGER
+    }
+
+
+    
+    gpioIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            gpio1(1),
+            gpio2(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for MSC GPIO outputs and ACO GPIO inputs "
+    ::= { mscGPIOOutputEntry 1 }
+
+    
+    mscGPIOOutputStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            active(1),
+            inactive(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show MSC GPIO Output levels. "
+    ::= { mscGPIOOutputEntry 2 }
+
+-- End of mscGPIOOutputTable
+
+
+        
+-- Beginning of aco2GPIOInputTable
+    aco2GPIOInputTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF Aco2GPIOInputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The aco2GPIOInput table. "
+    ::= { aco2GeneralStatus 12 }
+
+    aco2GPIOInputEntry OBJECT-TYPE
+      SYNTAX Aco2GPIOInputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { gpioIdx }
+    ::= { aco2GPIOInputTable 1 }
+
+    Aco2GPIOInputEntry ::= SEQUENCE {
+        aco2GPIOInputStatus     INTEGER
+    }
+
+
+    
+    aco2GPIOInputStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            active(1),
+            inactive(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to show ACO2 GPIO Input levels. "
+    ::= { aco2GPIOInputEntry 1 }
+
+-- End of aco2GPIOInputTable
+
+
+        
+    firmwareVersion OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(16) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter contains the firmware version string. "
+    ::= { aco2GeneralStatus 13 }
+
+        
+-- Beginning of mgmtFaultAnalogTGTable
+    mgmtFaultAnalogTGTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAnalogTGEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAnalogTG table. "
+    ::= { aco2Notify 1 }
+
+    mgmtFaultAnalogTGEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAnalogTGEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { analogTGFaultNameIdx, outputBankIdx }
+    ::= { mgmtFaultAnalogTGTable 1 }
+
+    MgmtFaultAnalogTGEntry ::= SEQUENCE {
+        outputBankIdx     INTEGER,
+        analogTGFaultNameIdx     INTEGER,
+        analogTGFaultPresent     INTEGER,
+        sendTrapAnalogTG     INTEGER
+    }
+
+
+    
+    outputBankIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            bankA(1),
+            bankB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index bank A or bank B. "
+    ::= { mgmtFaultAnalogTGEntry 1 }
+
+    
+    analogTGFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            analogTGLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Analog TG Presence fault index "
+    ::= { mgmtFaultAnalogTGEntry 2 }
+
+    
+    analogTGFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Analog TG fault status "
+    ::= { mgmtFaultAnalogTGEntry 3 }
+
+    
+    sendTrapAnalogTG OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn Analog TG traps on and off. "
+    ::= { mgmtFaultAnalogTGEntry 4 }
+
+-- End of mgmtFaultAnalogTGTable
+
+
+        
+-- Beginning of mgmtFaultAnalogSyncTable
+    mgmtFaultAnalogSyncTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAnalogSyncEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAnalogSync table. "
+    ::= { aco2Notify 2 }
+
+    mgmtFaultAnalogSyncEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAnalogSyncEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { analogSyncFaultNameIdx, outputBankIdx, analogSyncChannelIdx }
+    ::= { mgmtFaultAnalogSyncTable 1 }
+
+    MgmtFaultAnalogSyncEntry ::= SEQUENCE {
+        analogSyncFaultNameIdx     INTEGER,
+        analogSyncChannelIdx     INTEGER,
+        analogSyncFaultPresent     INTEGER,
+        sendTrapAnalogSync     INTEGER
+    }
+
+
+    
+    analogSyncFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            analogSyncLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Analog Sync Presence fault index "
+    ::= { mgmtFaultAnalogSyncEntry 1 }
+
+    
+    analogSyncChannelIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            channel1(1),
+            channel2(2),
+            channel3(3),
+            channel4(4),
+            channel5(5),
+            channel6(6)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for channel 1 - 6 of analog sync inputs "
+    ::= { mgmtFaultAnalogSyncEntry 2 }
+
+    
+    analogSyncFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Analog sync fault status "
+    ::= { mgmtFaultAnalogSyncEntry 3 }
+
+    
+    sendTrapAnalogSync OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn Analog sync traps on and off. "
+    ::= { mgmtFaultAnalogSyncEntry 4 }
+
+-- End of mgmtFaultAnalogSyncTable
+
+
+        
+-- Beginning of mgmtFaultSDIvideoTable
+    mgmtFaultSDIvideoTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultSDIvideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultSDIvideo table. "
+    ::= { aco2Notify 3 }
+
+    mgmtFaultSDIvideoEntry OBJECT-TYPE
+      SYNTAX MgmtFaultSDIvideoEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { sdiVideoFaultNameIdx, outputBankIdx, sdiStdIdx, sdiChannelIdx }
+    ::= { mgmtFaultSDIvideoTable 1 }
+
+    MgmtFaultSDIvideoEntry ::= SEQUENCE {
+        sdiChannelIdx     INTEGER,
+        sdiStdIdx     INTEGER,
+        sdiVideoFaultNameIdx     INTEGER,
+        sdiVideoFaultPresent     INTEGER,
+        sendTrapSDIVideo     INTEGER
+    }
+
+
+    
+    sdiChannelIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            channel1(1),
+            channel2(2),
+            channel3(3),
+            channel4(4)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for channel 1 to 4 of SDI inputs "
+    ::= { mgmtFaultSDIvideoEntry 1 }
+
+    
+    sdiStdIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            sd(1),
+            hd(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to index SDI inputs with SD or HD. "
+    ::= { mgmtFaultSDIvideoEntry 2 }
+
+    
+    sdiVideoFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            sdiLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " SDI Video Presence fault index "
+    ::= { mgmtFaultSDIvideoEntry 3 }
+
+    
+    sdiVideoFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " SDI video fault status "
+    ::= { mgmtFaultSDIvideoEntry 4 }
+
+    
+    sendTrapSDIVideo OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn SDI Video traps on and off. "
+    ::= { mgmtFaultSDIvideoEntry 5 }
+
+-- End of mgmtFaultSDIvideoTable
+
+
+        
+-- Beginning of mgmtFaultAESTGTable
+    mgmtFaultAESTGTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultAESTGEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultAESTG table. "
+    ::= { aco2Notify 4 }
+
+    mgmtFaultAESTGEntry OBJECT-TYPE
+      SYNTAX MgmtFaultAESTGEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { aesTGFaultNameIdx, outputBankIdx, balanceIdx }
+    ::= { mgmtFaultAESTGTable 1 }
+
+    MgmtFaultAESTGEntry ::= SEQUENCE {
+        aesTGFaultNameIdx     INTEGER,
+        balanceIdx     INTEGER,
+        aesTGFaultPresent     INTEGER,
+        sendTrapAESTG     INTEGER
+    }
+
+
+    
+    aesTGFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            aesTGLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " AES TG Presence fault index "
+    ::= { mgmtFaultAESTGEntry 1 }
+
+    
+    balanceIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            balance(1),
+            unbalance(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for balance and unbalance inputs "
+    ::= { mgmtFaultAESTGEntry 2 }
+
+    
+    aesTGFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " AES TG fault status "
+    ::= { mgmtFaultAESTGEntry 3 }
+
+    
+    sendTrapAESTG OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn AES TG traps on and off. "
+    ::= { mgmtFaultAESTGEntry 4 }
+
+-- End of mgmtFaultAESTGTable
+
+
+        
+-- Beginning of mgmtFaultDARSTable
+    mgmtFaultDARSTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultDARSEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultDARS table. "
+    ::= { aco2Notify 5 }
+
+    mgmtFaultDARSEntry OBJECT-TYPE
+      SYNTAX MgmtFaultDARSEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { darsFaultNameIdx, outputBankIdx, balanceIdx }
+    ::= { mgmtFaultDARSTable 1 }
+
+    MgmtFaultDARSEntry ::= SEQUENCE {
+        darsFaultNameIdx     INTEGER,
+        darsFaultPresent     INTEGER,
+        sendTrapDARS     INTEGER
+    }
+
+
+    
+    darsFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            darsLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " DARS Presence fault index "
+    ::= { mgmtFaultDARSEntry 1 }
+
+    
+    darsFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " DARS fault status "
+    ::= { mgmtFaultDARSEntry 2 }
+
+    
+    sendTrapDARS OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn DARS traps on and off. "
+    ::= { mgmtFaultDARSEntry 3 }
+
+-- End of mgmtFaultDARSTable
+
+
+        
+-- Beginning of mgmtFaultTenMhzTable
+    mgmtFaultTenMhzTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultTenMhzEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultTenMhz table. "
+    ::= { aco2Notify 6 }
+
+    mgmtFaultTenMhzEntry OBJECT-TYPE
+      SYNTAX MgmtFaultTenMhzEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { tenMhzFaultNameIdx, outputBankIdx }
+    ::= { mgmtFaultTenMhzTable 1 }
+
+    MgmtFaultTenMhzEntry ::= SEQUENCE {
+        tenMhzFaultNameIdx     INTEGER,
+        tenMhzFaultPresent     INTEGER,
+        sendTrapTenMhz     INTEGER
+    }
+
+
+    
+    tenMhzFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            tenMhzLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " 10 Mhz Presence fault index "
+    ::= { mgmtFaultTenMhzEntry 1 }
+
+    
+    tenMhzFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " 10 Mhz fault status "
+    ::= { mgmtFaultTenMhzEntry 2 }
+
+    
+    sendTrapTenMhz OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn 10 Mhz traps on and off. "
+    ::= { mgmtFaultTenMhzEntry 3 }
+
+-- End of mgmtFaultTenMhzTable
+
+
+        
+-- Beginning of mgmtFaultLTCTable
+    mgmtFaultLTCTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultLTCEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultLTC table. "
+    ::= { aco2Notify 7 }
+
+    mgmtFaultLTCEntry OBJECT-TYPE
+      SYNTAX MgmtFaultLTCEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { ltcFaultNameIdx, outputBankIdx, ltcChannelIdx }
+    ::= { mgmtFaultLTCTable 1 }
+
+    MgmtFaultLTCEntry ::= SEQUENCE {
+        ltcChannelIdx     INTEGER,
+        ltcFaultNameIdx     INTEGER,
+        ltcFaultPresent     INTEGER,
+        sendTrapLTC     INTEGER
+    }
+
+
+    
+    ltcChannelIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            channel1(1),
+            channel2(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for ltc inputs "
+    ::= { mgmtFaultLTCEntry 1 }
+
+    
+    ltcFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            ltcLoss(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " LTC Presence fault index "
+    ::= { mgmtFaultLTCEntry 2 }
+
+    
+    ltcFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " LTC fault status "
+    ::= { mgmtFaultLTCEntry 3 }
+
+    
+    sendTrapLTC OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn LTC traps on and off. "
+    ::= { mgmtFaultLTCEntry 4 }
+
+-- End of mgmtFaultLTCTable
+
+
+        
+-- Beginning of mgmtFaultMSCGPIOOutputTable
+    mgmtFaultMSCGPIOOutputTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultMSCGPIOOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultMSCGPIOOutput table. "
+    ::= { aco2Notify 8 }
+
+    mgmtFaultMSCGPIOOutputEntry OBJECT-TYPE
+      SYNTAX MgmtFaultMSCGPIOOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mscGPIOOutputFaultNameIdx, outputBankIdx, gpioIdx }
+    ::= { mgmtFaultMSCGPIOOutputTable 1 }
+
+    MgmtFaultMSCGPIOOutputEntry ::= SEQUENCE {
+        mscGPIOOutputFaultNameIdx     INTEGER,
+        mscGPIOOutputFaultPresent     INTEGER,
+        sendTrapMSCGPIOOutput     INTEGER
+    }
+
+
+    
+    mscGPIOOutputFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            mscGPIOOutputLevelChanged(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " MSC GPIO Output fault index "
+    ::= { mgmtFaultMSCGPIOOutputEntry 1 }
+
+    
+    mscGPIOOutputFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " MSC GPIO Output fault status "
+    ::= { mgmtFaultMSCGPIOOutputEntry 2 }
+
+    
+    sendTrapMSCGPIOOutput OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn MSC GPIO Output traps on and off. "
+    ::= { mgmtFaultMSCGPIOOutputEntry 3 }
+
+-- End of mgmtFaultMSCGPIOOutputTable
+
+
+        
+-- Beginning of mgmtFaultCurrentOutputTable
+    mgmtFaultCurrentOutputTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultCurrentOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultCurrentOutput table. "
+    ::= { aco2Notify 9 }
+
+    mgmtFaultCurrentOutputEntry OBJECT-TYPE
+      SYNTAX MgmtFaultCurrentOutputEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { currentOutputFaultNameIdx }
+    ::= { mgmtFaultCurrentOutputTable 1 }
+
+    MgmtFaultCurrentOutputEntry ::= SEQUENCE {
+        currentOutputFaultNameIdx     INTEGER,
+        currentOutputFaultPresent     INTEGER,
+        sendTrapCurrentOutput     INTEGER
+    }
+
+
+    
+    currentOutputFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            switch2BankA(1),
+            switch2BankB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Bank A loss, and switch to Bank B "
+    ::= { mgmtFaultCurrentOutputEntry 1 }
+
+    
+    currentOutputFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Current output fault status "
+    ::= { mgmtFaultCurrentOutputEntry 2 }
+
+    
+    sendTrapCurrentOutput OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn current output traps on and off. "
+    ::= { mgmtFaultCurrentOutputEntry 3 }
+
+-- End of mgmtFaultCurrentOutputTable
+
+
+        
+-- Beginning of mgmtFaultPowerSupplyTable
+    mgmtFaultPowerSupplyTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultPowerSupplyEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaultPowerSupply table. "
+    ::= { aco2Notify 10 }
+
+    mgmtFaultPowerSupplyEntry OBJECT-TYPE
+      SYNTAX MgmtFaultPowerSupplyEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { powerSupplyFaultNameIdx, powerSupplyIdx }
+    ::= { mgmtFaultPowerSupplyTable 1 }
+
+    MgmtFaultPowerSupplyEntry ::= SEQUENCE {
+        powerSupplyFaultNameIdx     INTEGER,
+        powerSupplyIdx     INTEGER,
+        powerSupplyFaultPresent     INTEGER,
+        sendTrapPowerSupply     INTEGER
+    }
+
+
+    
+    powerSupplyFaultNameIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            powerSupplyfailed(1)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Power Supply fault index "
+    ::= { mgmtFaultPowerSupplyEntry 1 }
+
+    
+    powerSupplyIdx OBJECT-TYPE
+      SYNTAX INTEGER {
+            powerSupply1(1),
+            powerSupply2(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index for the two power supplies "
+    ::= { mgmtFaultPowerSupplyEntry 2 }
+
+    
+    powerSupplyFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Power Supply fault status "
+    ::= { mgmtFaultPowerSupplyEntry 3 }
+
+    
+    sendTrapPowerSupply OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to turn Power Supply traps on and off. "
+    ::= { mgmtFaultPowerSupplyEntry 4 }
+
+-- End of mgmtFaultPowerSupplyTable
+
+
+
+END

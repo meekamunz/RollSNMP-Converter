@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id:  $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitors
+	standard PC workstations and servers, e.g. Dell_R630_Svr PCs.
+
+	It assumes that standard-alias-include.rsnmp and standard-fields-include.rsnmp is already included.
+
+ To Do:Server Specific Fields
+-->
+
+<DefinitionGroup>
+
+	<!-- Additional MIB folders from this library entry.
+		Remember that the path is relative to the config / program directory. -->
+	<MIBSource href="drivers/DELL_POWEREDGE_1.0.0/MIBs"/>
+	<MIBSource href="drivers/DELL_POWEREDGE_1.0.0/MIBs"/>
+	
+	<OIDAlias id="MIB 2" oid=".iso.org.dod.internet.mgmt.mib-2" >
+		<OIDAlias id="INTERFACES" oid=".interfaces">
+			<OIDAlias id="IF ENTRY" oid=".ifTable.ifEntry"/>
+		</OIDAlias>
+	</OIDAlias>
+
+	<OIDAlias id="DELL" oid=".iso.org.dod.internet.private.enterprises.dell" >
+		<OIDAlias id="SERVER3" oid=".server3" >
+			<OIDAlias id="BASEBOARD" oid=".baseboardGroup">
+				<OIDAlias id="SYSTEM STATE TABLE ENTRY" oid=".systemStateGroup.systemStateTable.systemStateTableEntry" />
+				<OIDAlias id="POWER GROUP" oid=".powerGroup" >
+					<OIDAlias id="POWER UNIT TABLE ENTRY" oid=".powerUnitTable.powerUnitTableEntry" />
+					<OIDAlias id="POWER SUPPLY TABLE ENTRY" oid=".powerSupplyTable.powerSupplyTableEntry" />
+					<OIDAlias id="VOLTAGE PROBE TABLE ENTRY" oid=".voltageProbeTable.voltageProbeTableEntry" />
+					<OIDAlias id="AMP PROBE TABLE ENTRY" oid=".amperageProbeTable.amperageProbeTableEntry" />
+				</OIDAlias>
+				<OIDAlias id="COOLING DEVICE TABLE ENTRY" oid=".thermalGroup.coolingDeviceTable.coolingDeviceTableEntry" />
+				<OIDAlias id="TEMPERATURE TABLE ENTRY" oid=".thermalGroup.temperatureProbeTable.temperatureProbeTableEntry" />
+				<OIDAlias id="CHASSIS TABLE ENTRY" oid=".chassisInformationGroup.chassisInformationTable.chassisInformationTableEntry" />
+			</OIDAlias>
+		</OIDAlias>
+		<OIDAlias id="STORAGE MANAGEMENT" oid=".storage.software.storageManagement" >
+			<OIDAlias id="ARRAY DISK TABLE ENTRY" oid=".physicalDevices.arrayDiskTable.arrayDiskEntry" />
+		</OIDAlias>
+	</OIDAlias>
+
+	<UnitTypeDef typeName="DELL_POWEREDGE_1.0.0" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id:  $</StaticString>
+		</StaticDef>
+
+		<!-- These fields reference some of the global MIB-2 translations.
+		     They are all available from any Microsoft PC running SNMP agent services. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+
+		<TranslationDef link="SYS UPTIME" />
+
+		<TranslationDef link="SYS CONTACT" />
+
+		<TranslationDef link="SYS NAME" />
+
+		<TranslationDef link="SYS LOCATION" />
+
+		<TranslationDef link="TCP CURR ESTAB" />
+
+		<TranslationDef link="SYS OBJECT ID" />
+
+		<TranslationDef link="SYS DATE" />
+
+		<TranslationDef link="USERS" />
+
+		<TranslationDef link="PROCESSES" />
+
+		<TranslationDef link="RAM" />
+
+		<TranslationDef link="PC_DESCRIPTION" />
+
+		<!-- The next 7 are arrays, to cover any number of LAN ports.  -->
+
+
+		<OIDFilter id="PORT" dynamic="true">
+			<OID alias="PORT NAME ARRAY">.#I</OID>
+			<OIDFilterRule regex="(Intel\(R\) I350 Gigabit Network Connection)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(Broadcom NetXtreme Gigabit Ethernet)( #)?[0-9]*?$"/>
+			<OIDFilterRule regex="^(TEAM)[ ]?[: ][A-Z|0-9| ]*$"/>
+			<OIDFilterRule regex="^(Intel\(R\) Gigabit 4P I350-t rNDC)( #)?[0-9]*?$"/>
+  	
+		</OIDFilter>
+		<TranslationDef link="PORT NAME ALIAS ARRAY"> <!-- "LAN_PORT_%d_NAME" = "local area connection" -->
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT INT ARRAY"> <!-- "LAN_PORT_%d_INT" = HP, Intel, broadcom etc -->
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT NAME TYPE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT ADMIN STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT STATUS ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT SPEED ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		<TranslationDef link="LAN PORT ERRORS">
+			<Array filter="PORT"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_IN" pollRate="30" link="PORT TRAFFIC IN ARRAY">
+			<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.ifInOctets.#I</OID>
+			
+			<!-- changed to bits/sec by multiplying by 8 -->
+    	
+			<!-- If rate of change is <= 1023 bits/sec, then show as bits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0625" valueMax="999" format="%d bits/sec" />
+    	
+			<!-- Divide rate of change by 1024, to convert from bits/sec to Kbits/sec.
+				If rate of change is >= 1 Kbits/sec but <= 1023Kbits/sec, then show as Kbits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00390625" valueMax="999" format="%1.1f Kbits/sec" />
+    	
+			<!-- Divide rate of change by 1024*1024, to convert from bits/sec to Mbits/sec.
+				If rate of change is >= 1 Mbits/sec but <= 1023Mbits/sec, then show as Mbits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000003814697265625" valueMax="999" format="%1.1f Mbits/sec" />
+    	
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bits/sec to Gbits/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0000000037252902984619140625" format="%1.1f Gbits/sec" />
+    	
+			<!-- If previous rules failed somehow, then show as bits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.125" format="%d bits/sec" />
+    	
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+
+
+		<TranslationDef rcLogField="LAN_PORT_%d_TRAFFIC_OUT" pollRate="30" link="PORT TRAFFIC OUT ARRAY">
+	  	<Array filter="PORT"/>
+			<OID alias="IF ENTRY">.ifOutOctets.#I</OID>
+			
+			<!-- changed to bits/sec by multiplying by 8 -->
+    	
+			<!-- If rate of change is <= 1023 bits/sec, then show as bits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0625" valueMax="999" format="%d bits/sec" />
+    	
+			<!-- Divide rate of change by 1024, to convert from bits/sec to Kbits/sec.
+				If rate of change is >= 1 Kbits/sec but <= 1023Kbits/sec, then show as Kbits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.00390625" valueMax="999" format="%1.1f Kbits/sec" />
+    	
+			<!-- Divide rate of change by 1024*1024, to convert from bits/sec to Mbits/sec.
+				If rate of change is >= 1 Mbits/sec but <= 1023Mbits/sec, then show as Mbits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.000003814697265625" valueMax="999" format="%1.1f Mbits/sec" />
+    	
+			<!-- Divide rate of change by 1024*1024*1024, to convert from bits/sec to Gbits/sec. -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.0000000037252902984619140625" format="%1.1f Gbits/sec" />
+    	
+			<!-- If previous rules failed somehow, then show as bits/sec: -->
+			<NumRule rateOfChange="true" timePeriodMultiplier="0.125" format="%d bits/sec" />
+    	
+			<StringRule format="FAIL:?Unknown string? %s" />
+			<ConstRule format="FAIL:?Unknown? (Const)" />
+		</TranslationDef>
+  	
+		<OIDFilter id="PARTITION" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageFixedDisk)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.4)$"/>
+		</OIDFilter>
+		<TranslationDef link="PARTITION NAME ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION SIZE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION SIZE BYTES ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED BYTES ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION USED PERCENT ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FREE ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+		<TranslationDef link="PARTITION FULL ERRORS ARRAY">
+			<Array filter="PARTITION"/>
+		</TranslationDef>
+			
+		<OIDFilter id="VIRT MEM" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageVirtualMemory)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.3)$"/>
+		</OIDFilter>
+		<TranslationDef link="VIRT MEM SIZE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM USED PERCENT ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FREE ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+		<TranslationDef link="VIRT MEM FULL ERRORS ARRAY">
+			<Array filter="VIRT MEM"/>
+		</TranslationDef>
+  	
+		<OIDFilter id="PHY MEM" dynamic="true">
+			<OID alias="HR STORAGE ENTRY">.hrStorageType.#I</OID>
+			<!-- polled OID is "AutonomousType" type, meaning an OID is returned, and then resolved through the MIB for a value
+					we need to match against the returned OID, not the final value (as displayed in a MIB browser) -->
+			<!--<OIDFilterRule regex="^(hrStorageRam)$"/>-->
+			<OIDFilterRule regex="^(\.1\.3\.6\.1\.2\.1\.25\.2\.1\.2)$"/>
+		</OIDFilter>
+		<TranslationDef link="PHY MEM SIZE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM USED PERCENT ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FREE ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+		<TranslationDef link="PHY MEM FULL ERRORS ARRAY">
+			<Array filter="PHY MEM"/>
+		</TranslationDef>
+  	
+		<TranslationDef link="CPU ARRAY NO WARN">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="SNMP ENABLE AUTHENTICATION TRAPS">
+		</TranslationDef>
+
+		<TranslationDef link="SNMP ENABLE AUTHENTICATION TRAPS">
+		</TranslationDef>
+
+		<TranslationDef rcLogField="DELL_SERVICE_TAG" pollRate="1000" >
+			<OID alias="CHASSIS TABLE ENTRY">.chassisServiceTagName.1</OID>
+				<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="POWER SUPPLY TABLE ENTRY">.powerSupplyStatus.#I</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1354" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1353" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1352" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_COMBINED_STATE" pollRate="60" >
+			<OID alias="SYSTEM STATE TABLE ENTRY">.systemStatePowerSupplyStatusCombined.1</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1354" />
+					<NumCondition format="FAIL">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<!-- removed anything other than a fail as this could lead to a potentially "OK" field when there is still a problem
+					polling will kick in to show OK if a problem has been resolved. Individual PSU field are repolled on trap
+
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1353" />
+					<NumCondition format="WARN">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1352" />
+					<NumCondition format="OK">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				-->
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_AC_INPUT_CURRENT" pollRate="300" >
+			<ExpOID alias="AMP PROBE TABLE ENTRY">.amperageProbeStatus.#I</ExpOID>	<!-- $1 -->
+			<ExpOID alias="AMP PROBE TABLE ENTRY">.amperageProbeReading.#I</ExpOID>	<!-- $2 -->
+			<GetNextArray dynamic="true" />
+			<ConditionRule condition="$1 e 3 =" expression="$2" format="OK: $2 amps" />
+			<ConditionRule condition="$1 e 3 !=" expression="$2" format="WARN: $2 amps" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PSU_%d_DC12V_OUTPUT_POWER" pollRate="300" >
+			<ExpOID alias="POWER SUPPLY TABLE ENTRY">.powerSupplyOutputWatts.#I</ExpOID>
+			<GetNextArray dynamic="true" />
+			<ExpressionRule expression="$1 e 10 /" format="%.0f Watts" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="TEMP_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="TEMPERATURE TABLE ENTRY">.temperatureProbeStatus.#I</OID>
+				<NumRule value="1" format="Other"/>
+				<NumRule value="2" format="Unknown"/>
+				<NumRule value="3" format="OK"/>
+				<NumRule value="4" format="WARN:High"/>
+				<NumRule value="5" format="FAIL:Very High"/>
+				<NumRule value="6" format="FAIL:Non recoverable High"/>
+				<NumRule value="7" format="WARN:Low"/>
+				<NumRule value="8" format="Fail: Very Low"/>
+				<NumRule value="9" format="FAIL:Non recoverable Low"/>
+				<NumRule value="10" format="FAIL"/>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1054" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1053" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1052" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="TEMP_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="TEMPERATURE TABLE ENTRY">.temperatureProbeLocationName.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		<TranslationDef rcLogField="TEMP_%d_CELSIUS" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<ExpOID alias="TEMPERATURE TABLE ENTRY">.temperatureProbeReading.#I</ExpOID>
+			<ExpressionRule expression="$1 e 10 /" format="%0.1f Celsius"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="FAN_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="COOLING DEVICE TABLE ENTRY">.coolingDeviceStatus.#I</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		<TranslationDef rcLogField="FAN_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="COOLING DEVICE TABLE ENTRY">.coolingDeviceLocationName.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		<TranslationDef rcLogField="FAN_%d_SPEED" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="COOLING DEVICE TABLE ENTRY">.coolingDeviceReading.#I</OID>
+			<NumRule format="%s RPM"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="DISK_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="ARRAY DISK TABLE ENTRY">.arrayDiskState.#I</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		<TranslationDef rcLogField="DISK_%d_SERIAL" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="ARRAY DISK TABLE ENTRY">.arrayDiskSerialNo.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_COMBINED_STATUS" pollRate="60" >
+			<OID alias="SYSTEM STATE TABLE ENTRY">.systemStateVoltageStatusCombined.1</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+				<ErrorRule format="FAIL:Unknown State" />
+				<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="VOLTAGE PROBE TABLE ENTRY">.voltageProbeStatus.#I</OID>
+				<NumRule value="1" format="Other"/>
+				<NumRule value="2" format="Unknown"/>
+				<NumRule value="3" format="OK"/>
+				<NumRule value="4" format="WARN:High"/>
+				<NumRule value="5" format="FAIL:Very High"/>
+				<NumRule value="6" format="FAIL:Non recoverable High"/>
+				<NumRule value="7" format="WARN:Low"/>
+				<NumRule value="8" format="Fail: Very Low"/>
+				<NumRule value="9" format="FAIL:Non recoverable Low"/>
+				<NumRule value="10" format="FAIL"/>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1154" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1153" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1152" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1155" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="VOLTAGE PROBE TABLE ENTRY">.voltageProbeLocationName.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="AMP_%d_STATE" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="AMP PROBE TABLE ENTRY">.amperageProbeStatus.#I</OID>
+				<NumRule format="Other"/>
+				<NumRule value="1" format="Other"/>
+				<NumRule value="2" format="Unknown"/>
+				<NumRule value="3" format="OK"/>
+				<NumRule value="4" format="WARN:High"/>
+				<NumRule value="5" format="FAIL:Very High"/>
+				<NumRule value="6" format="FAIL:Non recoverable High"/>
+				<NumRule value="7" format="WARN:Low"/>
+				<NumRule value="8" format="Fail: Very Low"/>
+				<NumRule value="9" format="FAIL:Non recoverable Low"/>
+				<NumRule value="10" format="FAIL"/>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1204" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1203" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1202" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+				<TrapDef>
+					<GenericTrap type="enterpriseSpecific" specific="1205" />
+					<NumCondition triggerRepoll="true">.1.3.6.1.4.1.674.10892.1.5000.10.4.0</NumCondition>
+				</TrapDef>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="AMP_%d_NAME" pollRate="60" >
+			<GetNextArray dynamic="true" />
+			<OID alias="AMP PROBE TABLE ENTRY">.amperageProbeLocationName.#I</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		<TranslationDef rcLogField="CHASSIS_STATUS" pollRate="60" >
+			<OID alias="SYSTEM STATE TABLE ENTRY">.systemStateChassisStatus.1</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+				<ErrorRule format="FAIL:Unknown State" />
+				<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="GLOBAL_STATUS" pollRate="60" >
+			<OID alias="SYSTEM STATE TABLE ENTRY">.systemStateGlobalSystemStatus.1</OID>
+				<NumRule value="1" format="WARN:Other (1)"/>
+				<NumRule value="2" format="WARN:Unknown (2)"/>
+				<NumRule value="3" format="OK:OK (3)"/>
+				<NumRule value="4" format="WARN:non critical (4)"/>
+				<NumRule value="5" format="FAIL:critical (5)"/>
+				<NumRule value="6" format="FAIL:non recoverable (6)"/>
+				<ErrorRule format="FAIL:Unknown State" />
+				<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+
+<!-- possibly more entries to monitor?
+chassisStatus.1 (integer) ok(3)
+systemStateAmperageStatusCombined.1 (integer) ok(3)
+systemStateCoolingDeviceStatusCombined.1 (integer) ok(3)
+systemStateCoolingUnitStatusCombined.1 (integer) ok(3)
+systemStateTemperatureStatusCombined.1 (integer) ok(3)
+systemStateMemoryDeviceStatusCombined.1 (integer) ok(3)
+systemStateProcessorDeviceStatusCombined.1 (integer) ok(3)
+systemStatePowerUnitStatusCombined.1 (integer) ok(3)
+systemStateBatteryStatusCombined.1 (integer) ok(3)
+-->
+
+	</UnitTypeDef>
+
+</DefinitionGroup>

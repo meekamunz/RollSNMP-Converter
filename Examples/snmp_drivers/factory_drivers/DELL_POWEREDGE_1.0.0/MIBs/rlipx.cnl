@@ -1,0 +1,425 @@
+RADLAN-IPX-MIB-A DEFINITIONS ::= BEGIN
+
+--
+-- Version:         7.35
+-- Last build date: 29 Oct 2003
+--
+
+IMPORTS
+    Counter                             FROM RFC1155-SMI
+    OBJECT-TYPE                         FROM RFC-1212
+    PhysAddress                         FROM RFC1213-MIB
+    rndIPX                              FROM RADLAN-MIB;
+
+    NetNumber ::=  OCTET STRING (SIZE(4))
+
+rndIPXdriver OBJECT IDENTIFIER
+    ::= { rndIPX 1 }
+
+rndIPXRip OBJECT IDENTIFIER
+    ::= { rndIPX 2 }
+
+rndIPXRipFilterGlbTable OBJECT-TYPE
+    ::= { rndIPXRip 10 }
+
+rndIPXRipFilterGlbEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rndIPXRipFilterGlbFLStatus
+    DELETE-VALUE      invalid
+    ::= { rndIPXRipFilterGlbTable 1 }
+
+rndIPXRipFilterGlbFLtype OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 1 }
+
+rndIPXRipFilterGlbFLnumber OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 2 }
+
+rndIPXRipFilterGlbFLStatus OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 3 }
+
+rndIPXRipFilterGlbFLnetworkPatern OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 4 }
+
+rndIPXRipFilterGlbFLnetworkMask OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 5 }
+
+rndIPXRipFilterGlbFLaction OBJECT-TYPE
+    ::= { rndIPXRipFilterGlbEntry 6 }
+
+rndIPXRipFilterCircuitTable OBJECT-TYPE
+    ::= { rndIPXRip 11 }
+
+rndIPXRipFilterCircuitEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rndIPXRipFilterCircFLStatus
+    DELETE-VALUE      invalid
+    ::= { rndIPXRipFilterCircuitTable 1 }
+
+rndIPXRipFilterCircFLIfIndex OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 1 }
+
+rndIPXRipFilterCircFLType OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 2 }
+
+rndIPXRipFilterCircFLnumber OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 3 }
+
+rndIPXRipFilterCircFLStatus OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 4 }
+
+rndIPXRipFilterCircFLnetworkPatern OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 5 }
+
+rndIPXRipFilterCircFLnetworkMask OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 6 }
+
+rndIPXRipFilterCircFLaction OBJECT-TYPE
+    ::= { rndIPXRipFilterCircuitEntry 7 }
+
+rndIPXSap OBJECT IDENTIFIER
+    ::= { rndIPX 3 }
+
+rndIPXSapFilterGlbTable OBJECT-TYPE
+    ::= { rndIPXSap 10 }
+
+rndIPXSapFilterGlbEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rndIPXSapFilterGlbFLStatus
+    DELETE-VALUE      invalid
+    ::= { rndIPXSapFilterGlbTable 1 }
+
+rndIPXSapFilterGlbFLtype OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 1 }
+
+rndIPXSapFilterGlbFLnumber OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 2 }
+
+rndIPXSapFilterGlbFLStatus OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 3 }
+
+rndIPXSapFilterGlbFLnetworkPatern OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 4 }
+
+rndIPXSapFilterGlbFLnetworkMask OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 5 }
+
+rndIPXSapFilterGlbFLserviceType OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 6 }
+
+rndIPXSapFilterGlbFLserviceName OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 7 }
+
+rndIPXSapFilterGlbFLaction OBJECT-TYPE
+    ::= { rndIPXSapFilterGlbEntry 8 }
+
+rndIPXSapFilterCircuitTable OBJECT-TYPE
+    ::= { rndIPXSap 11 }
+
+rndIPXSapFilterCircuitEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v1-status-field
+    STATUS-FIELD-NAME rndIPXSapFilterCircFLStatus
+    DELETE-VALUE      invalid
+    ::= { rndIPXSapFilterCircuitTable 1 }
+
+rndIPXSapFilterCircFLIfIndex OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 1 }
+
+rndIPXSapFilterCircFLtype OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 2 }
+
+rndIPXSapFilterCircFLnumber OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 3 }
+
+rndIPXSapFilterCircFLStatus OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 4 }
+
+rndIPXSapFilterCircFLnetworkPatern OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 5 }
+
+rndIPXSapFilterCircFLnetworkMask OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 6 }
+
+rndIPXSapFilterCircFLserviceType OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 7 }
+
+rndIPXSapFilterCircFLserviceName OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 8 }
+
+rndIPXSapFilterCircFLaction OBJECT-TYPE
+    ::= { rndIPXSapFilterCircuitEntry 9 }
+
+ipxSystem OBJECT IDENTIFIER
+    ::= { rndIPX 4 }
+
+ipxBasicSysTable OBJECT-TYPE
+    ::= { ipxSystem 1 }
+
+ipxBasicSysEntry OBJECT-TYPE
+--  ROW-STATUS-TYPE v1-status-field
+    ROW-STATUS-TYPE other-status-field
+    STATUS-FIELD-NAME ipxBasicSysExistState
+    DELETE-VALUE      off
+    CREATE-SEQUENCE   on
+    DELETE-SEQUENCE   off
+    ::= { ipxBasicSysTable 1 }
+
+ipxBasicSysInstance OBJECT-TYPE
+    ::= { ipxBasicSysEntry 1 }
+
+ipxBasicSysExistState OBJECT-TYPE
+    ::= { ipxBasicSysEntry 2 }
+
+ipxBasicSysInReceives OBJECT-TYPE
+    ::= { ipxBasicSysEntry 3 }
+
+ipxBasicSysInHdrErrors OBJECT-TYPE
+    ::= { ipxBasicSysEntry 4 }
+
+ipxBasicSysInUnknownSockets OBJECT-TYPE
+    ::= { ipxBasicSysEntry 5 }
+
+ipxBasicSysInDiscards OBJECT-TYPE
+    ::= { ipxBasicSysEntry 6 }
+
+ipxBasicSysInDelivers OBJECT-TYPE
+    ::= { ipxBasicSysEntry 7 }
+
+ipxBasicSysNoRoutes OBJECT-TYPE
+    ::= { ipxBasicSysEntry 8 }
+
+ipxBasicSysOutRequests OBJECT-TYPE
+    ::= { ipxBasicSysEntry 9 }
+
+ipxBasicSysOutMalformedRequests OBJECT-TYPE
+    ::= { ipxBasicSysEntry 10 }
+
+ipxBasicSysOutDiscards OBJECT-TYPE
+    ::= { ipxBasicSysEntry 11 }
+
+ipxBasicSysOutPackets OBJECT-TYPE
+    ::= { ipxBasicSysEntry 12 }
+
+ipxCircuit OBJECT IDENTIFIER
+    ::= { rndIPX 5 }
+
+ipxCircTable OBJECT-TYPE
+    ::= { ipxCircuit 1 }
+
+ipxCircEntry OBJECT-TYPE
+    ROW-STATUS-TYPE other-status-field
+    STATUS-FIELD-NAME ipxCircExistState
+    DELETE-VALUE      off
+    CREATE-SEQUENCE   on
+    DELETE-SEQUENCE   off
+    ::= { ipxCircTable 1 }
+
+ipxCircSysInstance OBJECT-TYPE
+    ::= { ipxCircEntry 1 }
+
+ipxCircIndex OBJECT-TYPE
+    ::= { ipxCircEntry 2 }
+
+ipxCircExistState OBJECT-TYPE
+    ::= { ipxCircEntry 3 }
+
+ipxCircOperState OBJECT-TYPE
+    ::= { ipxCircEntry 4 }
+
+ipxCircIfIndex OBJECT-TYPE
+    ::= { ipxCircEntry 5 }
+
+ipxCircNetNumber OBJECT-TYPE
+    ::= { ipxCircEntry 6 }
+
+ipxCircTimeToNet OBJECT-TYPE
+    ::= { ipxCircEntry 7 }
+
+ipxCircEncaps OBJECT-TYPE
+    ::= { ipxCircEntry 8 }
+
+ipxCircNetbiosDeliver OBJECT-TYPE
+    ::= { ipxCircEntry 9 }
+
+ipxForwarding OBJECT IDENTIFIER
+    ::= { rndIPX 6 }
+
+ipxDestTable OBJECT-TYPE
+    ::= { ipxForwarding 1 }
+
+ipxDestEntry OBJECT-TYPE
+--  ROW-STATUS-TYPE v1-status-field
+    ROW-STATUS-TYPE other-status-field
+    STATUS-FIELD-NAME ipxDestExistState
+    DELETE-VALUE      off
+    CREATE-SEQUENCE   on
+    DELETE-SEQUENCE   off
+    ::= { ipxDestTable 1 }
+
+ipxDestSysInstance OBJECT-TYPE
+    ::= { ipxDestEntry 1 }
+
+ipxDestNetNum OBJECT-TYPE
+    ::= { ipxDestEntry 2 }
+
+ipxDestNextHopCircIndex OBJECT-TYPE
+    ::= { ipxDestEntry 3 }
+
+ipxDestProtocol OBJECT-TYPE
+    ::= { ipxDestEntry 4 }
+
+ipxDestTicks OBJECT-TYPE
+    ::= { ipxDestEntry 5 }
+
+ipxDestHopCount OBJECT-TYPE
+    ::= { ipxDestEntry 6 }
+
+ipxDestNextHopNICAddress OBJECT-TYPE
+    ::= { ipxDestEntry 7 }
+
+ipxDestNextHopNetNum OBJECT-TYPE
+    ::= { ipxDestEntry 8 }
+
+ipxDestExistState OBJECT-TYPE
+    ::= { ipxDestEntry 9 }
+
+ipxServices OBJECT IDENTIFIER
+    ::= { rndIPX 7 }
+
+ipxServTable OBJECT-TYPE
+    ::= { ipxServices 1 }
+
+ipxServEntry OBJECT-TYPE
+--  ROW-STATUS-TYPE v1-status-field
+    ROW-STATUS-TYPE other-status-field
+    STATUS-FIELD-NAME ipxServExistState
+    DELETE-VALUE      off
+    CREATE-SEQUENCE   on
+    DELETE-SEQUENCE   off
+    ::= { ipxServTable 1 }
+
+ipxServSysInstance OBJECT-TYPE
+    ::= { ipxServEntry 1 }
+
+ipxServType OBJECT-TYPE
+    ::= { ipxServEntry 2 }
+
+ipxServName OBJECT-TYPE
+    ::= { ipxServEntry 3 }
+
+ipxServProtocol OBJECT-TYPE
+    ::= { ipxServEntry 4 }
+
+ipxServNetNum OBJECT-TYPE
+    ::= { ipxServEntry 5 }
+
+ipxServNode OBJECT-TYPE
+    ::= { ipxServEntry 6 }
+
+ipxServSocket OBJECT-TYPE
+    ::= { ipxServEntry 7 }
+
+ipxServHopCount OBJECT-TYPE
+    ::= { ipxServEntry 8 }
+
+ipxServExistState OBJECT-TYPE
+    ::= { ipxServEntry 9 }
+
+ripsap OBJECT IDENTIFIER
+    ::= { rndIPX 8 }
+
+ripsapSystem OBJECT-TYPE
+    ::= { ripsap 1 }
+
+ripSysTable OBJECT-TYPE
+    ::= { ripsapSystem 1 }
+
+ripSysEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ripSysTable 1 }
+
+ripSysInstance OBJECT-TYPE
+    ::= { ripSysEntry 1 }
+
+ripSysState OBJECT-TYPE
+    ::= { ripSysEntry 2 }
+
+ripSysIncorrectPackets OBJECT-TYPE
+    ::= { ripSysEntry 3 }
+
+sapSysTable OBJECT-TYPE
+    ::= { ripsapSystem 2 }
+
+sapSysEntry OBJECT-TYPE
+    ::= { sapSysTable 1 }
+
+sapSysInstance OBJECT-TYPE
+    ::= { sapSysEntry 1 }
+
+sapSysState OBJECT-TYPE
+    ::= { sapSysEntry 2 }
+
+sapSysIncorrectPackets OBJECT-TYPE
+    ::= { sapSysEntry 3 }
+
+ripsapCircuit OBJECT-TYPE
+    ::= { ripsap 2 }
+
+ripCircTable OBJECT-TYPE
+    ::= { ripsapCircuit 1 }
+
+ripCircEntry OBJECT-TYPE
+    ::= { ripCircTable 1 }
+
+ripCircSysInstance OBJECT-TYPE
+    ::= { ripCircEntry 1 }
+
+ripCircIndex OBJECT-TYPE
+    ::= { ripCircEntry 2 }
+
+ripCircState OBJECT-TYPE
+    ::= { ripCircEntry 3 }
+
+ripCircUpdate OBJECT-TYPE
+    ::= { ripCircEntry 4 }
+
+ripCircAgeMultiplier OBJECT-TYPE
+    ::= { ripCircEntry 5 }
+
+ripCircOutPackets OBJECT-TYPE
+    ::= { ripCircEntry 6 }
+
+ripCircInPackets OBJECT-TYPE
+    ::= { ripCircEntry 7 }
+
+sapCircTable OBJECT-TYPE
+    ::= { ripsapCircuit 2 }
+
+sapCircEntry OBJECT-TYPE
+    ::= { sapCircTable 1 }
+
+sapCircSysInstance OBJECT-TYPE
+    ::= { sapCircEntry 1 }
+
+sapCircIndex OBJECT-TYPE
+    ::= { sapCircEntry 2 }
+
+sapCircState OBJECT-TYPE
+    ::= { sapCircEntry 3 }
+
+sapCircUpdate OBJECT-TYPE
+    ::= { sapCircEntry 4 }
+
+sapCircAgeMultiplier OBJECT-TYPE
+    ::= { sapCircEntry 5 }
+
+sapCircGetNearestServerReply OBJECT-TYPE
+    ::= { sapCircEntry 6 }
+
+sapCircOutPackets OBJECT-TYPE
+    ::= { sapCircEntry 7 }
+
+sapCircInPackets OBJECT-TYPE
+    ::= { sapCircEntry 8 }
+
+END
+

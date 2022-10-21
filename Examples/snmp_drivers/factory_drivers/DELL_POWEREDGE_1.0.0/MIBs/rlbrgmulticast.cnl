@@ -1,0 +1,110 @@
+RADLAN-rlBrgMulticast-MIB-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN Multicast Bridge Configuration
+-- Version:    7.45.00.00
+-- Date:       25 May 2006
+--
+
+IMPORTS
+--    rnd, rndErrorDesc, rndErrorSeverity,rndNotifications FROM RADLAN-MIB
+    InterfaceIndex                                       FROM IF-MIB
+    TruthValue,TEXTUAL-CONVENTION                        FROM SNMPv2-TC
+    RowStatus                                            FROM RADLAN-SNMPv2
+    VlanIndex,PortList                                   FROM Q-BRIDGE-MIB
+    MacAddress                                           FROM BRIDGE-MIB
+    TimeTicks, IpAddress, NOTIFICATION-TYPE,
+    MODULE-IDENTITY, OBJECT-TYPE                         FROM SNMPv2-SMI
+    rnd,rlMacMulticast,rlBrgMulticast                    FROM RADLAN-MIB;
+
+rlMacMulticastEnable OBJECT-TYPE ::= { rlMacMulticast 1 }
+
+rlMacMulticastMaxEntriesNum OBJECT-TYPE ::= { rlMacMulticast 3 }
+
+-- igmp snooping
+
+rlIgmpSnoop  OBJECT-TYPE ::= { rlMacMulticast 2 }
+
+rlIgmpSnoopMibVersion OBJECT-TYPE
+    ::= { rlIgmpSnoop 1 }
+
+rlIgmpSnoopEnable OBJECT-TYPE
+    ::= { rlIgmpSnoop 2 }
+
+rlIgmpSnoopHostAgingTime OBJECT-TYPE
+    ::= { rlIgmpSnoop 3 }
+
+rlIgmpSnoopRouterAgingTime OBJECT-TYPE
+    ::= { rlIgmpSnoop 4 }
+
+rlIgmpSnoopGroupTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 5 }
+
+rlIgmpSnoopGroupEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIgmpSnoopGroupTable 1 }
+
+rlIgmpSnoopRouterTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 6 }
+
+rlIgmpSnoopRouterEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIgmpSnoopRouterTable 1 }
+
+rlIgmpSnoopVlanTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 7 }
+
+rlIgmpSnoopVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIgmpSnoopVlanTable 1 }
+
+rlIgmpSnoopIGMP224ReportsHandle OBJECT-TYPE
+    ::= {  rlIgmpSnoop 8 }
+
+rlIgmpSnoopMrouterEnabled OBJECT-TYPE
+    ::= {  rlIgmpSnoop 9 }
+
+rlIgmpSnoopMulticastTvTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 10 }
+
+rlIgmpSnoopMulticastTvEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlIgmpSnoopMulticastTvStatus
+    ::= { rlIgmpSnoopMulticastTvTable 1 }
+
+rlIgmpSnoopMembershipTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 11 }
+
+rlIgmpSnoopMembershipEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIgmpSnoopMembershipTable 1 }
+
+-- snoop querier
+rlIgmpSnoopQuerierVlanTable OBJECT-TYPE
+    ::= { rlIgmpSnoop 12 }
+
+rlIgmpSnoopQuerierVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlIgmpSnoopQuerierVlanTable 1 }
+
+-- ipm bridge
+rlBrgMulticastMibVersion OBJECT-TYPE
+    ::= { rlBrgMulticast 1 }
+
+rlBrgStaticIpMulticastTable OBJECT-TYPE
+    ::= { rlBrgMulticast 3}
+
+rlBrgStaticIpMulticastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME rlBrgStaticIpMulticastStatus
+    ::= { rlBrgStaticIpMulticastTable 1 }
+
+rlBrgIpMulticastTable OBJECT-TYPE
+    ::= { rlBrgMulticast  4}
+
+rlBrgIpMulticastEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlBrgIpMulticastTable 1 }
+
+END
+
+

@@ -1,0 +1,3547 @@
+-- Copyright 2014 Evertz Microsystems Ltd.
+-- Fri Apr 04 18:59:23 2014
+-- Confidential
+
+VIPPRO-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    videoInputIdx, trapTag, gpiIndex, vipproTraps
+        FROM VIPPRO-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { vipproTraps 1 }
+
+
+-- beginning of videoSyncLoss trap
+
+    faultvideoSyncLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Sync Loss Cleared"
+    ::= 1000
+    
+    faultvideoSyncLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Sync Loss Alert"
+    ::= 1001
+
+-- end of videoSyncLoss trap
+
+-- beginning of videoBurstLoss trap
+
+    faultvideoBurstLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Burst Loss Cleared"
+    ::= 1002
+    
+    faultvideoBurstLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Burst Loss Alert"
+    ::= 1003
+
+-- end of videoBurstLoss trap
+
+-- beginning of videoLoss trap
+
+    faultvideoLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Input Loss Cleared"
+    ::= 1004
+    
+    faultvideoLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Input Loss Alert"
+    ::= 1005
+
+-- end of videoLoss trap
+
+-- beginning of aplMax trap
+
+    faultaplMaxFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Maximum APL Exceeded Cleared"
+    ::= 1006
+    
+    faultaplMaxTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Maximum APL Exceeded Alert"
+    ::= 1007
+
+-- end of aplMax trap
+
+-- beginning of aplMin trap
+
+    faultaplMinFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Minimum APL Exceeded Cleared"
+    ::= 1008
+    
+    faultaplMinTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Minimum APL Exceeded Alert"
+    ::= 1009
+
+-- end of aplMin trap
+
+-- beginning of videoTypeChange trap
+
+    faultvideoTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Type Changed Cleared"
+    ::= 1010
+    
+    faultvideoTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Type Changed Alert"
+    ::= 1011
+
+-- end of videoTypeChange trap
+
+-- beginning of videoSrcChanged trap
+
+    faultvideoSrcChangedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Source Changed Cleared"
+    ::= 1012
+    
+    faultvideoSrcChangedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Source Changed Alert"
+    ::= 1013
+
+-- end of videoSrcChanged trap
+
+-- beginning of videoAPFrozen trap
+
+    faultvideoAPFrozenFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Frozen Cleared"
+    ::= 1014
+    
+    faultvideoAPFrozenTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Frozen Alert"
+    ::= 1015
+
+-- end of videoAPFrozen trap
+
+-- beginning of videoREGFrozen trap
+
+    faultvideoREGFrozenFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Frozen Cleared"
+    ::= 1016
+    
+    faultvideoREGFrozenTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Frozen Alert"
+    ::= 1017
+
+-- end of videoREGFrozen trap
+
+-- beginning of videoAPMotion trap
+
+    faultvideoAPMotionFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Motion Cleared"
+    ::= 1018
+    
+    faultvideoAPMotionTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Motion Alert"
+    ::= 1019
+
+-- end of videoAPMotion trap
+
+-- beginning of videoREGMotion trap
+
+    faultvideoREGMotionFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Motion Cleared"
+    ::= 1020
+    
+    faultvideoREGMotionTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Motion Alert"
+    ::= 1021
+
+-- end of videoREGMotion trap
+
+-- beginning of videoAPBlack trap
+
+    faultvideoAPBlackFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Black Cleared"
+    ::= 1022
+    
+    faultvideoAPBlackTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Active Picture Black Alert"
+    ::= 1023
+
+-- end of videoAPBlack trap
+
+-- beginning of videoREGBlack trap
+
+    faultvideoREGBlackFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Black Cleared"
+    ::= 1024
+    
+    faultvideoREGBlackTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Regionalized Area Black Alert"
+    ::= 1025
+
+-- end of videoREGBlack trap
+
+-- beginning of vitcInvalid trap
+
+    faultvitcInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "VITC Data Invalid Cleared"
+    ::= 1026
+    
+    faultvitcInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "VITC Data Invalid Alert"
+    ::= 1027
+
+-- end of vitcInvalid trap
+
+-- beginning of sidInvalid trap
+
+    faultsidInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SID Data Invalid Cleared"
+    ::= 1028
+    
+    faultsidInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SID Data Invalid Alert"
+    ::= 1029
+
+-- end of sidInvalid trap
+
+-- beginning of programRatingInvalid trap
+
+    faultprogramRatingInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Program Rating Invalid Cleared"
+    ::= 1030
+    
+    faultprogramRatingInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Program Rating Invalid Alert"
+    ::= 1031
+
+-- end of programRatingInvalid trap
+
+-- beginning of cc1Invalid trap
+
+    faultcc1InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC1 Data Invalid Cleared"
+    ::= 1032
+    
+    faultcc1InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC1 Data Invalid Alert"
+    ::= 1033
+
+-- end of cc1Invalid trap
+
+-- beginning of cc2Invalid trap
+
+    faultcc2InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC2 Data Invalid Cleared"
+    ::= 1034
+    
+    faultcc2InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC2 Data Invalid Alert"
+    ::= 1035
+
+-- end of cc2Invalid trap
+
+-- beginning of cc3Invalid trap
+
+    faultcc3InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC3 Data Invalid Cleared"
+    ::= 1036
+    
+    faultcc3InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC3 Data Invalid Alert"
+    ::= 1037
+
+-- end of cc3Invalid trap
+
+-- beginning of cc4Invalid trap
+
+    faultcc4InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC4 Data Invalid Cleared"
+    ::= 1038
+    
+    faultcc4InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC4 Data Invalid Alert"
+    ::= 1039
+
+-- end of cc4Invalid trap
+
+-- beginning of txt1Invalid trap
+
+    faulttxt1InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT1 Data Invalid Cleared"
+    ::= 1040
+    
+    faulttxt1InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT1 Data Invalid Alert"
+    ::= 1041
+
+-- end of txt1Invalid trap
+
+-- beginning of txt2Invalid trap
+
+    faulttxt2InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT2 Data Invalid Cleared"
+    ::= 1042
+    
+    faulttxt2InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT2 Data Invalid Alert"
+    ::= 1043
+
+-- end of txt2Invalid trap
+
+-- beginning of txt3Invalid trap
+
+    faulttxt3InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT3 Data Invalid Cleared"
+    ::= 1044
+    
+    faulttxt3InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT3 Data Invalid Alert"
+    ::= 1045
+
+-- end of txt3Invalid trap
+
+-- beginning of txt4Invalid trap
+
+    faulttxt4InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT4 Data Invalid Cleared"
+    ::= 1046
+    
+    faulttxt4InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "TXT4 Data Invalid Alert"
+    ::= 1047
+
+-- end of txt4Invalid trap
+
+-- beginning of xdsInvalid trap
+
+    faultxdsInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "XDS Data Invalid Cleared"
+    ::= 1048
+    
+    faultxdsInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "XDS Data Invalid Alert"
+    ::= 1049
+
+-- end of xdsInvalid trap
+
+-- beginning of ccWaveformInvalid trap
+
+    faultccWaveformInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC Waveform Invalid Cleared"
+    ::= 1050
+    
+    faultccWaveformInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "CC Waveform Invalid Alert"
+    ::= 1051
+
+-- end of ccWaveformInvalid trap
+
+-- beginning of vitcWaveformInvalid trap
+
+    faultvitcWaveformInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "VITC Waveform Invalid Cleared"
+    ::= 1052
+    
+    faultvitcWaveformInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "VITC Waveform Invalid Alert"
+    ::= 1053
+
+-- end of vitcWaveformInvalid trap
+
+-- beginning of prChanged trap
+
+    faultprChangedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Program Rating Changed Cleared"
+    ::= 1054
+    
+    faultprChangedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Program Rating Changed Alert"
+    ::= 1055
+
+-- end of prChanged trap
+
+-- beginning of teletextLoss trap
+
+    faultteletextLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Loss of Teletext Cleared"
+    ::= 1056
+    
+    faultteletextLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Loss of Teletext Alert"
+    ::= 1057
+
+-- end of teletextLoss trap
+
+-- beginning of wssLoss trap
+
+    faultwssLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Loss of WSS Cleared"
+    ::= 1058
+    
+    faultwssLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Loss of WSS Alert"
+    ::= 1059
+
+-- end of wssLoss trap
+
+-- beginning of eia708Svc1Invalid trap
+
+    faulteia708Svc1InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 1 Invalid Cleared"
+    ::= 1060
+    
+    faulteia708Svc1InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 1 Invalid Alert"
+    ::= 1061
+
+-- end of eia708Svc1Invalid trap
+
+-- beginning of eia708Svc2Invalid trap
+
+    faulteia708Svc2InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 2 Invalid Cleared"
+    ::= 1062
+    
+    faulteia708Svc2InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 2 Invalid Alert"
+    ::= 1063
+
+-- end of eia708Svc2Invalid trap
+
+-- beginning of eia708Svc3Invalid trap
+
+    faulteia708Svc3InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 3 Invalid Cleared"
+    ::= 1064
+    
+    faulteia708Svc3InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 3 Invalid Alert"
+    ::= 1065
+
+-- end of eia708Svc3Invalid trap
+
+-- beginning of eia708Svc4Invalid trap
+
+    faulteia708Svc4InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 4 Invalid Cleared"
+    ::= 1066
+    
+    faulteia708Svc4InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 4 Invalid Alert"
+    ::= 1067
+
+-- end of eia708Svc4Invalid trap
+
+-- beginning of eia708Svc5Invalid trap
+
+    faulteia708Svc5InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 5 Invalid Cleared"
+    ::= 1068
+    
+    faulteia708Svc5InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 5 Invalid Alert"
+    ::= 1069
+
+-- end of eia708Svc5Invalid trap
+
+-- beginning of eia708Svc6Invalid trap
+
+    faulteia708Svc6InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 6 Invalid Cleared"
+    ::= 1070
+    
+    faulteia708Svc6InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 6 Invalid Alert"
+    ::= 1071
+
+-- end of eia708Svc6Invalid trap
+
+-- beginning of eia708Svc7Invalid trap
+
+    faulteia708Svc7InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 7 Invalid Cleared"
+    ::= 1072
+    
+    faulteia708Svc7InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 7 Invalid Alert"
+    ::= 1073
+
+-- end of eia708Svc7Invalid trap
+
+-- beginning of eia708Svc8Invalid trap
+
+    faulteia708Svc8InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 8 Invalid Cleared"
+    ::= 1074
+    
+    faulteia708Svc8InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 8 Invalid Alert"
+    ::= 1075
+
+-- end of eia708Svc8Invalid trap
+
+-- beginning of eia708Svc9Invalid trap
+
+    faulteia708Svc9InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 9 Invalid Cleared"
+    ::= 1076
+    
+    faulteia708Svc9InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 9 Invalid Alert"
+    ::= 1077
+
+-- end of eia708Svc9Invalid trap
+
+-- beginning of eia708Svc10Invalid trap
+
+    faulteia708Svc10InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 10 Invalid Cleared"
+    ::= 1078
+    
+    faulteia708Svc10InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 10 Invalid Alert"
+    ::= 1079
+
+-- end of eia708Svc10Invalid trap
+
+-- beginning of eia708Svc11Invalid trap
+
+    faulteia708Svc11InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 11 Invalid Cleared"
+    ::= 1080
+    
+    faulteia708Svc11InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 11 Invalid Alert"
+    ::= 1081
+
+-- end of eia708Svc11Invalid trap
+
+-- beginning of eia708Svc12Invalid trap
+
+    faulteia708Svc12InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 12 Invalid Cleared"
+    ::= 1082
+    
+    faulteia708Svc12InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 12 Invalid Alert"
+    ::= 1083
+
+-- end of eia708Svc12Invalid trap
+
+-- beginning of eia708Svc13Invalid trap
+
+    faulteia708Svc13InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 13 Invalid Cleared"
+    ::= 1084
+    
+    faulteia708Svc13InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 13 Invalid Alert"
+    ::= 1085
+
+-- end of eia708Svc13Invalid trap
+
+-- beginning of eia708Svc14Invalid trap
+
+    faulteia708Svc14InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 14 Invalid Cleared"
+    ::= 1086
+    
+    faulteia708Svc14InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 14 Invalid Alert"
+    ::= 1087
+
+-- end of eia708Svc14Invalid trap
+
+-- beginning of eia708Svc15Invalid trap
+
+    faulteia708Svc15InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 15 Invalid Cleared"
+    ::= 1088
+    
+    faulteia708Svc15InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 15 Invalid Alert"
+    ::= 1089
+
+-- end of eia708Svc15Invalid trap
+
+-- beginning of eia708Svc16Invalid trap
+
+    faulteia708Svc16InvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 16 Invalid Cleared"
+    ::= 1090
+    
+    faulteia708Svc16InvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "EIA-708 Service 16 Invalid Alert"
+    ::= 1091
+
+-- end of eia708Svc16Invalid trap
+
+-- beginning of naesSourceLoss trap
+
+    faultnaesSourceLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "No longer receiving NAES data from Nielsen decoder. Cleared"
+    ::= 1092
+    
+    faultnaesSourceLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "No longer receiving NAES data from Nielsen decoder. Alert"
+    ::= 1093
+
+-- end of naesSourceLoss trap
+
+-- beginning of naesDataLoss trap
+
+    faultnaesDataLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Receiving data from Nielsen decoder, but decoder is unable to extract NAES data. Cleared"
+    ::= 1094
+    
+    faultnaesDataLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Receiving data from Nielsen decoder, but decoder is unable to extract NAES data. Alert"
+    ::= 1095
+
+-- end of naesDataLoss trap
+
+-- beginning of amolSourceLoss trap
+
+    faultamolSourceLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "No longer receiving AMOL data from Nielsen decoder. Cleared"
+    ::= 1096
+    
+    faultamolSourceLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "No longer receiving AMOL data from Nielsen decoder. Alert"
+    ::= 1097
+
+-- end of amolSourceLoss trap
+
+-- beginning of amolDataLoss trap
+
+    faultamolDataLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Receiving data from Nielsen decoder, but decoder is unable to extract AMOL data. Cleared"
+    ::= 1098
+    
+    faultamolDataLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Receiving data from Nielsen decoder, but decoder is unable to extract AMOL data. Alert"
+    ::= 1099
+
+-- end of amolDataLoss trap
+
+-- beginning of audioChannel1Loss trap
+
+    faultaudioChannel1LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Cleared"
+    ::= 1100
+    
+    faultaudioChannel1LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Loss Alert"
+    ::= 1101
+
+-- end of audioChannel1Loss trap
+
+-- beginning of audioChannel2Loss trap
+
+    faultaudioChannel2LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Cleared"
+    ::= 1102
+    
+    faultaudioChannel2LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Loss Alert"
+    ::= 1103
+
+-- end of audioChannel2Loss trap
+
+-- beginning of audioChannel3Loss trap
+
+    faultaudioChannel3LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Cleared"
+    ::= 1104
+    
+    faultaudioChannel3LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Loss Alert"
+    ::= 1105
+
+-- end of audioChannel3Loss trap
+
+-- beginning of audioChannel4Loss trap
+
+    faultaudioChannel4LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Cleared"
+    ::= 1106
+    
+    faultaudioChannel4LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Loss Alert"
+    ::= 1107
+
+-- end of audioChannel4Loss trap
+
+-- beginning of audioChannel5Loss trap
+
+    faultaudioChannel5LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Cleared"
+    ::= 1108
+    
+    faultaudioChannel5LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Loss Alert"
+    ::= 1109
+
+-- end of audioChannel5Loss trap
+
+-- beginning of audioChannel6Loss trap
+
+    faultaudioChannel6LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Cleared"
+    ::= 1110
+    
+    faultaudioChannel6LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Loss Alert"
+    ::= 1111
+
+-- end of audioChannel6Loss trap
+
+-- beginning of audioChannel7Loss trap
+
+    faultaudioChannel7LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Cleared"
+    ::= 1112
+    
+    faultaudioChannel7LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Loss Alert"
+    ::= 1113
+
+-- end of audioChannel7Loss trap
+
+-- beginning of audioChannel8Loss trap
+
+    faultaudioChannel8LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Cleared"
+    ::= 1114
+    
+    faultaudioChannel8LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Loss Alert"
+    ::= 1115
+
+-- end of audioChannel8Loss trap
+
+-- beginning of audioChannel1Silent trap
+
+    faultaudioChannel1SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Cleared"
+    ::= 1116
+    
+    faultaudioChannel1SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Silent Alert"
+    ::= 1117
+
+-- end of audioChannel1Silent trap
+
+-- beginning of audioChannel2Silent trap
+
+    faultaudioChannel2SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Cleared"
+    ::= 1118
+    
+    faultaudioChannel2SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Silent Alert"
+    ::= 1119
+
+-- end of audioChannel2Silent trap
+
+-- beginning of audioChannel3Silent trap
+
+    faultaudioChannel3SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Cleared"
+    ::= 1120
+    
+    faultaudioChannel3SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Silent Alert"
+    ::= 1121
+
+-- end of audioChannel3Silent trap
+
+-- beginning of audioChannel4Silent trap
+
+    faultaudioChannel4SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Cleared"
+    ::= 1122
+    
+    faultaudioChannel4SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Silent Alert"
+    ::= 1123
+
+-- end of audioChannel4Silent trap
+
+-- beginning of audioChannel5Silent trap
+
+    faultaudioChannel5SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Cleared"
+    ::= 1124
+    
+    faultaudioChannel5SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Silent Alert"
+    ::= 1125
+
+-- end of audioChannel5Silent trap
+
+-- beginning of audioChannel6Silent trap
+
+    faultaudioChannel6SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Cleared"
+    ::= 1126
+    
+    faultaudioChannel6SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Silent Alert"
+    ::= 1127
+
+-- end of audioChannel6Silent trap
+
+-- beginning of audioChannel7Silent trap
+
+    faultaudioChannel7SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Cleared"
+    ::= 1128
+    
+    faultaudioChannel7SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Silent Alert"
+    ::= 1129
+
+-- end of audioChannel7Silent trap
+
+-- beginning of audioChannel8Silent trap
+
+    faultaudioChannel8SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Cleared"
+    ::= 1130
+    
+    faultaudioChannel8SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Silent Alert"
+    ::= 1131
+
+-- end of audioChannel8Silent trap
+
+-- beginning of audioChannel1Over trap
+
+    faultaudioChannel1OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Cleared"
+    ::= 1132
+    
+    faultaudioChannel1OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 1 Over Alert"
+    ::= 1133
+
+-- end of audioChannel1Over trap
+
+-- beginning of audioChannel2Over trap
+
+    faultaudioChannel2OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Cleared"
+    ::= 1134
+    
+    faultaudioChannel2OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 2 Over Alert"
+    ::= 1135
+
+-- end of audioChannel2Over trap
+
+-- beginning of audioChannel3Over trap
+
+    faultaudioChannel3OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Cleared"
+    ::= 1136
+    
+    faultaudioChannel3OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 3 Over Alert"
+    ::= 1137
+
+-- end of audioChannel3Over trap
+
+-- beginning of audioChannel4Over trap
+
+    faultaudioChannel4OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Cleared"
+    ::= 1138
+    
+    faultaudioChannel4OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 4 Over Alert"
+    ::= 1139
+
+-- end of audioChannel4Over trap
+
+-- beginning of audioChannel5Over trap
+
+    faultaudioChannel5OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Cleared"
+    ::= 1140
+    
+    faultaudioChannel5OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 5 Over Alert"
+    ::= 1141
+
+-- end of audioChannel5Over trap
+
+-- beginning of audioChannel6Over trap
+
+    faultaudioChannel6OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Cleared"
+    ::= 1142
+    
+    faultaudioChannel6OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 6 Over Alert"
+    ::= 1143
+
+-- end of audioChannel6Over trap
+
+-- beginning of audioChannel7Over trap
+
+    faultaudioChannel7OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Cleared"
+    ::= 1144
+    
+    faultaudioChannel7OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 7 Over Alert"
+    ::= 1145
+
+-- end of audioChannel7Over trap
+
+-- beginning of audioChannel8Over trap
+
+    faultaudioChannel8OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Cleared"
+    ::= 1146
+    
+    faultaudioChannel8OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 8 Over Alert"
+    ::= 1147
+
+-- end of audioChannel8Over trap
+
+-- beginning of audioPair12PhaseReversed trap
+
+    faultaudioPair12PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phased Reversed Cleared"
+    ::= 1148
+    
+    faultaudioPair12PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Phased Reversed Alert"
+    ::= 1149
+
+-- end of audioPair12PhaseReversed trap
+
+-- beginning of audioPair34PhaseReversed trap
+
+    faultaudioPair34PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phased Reversed Cleared"
+    ::= 1150
+    
+    faultaudioPair34PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Phased Reversed Alert"
+    ::= 1151
+
+-- end of audioPair34PhaseReversed trap
+
+-- beginning of audioPair56PhaseReversed trap
+
+    faultaudioPair56PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phased Reversed Cleared"
+    ::= 1152
+    
+    faultaudioPair56PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Phased Reversed Alert"
+    ::= 1153
+
+-- end of audioPair56PhaseReversed trap
+
+-- beginning of audioPair78PhaseReversed trap
+
+    faultaudioPair78PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phased Reversed Cleared"
+    ::= 1154
+    
+    faultaudioPair78PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Phased Reversed Alert"
+    ::= 1155
+
+-- end of audioPair78PhaseReversed trap
+
+-- beginning of audioPair12Mono trap
+
+    faultaudioPair12MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Cleared"
+    ::= 1156
+    
+    faultaudioPair12MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Mono Alert"
+    ::= 1157
+
+-- end of audioPair12Mono trap
+
+-- beginning of audioPair34Mono trap
+
+    faultaudioPair34MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Cleared"
+    ::= 1158
+    
+    faultaudioPair34MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Mono Alert"
+    ::= 1159
+
+-- end of audioPair34Mono trap
+
+-- beginning of audioPair56Mono trap
+
+    faultaudioPair56MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Cleared"
+    ::= 1160
+    
+    faultaudioPair56MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Mono Alert"
+    ::= 1161
+
+-- end of audioPair56Mono trap
+
+-- beginning of audioPair78Mono trap
+
+    faultaudioPair78MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Cleared"
+    ::= 1162
+    
+    faultaudioPair78MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Mono Alert"
+    ::= 1163
+
+-- end of audioPair78Mono trap
+
+-- beginning of audio12NonPCMInvalid trap
+
+    faultaudio12NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid  Cleared"
+    ::= 1164
+    
+    faultaudio12NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non-PCM Data Invalid  Alert"
+    ::= 1165
+
+-- end of audio12NonPCMInvalid trap
+
+-- beginning of audio34NonPCMInvalid trap
+
+    faultaudio34NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid  Cleared"
+    ::= 1166
+    
+    faultaudio34NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non-PCM Data Invalid  Alert"
+    ::= 1167
+
+-- end of audio34NonPCMInvalid trap
+
+-- beginning of audio56NonPCMInvalid trap
+
+    faultaudio56NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid  Cleared"
+    ::= 1168
+    
+    faultaudio56NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non-PCM Data Invalid  Alert"
+    ::= 1169
+
+-- end of audio56NonPCMInvalid trap
+
+-- beginning of audio78NonPCMInvalid trap
+
+    faultaudio78NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid  Cleared"
+    ::= 1170
+    
+    faultaudio78NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non-PCM Data Invalid  Alert"
+    ::= 1171
+
+-- end of audio78NonPCMInvalid trap
+
+-- beginning of xlinkRedundant trap
+
+    faultxlinkRedundantFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Redundant input is connected, in AUTO Xlink Mode. Cleared"
+    ::= 1172
+    
+    faultxlinkRedundantTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Redundant input is connected, in AUTO Xlink Mode. Alert"
+    ::= 1173
+
+-- end of xlinkRedundant trap
+
+-- beginning of smpteAfdLoss trap
+
+    faultsmpteAfdLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SMPTE AFD loss Cleared"
+    ::= 1174
+    
+    faultsmpteAfdLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SMPTE AFD loss Alert"
+    ::= 1175
+
+-- end of smpteAfdLoss trap
+
+-- beginning of smpteAfdTypeChange trap
+
+    faultsmpteAfdTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SMPTE AFD Type Changed Cleared"
+    ::= 1176
+    
+    faultsmpteAfdTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SMPTE AFD Type Changed Alert"
+    ::= 1177
+
+-- end of smpteAfdTypeChange trap
+
+-- beginning of videoIndexLoss trap
+
+    faultvideoIndexLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Index Loss Cleared"
+    ::= 1178
+    
+    faultvideoIndexLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Index Loss Alert"
+    ::= 1179
+
+-- end of videoIndexLoss trap
+
+-- beginning of audio12NonPCMTypeChange trap
+
+    faultaudio12NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non PCM Type Changed Cleared"
+    ::= 1180
+    
+    faultaudio12NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 1/2 Non PCM Type Changed Alert"
+    ::= 1181
+
+-- end of audio12NonPCMTypeChange trap
+
+-- beginning of audio34NonPCMTypeChange trap
+
+    faultaudio34NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non PCM Type Changed Cleared"
+    ::= 1182
+    
+    faultaudio34NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 3/4 Non PCM Type Changed Alert"
+    ::= 1183
+
+-- end of audio34NonPCMTypeChange trap
+
+-- beginning of audio56NonPCMTypeChange trap
+
+    faultaudio56NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non PCM Type Changed Cleared"
+    ::= 1184
+    
+    faultaudio56NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 5/6 Non PCM Type Changed Alert"
+    ::= 1185
+
+-- end of audio56NonPCMTypeChange trap
+
+-- beginning of audio78NonPCMTypeChange trap
+
+    faultaudio78NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non PCM Type Changed Cleared"
+    ::= 1186
+    
+    faultaudio78NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 7/8 Non PCM Type Changed Alert"
+    ::= 1187
+
+-- end of audio78NonPCMTypeChange trap
+
+-- beginning of videoIndexChange trap
+
+    faultvideoIndexChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Index Change Cleared"
+    ::= 1188
+    
+    faultvideoIndexChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Video Index Change Alert"
+    ::= 1189
+
+-- end of videoIndexChange trap
+
+-- beginning of macroBlkDetect trap
+
+    faultmacroBlkDetectFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Macroblocking Detected Cleared"
+    ::= 1190
+    
+    faultmacroBlkDetectTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Macroblocking Detected Alert"
+    ::= 1191
+
+-- end of macroBlkDetect trap
+
+-- beginning of audioChannel9Loss trap
+
+    faultaudioChannel9LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Loss Cleared"
+    ::= 1192
+    
+    faultaudioChannel9LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Loss Alert"
+    ::= 1193
+
+-- end of audioChannel9Loss trap
+
+-- beginning of audioChannel10Loss trap
+
+    faultaudioChannel10LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Loss Cleared"
+    ::= 1194
+    
+    faultaudioChannel10LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Loss Alert"
+    ::= 1195
+
+-- end of audioChannel10Loss trap
+
+-- beginning of audioChannel11Loss trap
+
+    faultaudioChannel11LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Loss Cleared"
+    ::= 1196
+    
+    faultaudioChannel11LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Loss Alert"
+    ::= 1197
+
+-- end of audioChannel11Loss trap
+
+-- beginning of audioChannel12Loss trap
+
+    faultaudioChannel12LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Loss Cleared"
+    ::= 1198
+    
+    faultaudioChannel12LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Loss Alert"
+    ::= 1199
+
+-- end of audioChannel12Loss trap
+
+-- beginning of audioChannel13Loss trap
+
+    faultaudioChannel13LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Loss Cleared"
+    ::= 1200
+    
+    faultaudioChannel13LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Loss Alert"
+    ::= 1201
+
+-- end of audioChannel13Loss trap
+
+-- beginning of audioChannel14Loss trap
+
+    faultaudioChannel14LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Loss Cleared"
+    ::= 1202
+    
+    faultaudioChannel14LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Loss Alert"
+    ::= 1203
+
+-- end of audioChannel14Loss trap
+
+-- beginning of audioChannel15Loss trap
+
+    faultaudioChannel15LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Loss Cleared"
+    ::= 1204
+    
+    faultaudioChannel15LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Loss Alert"
+    ::= 1205
+
+-- end of audioChannel15Loss trap
+
+-- beginning of audioChannel16Loss trap
+
+    faultaudioChannel16LossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Loss Cleared"
+    ::= 1206
+    
+    faultaudioChannel16LossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Loss Alert"
+    ::= 1207
+
+-- end of audioChannel16Loss trap
+
+-- beginning of audioChannel9Silent trap
+
+    faultaudioChannel9SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Silent Cleared"
+    ::= 1208
+    
+    faultaudioChannel9SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Silent Alert"
+    ::= 1209
+
+-- end of audioChannel9Silent trap
+
+-- beginning of audioChannel10Silent trap
+
+    faultaudioChannel10SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Silent Cleared"
+    ::= 1210
+    
+    faultaudioChannel10SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Silent Alert"
+    ::= 1211
+
+-- end of audioChannel10Silent trap
+
+-- beginning of audioChannel11Silent trap
+
+    faultaudioChannel11SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Silent Cleared"
+    ::= 1212
+    
+    faultaudioChannel11SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Silent Alert"
+    ::= 1213
+
+-- end of audioChannel11Silent trap
+
+-- beginning of audioChannel12Silent trap
+
+    faultaudioChannel12SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Silent Cleared"
+    ::= 1214
+    
+    faultaudioChannel12SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Silent Alert"
+    ::= 1215
+
+-- end of audioChannel12Silent trap
+
+-- beginning of audioChannel13Silent trap
+
+    faultaudioChannel13SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Silent Cleared"
+    ::= 1216
+    
+    faultaudioChannel13SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Silent Alert"
+    ::= 1217
+
+-- end of audioChannel13Silent trap
+
+-- beginning of audioChannel14Silent trap
+
+    faultaudioChannel14SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Silent Cleared"
+    ::= 1218
+    
+    faultaudioChannel14SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Silent Alert"
+    ::= 1219
+
+-- end of audioChannel14Silent trap
+
+-- beginning of audioChannel15Silent trap
+
+    faultaudioChannel15SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Silent Cleared"
+    ::= 1220
+    
+    faultaudioChannel15SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Silent Alert"
+    ::= 1221
+
+-- end of audioChannel15Silent trap
+
+-- beginning of audioChannel16Silent trap
+
+    faultaudioChannel16SilentFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Silent Cleared"
+    ::= 1222
+    
+    faultaudioChannel16SilentTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Silent Alert"
+    ::= 1223
+
+-- end of audioChannel16Silent trap
+
+-- beginning of audioChannel9Over trap
+
+    faultaudioChannel9OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Over Cleared"
+    ::= 1224
+    
+    faultaudioChannel9OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 9 Over Alert"
+    ::= 1225
+
+-- end of audioChannel9Over trap
+
+-- beginning of audioChannel10Over trap
+
+    faultaudioChannel10OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Over Cleared"
+    ::= 1226
+    
+    faultaudioChannel10OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 10 Over Alert"
+    ::= 1227
+
+-- end of audioChannel10Over trap
+
+-- beginning of audioChannel11Over trap
+
+    faultaudioChannel11OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Over Cleared"
+    ::= 1228
+    
+    faultaudioChannel11OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 11 Over Alert"
+    ::= 1229
+
+-- end of audioChannel11Over trap
+
+-- beginning of audioChannel12Over trap
+
+    faultaudioChannel12OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Over Cleared"
+    ::= 1230
+    
+    faultaudioChannel12OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 12 Over Alert"
+    ::= 1231
+
+-- end of audioChannel12Over trap
+
+-- beginning of audioChannel13Over trap
+
+    faultaudioChannel13OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Over Cleared"
+    ::= 1232
+    
+    faultaudioChannel13OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 13 Over Alert"
+    ::= 1233
+
+-- end of audioChannel13Over trap
+
+-- beginning of audioChannel14Over trap
+
+    faultaudioChannel14OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Over Cleared"
+    ::= 1234
+    
+    faultaudioChannel14OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 14 Over Alert"
+    ::= 1235
+
+-- end of audioChannel14Over trap
+
+-- beginning of audioChannel15Over trap
+
+    faultaudioChannel15OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Over Cleared"
+    ::= 1236
+    
+    faultaudioChannel15OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 15 Over Alert"
+    ::= 1237
+
+-- end of audioChannel15Over trap
+
+-- beginning of audioChannel16Over trap
+
+    faultaudioChannel16OverFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Over Cleared"
+    ::= 1238
+    
+    faultaudioChannel16OverTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Channel 16 Over Alert"
+    ::= 1239
+
+-- end of audioChannel16Over trap
+
+-- beginning of audioPair0910PhaseReversed trap
+
+    faultaudioPair0910PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Phased Reversed Cleared"
+    ::= 1240
+    
+    faultaudioPair0910PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Phased Reversed Alert"
+    ::= 1241
+
+-- end of audioPair0910PhaseReversed trap
+
+-- beginning of audioPair1112PhaseReversed trap
+
+    faultaudioPair1112PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Phased Reversed Cleared"
+    ::= 1242
+    
+    faultaudioPair1112PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Phased Reversed Alert"
+    ::= 1243
+
+-- end of audioPair1112PhaseReversed trap
+
+-- beginning of audioPair1314PhaseReversed trap
+
+    faultaudioPair1314PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Phased Reversed Cleared"
+    ::= 1244
+    
+    faultaudioPair1314PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Phased Reversed Alert"
+    ::= 1245
+
+-- end of audioPair1314PhaseReversed trap
+
+-- beginning of audioPair1516PhaseReversed trap
+
+    faultaudioPair1516PhaseReversedFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Phased Reversed Cleared"
+    ::= 1246
+    
+    faultaudioPair1516PhaseReversedTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Phased Reversed Alert"
+    ::= 1247
+
+-- end of audioPair1516PhaseReversed trap
+
+-- beginning of audioPair0910Mono trap
+
+    faultaudioPair0910MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Mono Cleared"
+    ::= 1248
+    
+    faultaudioPair0910MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Mono Alert"
+    ::= 1249
+
+-- end of audioPair0910Mono trap
+
+-- beginning of audioPair1112Mono trap
+
+    faultaudioPair1112MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Mono Cleared"
+    ::= 1250
+    
+    faultaudioPair1112MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Mono Alert"
+    ::= 1251
+
+-- end of audioPair1112Mono trap
+
+-- beginning of audioPair1314Mono trap
+
+    faultaudioPair1314MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Mono Cleared"
+    ::= 1252
+    
+    faultaudioPair1314MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Mono Alert"
+    ::= 1253
+
+-- end of audioPair1314Mono trap
+
+-- beginning of audioPair1516Mono trap
+
+    faultaudioPair1516MonoFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Mono Cleared"
+    ::= 1254
+    
+    faultaudioPair1516MonoTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Mono Alert"
+    ::= 1255
+
+-- end of audioPair1516Mono trap
+
+-- beginning of audio0910NonPCMInvalid trap
+
+    faultaudio0910NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Non-PCM Data Invalid  Cleared"
+    ::= 1256
+    
+    faultaudio0910NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Non-PCM Data Invalid  Alert"
+    ::= 1257
+
+-- end of audio0910NonPCMInvalid trap
+
+-- beginning of audio1112NonPCMInvalid trap
+
+    faultaudio1112NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Non-PCM Data Invalid  Cleared"
+    ::= 1258
+    
+    faultaudio1112NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Non-PCM Data Invalid  Alert"
+    ::= 1259
+
+-- end of audio1112NonPCMInvalid trap
+
+-- beginning of audio1314NonPCMInvalid trap
+
+    faultaudio1314NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Non-PCM Data Invalid  Cleared"
+    ::= 1260
+    
+    faultaudio1314NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Non-PCM Data Invalid  Alert"
+    ::= 1261
+
+-- end of audio1314NonPCMInvalid trap
+
+-- beginning of audio1516NonPCMInvalid trap
+
+    faultaudio1516NonPCMInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Non-PCM Data Invalid  Cleared"
+    ::= 1262
+    
+    faultaudio1516NonPCMInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Non-PCM Data Invalid  Alert"
+    ::= 1263
+
+-- end of audio1516NonPCMInvalid trap
+
+-- beginning of audio0910NonPCMTypeChange trap
+
+    faultaudio0910NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Non PCM Type Changed Cleared"
+    ::= 1264
+    
+    faultaudio0910NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 09/10 Non PCM Type Changed Alert"
+    ::= 1265
+
+-- end of audio0910NonPCMTypeChange trap
+
+-- beginning of audio1112NonPCMTypeChange trap
+
+    faultaudio1112NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Non PCM Type Changed Cleared"
+    ::= 1266
+    
+    faultaudio1112NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 11/12 Non PCM Type Changed Alert"
+    ::= 1267
+
+-- end of audio1112NonPCMTypeChange trap
+
+-- beginning of audio1314NonPCMTypeChange trap
+
+    faultaudio1314NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Non PCM Type Changed Cleared"
+    ::= 1268
+    
+    faultaudio1314NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 13/14 Non PCM Type Changed Alert"
+    ::= 1269
+
+-- end of audio1314NonPCMTypeChange trap
+
+-- beginning of audio1516NonPCMTypeChange trap
+
+    faultaudio1516NonPCMTypeChangeFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Non PCM Type Changed Cleared"
+    ::= 1270
+    
+    faultaudio1516NonPCMTypeChangeTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Pair 15/16 Non PCM Type Changed Alert"
+    ::= 1271
+
+-- end of audio1516NonPCMTypeChange trap
+
+-- beginning of audLoudOver1 trap
+
+    faultaudLoudOver1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog1 Cleared"
+    ::= 1272
+    
+    faultaudLoudOver1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog1 Alert"
+    ::= 1273
+
+-- end of audLoudOver1 trap
+
+-- beginning of audLoudOver2 trap
+
+    faultaudLoudOver2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog2 Cleared"
+    ::= 1274
+    
+    faultaudLoudOver2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog2 Alert"
+    ::= 1275
+
+-- end of audLoudOver2 trap
+
+-- beginning of audLoudOver3 trap
+
+    faultaudLoudOver3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog3 Cleared"
+    ::= 1276
+    
+    faultaudLoudOver3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog3 Alert"
+    ::= 1277
+
+-- end of audLoudOver3 trap
+
+-- beginning of audLoudOver4 trap
+
+    faultaudLoudOver4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog4 Cleared"
+    ::= 1278
+    
+    faultaudLoudOver4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog4 Alert"
+    ::= 1279
+
+-- end of audLoudOver4 trap
+
+-- beginning of audLoudOver5 trap
+
+    faultaudLoudOver5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog5 Cleared"
+    ::= 1280
+    
+    faultaudLoudOver5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog5 Alert"
+    ::= 1281
+
+-- end of audLoudOver5 trap
+
+-- beginning of audLoudOver6 trap
+
+    faultaudLoudOver6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog6 Cleared"
+    ::= 1282
+    
+    faultaudLoudOver6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog6 Alert"
+    ::= 1283
+
+-- end of audLoudOver6 trap
+
+-- beginning of audLoudOver7 trap
+
+    faultaudLoudOver7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog7 Cleared"
+    ::= 1284
+    
+    faultaudLoudOver7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog7 Alert"
+    ::= 1285
+
+-- end of audLoudOver7 trap
+
+-- beginning of audLoudOver8 trap
+
+    faultaudLoudOver8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog8 Cleared"
+    ::= 1286
+    
+    faultaudLoudOver8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Over Prog8 Alert"
+    ::= 1287
+
+-- end of audLoudOver8 trap
+
+-- beginning of audLoudLow1 trap
+
+    faultaudLoudLow1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog1 Cleared"
+    ::= 1288
+    
+    faultaudLoudLow1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog1 Alert"
+    ::= 1289
+
+-- end of audLoudLow1 trap
+
+-- beginning of audLoudLow2 trap
+
+    faultaudLoudLow2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog2 Cleared"
+    ::= 1290
+    
+    faultaudLoudLow2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog2 Alert"
+    ::= 1291
+
+-- end of audLoudLow2 trap
+
+-- beginning of audLoudLow3 trap
+
+    faultaudLoudLow3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog3 Cleared"
+    ::= 1292
+    
+    faultaudLoudLow3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog3 Alert"
+    ::= 1293
+
+-- end of audLoudLow3 trap
+
+-- beginning of audLoudLow4 trap
+
+    faultaudLoudLow4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog4 Cleared"
+    ::= 1294
+    
+    faultaudLoudLow4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog4 Alert"
+    ::= 1295
+
+-- end of audLoudLow4 trap
+
+-- beginning of audLoudLow5 trap
+
+    faultaudLoudLow5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog5 Cleared"
+    ::= 1296
+    
+    faultaudLoudLow5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog5 Alert"
+    ::= 1297
+
+-- end of audLoudLow5 trap
+
+-- beginning of audLoudLow6 trap
+
+    faultaudLoudLow6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog6 Cleared"
+    ::= 1298
+    
+    faultaudLoudLow6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog6 Alert"
+    ::= 1299
+
+-- end of audLoudLow6 trap
+
+-- beginning of audLoudLow7 trap
+
+    faultaudLoudLow7False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog7 Cleared"
+    ::= 1300
+    
+    faultaudLoudLow7True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog7 Alert"
+    ::= 1301
+
+-- end of audLoudLow7 trap
+
+-- beginning of audLoudLow8 trap
+
+    faultaudLoudLow8False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog8 Cleared"
+    ::= 1302
+    
+    faultaudLoudLow8True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Audio Loudness Low Prog8 Alert"
+    ::= 1303
+
+-- end of audLoudLow8 trap
+
+-- beginning of nlsnWatermarkLoss trap
+
+    faultnlsnWatermarkLossFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen Watermark Loss Cleared"
+    ::= 1304
+    
+    faultnlsnWatermarkLossTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen Watermark Loss Alert"
+    ::= 1305
+
+-- end of nlsnWatermarkLoss trap
+
+-- beginning of naesMismatch trap
+
+    faultnaesMismatchFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen NAES Mismatch Cleared"
+    ::= 1306
+    
+    faultnaesMismatchTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen NAES Mismatch Alert"
+    ::= 1307
+
+-- end of naesMismatch trap
+
+-- beginning of amolMismatch trap
+
+    faultamolMismatchFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen AMOL Mismatch Cleared"
+    ::= 1308
+    
+    faultamolMismatchTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen AMOL Mismatch Alert"
+    ::= 1309
+
+-- end of amolMismatch trap
+
+-- beginning of nlsnWatermarkMismatch trap
+
+    faultnlsnWatermarkMismatchFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen Watermark Mismatch Cleared"
+    ::= 1310
+    
+    faultnlsnWatermarkMismatchTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Nielsen Watermark Mismatch Alert"
+    ::= 1311
+
+-- end of nlsnWatermarkMismatch trap
+
+-- beginning of videoTypeMismatch trap
+
+    faultvideoTypeMismatchFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Wideo Standard Mismatch Cleared"
+    ::= 1312
+    
+    faultvideoTypeMismatchTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Wideo Standard Mismatch Alert"
+    ::= 1313
+
+-- end of videoTypeMismatch trap
+
+-- beginning of scte104Gpi01Pres trap
+
+    faultscte104Gpi01PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 01 Present Cleared"
+    ::= 1314
+    
+    faultscte104Gpi01PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 01 Present Alert"
+    ::= 1315
+
+-- end of scte104Gpi01Pres trap
+
+-- beginning of scte104Gpi02Pres trap
+
+    faultscte104Gpi02PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 02 Present Cleared"
+    ::= 1316
+    
+    faultscte104Gpi02PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 02 Present Alert"
+    ::= 1317
+
+-- end of scte104Gpi02Pres trap
+
+-- beginning of scte104Gpi03Pres trap
+
+    faultscte104Gpi03PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 03 Present Cleared"
+    ::= 1318
+    
+    faultscte104Gpi03PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 03 Present Alert"
+    ::= 1319
+
+-- end of scte104Gpi03Pres trap
+
+-- beginning of scte104Gpi04Pres trap
+
+    faultscte104Gpi04PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 04 Present Cleared"
+    ::= 1320
+    
+    faultscte104Gpi04PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 04 Present Alert"
+    ::= 1321
+
+-- end of scte104Gpi04Pres trap
+
+-- beginning of scte104Gpi05Pres trap
+
+    faultscte104Gpi05PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 05 Present Cleared"
+    ::= 1322
+    
+    faultscte104Gpi05PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 05 Present Alert"
+    ::= 1323
+
+-- end of scte104Gpi05Pres trap
+
+-- beginning of scte104Gpi06Pres trap
+
+    faultscte104Gpi06PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 06 Present Cleared"
+    ::= 1324
+    
+    faultscte104Gpi06PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "SCTE104 GPI 06 Present Alert"
+    ::= 1325
+
+-- end of scte104Gpi06Pres trap
+
+-- beginning of hdcpEncryptPres trap
+
+    faulthdcpEncryptPresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "HDCP Encryption Present Cleared"
+    ::= 1326
+    
+    faulthdcpEncryptPresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "HDCP Encryption Present Alert"
+    ::= 1327
+
+-- end of hdcpEncryptPres trap
+
+-- beginning of timecodeRctlGpi01Pres trap
+
+    faulttimecodeRctlGpi01PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 01 Present Cleared"
+    ::= 1328
+    
+    faulttimecodeRctlGpi01PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 01 Present Alert"
+    ::= 1329
+
+-- end of timecodeRctlGpi01Pres trap
+
+-- beginning of timecodeRctlGpi02Pres trap
+
+    faulttimecodeRctlGpi02PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 02 Present Cleared"
+    ::= 1330
+    
+    faulttimecodeRctlGpi02PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 02 Present Alert"
+    ::= 1331
+
+-- end of timecodeRctlGpi02Pres trap
+
+-- beginning of timecodeRctlGpi03Pres trap
+
+    faulttimecodeRctlGpi03PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 03 Present Cleared"
+    ::= 1332
+    
+    faulttimecodeRctlGpi03PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 03 Present Alert"
+    ::= 1333
+
+-- end of timecodeRctlGpi03Pres trap
+
+-- beginning of timecodeRctlGpi04Pres trap
+
+    faulttimecodeRctlGpi04PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 04 Present Cleared"
+    ::= 1334
+    
+    faulttimecodeRctlGpi04PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 04 Present Alert"
+    ::= 1335
+
+-- end of timecodeRctlGpi04Pres trap
+
+-- beginning of timecodeRctlGpi05Pres trap
+
+    faulttimecodeRctlGpi05PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 05 Present Cleared"
+    ::= 1336
+    
+    faulttimecodeRctlGpi05PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 05 Present Alert"
+    ::= 1337
+
+-- end of timecodeRctlGpi05Pres trap
+
+-- beginning of timecodeRctlGpi06Pres trap
+
+    faulttimecodeRctlGpi06PresFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 06 Present Cleared"
+    ::= 1338
+    
+    faulttimecodeRctlGpi06PresTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Timecode GPI 06 Present Alert"
+    ::= 1339
+
+-- end of timecodeRctlGpi06Pres trap
+
+-- beginning of extendedFutureUse85 trap
+
+    faultextendedFutureUse85False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 85 Cleared"
+    ::= 1340
+    
+    faultextendedFutureUse85True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 85 Alert"
+    ::= 1341
+
+-- end of extendedFutureUse85 trap
+
+-- beginning of extendedFutureUse86 trap
+
+    faultextendedFutureUse86False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 86 Cleared"
+    ::= 1342
+    
+    faultextendedFutureUse86True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 86 Alert"
+    ::= 1343
+
+-- end of extendedFutureUse86 trap
+
+-- beginning of extendedFutureUse87 trap
+
+    faultextendedFutureUse87False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 87 Cleared"
+    ::= 1344
+    
+    faultextendedFutureUse87True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 87 Alert"
+    ::= 1345
+
+-- end of extendedFutureUse87 trap
+
+-- beginning of extendedFutureUse88 trap
+
+    faultextendedFutureUse88False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 88 Cleared"
+    ::= 1346
+    
+    faultextendedFutureUse88True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 88 Alert"
+    ::= 1347
+
+-- end of extendedFutureUse88 trap
+
+-- beginning of extendedFutureUse89 trap
+
+    faultextendedFutureUse89False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 89 Cleared"
+    ::= 1348
+    
+    faultextendedFutureUse89True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 89 Alert"
+    ::= 1349
+
+-- end of extendedFutureUse89 trap
+
+-- beginning of extendedFutureUse90 trap
+
+    faultextendedFutureUse90False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 90 Cleared"
+    ::= 1350
+    
+    faultextendedFutureUse90True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 90 Alert"
+    ::= 1351
+
+-- end of extendedFutureUse90 trap
+
+-- beginning of extendedFutureUse91 trap
+
+    faultextendedFutureUse91False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 91 Cleared"
+    ::= 1352
+    
+    faultextendedFutureUse91True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 91 Alert"
+    ::= 1353
+
+-- end of extendedFutureUse91 trap
+
+-- beginning of extendedFutureUse92 trap
+
+    faultextendedFutureUse92False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 92 Cleared"
+    ::= 1354
+    
+    faultextendedFutureUse92True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 92 Alert"
+    ::= 1355
+
+-- end of extendedFutureUse92 trap
+
+-- beginning of extendedFutureUse93 trap
+
+    faultextendedFutureUse93False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 93 Cleared"
+    ::= 1356
+    
+    faultextendedFutureUse93True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 93 Alert"
+    ::= 1357
+
+-- end of extendedFutureUse93 trap
+
+-- beginning of extendedFutureUse94 trap
+
+    faultextendedFutureUse94False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 94 Cleared"
+    ::= 1358
+    
+    faultextendedFutureUse94True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 94 Alert"
+    ::= 1359
+
+-- end of extendedFutureUse94 trap
+
+-- beginning of extendedFutureUse95 trap
+
+    faultextendedFutureUse95False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 95 Cleared"
+    ::= 1360
+    
+    faultextendedFutureUse95True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 95 Alert"
+    ::= 1361
+
+-- end of extendedFutureUse95 trap
+
+-- beginning of extendedFutureUse96 trap
+
+    faultextendedFutureUse96False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 96 Cleared"
+    ::= 1362
+    
+    faultextendedFutureUse96True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 96 Alert"
+    ::= 1363
+
+-- end of extendedFutureUse96 trap
+
+-- beginning of extendedFutureUse97 trap
+
+    faultextendedFutureUse97False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 97 Cleared"
+    ::= 1364
+    
+    faultextendedFutureUse97True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 97 Alert"
+    ::= 1365
+
+-- end of extendedFutureUse97 trap
+
+-- beginning of extendedFutureUse98 trap
+
+    faultextendedFutureUse98False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 98 Cleared"
+    ::= 1366
+    
+    faultextendedFutureUse98True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 98 Alert"
+    ::= 1367
+
+-- end of extendedFutureUse98 trap
+
+-- beginning of extendedFutureUse99 trap
+
+    faultextendedFutureUse99False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 99 Cleared"
+    ::= 1368
+    
+    faultextendedFutureUse99True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 99 Alert"
+    ::= 1369
+
+-- end of extendedFutureUse99 trap
+
+-- beginning of extendedFutureUse100 trap
+
+    faultextendedFutureUse100False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 100 Cleared"
+    ::= 1370
+    
+    faultextendedFutureUse100True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { videoInputIdx,trapTag }
+        DESCRIPTION
+            "Extended Fault Future Use 100 Alert"
+    ::= 1371
+
+-- end of extendedFutureUse100 trap
+
+-- beginning of gpiFault01 trap
+
+    faultgpiFault01False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 01 Cleared"
+    ::= 1372
+    
+    faultgpiFault01True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 01 Alert"
+    ::= 1373
+
+-- end of gpiFault01 trap
+
+-- beginning of gpiFault02 trap
+
+    faultgpiFault02False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 02 Cleared"
+    ::= 1374
+    
+    faultgpiFault02True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 02 Alert"
+    ::= 1375
+
+-- end of gpiFault02 trap
+
+-- beginning of gpiFault03 trap
+
+    faultgpiFault03False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 03 Cleared"
+    ::= 1376
+    
+    faultgpiFault03True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 03 Alert"
+    ::= 1377
+
+-- end of gpiFault03 trap
+
+-- beginning of gpiFault04 trap
+
+    faultgpiFault04False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 04 Cleared"
+    ::= 1378
+    
+    faultgpiFault04True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 04 Alert"
+    ::= 1379
+
+-- end of gpiFault04 trap
+
+-- beginning of gpiFault05 trap
+
+    faultgpiFault05False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 05 Cleared"
+    ::= 1380
+    
+    faultgpiFault05True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 05 Alert"
+    ::= 1381
+
+-- end of gpiFault05 trap
+
+-- beginning of gpiFault06 trap
+
+    faultgpiFault06False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 06 Cleared"
+    ::= 1382
+    
+    faultgpiFault06True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 06 Alert"
+    ::= 1383
+
+-- end of gpiFault06 trap
+
+-- beginning of gpiFault07 trap
+
+    faultgpiFault07False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 07 Cleared"
+    ::= 1384
+    
+    faultgpiFault07True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 07 Alert"
+    ::= 1385
+
+-- end of gpiFault07 trap
+
+-- beginning of gpiFault08 trap
+
+    faultgpiFault08False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 08 Cleared"
+    ::= 1386
+    
+    faultgpiFault08True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 08 Alert"
+    ::= 1387
+
+-- end of gpiFault08 trap
+
+-- beginning of gpiFault09 trap
+
+    faultgpiFault09False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 09 Cleared"
+    ::= 1388
+    
+    faultgpiFault09True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 09 Alert"
+    ::= 1389
+
+-- end of gpiFault09 trap
+
+-- beginning of gpiFault10 trap
+
+    faultgpiFault10False TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 10 Cleared"
+    ::= 1390
+    
+    faultgpiFault10True TRAP-TYPE
+        ENTERPRISE  trapFault
+        VARIABLES   { gpiIndex }
+        DESCRIPTION
+            "GPI 10 Alert"
+    ::= 1391
+
+-- end of gpiFault10 trap
+
+
+
+
+END

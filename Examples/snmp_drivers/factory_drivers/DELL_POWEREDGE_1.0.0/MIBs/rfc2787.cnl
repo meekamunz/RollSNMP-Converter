@@ -1,0 +1,110 @@
+VRRP-MIB-A DEFINITIONS ::= BEGIN
+
+ IMPORTS
+     MODULE-IDENTITY, OBJECT-TYPE,
+     NOTIFICATION-TYPE, Counter32,
+     Integer32, IpAddress, mib-2         FROM SNMPv2-SMI
+
+     TEXTUAL-CONVENTION, RowStatus,
+     MacAddress, TruthValue, TimeStamp   FROM SNMPv2-TC
+
+     MODULE-COMPLIANCE, OBJECT-GROUP,
+     NOTIFICATION-GROUP                  FROM SNMPv2-CONF
+     ifIndex                             FROM IF-MIB
+     vrrpMIB                             FROM VRRP-MIB;
+
+-- *******************************************************************
+--  Textual Conventions
+-- *******************************************************************
+
+ VrId ::= TEXTUAL-CONVENTION
+     STATUS       current
+     DESCRIPTION
+         "A number which, along with an interface index (ifIndex),
+         serves to uniquely identify a virtual router on a given VRRP
+         router. A set of one or more associated addresses is assigned
+         to a VRID."
+     SYNTAX      Integer32 (1..255)
+
+-- *******************************************************************
+--  VRRP MIB Groups
+-- *******************************************************************
+
+ vrrpNotifications   OBJECT IDENTIFIER ::= { vrrpMIB 0 }
+ vrrpOperations      OBJECT IDENTIFIER ::= { vrrpMIB 1 }
+ vrrpStatistics      OBJECT IDENTIFIER ::= { vrrpMIB 2 }
+ vrrpConformance     OBJECT IDENTIFIER ::= { vrrpMIB 3 }
+
+
+-- *******************************************************************
+--  Start of MIB objects
+-- *******************************************************************
+
+ vrrpNodeVersion  OBJECT-TYPE
+     ::= { vrrpOperations 1 }
+
+ vrrpNotificationCntl  OBJECT-TYPE
+     ::= { vrrpOperations 2 }
+
+-- *******************************************************************
+--  VRRP Operations Table
+-- *******************************************************************
+
+ vrrpOperTable OBJECT-TYPE
+    ::= { vrrpOperations 3 }
+
+ vrrpOperEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vrrpOperRowStatus
+    ::= { vrrpOperTable 1 }
+
+-- *******************************************************************
+--  VRRP Associated IP Address Table
+-- *******************************************************************
+
+ vrrpAssoIpAddrTable OBJECT-TYPE
+     ::= { vrrpOperations 4 }
+
+ vrrpAssoIpAddrEntry OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME vrrpAssoIpAddrRowStatus
+     ::= { vrrpAssoIpAddrTable 1 }
+
+-- *******************************************************************
+--  VRRP Router Statistics
+-- *******************************************************************
+
+ vrrpRouterChecksumErrors OBJECT-TYPE
+     ::= { vrrpStatistics 1 }
+
+ vrrpRouterVersionErrors OBJECT-TYPE
+     ::= { vrrpStatistics 2 }
+
+ vrrpRouterVrIdErrors OBJECT-TYPE
+     ::= { vrrpStatistics 3 }
+
+-- *******************************************************************
+--  VRRP Router Statistics Table
+-- *******************************************************************
+
+ vrrpRouterStatsTable OBJECT-TYPE
+     ::= { vrrpStatistics 4 }
+
+ vrrpRouterStatsEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { vrrpRouterStatsTable 1 }
+
+
+ vrrpTrapNewMaster TRAP-TYPE
+    ENTERPRISE vrrpNotifications
+    ERRCODE    RSG_ErrMsg_code_vrrpTrapNewMaster_E
+    SEVERITY   WARNING
+    ::= 1
+
+ vrrpTrapAuthFailure TRAP-TYPE
+    ENTERPRISE vrrpNotifications
+    ERRCODE    RSG_ErrMsg_code_vrrpTrapAuthFailure_E
+    SEVERITY   WARNING
+    ::= 2
+
+END

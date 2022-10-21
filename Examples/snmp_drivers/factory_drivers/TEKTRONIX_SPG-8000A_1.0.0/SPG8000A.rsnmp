@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Config developed for and tested on Tektronix SPG8000A at SLP on 01/11/2016.
+	This unit is configured with SNMPv2c, so this config is for V2c SNMP units.  It hasn't been tested
+	with, and may not work with units configured for SNMPv1.
+-->
+
+<DefinitionGroup>
+
+	<MIBSource href="drivers/TEKTRONIX_SPG-8000A_1.0.0/MIBs"/>
+
+	<OIDAlias id="SPG8000" oid=".iso.org.dod.internet.private.enterprises.tek.tvt.tvtproducts.spg8000" >
+		<OIDAlias id="STATUS" oid=".status" >
+			<OIDAlias id="FIRMWARE VERSION" oid=".versionInfoFwStatus" />
+			<OIDAlias id="HARDWARE VERSION" oid=".versionInfoHwStatus" />
+			<OIDAlias id="PANEL LEDS" oid=".frontPanelLedStatus" />
+			<OIDAlias id="TEMPERATURE" oid=".temperatureStatus" />
+			<OIDAlias id="VOLTAGE" oid=".voltageStatus" />
+			<OIDAlias id="BATTERY" oid=".batteryStatus" />
+			<OIDAlias id="FAN STATUS" oid=".fanStatus" />
+			<OIDAlias id="PSU HOURS" oid=".powerSupplyHourStatus" />
+			<OIDAlias id="PSU TWH" oid=".powerSupplyFomStatus" />
+			<OIDAlias id="PSU TWELVE VOLT" oid=".powerSupplyTwelveVoltStatus" />
+		</OIDAlias>
+		<OIDAlias id="TRAPS" oid=".traps" />
+	</OIDAlias>
+
+	<UnitTypeDef typeName="TEKTRONIX_SPG-8000A_1.0.0" snmpVersion="2C">
+
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: $</StaticString>
+		</StaticDef>
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+
+        <!-- DateTime format is encoded as octet string which we do not currently support -->
+		<!--<TranslationDef link="SYS DATE" />-->
+
+		<TranslationDef link="PORT NAME ARRAY" >
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY" >
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT STATUS ARRAY SFP">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT HIGH SPEED ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT LAST CHANGE ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef pollRate="60" link="LAN PORT ERRORS">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT ADMIN STATUS ARRAY" >
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT TRAFFIC IN ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<TranslationDef link="PORT TRAFFIC OUT ARRAY">
+			<GetNextArray dynamic="true"/>
+		</TranslationDef>
+
+		<!-- Tek specific translation definitions -->
+
+		<!-- Status Definitions -->
+
+		<TranslationDef rcLogField="FIRMWARE_VERSION" pollRate="600" >
+			<OID alias="FIRMWARE VERSION">.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="HARDWARE_VERSION" pollRate="600" >
+			<OID alias="HARDWARE VERSION">.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PANEL_INT_LED" pollRate="60" >
+			<OID alias="PANEL LEDS">.0</OID>
+			<StringRule match=".*INT off.*" format="OK: INT off" />
+			<StringRule match=".*INT green.*" format="OK: INT green, refer maunal" />
+			<StringRule match=".*INT blinking green.*" format="WARN: System warming up..." />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PANEL_EXT_LED" pollRate="60" >
+			<OID alias="PANEL LEDS">.0</OID>
+			<StringRule match=".*EXT off.*" format="OK: EXT off" />
+			<StringRule match=".*EXT green.*" format="OK: EXT on" />
+			<StringRule match=".*EXT amber.*" format="WARN: EXT amber, refer maunal" />
+			<StringRule match=".*EXT red.*" format="FAIL: EXT red, refer maunal" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PANEL_TIME_LED" pollRate="60" >
+			<OID alias="PANEL LEDS">.0</OID>
+			<StringRule match=".*TIME off.*" format="WARN: TIME off, refer maunal" />
+			<StringRule match=".*TIME green.*" format="OK: TIME green" />
+			<StringRule match=".*TIME red.*" format="FAIL: TIME red, refer maunal" />
+			<StringRule match=".*TIME yellow.*" format="WARN: LTC Outside SMPTE 12M Specification" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PANEL_FAULT_LED" pollRate="60" >
+			<OID alias="PANEL LEDS">.0</OID>
+			<StringRule match=".*FAULT off" format="OK: No Fault Found" />
+			<StringRule match=".*FAULT blinking red" format="FAIL: Hardware fault" />
+			<StringRule match=".*FAULT red" format="FAIL: Check fan speed and PSU voltages" />
+			<StringRule match=".*FAULT amber" format="WARN: FAULT condition, refer manual" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="TEMP_1" pollRate="60" >
+			<OID alias="TEMPERATURE">.0</OID>
+			<StringRule match=".*(FAULT).*" format="FAIL: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+			<TrapDef>
+				<TrapRepollOID alias="TRAPS">.0.temperatureTrap</TrapRepollOID>
+				<ConstCondition format="FAIL: Measured temperature too high" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_1" pollRate="60" >
+			<OID alias="VOLTAGE">.0</OID>
+			<StringRule match=".*OK.*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+			<TrapDef>
+				<TrapRepollOID alias="TRAPS">.0.voltageTrap</TrapRepollOID>
+				<ConstCondition format="FAIL: Power supply voltage has failed" />
+			</TrapDef>
+		</TranslationDef>
+
+
+		<TranslationDef rcLogField="BATTERY_1" pollRate="60" >
+			<OID alias="BATTERY">.0</OID>
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_FAN_STATUS" pollRate="60" >
+			<OID alias="FAN STATUS">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_HOURS" pollRate="60" >
+			<OID alias="PSU HOURS">.0</OID>
+			<StringRule />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_TWH" pollRate="60" >
+			<OID alias="PSU TWH">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="PSU_12V" pollRate="60" >
+			<OID alias="PSU TWELVE VOLT">.0</OID>
+			<StringRule match=".*not installed.*" format="WARN: %s" />
+			<StringRule match=".*(OK).*" format="OK: %s" />
+			<StringRule format="FAIL: %s" />
+			<ErrorRule format="FAIL: N/A" />
+		</TranslationDef>
+
+		<!-- Trap Definitions -->
+
+		<TranslationDef rcLogField="MAIN_FAN_WARNING" defaultValue="OK: Main Fan Running" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.mainFanStopTrap</TrapOID>
+				<ConstCondition format="FAIL: Main Fan Stopped!" />
+			</TrapDef>
+			<ConstRule format="OK: Main fan running" />
+		</TranslationDef>
+
+		<TranslationDef rcLogField="TEMP_WARNING" defaultValue="OK: No Temperature warnings" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.temperatureTrap</TrapOID>
+				<ConstCondition format="FAIL: Measured temperature too high" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VOLTAGE_WARNING" defaultValue="OK: No Voltage warnings" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.voltageTrap</TrapOID>
+				<ConstCondition format="FAIL: Power supply voltage has failed" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="SYSTEM_FAN_STATUS" defaultValue="OK: System Fan OK" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.mainFanStopTrap</TrapOID>
+				<ConstCondition format="FAIL: Main Fan Stopped!" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="GPS_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.gpsSignalMissingTrap</TrapOID>
+				<ConstCondition format="FAIL: GPS signal missing" />
+			</TrapDef>
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.gpsFomTrap</TrapOID>
+				<ConstCondition format="WARN: GPS Figure Of Merit - Low Signal" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="GENLOCK_SIGNAL_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.genlockInputMissingTrap</TrapOID>
+				<ConstCondition format="FAIL: genlock input missing" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="VITC_LTC_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.vitcLtcMissingTrap</TrapOID>
+				<ConstCondition format="FAIL: VITC or LTC signal missing" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LTC_OUTSIDE_SMPTE_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.ltcOutsideSmpteTrap</TrapOID>
+				<ConstCondition format="FAIL: LTC signal outside of SMPTE 12M Specification" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="LOSS_OF_LOCK_WARNING" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.lossOfLockTrap</TrapOID>
+				<ConstCondition format="FAIL: Loss of Lock, refer manual" />
+			</TrapDef>
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.nearLossOfLockTrap</TrapOID>
+				<ConstCondition format="WARN: Near Loss of Lock" />
+			</TrapDef>
+		</TranslationDef>
+
+		<TranslationDef rcLogField="GPS_ALARM_TIME" defaultValue="INFO: No Trap Recieved" >
+			<TrapDef>
+				<TrapOID alias="TRAPS">.0.gpsAlarmTimeTrap</TrapOID>
+				<ConstCondition format="FAIL: Alarm Time" />
+			</TrapDef>
+		</TranslationDef>
+
+	</UnitTypeDef>
+
+</DefinitionGroup>

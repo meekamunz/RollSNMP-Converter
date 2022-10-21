@@ -1,0 +1,119 @@
+-- Title:      RADLAN ROS
+--             This Private MIB supports the ROS
+-- Version:    7.30
+-- Date:       13 Jan 2002
+-- By:         Michael Indenbaum
+-- E-mail:     michael@radlan.com
+--
+rndSysId OBJECT-TYPE
+    SYNTAX  INTEGER
+       --   1 reb
+       --   2 ceb
+       --   3 ceblb
+       --   4 xeb
+       --   5 xeb1
+       --   6 rebsx
+       --   7 rtb
+       --   8 ltb
+       --   9 lte
+       --  10 iprouter
+       --  11 ielb
+       --  12 leb
+       --  13 openGate12
+       --  14 openGate4,
+       --  15 ran
+       --  16 itlb
+       --  17 gatelinx
+       --  18 openGate2
+       --  19 ogRanTR
+       --  20 stc
+       --  21 ftc
+       --  22 armon
+       --  23 fccs1004    RADway
+       --  24 fccs1012    RADway
+       --  25 rdapter
+       --  26 ogvan
+       --  27 wanGate
+       --  28 ogRubE
+       --  29 ogRubT,
+       --  30 elX
+       --  31 vGate4
+       --  32 mrt
+       --  33 ogSrubET
+       --  34 vanXS
+       --  35 lre
+       --  36 vGate2
+       --  37 serverDispatcher4
+       --  38 serverDispatcher2
+       --  39 vGate2Fast
+       --  40 serverDispatcher2Fast
+       --  41 prt
+       --  42 mlm
+       --  43 prt11
+       --  44 quickOffice
+       --  45 prtXS
+       --  46 apollo-pro
+       --  47 highLink6000
+       --  48 highLink3000
+       --  49 wsd-FE2
+       --  50 wsd-FE4
+       --
+       --  51 csd-ETH2          quickOffice-244
+       --  52 csd-ETH4          PRT_ISP (RadWiz)
+       --
+       --  53 csd-FE2
+       --  54 csd-FE4
+       --
+       --  54 fp-ETH2
+       --  55 fp-ETH4
+       --
+       --  56 fp-FE2
+       --  57 fp-FE4
+       --
+       --  58 wsd-ds
+       --  59 wsd-np
+       --
+       --  60 radwiz
+       --  61 radware
+
+       --  63 next-i960
+       --
+       --  64 box-3202
+       --  65 opal-Evalution-i960
+       --
+       --  66 box-bcm5600
+       --
+       --  67 box-lg
+       --
+       --  68 box-bcm5680
+       --  69 box-bcm5605
+
+       --  70 box-galstack
+       --  71 box-galrack
+
+       --  72 SDK5632
+       --  73 MMC
+       --  74 Infineon
+
+       --  75 MIPS based yellow pizza-box, 5605/5615
+       --  76 RiverStone 24+2
+       --  77 RiverStone 16+2
+       --  78 Cheetah
+
+       --  79 EVMX620-E1041
+       --  80 RD-EX120-E104
+       --  81 D-LINK
+
+       --  82 RD-48364-24G
+
+       --  83 NOVALL box (24 GE, BCM5632=BCM5632, L2 only)
+       --  84 BCM95625S RefDesign box (48FE + 2GE, BCM5625=BCM5625, L2/3/4)
+       --  85 BCM SDK5632MIPS box (24 GE, BCM5632=BCM5632, L2 only)
+       --  86 BCM SDK95690S box   (24 GE, XGS, L2/3/4)
+
+       --  87 OpENSolo B2324
+
+       --  88 Oak
+
+ -- 200 - 299 radwiz
+

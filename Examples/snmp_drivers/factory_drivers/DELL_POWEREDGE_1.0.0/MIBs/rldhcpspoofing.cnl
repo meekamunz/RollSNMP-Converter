@@ -1,0 +1,24 @@
+-- Version:         7.39.02.03
+-- Last build date: 15 May 2006
+
+RADLAN-DhcpSpoofing-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rnd                                     FROM RADLAN-MIB
+    OBJECT-TYPE,
+    MODULE-IDENTITY                         FROM SNMPv2-SMI
+    PortList, dot1qVlanIndex                FROM Q-BRIDGE-MIB
+    TruthValue                              FROM RADLAN-SNMPv2
+    rlDhcpSpoofing                          FROM RADLAN-DhcpSpoofing-MIB;
+
+rlDhcpSpoofingServerPorts OBJECT-TYPE
+    ::= { rlDhcpSpoofing 1 }
+
+rlDhcpSpoofingVlanTable OBJECT-TYPE
+    ::= { rlDhcpSpoofing 2 }
+
+rlDhcpSpoofingVlanEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { rlDhcpSpoofingVlanTable 1 }
+
+END

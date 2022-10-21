@@ -1,0 +1,43 @@
+
+RSTP-MIB-A DEFINITIONS ::= BEGIN
+
+-- -------------------------------------------------------------
+-- MIB for IEEE 802.1w Rapid Spanning Tree Protocol
+-- -------------------------------------------------------------
+
+IMPORTS
+    rstpMIB
+        FROM RSTP-MIB
+    MODULE-IDENTITY, OBJECT-TYPE
+        FROM SNMPv2-SMI
+    TruthValue
+        FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP
+        FROM SNMPv2-CONF
+    dot1dBridge, dot1dStp, dot1dStpPortEntry
+        FROM BRIDGE-MIB;
+
+
+-- -------------------------------------------------------------
+-- Addition to the dot1dStp group
+-- -------------------------------------------------------------
+
+dot1dStpVersion OBJECT-TYPE
+    ::= { dot1dStp 16 }
+
+dot1dStpTxHoldCount OBJECT-TYPE
+    ::= { dot1dStp 17 }
+
+dot1dStpPathCostDefault OBJECT-TYPE
+    ::= { dot1dStp 18 }
+
+dot1dStpExtPortTable OBJECT-TYPE
+    ::= { dot1dStp 19 }
+
+dot1dStpExtPortEntry OBJECT-TYPE
+    AUGMENTS    { dot1dStpPortEntry }
+    ::= { dot1dStpExtPortTable 1 }
+
+END
+
+

@@ -1,0 +1,87 @@
+RADLAN-rlBrgMcMngr-MIB DEFINITIONS ::= BEGIN
+
+
+IMPORTS
+    rnd                                         FROM RADLAN-MIB
+    VlanIndex                                   FROM Q-BRIDGE-MIB
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI;
+
+rlBrgMcMngr MODULE-IDENTITY
+              LAST-UPDATED "200602120000Z"
+              ORGANIZATION "Radlan Computer Communications Ltd."
+              CONTACT-INFO
+                      "radlan.com"
+              DESCRIPTION
+                      "The private MIB module definition for Multicast support in Radlan devices."
+              REVISION "200602120000Z"
+              DESCRIPTION
+                       "Editorial changes to support new MIB compilers."
+               REVISION "200404190000Z"
+              DESCRIPTION
+                      "Initial version of this MIB."
+          ::= { rnd 117 }
+
+rlBrgMulticastManagerTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF RlBrgMulticastManagerEntry
+    MAX-ACCESS  read-write
+    STATUS  current
+    DESCRIPTION
+    "The table containing Multicast information for each VLAN."
+    ::= { rlBrgMcMngr  1}
+
+rlBrgMulticastManagerEntry OBJECT-TYPE
+SYNTAX  RlBrgMulticastManagerEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION
+    "An entry (conceptual row) in the rlBrgMulticastManagerTable."
+    INDEX  { rlBrgMulticastManagerVlanTag }
+    ::= { rlBrgMulticastManagerTable 1 }
+
+RlBrgMulticastManagerEntry ::=
+SEQUENCE {
+        rlBrgMulticastManagerVlanTag  VlanIndex,
+        rlBrgMulticastManagerAdminVlanMode INTEGER,
+        rlBrgMulticastManagerOperVlanMode  INTEGER
+}
+rlBrgMulticastManagerVlanTag OBJECT-TYPE
+    SYNTAX  VlanIndex
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION
+    " The VLAN tag for which this entry is configured."
+    ::= { rlBrgMulticastManagerEntry 1 }
+
+rlBrgMulticastManagerAdminVlanMode OBJECT-TYPE
+    SYNTAX  INTEGER {
+        mac-group(1),
+        ip-group(2),
+        ip-src-group(3)
+    }
+    MAX-ACCESS   read-write
+    STATUS   current
+    DESCRIPTION
+        "The Bridge Multicast Admin Lookup Mode."
+    DEFVAL { mac-group }
+    ::= { rlBrgMulticastManagerEntry 2 }
+
+rlBrgMulticastManagerOperVlanMode OBJECT-TYPE
+    SYNTAX  INTEGER {
+        mac-group(1),
+        ip-group(2),
+        ip-src-group(3)
+    }
+    MAX-ACCESS  read-only
+    STATUS   current
+    DESCRIPTION
+        "The Bridge Multicast Oper Lookup Mode."
+    DEFVAL { mac-group }
+    ::= { rlBrgMulticastManagerEntry 3 }
+
+
+END
+
+
+
+
+

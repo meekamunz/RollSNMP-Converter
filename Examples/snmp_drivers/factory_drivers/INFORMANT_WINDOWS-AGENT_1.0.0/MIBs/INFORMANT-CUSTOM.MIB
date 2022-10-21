@@ -1,0 +1,1830 @@
+INFORMANT-CUSTOM DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-IDENTITY, OBJECT-TYPE, Gauge32, Integer32, Counter32, Counter64, Unsigned32
+        FROM SNMPv2-SMI
+    DateAndTime, TruthValue
+        FROM SNMPv2-TC
+    informant, WtcsDisplayString, InstanceName
+        FROM WTCS;
+
+siCustom MODULE-IDENTITY
+    LAST-UPDATED "201201020507Z"
+    ORGANIZATION "Informant Systems, Inc."
+    CONTACT-INFO
+            "Garth Williams
+             11135-23A Ave
+             Edmonton, AB  T6J4W5  Canada
+             Tel: +1 780 434 4113
+             E-mail: garth.williams@wtcs.org"
+    DESCRIPTION
+            "The sample MIB module for the sample Agent
+            Definitions.ini file provided with the custom
+            agent. You are responsible for creating your
+            own MIB file based on your own Agent
+            Definitions.ini file."
+    REVISION      "201201020507Z"
+    DESCRIPTION
+            "The initial revision of this MIB module."
+    ::= { informant 99 }
+
+siRegistryExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating various registry query examples."
+    ::= { siCustom 1 }
+
+siWinProductName OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Product Name Registry Setting"
+    ::= { siRegistryExample 1 }
+
+siWinProductId OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Product ID Registry Setting"
+    ::= { siRegistryExample 2 }
+
+siWinCurrentBuild OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Build String Registry Setting"
+    ::= { siRegistryExample 3 }
+
+siWinCurrentBuildNumber OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Build Number Registry Setting"
+    ::= { siRegistryExample 4 }
+
+siWinCurrentVersion OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Version String Registry Setting"
+    ::= { siRegistryExample 5 }
+
+siWinBuildLab OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Build Lab String Registry Setting"
+    ::= { siRegistryExample 6 }
+
+siWinInstallDate OBJECT-TYPE
+    SYNTAX     Unsigned32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Windows Install Date Registry Setting"
+    ::= { siRegistryExample 7 }
+
+siExecuteExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating various process string query examples."
+    ::= { siCustom 2 }
+
+siJavaScriptStringQuery OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a JavaScript program with a ExecuteQuery and a
+        string with argument and returning an string value."
+    ::= { siExecuteExample 1 }
+
+siVBScriptStringQuery OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a VBScript program with a ExecuteQuery and a
+        string with argument and returning an string value."
+    ::= { siExecuteExample 2 }
+
+siExeStringQuery OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a executable program with a ExecuteQuery and a
+        string with argument and returning an string value."
+    ::= { siExecuteExample 3 }
+
+siJavaScriptIntegerQuery OBJECT-TYPE
+    SYNTAX     Counter32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a JavaScript program with a ExecuteQuery and
+        returning a 32-bit counter value."
+    ::= { siExecuteExample 4 }
+
+siVBScriptIntegerQuery OBJECT-TYPE
+    SYNTAX     Counter64
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a VBScript program with a ExecuteQuery and
+        returning a 64-bit counter value."
+    ::= { siExecuteExample 5 }
+
+siExeIntegerQuery OBJECT-TYPE
+    SYNTAX     Integer32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a executable program with a ExecuteQuery and
+        returning an 32-bit integer value."
+    ::= { siExecuteExample 6 }
+
+siExeUnsignedQuery OBJECT-TYPE
+    SYNTAX     Unsigned32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a executable program with a ExecuteQuery and
+        returning an 32-bit unsigned integer value."
+    ::= { siExecuteExample 7 }
+
+siExeGaugeQuery OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Example of running a executable program with a ExecuteQuery and
+        returning an 32-bit gauge value."
+    ::= { siExecuteExample 8 }
+
+siPerformanceMemoryExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating a query against the Memory performance
+        counter."
+    ::= { siCustom 3 }
+
+memoryPercentCommittedBytesInUse OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Committed Bytes In Use is the ratio of Memory\\Committed Bytes
+        to the Memory\\Commit Limit. Committed memory is the physical
+        memory in use for which space has been reserved in the paging file
+        should it need to be written to disk. The commit limit is
+        determined by the size of the paging file.  If the paging file is
+        enlarged, the commit limit increases, and the ratio is reduced).
+        This counter displays the current percentage value only; it is not
+        an average."
+    ::= { siPerformanceMemoryExample 1 }
+
+memoryAvailableBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Available Bytes is the amount of physical memory, in bytes,
+        immediately available for allocation to a process or for system
+        use. It is equal to the sum of memory assigned to the standby
+        (cached), free and zero page lists. For a full explanation of the
+        memory manager, refer to MSDN and/or the System Performance and
+        Troubleshooting Guide chapter in the Windows Server 2003 Resource
+        Kit."
+    ::= { siPerformanceMemoryExample 2 }
+
+memoryAvailableKBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Available KBytes is the amount of physical memory, in Kilobytes,
+        immediately available for allocation to a process or for system
+        use. It is equal to the sum of memory assigned to the standby
+        (cached), free and zero page lists. For a full explanation of the
+        memory manager, refer to MSDN and/or the System Performance and
+        Troubleshooting Guide chapter in the Windows Server 2003 Resource
+        Kit."
+    ::= { siPerformanceMemoryExample 3 }
+
+memoryAvailableMBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Available MBytes is the amount of physical memory, in Megabytes,
+        immediately available for allocation to a process or for system
+        use. It is equal to the sum of memory assigned to the standby
+        (cached), free and zero page lists. For a full explanation of the
+        memory manager, refer to MSDN and/or the System Performance and
+        Troubleshooting Guide chapter in the Windows Server 2003 Resource
+        Kit."
+    ::= { siPerformanceMemoryExample 4 }
+
+memoryCacheBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Cache Bytes is the sum of the Memory\\System Cache Resident Bytes,
+        Memory\\System Driver Resident Bytes, Memory\\System Code Resident
+        Bytes, and Memory\\Pool Paged Resident Bytes counters.  This
+        counter displays the last observed value only; it is not an
+        average."
+    ::= { siPerformanceMemoryExample 5 }
+
+memoryCacheBytesPeak OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Cache Bytes Peak is the maximum number of bytes used by the file
+        system cache since the system was last restarted. This might be
+        larger than the current size of the cache. This counter displays
+        the last observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 6 }
+
+memoryCacheFaultsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Cache Faults/sec is the rate at which faults occur when a page
+        sought in the file system cache is not found and must be retrieved
+        from elsewhere in memory (a soft fault) or from disk (a hard
+        fault). The file system cache is an area of physical memory that
+        stores recently used pages of data for applications. Cache activity
+        is a reliable indicator of most application I/O operations. This
+        counter shows the number of faults, without regard for the number
+        of pages faulted in each operation."
+    ::= { siPerformanceMemoryExample 7 }
+
+memoryCommitLimit OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Commit Limit is the amount of virtual memory that can be committed
+        without having to extend the paging file(s).  It is measured in
+        bytes. Committed memory is the physical memory which has space
+        reserved on the disk paging files. There can be one paging file on
+        each logical drive). If the paging file(s) are be expanded, this
+        limit increases accordingly.  This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 8 }
+
+memoryCommittedBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Committed Bytes is the amount of committed virtual memory, in
+        bytes. Committed memory is the physical memory which has space
+        reserved on the disk paging file(s). There can be one or more
+        paging files on each physical drive. This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 9 }
+
+memoryDemandZeroFaultsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Demand Zero Faults/sec is the rate at which a zeroed page is
+        required to satisfy the fault.  Zeroed pages, pages emptied of
+        previously stored data and filled with zeros, are a security
+        feature of Windows that prevent processes from seeing data stored
+        by earlier processes that used the memory space. Windows maintains
+        a list of zeroed pages to accelerate this process. This counter
+        shows the number of faults, without regard to the number of pages
+        retrieved to satisfy the fault. This counter displays the
+        difference between the values observed in the last two samples,
+        divided by the duration of the sample interval."
+    ::= { siPerformanceMemoryExample 10 }
+
+memoryFreeSystemPageTableEntries OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Free System Page Table Entries is the number of page table entries
+        not currently in used by the system.  This counter displays the
+        last observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 11 }
+
+memoryPageFaultsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Page Faults/sec is the average number of pages faulted per second.
+        It is measured in number of pages faulted per second because only
+        one page is faulted in each fault operation, hence this is also
+        equal to the number of page fault operations. This counter includes
+        both hard faults (those that require disk access) and soft faults
+        (where the faulted page is found elsewhere in physical memory.)
+        Most processors can handle large numbers of soft faults without
+        significant consequence. However, hard faults, which require disk
+        access, can cause significant delays."
+    ::= { siPerformanceMemoryExample 12 }
+
+memoryPageReadsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Page Reads/sec is the rate at which the disk was read to resolve
+        hard page faults. It shows the number of reads operations, without
+        regard to the number of pages retrieved in each operation. Hard
+        page faults occur when a process references a page in virtual
+        memory that is not in working set or elsewhere in physical memory,
+        and must be retrieved from disk. This counter is a primary
+        indicator of the kinds of faults that cause system-wide delays. It
+        includes read operations to satisfy faults in the file system cache
+        (usually requested by applications) and in non-cached mapped memory
+        files. Compare the value of Memory\\Pages Reads/sec to the value of
+        Memory\\Pages Input/sec to determine the average number of pages
+        read during each operation."
+    ::= { siPerformanceMemoryExample 13 }
+
+memoryPageWritesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Page Writes/sec is the rate at which pages are written to disk to
+        free up space in physical memory. Pages are written to disk only if
+        they are changed while in physical memory, so they are likely to
+        hold data, not code.  This counter shows write operations, without
+        regard to the number of pages written in each operation.  This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siPerformanceMemoryExample 14 }
+
+memoryPagesInputPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pages Input/sec is the rate at which pages are read from disk to
+        resolve hard page faults. Hard page faults occur when a process
+        refers to a page in virtual memory that is not in its working set
+        or elsewhere in physical memory, and must be retrieved from disk.
+        When a page is faulted, the system tries to read multiple
+        contiguous pages into memory to maximize the benefit of the read
+        operation. Compare the value of Memory\\Pages Input/sec to the
+        value of  Memory\\Page Reads/sec to determine the average number of
+        pages read into memory during each read operation."
+    ::= { siPerformanceMemoryExample 15 }
+
+memoryPagesOutputPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pages Output/sec is the rate at which pages are written to disk to
+        free up space in physical memory. Pages are written back to disk
+        only if they are changed in physical memory, so they are likely to
+        hold data, not code. A high rate of pages output might indicate a
+        memory shortage. Windows writes more pages back to disk to free up
+        space when physical memory is in short supply.  This counter shows
+        the number of pages, and can be compared to other counts of pages,
+        without conversion."
+    ::= { siPerformanceMemoryExample 16 }
+
+memoryPagesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pages/sec is the rate at which pages are read from or written to
+        disk to resolve hard page faults. This counter is a primary
+        indicator of the kinds of faults that cause system-wide delays.  It
+        is the sum of Memory\\Pages Input/sec and Memory\\Pages Output/sec.
+         It is counted in numbers of pages, so it can be compared to other
+        counts of pages, such as Memory\\Page Faults/sec, without
+        conversion. It includes pages retrieved to satisfy faults in the
+        file system cache (usually requested by applications) non-cached
+        mapped memory files."
+    ::= { siPerformanceMemoryExample 17 }
+
+memoryPoolNonpagedAllocs OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pool Nonpaged Allocs is the number of calls to allocate space in
+        the nonpaged pool. The nonpaged pool is an area of system memory
+        area for objects that cannot be written to disk, and must remain in
+        physical memory as long as they are allocated.  It is measured in
+        numbers of calls to allocate space, regardless of the amount of
+        space allocated in each call.  This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 18 }
+
+memoryPoolNonpagedBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pool Nonpaged Bytes is the size, in bytes, of the nonpaged pool,
+        an area of system memory (physical memory used by the operating
+        system) for objects that cannot be written to disk, but must remain
+        in physical memory as long as they are allocated.  Memory\\Pool
+        Nonpaged Bytes is calculated differently than Process\\Pool
+        Nonpaged Bytes, so it might not equal Process\\Pool Nonpaged
+        Bytes\\_Total.  This counter displays the last observed value only;
+        it is not an average."
+    ::= { siPerformanceMemoryExample 19 }
+
+memoryPoolPagedAllocs OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pool Paged Allocs is the number of calls to allocate space in the
+        paged pool. The paged pool is an area of system memory (physical
+        memory used by the operating system) for objects that can be
+        written to disk when they are not being used. It is measured in
+        numbers of calls to allocate space, regardless of the amount of
+        space allocated in each call.  This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 20 }
+
+memoryPoolPagedBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pool Paged Bytes is the size, in bytes, of the paged pool, an area
+        of system memory (physical memory used by the operating system) for
+        objects that can be written to disk when they are not being used. 
+        Memory\\Pool Paged Bytes is calculated differently than
+        Process\\Pool Paged Bytes, so it might not equal Process\\Pool
+        Paged Bytes\\_Total. This counter displays the last observed value
+        only; it is not an average."
+    ::= { siPerformanceMemoryExample 21 }
+
+memoryPoolPagedResidentBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Pool Paged Resident Bytes is the current size, in bytes, of the
+        paged pool. The paged pool is an area of system memory (physical
+        memory used by the operating system) for objects that can be
+        written to disk when they are not being used. Space used by the
+        paged and nonpaged pools are taken from physical memory, so a pool
+        that is too large denies memory space to processes. This counter
+        displays the last observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 22 }
+
+memorySystemCacheResidentBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "System Cache Resident Bytes is the size, in bytes, of the pageable
+        operating system code in the file system cache. This value includes
+        only current physical pages and does not include any virtual memory
+        pages not currently resident. It does equal the System Cache value
+        shown in Task Manager. As a result, this value may be smaller than
+        the actual amount of virtual memory in use by the file system
+        cache. This value is a component of Memory\\System Code Resident
+        Bytes which represents all pageable operating system code that is
+        currently in physical memory. This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 23 }
+
+memorySystemCodeResidentBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "System Code Resident Bytes is the size, in bytes of the operating
+        system code currently in physical memory that can be written to
+        disk when not in use. This value is a component of Memory\\System
+        Code Total Bytes, which also includes operating system code on
+        disk. Memory\\System Code Resident Bytes (and Memory\\System Code
+        Total Bytes) does not include code that must remain in physical
+        memory and cannot be written to disk. This counter displays the
+        last observed value only; it is not an average."
+    ::= { siPerformanceMemoryExample 24 }
+
+memorySystemCodeTotalBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "System Code Total Bytes is the size, in bytes, of the pageable
+        operating system code currently in virtual memory. It is a measure
+        of the amount of physical memory being used by the operating system
+        that can be written to disk when not in use. This value is
+        calculated by summing the bytes in Ntoskrnl.exe, Hal.dll, the boot
+        drivers, and file systems loaded by Ntldr/osloader.  This counter
+        does not include code that must remain in physical memory and
+        cannot be written to disk. This counter displays the last observed
+        value only; it is not an average."
+    ::= { siPerformanceMemoryExample 25 }
+
+memorySystemDriverResidentBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "System Driver Resident Bytes is the size, in bytes, of the
+        pageable physical memory being used by device drivers. It is the
+        working set (physical memory area) of the drivers. This value is a
+        component of Memory\\System Driver Total Bytes, which also includes
+        driver memory that has been written to disk. Neither Memory\\System
+        Driver Resident Bytes nor Memory\\System Driver Total Bytes
+        includes memory that cannot be written to disk."
+    ::= { siPerformanceMemoryExample 26 }
+
+memorySystemDriverTotalBytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "System Driver Total Bytes is the size, in bytes, of the pageable
+        virtual memory currently being used by device drivers. Pageable
+        memory can be written to disk when it is not being used. It
+        includes physical memory (Memory\\System Driver Resident Bytes) and
+        code and data paged to disk. It is a component of Memory\\System
+        Code Total Bytes. This counter displays the last observed value
+        only; it is not an average."
+    ::= { siPerformanceMemoryExample 27 }
+
+memoryTranFaultsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Transition Faults/sec is the rate at which page faults are
+        resolved by recovering pages that were being used by another
+        process sharing the page, or were on the modified page list or the
+        standby list, or were being written to disk at the time of the page
+        fault. The pages were recovered without additional disk activity.
+        Transition faults are counted in numbers of faults; because only
+        one page is faulted in each operation, it is also equal to the
+        number of pages faulted."
+    ::= { siPerformanceMemoryExample 28 }
+
+memoryTransPagesRePurposedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Transition Pages RePurposed is the rate at which the number of
+        transition cache pages were reused for a different purpose.  These
+        pages would have otherwise remained in the page cache to provide a
+        (fast) soft fault (instead of retrieving it from backing store) in
+        the event the page was accessed in the future.  Note these pages
+        can contain private or sharable memory."
+    ::= { siPerformanceMemoryExample 29 }
+
+memoryWriteCopiesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Write Copies/sec is the rate at which page faults are caused by
+        attempts to write that have been satisfied by coping of the page
+        from elsewhere in physical memory. This is an economical way of
+        sharing data since pages are only copied when they are written to;
+        otherwise, the page is shared. This counter shows the number of
+        copies, without regard for the number of pages copied in each
+        operation."
+    ::= { siPerformanceMemoryExample 30 }
+
+siPerformanceProcessorExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating a query against the Processor performance
+        counter."
+    ::= { siCustom 4 }
+
+cpuPercentC1Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C1 Time is the percentage of time the processor spends in the C1
+        low-power idle state. % C1 Time is a subset of the total processor
+        idle time. C1 low-power idle state enables the processor to
+        maintain its entire context and quickly return to the running
+        state. Not all systems support the % C1 state."
+    ::= { siPerformanceProcessorExample 1 }
+
+cpuPercentC2Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C2 Time is the percentage of time the processor spends in the C2
+        low-power idle state. % C2 Time is a subset of the total processor
+        idle time. C2 low-power idle state enables the processor to
+        maintain the context of the system caches. The C2 power state is a
+        lower power and higher exit latency state than C1. Not all systems
+        support the C2 state."
+    ::= { siPerformanceProcessorExample 2 }
+
+cpuPercentC3Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C3 Time is the percentage of time the processor spends in the C3
+        low-power idle state. % C3 Time is a subset of the total processor
+        idle time. When the processor is in the C3 low-power idle state it
+        is unable to maintain the coherency of its caches. The C3 power
+        state is a lower power and higher exit latency state than C2. Not
+        all systems support the C3 state."
+    ::= { siPerformanceProcessorExample 3 }
+
+cpuPercentDPCTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% DPC Time is the percentage of time that the processor spent
+        receiving and servicing deferred procedure calls (DPCs) during the
+        sample interval. DPCs are interrupts that run at a lower priority
+        than standard interrupts. % DPC Time is a component of % Privileged
+        Time because DPCs are executed in privileged mode. They are counted
+        separately and are not a component of the interrupt counters. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siPerformanceProcessorExample 4 }
+
+cpuPercentIdleTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Idle Time is the percentage of time the processor is idle during
+        the sample interval"
+    ::= { siPerformanceProcessorExample 5 }
+
+cpuPercentInterruptTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Interrupt Time is the time the processor spends receiving and
+        servicing hardware interrupts during sample intervals. This value
+        is an indirect indicator of the activity of devices that generate
+        interrupts, such as the system clock, the mouse, disk drivers, data
+        communication lines, network interface cards and other peripheral
+        devices. These devices normally interrupt the processor when they
+        have completed a task or require attention. Normal thread execution
+        is suspended during interrupts. Most system clocks interrupt the
+        processor every 10 milliseconds, creating a background of interrupt
+        activity. suspends normal thread execution during interrupts. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siPerformanceProcessorExample 6 }
+
+cpuPercentPrivilegedTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Privileged Time is the percentage of elapsed time that the
+        process threads spent executing code in privileged mode.  When a
+        Windows system service in called, the service will often run in
+        privileged mode to gain access to system-private data. Such data is
+        protected from access by threads executing in user mode. Calls to
+        the system can be explicit or implicit, such as page faults or
+        interrupts. Unlike some early operating systems, Windows uses
+        process boundaries for subsystem protection in addition to the
+        traditional protection of user and privileged modes. Some work done
+        by Windows on behalf of the application might appear in other
+        subsystem processes in addition to the privileged time in the
+        process."
+    ::= { siPerformanceProcessorExample 7 }
+
+cpuPercentProcessorTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Processor Time is the percentage of elapsed time that the
+        processor spends to execute a non-Idle thread. It is calculated by
+        measuring the percentage of time that the processor spends
+        executing the idle thread and then subtracting that value from
+        100%. (Each processor has an idle thread that consumes cycles when
+        no other threads are ready to run). This counter is the primary
+        indicator of processor activity, and displays the average
+        percentage of busy time observed during the sample interval. It
+        should be noted that the accounting calculation of whether the
+        processor is idle is performed at an internal sampling interval of
+        the system clock (10ms). On todays fast processors, % Processor
+        Time can therefore underestimate the processor utilization as the
+        processor may be spending a lot of time servicing threads between
+        the system clock sampling interval. Workload based timer
+        applications are one example  of applications  which are more
+        likely to be measured inaccurately as timers are signaled just
+        after the sample is taken."
+    ::= { siPerformanceProcessorExample 8 }
+
+cpuPercentUserTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% User Time is the percentage of elapsed time the processor spends
+        in the user mode. User mode is a restricted processing mode
+        designed for applications, environment subsystems, and integral
+        subsystems.  The alternative, privileged mode, is designed for
+        operating system components and allows direct access to hardware
+        and all memory.  The operating system switches application threads
+        to privileged mode to access operating system services. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siPerformanceProcessorExample 9 }
+
+cpuC1TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C1 Transitions/sec is the rate that the CPU enters the C1
+        low-power idle state. The CPU enters the C1 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siPerformanceProcessorExample 10 }
+
+cpuC2TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C2 Transitions/sec is the rate that the CPU enters the C2
+        low-power idle state. The CPU enters the C2 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siPerformanceProcessorExample 11 }
+
+cpuC3TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C3 Transitions/sec is the rate that the CPU enters the C3
+        low-power idle state. The CPU enters the C3 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siPerformanceProcessorExample 12 }
+
+cpuDPCRate OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "DPC Rate is the rate at which deferred procedure calls (DPCs) were
+        added to the processors DPC queues between the timer ticks of the
+        processor clock. DPCs are interrupts that run at alower priority
+        than standard interrupts.  Each processor has its own DPC queue.
+        This counter measures the rate that DPCs were added to the queue,
+        not the number of DPCs in the queue. This counter displays the last
+        observed value only; it is not an average."
+    ::= { siPerformanceProcessorExample 13 }
+
+cpuDPCsQueuedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "DPCs Queued/sec is the average rate, in incidents per second, at
+        which deferred procedure calls (DPCs) were added to the processor's
+        DPC queue. DPCs are interrupts that run at a lower priority than
+        standard interrupts.  Each processor has its own DPC queue. This
+        counter measures the rate that DPCs are added to the queue, not the
+        number of DPCs in the queue.  This counter displays the difference
+        between the values observed in the last two samples, divided by the
+        duration of the sample interval."
+    ::= { siPerformanceProcessorExample 14 }
+
+cpuInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Interrupts/sec is the average rate, in incidents per second, at
+        which the processor received and serviced hardware interrupts. It
+        does not include deferred procedure calls (DPCs), which are counted
+        separately. This value is an indirect indicator of the activity of
+        devices that generate interrupts, such as the system clock, the
+        mouse, disk drivers, data communication lines, network interface
+        cards, and other peripheral devices. These devices normally
+        interrupt the processor when they have completed a task or require
+        attention. Normal thread execution is suspended. The system clock
+        typically interrupts the processor every 10 milliseconds, creating
+        a background of interrupt activity. This counter displays the
+        difference between the values observed in the last two samples,
+        divided by the duration of the sample interval."
+    ::= { siPerformanceProcessorExample 15 }
+
+siPerformanceLDiskExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating a query against the LogicalDisk
+        performance counter."
+    ::= { siCustom 5 }
+
+lDiskPercentDiskReadTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Disk Read Time is the percentage of elapsed time that the
+        selected disk drive was busy servicing read requests."
+    ::= { siPerformanceLDiskExample 1 }
+
+lDiskPercentDiskTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Disk Time is the percentage of elapsed time that the selected
+        disk drive was busy servicing read or write requests."
+    ::= { siPerformanceLDiskExample 2 }
+
+lDiskPercentDiskWriteTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Disk Write Time is the percentage of elapsed time that the
+        selected disk drive was busy servicing write requests."
+    ::= { siPerformanceLDiskExample 3 }
+
+lDiskPercentFreeSpace OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Free Space is the percentage of total usable space on the
+        selected logical disk drive that was free."
+    ::= { siPerformanceLDiskExample 4 }
+
+lDiskPercentIdleTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Idle Time reports the percentage of time during the sample
+        interval that the disk was idle."
+    ::= { siPerformanceLDiskExample 5 }
+
+lDiskAvgDiskBytesPerRead OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Bytes/Read is the average number of bytes transferred
+        from the disk during read operations."
+    ::= { siPerformanceLDiskExample 6 }
+
+lDiskAvgDiskBytesPerTransfer OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Bytes/Transfer is the average number of bytes
+        transferred to or from the disk during write or read operations."
+    ::= { siPerformanceLDiskExample 7 }
+
+lDiskAvgDiskBytesPerWrite OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Bytes/Write is the average number of bytes transferred
+        to the disk during write operations."
+    ::= { siPerformanceLDiskExample 8 }
+
+lDiskAvgDiskQueueLength OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Queue Length is the average number of both read and
+        write requests that were queued for the selected disk during the
+        sample interval.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 9 }
+
+lDiskAvgDiskReadQueueLength OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Read Queue Length is the average number of read requests
+        that were queued for the selected disk during the sample interval.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 10 }
+
+lDiskAvgDiskSecPerRead OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk sec/Read is the average time, in seconds, of a read of
+        data from the disk.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 11 }
+
+lDiskAvgDiskSecPerTransfer OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk sec/Transfer is the time, in seconds, of the average
+        disk transfer.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 12 }
+
+lDiskAvgDiskSecPerWrite OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk sec/Write is the average time, in seconds, of a write of
+        data to the disk.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 13 }
+
+lDiskAvgDiskWriteQueueLength OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Avg. Disk Write Queue Length is the average number of write
+        requests that were queued for the selected disk during the sample
+        interval.
+        
+        The value is being returned as a floating point value imbedded
+        within an string as this value is commonly a fractional value."
+    ::= { siPerformanceLDiskExample 14 }
+
+lDiskCurrentDiskQueueLength OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Current Disk Queue Length is the number of requests outstanding on
+        the disk at the time the performance data is collected. It also
+        includes requests in service at the time of the collection. This is
+        a instantaneous snapshot, not an average over the time interval.
+        Multi-spindle disk devices can have multiple requests that are
+        active at one time, but other concurrent requests are awaiting
+        service. This counter might reflect a transitory high or low queue
+        length, but if there is a sustained load on the disk drive, it is
+        likely that this will be consistently high. Requests experience
+        delays proportional to the length of this queue minus the number of
+        spindles on the disks. For good performance, this difference should
+        average less than two."
+    ::= { siPerformanceLDiskExample 15 }
+
+lDiskDiskBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Bytes/sec is the rate bytes are transferred to or from the
+        disk during write or read operations."
+    ::= { siPerformanceLDiskExample 16 }
+
+lDiskDiskReadBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Read Bytes/sec is the rate at which bytes are transferred
+        from the disk during read operations."
+    ::= { siPerformanceLDiskExample 17 }
+
+lDiskDiskReadsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Reads/sec is the rate of read operations on the disk."
+    ::= { siPerformanceLDiskExample 18 }
+
+lDiskDiskTransfersPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Transfers/sec is the rate of read and write operations on the
+        disk."
+    ::= { siPerformanceLDiskExample 19 }
+
+lDiskDiskWriteBytesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Write Bytes/sec is rate at which bytes are transferred to the
+        disk during write operations."
+    ::= { siPerformanceLDiskExample 20 }
+
+lDiskDiskWritesPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Disk Writes/sec is the rate of write operations on the disk."
+    ::= { siPerformanceLDiskExample 21 }
+
+lDiskFreeMegabytes OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Free Megabytes displays the unallocated space, in megabytes, on
+        the disk drive in megabytes. One megabyte is equal to 1,048,576
+        bytes."
+    ::= { siPerformanceLDiskExample 22 }
+
+lDiskSplitIOPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Split IO/Sec reports the rate at which I/Os to the disk were split
+        into multiple I/Os. A split I/O may result from requesting data of
+        a size that is too large to fit into a single I/O or that the disk
+        is fragmented."
+    ::= { siPerformanceLDiskExample 23 }
+
+siFixedQueryExample OBJECT-IDENTITY
+    STATUS     current
+    DESCRIPTION
+        "OID group demonstrating a query returning a fixed value."
+    ::= { siCustom 6 }
+
+fqString OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed string value 'Fixed String'"
+    ::= { siFixedQueryExample 1 }
+
+fqUnsigned OBJECT-TYPE
+    SYNTAX     Unsigned32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed unsigned value of '123'"
+    ::= { siFixedQueryExample 2 }
+
+fqCounter32 OBJECT-TYPE
+    SYNTAX     Counter32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed 32-bit counter value of '456'"
+    ::= { siFixedQueryExample 3 }
+
+fqGauge32 OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed gauge value of '789'"
+    ::= { siFixedQueryExample 4 }
+
+fqInteger32 OBJECT-TYPE
+    SYNTAX     Integer32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed integer value of '987'"
+    ::= { siFixedQueryExample 5 }
+
+fqCounter64 OBJECT-TYPE
+    SYNTAX     Counter64
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Returns a fixed 64-bit counter value of '123456789'"
+    ::= { siFixedQueryExample 6 }
+
+siProcessorExampleTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF SIProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "The Processor performance object consists of counters that measure
+        aspects of processor activity. The processor is the part of the
+        computer that performs arithmetic and logical computations,
+        initiates operations on peripherals, and runs the threads of
+        processes. A computer can have multiple processors. The processor
+        object represents each processor as an instance of the object."
+    ::= { siCustom 7 }
+
+siProcessorExampleEntry OBJECT-TYPE
+    SYNTAX     SIProcessorEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "Performance information for one particular instance of 'Processor'
+        object."
+    INDEX      { tcpuInstance }
+    ::= { siProcessorExampleTable 1 }
+
+SIProcessorEntry ::= SEQUENCE {
+    tcpuInstance InstanceName,
+    tcpuPercentC1Time Gauge32,
+    tcpuPercentC2Time Gauge32,
+    tcpuPercentC3Time Gauge32,
+    tcpuPercentDPCTime Gauge32,
+    tcpuPercentIdleTime Gauge32,
+    tcpuPercentInterruptTime Gauge32,
+    tcpuPercentPrivilegedTime Gauge32,
+    tcpuPercentProcessorTime Gauge32,
+    tcpuPercentUserTime Gauge32,
+    tcpuC1TransitionsPerSec Gauge32,
+    tcpuC2TransitionsPerSec Gauge32,
+    tcpuC3TransitionsPerSec Gauge32,
+    tcpuDPCRate Gauge32,
+    tcpuDPCsQueuedPerSec Gauge32,
+    tcpuInterruptsPerSec Gauge32
+}
+
+tcpuInstance OBJECT-TYPE
+    SYNTAX     InstanceName
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Instance name."
+    ::= { siProcessorExampleEntry 1 }
+
+tcpuPercentC1Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C1 Time is the percentage of time the processor spends in the C1
+        low-power idle state. % C1 Time is a subset of the total processor
+        idle time. C1 low-power idle state enables the processor to
+        maintain its entire context and quickly return to the running
+        state. Not all systems support the % C1 state."
+    ::= { siProcessorExampleEntry 2 }
+
+tcpuPercentC2Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C2 Time is the percentage of time the processor spends in the C2
+        low-power idle state. % C2 Time is a subset of the total processor
+        idle time. C2 low-power idle state enables the processor to
+        maintain the context of the system caches. The C2 power state is a
+        lower power and higher exit latency state than C1. Not all systems
+        support the C2 state."
+    ::= { siProcessorExampleEntry 3 }
+
+tcpuPercentC3Time OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% C3 Time is the percentage of time the processor spends in the C3
+        low-power idle state. % C3 Time is a subset of the total processor
+        idle time. When the processor is in the C3 low-power idle state it
+        is unable to maintain the coherency of its caches. The C3 power
+        state is a lower power and higher exit latency state than C2. Not
+        all systems support the C3 state."
+    ::= { siProcessorExampleEntry 4 }
+
+tcpuPercentDPCTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% DPC Time is the percentage of time that the processor spent
+        receiving and servicing deferred procedure calls (DPCs) during the
+        sample interval. DPCs are interrupts that run at a lower priority
+        than standard interrupts. % DPC Time is a component of % Privileged
+        Time because DPCs are executed in privileged mode. They are counted
+        separately and are not a component of the interrupt counters. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siProcessorExampleEntry 5 }
+
+tcpuPercentIdleTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Idle Time is the percentage of time the processor is idle during
+        the sample interval"
+    ::= { siProcessorExampleEntry 6 }
+
+tcpuPercentInterruptTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Interrupt Time is the time the processor spends receiving and
+        servicing hardware interrupts during sample intervals. This value
+        is an indirect indicator of the activity of devices that generate
+        interrupts, such as the system clock, the mouse, disk drivers, data
+        communication lines, network interface cards and other peripheral
+        devices. These devices normally interrupt the processor when they
+        have completed a task or require attention. Normal thread execution
+        is suspended during interrupts. Most system clocks interrupt the
+        processor every 10 milliseconds, creating a background of interrupt
+        activity. suspends normal thread execution during interrupts. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siProcessorExampleEntry 7 }
+
+tcpuPercentPrivilegedTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Privileged Time is the percentage of elapsed time that the
+        process threads spent executing code in privileged mode.  When a
+        Windows system service in called, the service will often run in
+        privileged mode to gain access to system-private data. Such data is
+        protected from access by threads executing in user mode. Calls to
+        the system can be explicit or implicit, such as page faults or
+        interrupts. Unlike some early operating systems, Windows uses
+        process boundaries for subsystem protection in addition to the
+        traditional protection of user and privileged modes. Some work done
+        by Windows on behalf of the application might appear in other
+        subsystem processes in addition to the privileged time in the
+        process."
+    ::= { siProcessorExampleEntry 8 }
+
+tcpuPercentProcessorTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% Processor Time is the percentage of elapsed time that the
+        processor spends to execute a non-Idle thread. It is calculated by
+        measuring the percentage of time that the processor spends
+        executing the idle thread and then subtracting that value from
+        100%. (Each processor has an idle thread that consumes cycles when
+        no other threads are ready to run). This counter is the primary
+        indicator of processor activity, and displays the average
+        percentage of busy time observed during the sample interval. It
+        should be noted that the accounting calculation of whether the
+        processor is idle is performed at an internal sampling interval of
+        the system clock (10ms). On todays fast processors, % Processor
+        Time can therefore underestimate the processor utilization as the
+        processor may be spending a lot of time servicing threads between
+        the system clock sampling interval. Workload based timer
+        applications are one example  of applications  which are more
+        likely to be measured inaccurately as timers are signaled just
+        after the sample is taken."
+    ::= { siProcessorExampleEntry 9 }
+
+tcpuPercentUserTime OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "% User Time is the percentage of elapsed time the processor spends
+        in the user mode. User mode is a restricted processing mode
+        designed for applications, environment subsystems, and integral
+        subsystems.  The alternative, privileged mode, is designed for
+        operating system components and allows direct access to hardware
+        and all memory.  The operating system switches application threads
+        to privileged mode to access operating system services. This
+        counter displays the average busy time as a percentage of the
+        sample time."
+    ::= { siProcessorExampleEntry 10 }
+
+tcpuC1TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C1 Transitions/sec is the rate that the CPU enters the C1
+        low-power idle state. The CPU enters the C1 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siProcessorExampleEntry 11 }
+
+tcpuC2TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C2 Transitions/sec is the rate that the CPU enters the C2
+        low-power idle state. The CPU enters the C2 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siProcessorExampleEntry 12 }
+
+tcpuC3TransitionsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "C3 Transitions/sec is the rate that the CPU enters the C3
+        low-power idle state. The CPU enters the C3 state when it is
+        sufficiently idle and exits this state on any interrupt. This
+        counter displays the difference between the values observed in the
+        last two samples, divided by the duration of the sample interval."
+    ::= { siProcessorExampleEntry 13 }
+
+tcpuDPCRate OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "DPC Rate is the rate at which deferred procedure calls (DPCs) were
+        added to the processors DPC queues between the timer ticks of the
+        processor clock. DPCs are interrupts that run at alower priority
+        than standard interrupts.  Each processor has its own DPC queue.
+        This counter measures the rate that DPCs were added to the queue,
+        not the number of DPCs in the queue. This counter displays the last
+        observed value only; it is not an average."
+    ::= { siProcessorExampleEntry 14 }
+
+tcpuDPCsQueuedPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "DPCs Queued/sec is the average rate, in incidents per second, at
+        which deferred procedure calls (DPCs) were added to the processor's
+        DPC queue. DPCs are interrupts that run at a lower priority than
+        standard interrupts.  Each processor has its own DPC queue. This
+        counter measures the rate that DPCs are added to the queue, not the
+        number of DPCs in the queue.  This counter displays the difference
+        between the values observed in the last two samples, divided by the
+        duration of the sample interval."
+    ::= { siProcessorExampleEntry 15 }
+
+tcpuInterruptsPerSec OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Interrupts/sec is the average rate, in incidents per second, at
+        which the processor received and serviced hardware interrupts. It
+        does not include deferred procedure calls (DPCs), which are counted
+        separately. This value is an indirect indicator of the activity of
+        devices that generate interrupts, such as the system clock, the
+        mouse, disk drivers, data communication lines, network interface
+        cards, and other peripheral devices. These devices normally
+        interrupt the processor when they have completed a task or require
+        attention. Normal thread execution is suspended. The system clock
+        typically interrupts the processor every 10 milliseconds, creating
+        a background of interrupt activity. This counter displays the
+        difference between the values observed in the last two samples,
+        divided by the duration of the sample interval."
+    ::= { siProcessorExampleEntry 16 }
+
+wmiProcessTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF WMIProcessEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "The Win32_Process WMI class represents a sequence of events on a
+        Windows operating system. A descendent or member of this class is a
+        sequence that consists of an interaction of one or more processors
+        or interpreters, some executable code, and a set of inputs, for
+        example, a client application running on a Windows system."
+    ::= { siCustom 8 }
+
+wmiProcessEntry OBJECT-TYPE
+    SYNTAX     WMIProcessEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "None"
+    INDEX      { wmiIndex }
+    ::= { wmiProcessTable 1 }
+
+WMIProcessEntry ::= SEQUENCE {
+    wmiIndex Integer32,
+    wmiProcessId  Gauge32,
+    wmiParentProcessId  Gauge32,
+    wmiPageFaults  Gauge32,
+    wmiVirtualSize  Gauge32,
+    wmiWorkingSetSize  Gauge32
+}
+
+wmiIndex OBJECT-TYPE
+    SYNTAX     Integer32 (1..2147483647)
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "The value of this object uniquely identifies the instance entry
+        for this class."
+    ::= { wmiProcessEntry 1 }
+
+wmiProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Global process identifier that you can use to identify a process.
+        The value is valid from the time a process is created until it is
+        terminated."
+    ::= { wmiProcessEntry 2 }
+
+wmiParentProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Unique identifier of the process that creates a process. Process
+        identifier numbers are reused, so they only identify a process for
+        the lifetime of that process. It is possible that the process
+        identified by ParentProcessId is terminated, so ParentProcessId may
+        not refer to a running process. It is also possible that
+        ParentProcessId incorrectly refers to a process that reuses a
+        process identifier. You can use the CreationDate property to
+        determine whether the specified parent was created after the
+        process represented by this Win32_Process instance was created."
+    ::= { wmiProcessEntry 3 }
+
+wmiPageFaults  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Number of page faults that a process generates.
+        Example: 10"
+    ::= { wmiProcessEntry 4 }
+
+wmiVirtualSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Current size of the virtual address space that a process is using.
+        Using virtual address space does not necessarily imply
+        corresponding use of either disk or main memory pages. Virtual
+        space is finite, and by using too much, the process might not be
+        able to load libraries."
+    ::= { wmiProcessEntry 5 }
+
+wmiWorkingSetSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Amount of memory in bytes that a process needs to execute
+        efficiently for an operating system that uses page-based memory
+        management. If the system does not have enough memory (less than
+        the working set size), thrashing occurs. If the size of the working
+        set is not known, use NULL or 0 (zero). If working set data is
+        provided, you can monitor the information to understand the
+        changing memory requirements of a process."
+    ::= { wmiProcessEntry 6 }
+
+wqlProcessTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF WQLProcessEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "The Win32_Process WMI class represents a sequence of events on a
+        Windows operating system. A descendent or member of this class is a
+        sequence that consists of an interaction of one or more processors
+        or interpreters, some executable code, and a set of inputs, for
+        example, a client application running on a Windows system."
+    ::= { siCustom 9 }
+
+wqlProcessEntry OBJECT-TYPE
+    SYNTAX     WQLProcessEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "None"
+    INDEX      { wqlIndex }
+    ::= { wqlProcessTable 1 }
+
+WQLProcessEntry ::= SEQUENCE {
+    wqlIndex Integer32,
+    wqlProcessId  Gauge32,
+    wqlParentProcessId  Gauge32,
+    wqlPageFaults  Gauge32,
+    wqlVirtualSize  Gauge32,
+    wqlWorkingSetSize  Gauge32
+}
+
+wqlIndex OBJECT-TYPE
+    SYNTAX     Integer32 (1..2147483647)
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "The value of this object uniquely identifies the instance entry
+        for this class."
+    ::= { wqlProcessEntry 1 }
+
+wqlProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Global process identifier that you can use to identify a process.
+        The value is valid from the time a process is created until it is
+        terminated."
+    ::= { wqlProcessEntry 2 }
+
+wqlParentProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Unique identifier of the process that creates a process. Process
+        identifier numbers are reused, so they only identify a process for
+        the lifetime of that process. It is possible that the process
+        identified by ParentProcessId is terminated, so ParentProcessId may
+        not refer to a running process. It is also possible that
+        ParentProcessId incorrectly refers to a process that reuses a
+        process identifier. You can use the CreationDate property to
+        determine whether the specified parent was created after the
+        process represented by this Win32_Process instance was created."
+    ::= { wqlProcessEntry 3 }
+
+wqlPageFaults  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Number of page faults that a process generates.
+        Example: 10"
+    ::= { wqlProcessEntry 4 }
+
+wqlVirtualSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Current size of the virtual address space that a process is using.
+        Using virtual address space does not necessarily imply
+        corresponding use of either disk or main memory pages. Virtual
+        space is finite, and by using too much, the process might not be
+        able to load libraries."
+    ::= { wqlProcessEntry 5 }
+
+wqlWorkingSetSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Amount of memory in bytes that a process needs to execute
+        efficiently for an operating system that uses page-based memory
+        management. If the system does not have enough memory (less than
+        the working set size), thrashing occurs. If the size of the working
+        set is not known, use NULL or 0 (zero). If working set data is
+        provided, you can monitor the information to understand the
+        changing memory requirements of a process."
+    ::= { wqlProcessEntry 6 }
+
+cmdletProcessTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF CmdletEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "The Win32_Process WMI class represents a sequence of events on a
+        Windows operating system. A descendent or member of this class is a
+        sequence that consists of an interaction of one or more processors
+        or interpreters, some executable code, and a set of inputs, for
+        example, a client application running on a Windows system."
+    ::= { siCustom 10 }
+
+cmdletProcessEntry OBJECT-TYPE
+    SYNTAX     CmdletEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "None"
+    INDEX      { cmdletIndex }
+    ::= { cmdletProcessTable 1 }
+
+CmdletEntry ::= SEQUENCE {
+    cmdletIndex Integer32,
+    cmdletProcessId  Gauge32,
+    cmdletHandleCount  Gauge32,
+    cmdletPageFaults  Gauge32,
+    cmdletVirtualSize  Gauge32,
+    cmdletWorkingSetSize  Gauge32
+}
+
+cmdletIndex OBJECT-TYPE
+    SYNTAX     Integer32 (1..2147483647)
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "The value of this object uniquely identifies the instance entry
+        for this class."
+    ::= { cmdletProcessEntry 1 }
+
+cmdletProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Global process identifier that you can use to identify a process.
+        The value is valid from the time a process is created until it is
+        terminated."
+    ::= { cmdletProcessEntry 2 }
+
+cmdletHandleCount  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Total number of open handles owned by the process. HandleCount is
+        the sum of the handles currently open by each thread in this
+        process. A handle is used to examine or modify the system
+        resources. Each handle has an entry in a table that is maintained
+        internally. Entries contain the addresses of the resources and data
+        to identify the resource type."
+    ::= { cmdletProcessEntry 3 }
+
+cmdletPageFaults  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Number of page faults that a process generates.
+        Example: 10"
+    ::= { cmdletProcessEntry 4 }
+
+cmdletVirtualSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Current size of the virtual address space that a process is using.
+        Using virtual address space does not necessarily imply
+        corresponding use of either disk or main memory pages. Virtual
+        space is finite, and by using too much, the process might not be
+        able to load libraries."
+    ::= { cmdletProcessEntry 5 }
+
+cmdletWorkingSetSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Amount of memory in bytes that a process needs to execute
+        efficiently for an operating system that uses page-based memory
+        management. If the system does not have enough memory (less than
+        the working set size), thrashing occurs. If the size of the working
+        set is not known, use NULL or 0 (zero). If working set data is
+        provided, you can monitor the information to understand the
+        changing memory requirements of a process."
+    ::= { cmdletProcessEntry 6 }
+
+condclProcessTable OBJECT-TYPE
+    SYNTAX     SEQUENCE OF ConditionalCmdletEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "The Win32_Process WMI class represents a sequence of events on a
+        Windows operating system. A descendent or member of this class is a
+        sequence that consists of an interaction of one or more processors
+        or interpreters, some executable code, and a set of inputs, for
+        example, a client application running on a Windows system."
+    ::= { siCustom 11 }
+
+condclProcessEntry OBJECT-TYPE
+    SYNTAX     ConditionalCmdletEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+        "None"
+    INDEX      { condclIndex }
+    ::= { condclProcessTable 1 }
+
+ConditionalCmdletEntry ::= SEQUENCE {
+    condclIndex Integer32,
+    condclProcessId  Gauge32,
+    condclHandleCount  Gauge32,
+    condclPageFaults  Gauge32,
+    condclVirtualSize  Gauge32,
+    condclWorkingSetSize  Gauge32
+}
+
+condclIndex OBJECT-TYPE
+    SYNTAX     Integer32 (1..2147483647)
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "The value of this object uniquely identifies the instance entry
+        for this class."
+    ::= { condclProcessEntry 1 }
+
+condclProcessId  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Global process identifier that you can use to identify a process.
+        The value is valid from the time a process is created until it is
+        terminated."
+    ::= { condclProcessEntry 2 }
+
+condclHandleCount  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Unique identifier of the process that creates a process. Process
+        identifier numbers are reused, so they only identify a process for
+        the lifetime of that process. It is possible that the process
+        identified by ParentProcessId is terminated, so ParentProcessId may
+        not refer to a running process. It is also possible that
+        ParentProcessId incorrectly refers to a process that reuses a
+        process identifier. You can use the CreationDate property to
+        determine whether the specified parent was created after the
+        process represented by this Win32_Process instance was created."
+    ::= { condclProcessEntry 3 }
+
+condclPageFaults  OBJECT-TYPE
+    SYNTAX     Gauge32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Number of page faults that a process generates.
+        Example: 10"
+    ::= { condclProcessEntry 4 }
+
+condclVirtualSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Current size of the virtual address space that a process is using.
+        Using virtual address space does not necessarily imply
+        corresponding use of either disk or main memory pages. Virtual
+        space is finite, and by using too much, the process might not be
+        able to load libraries."
+    ::= { condclProcessEntry 5 }
+
+condclWorkingSetSize  OBJECT-TYPE
+    SYNTAX     Gauge32
+    UNITS "Bytes"
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Amount of memory in bytes that a process needs to execute
+        efficiently for an operating system that uses page-based memory
+        management. If the system does not have enough memory (less than
+        the working set size), thrashing occurs. If the size of the working
+        set is not known, use NULL or 0 (zero). If working set data is
+        provided, you can monitor the information to understand the
+        changing memory requirements of a process."
+    ::= { condclProcessEntry 6 }
+
+siCustomVersion OBJECT-TYPE
+    SYNTAX     OCTET STRING
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+        "Designates the version of this SNMP Informant agent."
+    ::= { siCustom 999 }
+
+END

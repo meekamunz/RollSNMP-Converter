@@ -1,0 +1,73 @@
+GENERAL-EXC-CONTROL-FILE
+EXCLUDE ipForwardNumber
+EXCLUDE ipForwardTable
+EXCLUDE at
+EXCLUDE egp
+EXCLUDE dot1dSr
+EXCLUDE ifTestTable
+EXCLUDE ifRcvAddressTable
+-- EXCLUDE pppLqr
+-- EXCLUDE pppTests
+EXCLUDE rndInactiveArpTimeOut
+-- EXCLUDE rndICMPTransmitionEnable
+EXCLUDE rndFileName
+EXCLUDE rndBrgLicense
+EXCLUDE ipRedundOperStatus
+EXCLUDE rsIpAdEntBackupAddr
+EXCLUDE ospfAreaRangeTable
+EXCLUDE ospfHostTable
+EXCLUDE ospfAuthType
+EXCLUDE ospfAreaAggregateEntry
+EXCLUDE bgp
+EXCLUDE rlBgp
+EXCLUDE rlRCli
+EXCLUDE pingMIB
+EXCLUDE rlIpxFFT
+EXCLUDE rsMaxIpxForwardingEntriesTuning
+EXCLUDE rsMaxIpxFftEntriesTuning
+
+-- EXCLUDE rptrRptrInfo
+-- EXCLUDE rptrMonitorRptrInfo
+-- EXCLUDE rptrMonitor100PortTable
+-- EXCLUDE rptrAllRptrInfo
+-- EXCLUDE rptrPortAutoPartitionState
+-- EXCLUDE rptrMonitorAllRptrInfo
+-- EXCLUDE rptrMonitorRptrInfo
+-- EXCLUDE rptrAddrTrackPackage
+-- EXCLUDE rptrAddrTrackRptrInfo
+-- EXCLUDE rptrAddrTrackGroupInfo
+-- EXCLUDE rptrAddrTrackPortInfo
+-- EXCLUDE rptrMonitor100PortTable
+-- EXCLUDE rptrMonitorGroupInfo
+-- EXCLUDE rptrTopNPackage
+-- EXCLUDE rptrGroupDescr
+-- EXCLUDE rptrGroupLastOperStatusChange
+-- EXCLUDE snmpRptrMod
+-- EXCLUDE frErrTable
+EXCLUDE dot3CollTable
+EXCLUDE dot3Tests
+EXCLUDE dot3Errors
+-- EXCLUDE rs232InSigTable
+-- EXCLUDE rs232OutSigTable
+-- EXCLUDE dialCtlPeerCallSetup
+-- EXCLUDE callHistoryRetainTimer
+-- EXCLUDE isdnSignalingGetIndex
+-- EXCLUDE isdnEndpointGetIndex
+-- EXCLUDE isdnLapdTable
+-- EXCLUDE isdnDirectoryGroup
+EXCLUDE rndDeleteValuesTable
+EXCLUDE snmpDot3MauMgt
+EXCLUDE entityLogical
+EXCLUDE entLPMappingTable
+EXCLUDE entityConformance
+EXCLUDE hosts       -- RMON
+EXCLUDE hostTopN    -- RMON
+EXCLUDE matrix      -- RMON
+EXCLUDE filter      -- RMON
+EXCLUDE capture     -- RMON
+EXCLUDE dnsServMIB  -- need just for importing types
+EXCLUDE rlPolicyGalileoDebugFlowTableEntry
+
+
+DEFINITIONS ::= BEGIN
+END

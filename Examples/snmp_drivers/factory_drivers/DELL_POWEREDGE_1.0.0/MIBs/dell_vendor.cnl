@@ -1,0 +1,18 @@
+
+Dell-Vendor-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+        TRAP-TYPE
+                FROM RFC-1215
+        dell-VendorTraps
+                FROM Dell-Vendor-MIB;
+
+productStatusGlobalStatusChange TRAP-TYPE
+        ENTERPRISE  dell-VendorTrapsPrefix
+        ERRCODE     RSG_ErrMsg_code_productStatusGlobalStatusChange_E
+        SEVERITY    WARNING
+        ::=  1
+
+
+
+END

@@ -1,0 +1,485 @@
+-- Copyright Evertz Microsystems Ltd.
+-- Confidential 
+
+CVDR7707-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS        
+
+	exprCVDR7707                     
+		FROM EVERTZ-EXPERIMENTAL-NODE        
+	OBJECT-TYPE                
+		FROM RFC-1212;
+
+	cvdr7707InstanceInfo			OBJECT IDENTIFIER ::= { exprCVDR7707 2 }
+	cvdr7707Control			OBJECT IDENTIFIER ::= { exprCVDR7707 3 }
+      	cvdr7707Notify	 		OBJECT IDENTIFIER ::= { exprCVDR7707 4 }
+	cvdr7707Configure			OBJECT IDENTIFIER ::= { exprCVDR7707 5 }
+	cvdr7707Traps			OBJECT IDENTIFIER ::= { exprCVDR7707 6 }
+
+-- beginning of cvdr7707 Instance Information table       
+
+	instanceTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  		              
+            This table contains the information and objects related to the
+            card instance
+		"        
+	::= { cvdr7707InstanceInfo 1 }        
+
+	instanceEntry OBJECT-TYPE                
+		SYNTAX InstanceEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                
+            This entry object is used to access the objects in this table
+		"                
+		INDEX { cvdr7707Instance }        
+	::= { instanceTable 1 }        
+
+	InstanceEntry ::= SEQUENCE {                
+		cvdr7707Instance	INTEGER       
+	}        
+
+	cvdr7707Instance OBJECT-TYPE                
+		SYNTAX INTEGER ( 1..15 )                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This object is the main index for this product. Every object is
+            referenced by it
+		"        
+	::= { instanceEntry 1 }        
+
+-- end of cvdr7707 Instance Information table 
+-- beginning of misc control table       
+
+	miscControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  		            
+            This table contains the information and objects related to card
+            status
+		"        
+	::= { cvdr7707Control 1 }        
+
+	miscControlEntry OBJECT-TYPE                
+		SYNTAX MiscControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"         
+            This entry object is used to access the objects in this table
+		"                
+		INDEX { cvdr7707Instance }        
+	::= { miscControlTable 1 }        
+
+	MiscControlEntry ::= SEQUENCE { 
+		cardType		OCTET STRING,               
+		opticalPower	INTEGER,
+        serialPortTxActive  INTEGER,
+        serialPortRxActive  INTEGER
+	}        
+
+	cardType OBJECT-TYPE                
+		SYNTAX OCTET STRING (SIZE(17))     
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control reads the card name and it can either be 
+            '7707CVDR', '7707CVDR-F2', '7707CVDR-A4', or '7707CVDR-A4-F2'
+		"        
+	::= { miscControlEntry 1 } 
+	
+	opticalPower OBJECT-TYPE                
+		SYNTAX INTEGER (-128..127)     
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This is the optical power parameter and it has a MIB range from 
+            -128 to 127.  The card range is from -41dB to 1dB where
+            -128 = < min and 127 = OK.
+		"        
+	::= { miscControlEntry 2 }
+
+    serialPortTxActive OBJECT-TYPE                
+		SYNTAX INTEGER { false(1),
+				 true(2)
+		}     
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+		    This parameter is used to determine if there is currently any
+            activity on the serial port transmit lines
+        "        
+	::= { miscControlEntry 3 }
+    
+    serialPortRxActive OBJECT-TYPE                
+		SYNTAX INTEGER { false(1),
+				 true(2)
+		}     
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+		    This parameter is used to determine if there is currently any
+            activity on the serial port receive lines
+        "        
+	::= { miscControlEntry 4 } 
+-- end of cvdr7707 misc control table 
+-- beginning of cvdr7707 video control table       
+
+	videoControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF VideoControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  		              
+            This table contains the information and objects related to video
+		"        
+	::= { cvdr7707Control 2 }        
+
+	videoControlEntry OBJECT-TYPE                
+		SYNTAX VideoControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+            This entry object is used to access the objects in this table
+		"                
+		INDEX { videoChannel, cvdr7707Instance }        
+	::= { videoControlTable 1 }        
+
+	VideoControlEntry ::= SEQUENCE { 
+		videoChannel		INTEGER,              
+		videoOffset			INTEGER,
+		videoGain			INTEGER,
+		outputCableEQ    	INTEGER,
+		videoStandard		INTEGER
+
+	}        
+
+	videoChannel OBJECT-TYPE                
+		SYNTAX INTEGER {	videoA(1),
+					videoB(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This is the main index in this table. Every other object in this 
+            table is indexed on this.
+		"        
+	::= { videoControlEntry 1 }        
+
+	videoOffset OBJECT-TYPE                
+		SYNTAX INTEGER (-20..20)                
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control is used to set the DC offset level of the video
+            output(s).  The range is from -20 to 20, however, the range in the
+            card is from -100 to 100 with increments of 5.
+            Note: For the '7707CVDR-F2' and the '7707CVDR-A4-F2', this 
+            parameter only applies to the Video A index and a default value of 0
+            will be returned for the Video B Index.
+		"        
+	::= { videoControlEntry 2 }        
+
+	videoGain OBJECT-TYPE                
+		SYNTAX INTEGER (50..150)                
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control is used to set the gain of the video output(s).
+            Note: For the '7707CVDR-F2' and the '7707CVDR-A4-F2', this 
+            parameter only applies to the Video A index and a default value of 0
+            will be returned for the Video B Index.
+		"        
+	::= { videoControlEntry 3 }
+
+	outputCableEQ OBJECT-TYPE                
+		SYNTAX INTEGER (0..300)                
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control is used to set the Pre-emphasis of the video output(s)
+            in metres.
+            Note: For the '7707CVDR-F2' and the '7707CVDR-A4-F2', this 
+            parameter only applies to the Video A index and a default value of 0
+            will be returned for the Video B Index.
+		"        
+	::= { videoControlEntry 4 }        
+
+	videoStandard OBJECT-TYPE                
+		SYNTAX INTEGER { loss(1),	
+                    ntsc(2),
+					pal(3)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control reads the input video-standard, either loss, NTSC or 
+            PAL.
+            Note: For the '7707CVDR-F2' and the '7707CVDR-A4-F2', this 
+            parameter only applies to the Video A index and a default value of 0
+            will be returned for the Video B Index.
+		"        
+	::= { videoControlEntry 5 }
+
+-- end of cvdr7707 video control table 
+-- beginning of cvdr7707 audio control table       
+
+	audioControlTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF AudioControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"  		              
+            This table contains information and objects related to audio.
+		"        
+	::= { cvdr7707Control 3 }        
+
+	audioControlEntry OBJECT-TYPE                
+		SYNTAX AudioControlEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                         
+            This entry object is used to access the objects in this table.
+		"                
+		INDEX { audioChannel, cvdr7707Instance }        
+	::= { audioControlTable 1 }        
+
+	AudioControlEntry ::= SEQUENCE { 
+		audioChannel			INTEGER,
+		audioVolume				INTEGER,
+		audioOutputMute			INTEGER,
+		audioSilenceDetect		INTEGER,
+		audioSilenceDuration		INTEGER,
+		audioSilenceLevel			INTEGER
+	}        
+
+	audioChannel OBJECT-TYPE                
+		SYNTAX INTEGER {	audio1(1),
+					audio2(2),
+					audio3(3),
+					audio4(4)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This is the main index in this table. Every other object in this
+            table is indexed on this.
+		"        
+	::= { audioControlEntry 1 }   
+	
+	audioVolume OBJECT-TYPE                
+		SYNTAX INTEGER (-40..6)     
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This controls allows for reading and setting of the audio volume.
+            The range is from -40 to 6dB.  The range in the card is from 
+            -20 to 3dB in 0.5dB increments.
+            Note: This parameter is not valid on the '7707CVDR' and the
+            '7707CVDR-F2' and will return an error.
+		"        
+	::= { audioControlEntry 2 }             
+
+	audioOutputMute OBJECT-TYPE                
+		SYNTAX INTEGER {	off(1),
+							on(2)
+		}     
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This controls allows for muting of the output audio.
+            Note: This parameter is not supported on the '7707CVDR' and the
+            '7707CVDR-F2' and will return an error.
+		"        
+	::= { audioControlEntry 3 }
+
+	audioSilenceDetect OBJECT-TYPE                
+		SYNTAX INTEGER {	off(1),
+							on(2)
+		}     
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control enables/disables the audio silence faults.
+            Note: This parameter is not supported on the '7707CVDR' and the
+            '7707CVDR-F2' and will return an error.
+		"        
+	::= { audioControlEntry 4 }
+
+	audioSilenceDuration OBJECT-TYPE                
+		SYNTAX INTEGER (1..20)     
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control sets the amount of time the audio is silent before
+            a fault occurs (in seconds).
+            Note: This parameter is not supported on the '7707CVDR' and the
+            '7707CVDR-F2' and will return an error.
+		"        
+	::= { audioControlEntry 5 }
+
+	audioSilenceLevel OBJECT-TYPE                
+		SYNTAX INTEGER (-67..0)     
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"        			
+            This control sets the audio level under which it is considered
+            to be silent (in dBu).
+            Note: This parameter is not supported on the '7707CVDR' and the
+            '7707CVDR-F2' and will return an error.
+		"        
+	::= { audioControlEntry 6 }                          
+
+-- end of cvdr7707 audio control table 
+-- beginning of cvdr7707 Configuration table       
+
+	configurationTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF ConfigurationEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       					
+            This table contains the information and objects related to the
+            configuration of the card.
+		"        
+	::= { cvdr7707Configure 1 }        
+
+	configurationEntry OBJECT-TYPE                
+		SYNTAX ConfigurationEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                            
+            This entry object type is used to access all of the objects in
+            this table
+		"                
+		INDEX { cvdr7707Instance }        
+	::= { configurationTable 1 }        
+
+	ConfigurationEntry ::= SEQUENCE {                
+		masterJumper		INTEGER
+	}        
+	
+	masterJumper OBJECT-TYPE                
+		SYNTAX INTEGER {	local(1),
+				 	remote(2)		
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"             
+            This control allows the user to read if the master jumper is in
+            local or remote control mode. 
+		"        
+	::= { configurationEntry 1 }        	
+
+-- end of cvdr7707 Configuration table 
+-- beginning of cvdr7707 Management Notification table       
+
+	mgmtFaultTable OBJECT-TYPE                
+		SYNTAX SEQUENCE OF MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			                      
+			This table contains the faults and their related information.
+		"        
+	::= { cvdr7707Notify 1 }        
+
+	mgmtFaultEntry OBJECT-TYPE                
+		SYNTAX MgmtFaultEntry                
+		ACCESS not-accessible                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"      
+			This entry object is used to access all of the objects in this
+			file.			
+		"                
+		INDEX { faultName, cvdr7707Instance }        
+	::= { mgmtFaultTable 1 }        
+
+	MgmtFaultEntry ::= SEQUENCE {                
+		faultName			INTEGER,                
+		sendTrap			INTEGER,
+		faultPresent		INTEGER        
+	}        
+
+	faultName OBJECT-TYPE                
+		SYNTAX INTEGER { lossOfVideoInputA(1),	
+				 	lossOfVideoInputB(2),	
+				 	audioSilence1(3),
+				 	audioSilence2(4),
+				 	audioSilence3(5),
+				 	audioSilence4(6),
+                    laserNotOK(7),
+                    fiberLinkLost(8),
+                    carrierWeak(9)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                      
+			This is the main index for this table.  It is used to reference 
+			all of the other objects in this table.
+            Note: The audioSilence1, audioSilence2, audioSilence3, and
+            audioSilence4 traps are not supported on the '7707CVDR' and the
+            '7707CVDR-F2' and will return false for the faultPresent parameter.
+		"        
+	::= { mgmtFaultEntry 1 }        
+
+	sendTrap OBJECT-TYPE                
+		SYNTAX INTEGER {	false(1),
+				 	true(2)
+		}                
+		ACCESS read-write                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                       			                   
+			This control allows the user to choose whether a particular trap 
+			is generated by the card or if is ignored.
+		"        
+	::= { mgmtFaultEntry 2 }
+
+	faultPresent OBJECT-TYPE                
+		SYNTAX INTEGER {	false(1),				 			
+				 	true(2)
+		}                
+		ACCESS read-only                
+		STATUS mandatory                
+		DESCRIPTION                        
+		"                      
+			This control allows the user to read whether a particular fault
+			is present or not present.
+            Note: A default value of false will be returned for the audioSilence
+            traps on the '7707CVDR' and the '7707CVDR-F2'.
+		"        
+	::= { mgmtFaultEntry 3 }
+
+-- end of cvdr7707 Management Notification table   
+END

@@ -1,0 +1,38 @@
+-- Version:         7.35
+-- Last build date: 23 Sep 2003
+
+RADLAN-File-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rlFile                                      FROM RADLAN-MIB
+    DisplayString, RowStatus                    FROM SNMPv2-TC
+    OBJECT-TYPE                                 FROM SNMPv2-SMI;
+
+rlFileMibVersion OBJECT-TYPE
+    ::= {rlFile 1 }
+
+rlFileTable OBJECT-TYPE
+    ::= { rlFile 2 }
+
+rlFileEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlFileRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= {rlFileTable  1 }
+
+rlFileActionTable OBJECT-TYPE
+    ::= { rlFile 3 }
+
+rlFileActionEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlFileActionRowStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= {rlFileActionTable  1 }
+
+rlFileTotalSizeOfFlash OBJECT-TYPE
+    ::= { rlFile 4 }
+
+rlFileFreeSizeOfFlash OBJECT-TYPE
+    ::= { rlFile 5 }
+
+rlFileAuditingEnable  OBJECT-TYPE
+    ::= { rlFile 6 }
+END

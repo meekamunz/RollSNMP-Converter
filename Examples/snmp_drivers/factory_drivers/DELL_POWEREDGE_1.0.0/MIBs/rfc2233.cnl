@@ -1,0 +1,180 @@
+IF-MIB-A DEFINITIONS ::= BEGIN
+
+	   IMPORTS
+	       MODULE-IDENTITY, OBJECT-TYPE, Counter32, Gauge32, Counter64,
+	       Integer32, TimeTicks, mib-2,
+	       NOTIFICATION-TYPE                        FROM SNMPv2-SMI
+	       TEXTUAL-CONVENTION, DisplayString,
+	       PhysAddress, TruthValue, RowStatus,
+	       TimeStamp, AutonomousType, TestAndIncr   FROM SNMPv2-TC
+	       MODULE-COMPLIANCE, OBJECT-GROUP          FROM SNMPv2-CONF
+	       snmpTraps                                FROM SNMPv2-MIB
+               IANAifType                               FROM IANAifType-MIB
+               ifMIB                                    FROM IF-MIB;
+
+ifMIBObjects OBJECT IDENTIFIER ::= { ifMIB 1 }
+
+interfaces   OBJECT IDENTIFIER ::= { mib-2 2 }
+
+
+OwnerString ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT "255a"
+    STATUS       current
+    DESCRIPTION
+            "This data type is used to model an administratively
+            assigned name of the owner of a resource.  This
+            information is taken from the NVT ASCII character set.
+            It is suggested that this name contain one or more of
+            the following: ASCII form of the manager station's
+            transport address, management station name (e.g.,
+            domain name), network management personnel's name,
+            location, or phone number.  In some cases the agent
+            itself will be the owner of an entry.  In these cases,
+            this string shall be set to a string starting with
+            'agent'."
+    SYNTAX       OCTET STRING (SIZE(0..255))
+
+-- InterfaceIndex contains the semantics of ifIndex and
+-- should be used for any objects defined on other mib
+-- modules that need these semantics.
+
+InterfaceIndex ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT "d"
+    STATUS       current
+    DESCRIPTION
+            "A unique value, greater than zero, for each interface
+            or interface sub-layer in the managed system.  It is
+            recommended that values are assigned contiguously
+            starting from 1.  The value for each interface sub-
+            layer must remain constant at least from one re-
+            initialization of the entity's network management
+            system to the next re-initialization."
+    SYNTAX       Integer32 (1..2147483647)
+
+
+InterfaceIndexOrZero ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT "d"
+    STATUS       current
+    DESCRIPTION
+            "This textual convention is an extension of the
+            InterfaceIndex convention.  The latter defines a
+            greater than zero value used to identify an interface
+            or interface sub-layer in the managed system.  This
+            extension permits the additional value of zero.  the
+            value zero is object-specific and must therefore be
+            defined as part of the description of any object which
+            uses this syntax.  Examples of the usage of zero might
+            include situations where interface was unknown, or
+            when none or all interfaces need to be referenced."
+    SYNTAX       Integer32 (0..2147483647)
+
+
+ifNumber  OBJECT-TYPE
+    ::= { interfaces 1 }
+
+ifTableLastChange  OBJECT-TYPE
+    ::= { ifMIBObjects 5 }
+
+
+-- the Interfaces table
+
+-- The Interfaces table contains information on the entity's
+-- interfaces.  Each sub-layer below the internetwork-layer
+-- of a network interface is considered to be an interface.
+
+ifTable OBJECT-TYPE
+    ::= { interfaces 2 }
+
+ifEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { ifTable 1 }
+
+--
+--   Extension to the interface table
+--
+-- This table replaces the ifExtnsTable table.
+--
+
+ifXTable        OBJECT-TYPE
+    ::= { ifMIBObjects 1 }
+
+ifXEntry        OBJECT-TYPE
+    AUGMENTS     {ifEntry}
+    ::= { ifXTable 1 }
+
+--           The Interface Stack Group
+--
+-- Implementation of this group is mandatory for all systems
+--
+
+ifStackTable  OBJECT-TYPE
+     ::= { ifMIBObjects 2 }
+
+
+ifStackEntry  OBJECT-TYPE
+    ROW-STATUS-TYPE v2-status-field
+    STATUS-FIELD-NAME ifStackStatus
+     ::= { ifStackTable 1 }
+
+ifStackLastChange OBJECT-TYPE
+    ::= { ifMIBObjects 6 }
+
+
+--   Generic Receive Address Table
+--
+-- This group of objects is mandatory for all types of
+-- interfaces which can receive packets/frames addressed to
+-- more than one address.
+--
+-- This table replaces the ifExtnsRcvAddr table.  The main
+-- difference is that this table makes use of the RowStatus
+-- textual convention, while ifExtnsRcvAddr did not.
+
+ifRcvAddressTable  OBJECT-TYPE
+    ::= { ifMIBObjects 4 }
+
+ifRcvAddressEntry  OBJECT-TYPE
+    ::= { ifRcvAddressTable 1 }
+
+-- definition of interface-related traps.
+
+-- linkDown NOTIFICATION-TYPE
+--         OBJECTS { ifIndex, ifAdminStatus, ifOperStatus }
+--         STATUS  current
+--         DESCRIPTION
+--             "A linkDown trap signifies that the SNMPv2 entity,
+--             acting in an agent role, has detected that the
+--             ifOperStatus object for one of its communication links
+--             is about to enter the down state from some other state
+--             (but not from the notPresent state).  This other state
+--             is indicated by the included value of ifOperStatus."
+--     ::= { snmpTraps 3 }
+--
+-- linkUp NOTIFICATION-TYPE
+--         OBJECTS { ifIndex, ifAdminStatus, ifOperStatus }
+--         STATUS  current
+--         DESCRIPTION
+--             "A linkDown trap signifies that the SNMPv2 entity,
+--             acting in an agent role, has detected that the
+--             ifOperStatus object for one of its communication links
+--             left the down state and transitioned into some other
+--             state (but not into the notPresent state).  This other
+--             state is indicated by the included value of
+--             ifOperStatus."
+--   ::= { snmpTraps 4 }
+
+linkDown TRAP-TYPE
+--?? Non-reverse mappable trap
+    ENTERPRISE { iso(1) org(3) dod(6) internet(1) snmpV2(6) snmpModules(3) snmpMIB(1) snmpMIBObjects(1) snmpTraps(5) }
+    ERRCODE     RSG_ErrMsg_code_linkDown_E
+    SEVERITY    WARNING
+    ::= 3
+
+linkUp TRAP-TYPE
+--?? Non-reverse mappable trap
+    ENTERPRISE { iso(1) org(3) dod(6) internet(1) snmpV2(6) snmpModules(3) snmpMIB(1) snmpMIBObjects(1) snmpTraps(5) }
+    ERRCODE     RSG_ErrMsg_code_linkUp_E
+    SEVERITY    WARNING
+    ::= 4
+
+END

@@ -1,0 +1,315 @@
+
+-- File Name : KALEIDO-IP-MIB.mib
+-- Date      : Tue Nov 8 21:30:00 EDT 2016
+-- Author    : Grass Valley, a Belden Brand
+
+
+KALEIDO-KX-MIB  DEFINITIONS ::= BEGIN
+    IMPORTS
+        RowStatus, TEXTUAL-CONVENTION
+            FROM SNMPv2-TC
+        snmp
+            FROM RFC1213-MIB
+        OBJECT-GROUP, NOTIFICATION-GROUP
+            FROM SNMPv2-CONF
+        miranda, MTOnOffStatus, GsmStatus, GPIDirectionEnum, GPIStateEnum
+            FROM MIRANDA-MIB
+        OBJECT-TYPE, MODULE-IDENTITY, Integer32, enterprises, NOTIFICATION-TYPE, IpAddress
+            FROM SNMPv2-SMI;
+
+    kaleidoKxMibModule  MODULE-IDENTITY
+        LAST-UPDATED    "201611080000Z"
+        ORGANIZATION    "Grass Valley, a Belden Brand"
+        CONTACT-INFO    "Contact:"
+        DESCRIPTION     "Kaleido KX MIB"
+        REVISION        "201611080000Z"
+        DESCRIPTION     "Updated to Grass Valley branding and fixed errors"
+        REVISION        "201408210000Z"
+        DESCRIPTION     "Edited to reflect Kaleido-IP supported elements."
+        REVISION        "201301310000Z"
+        DESCRIPTION     "Kaleido KX SNMP module, first definition"
+        ::=  {  enterprises  1  }
+
+    org OBJECT IDENTIFIER
+        ::=  {  iso  3  }
+
+    dod OBJECT IDENTIFIER
+        ::=  {  org  6  }
+
+    internet    OBJECT IDENTIFIER
+        ::=  {  dod  1  }
+
+    private OBJECT IDENTIFIER
+        ::=  {  internet  4  }
+
+    enterprises OBJECT IDENTIFIER
+        ::=  {  private  1  }
+
+    kaleidoKxMibObjectGroup OBJECT-GROUP
+        OBJECTS         { 
+						kxTrapSeverity,
+						kxRooms,
+						kxLayouts, 
+						kxTrapFriendlyName,
+						kxFrameModel,
+						kxsVersion,
+						kxFrameIP,
+						kxTrapTargetCount,
+						kxCommunityString,
+						kxNetmask,
+						kxGateway,
+						kxoCardIps,
+						kxTrapTargetHost,
+						kxTrapTargetPort,
+						kxVirtualAlarmCount,
+						kxVirtualAlarmFriendlyName,
+						kxVirtualAlarmStatus,
+						kxVirtualAlarmStatusTrapEnabled,
+						kxVirtualAlarmCauses
+						}
+        STATUS          current
+        DESCRIPTION     "Kaleido KX SNMP module"
+        REFERENCE       "Enter Reference Information"
+        ::=  {  enterprises  3873  }
+
+    kaleidoKX   OBJECT IDENTIFIER
+        ::=  {  miranda  21  }
+
+    kxSystem    OBJECT IDENTIFIER
+        ::=  {  kaleidoKX  1  }
+
+    kxConfig    OBJECT IDENTIFIER
+        ::=  {  kaleidoKX  2  }
+
+    kxVirtualAlarm  OBJECT IDENTIFIER
+        ::=  {  kaleidoKX  6  }
+
+    kxTrap  OBJECT IDENTIFIER
+        ::=  {  kaleidoKX  8  }
+        
+    kxLayouts   OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "List of currently loaded layout names separated by ';'. The list is in the same order as kxRooms."
+        ::=  {  kxSystem  4  }
+
+    kxRooms OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "List of existing rooms in the system."
+        ::=  {  kxSystem  5  }
+
+    kxFrameModel    OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Frame model."
+        ::=  {  kxSystem  7  }
+
+    kxsVersion  OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "KX software version."
+        ::=  {  kxSystem  8  }
+
+
+    kxFrameIP   OBJECT-TYPE 
+        SYNTAX          IpAddress
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Frame ip address."
+        ::=  {  kxConfig  1  }
+
+    kxTrapTargetCount   OBJECT-TYPE 
+        SYNTAX          Integer32  ( -2147483648 .. 2147483647  ) 
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Entries count in kxTrapTargetTable (number of trap target)."
+        ::=  {  kxConfig  2  }
+
+    kxCommunityString   OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "The snmp community string which default to 'public'."
+        DEFVAL          { "public" }
+        ::=  {  kxConfig  3  }
+
+    kxNetmask   OBJECT-TYPE 
+        SYNTAX          IpAddress
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Netmask used by all KXO cards."
+        ::=  {  kxConfig  4  }
+
+    kxGateway   OBJECT-TYPE 
+        SYNTAX          IpAddress
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Gateway address used by all KXO cards."
+        ::=  {  kxConfig  5  }
+
+    kxoCardIps  OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "List of ip addresses used by KXO cards."
+        ::=  {  kxConfig  6  }
+
+
+    kxTrapTargetTable   OBJECT-TYPE
+        SYNTAX      SEQUENCE  OF  KxTrapTargetEntry
+        MAX-ACCESS  not-accessible
+        STATUS      current
+        DESCRIPTION "Table containing all trap targets."
+        ::=  { kxConfig  8 }
+
+    kxTrapTargetEntry   OBJECT-TYPE
+        SYNTAX      KxTrapTargetEntry
+        MAX-ACCESS  not-accessible
+        STATUS      current
+        DESCRIPTION "Defines a trap target."
+        INDEX       {  kxTrapTargetIndex  }
+        ::=  { kxTrapTargetTable 1 }
+
+    KxTrapTargetEntry  ::=  SEQUENCE {
+        kxTrapTargetIndex  Integer32,
+        kxTrapTargetHost  IpAddress,
+        kxTrapTargetPort  Integer32
+        }
+
+
+    kxTrapTargetIndex   OBJECT-TYPE 
+        SYNTAX          Integer32  ( -2147483648 .. 2147483647  ) 
+        MAX-ACCESS      not-accessible
+        STATUS          current
+        DESCRIPTION     "Sequential trap target index."
+        ::=  {  kxTrapTargetEntry  1  }
+
+
+    kxTrapTargetHost    OBJECT-TYPE 
+        SYNTAX          IpAddress
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Trap target's ip address."
+        ::=  {  kxTrapTargetEntry  2  }
+
+
+    kxTrapTargetPort    OBJECT-TYPE 
+        SYNTAX          Integer32  ( -2147483648 .. 2147483647  ) 
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Trap target's port."
+        DEFVAL          { 162 }
+        ::=  {  kxTrapTargetEntry  3  }
+
+    kxGatewayCommand    OBJECT IDENTIFIER
+        ::=  {  kxConfig  9  }
+
+    kxConfigTraps   OBJECT IDENTIFIER
+        ::=  {  kxConfig  10  }
+
+    kxVirtualAlarmCount OBJECT-TYPE 
+        SYNTAX          Integer32
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Virtual alarm count."
+        ::=  {  kxVirtualAlarm  1  }
+
+		
+    kxVirtualAlarmTable OBJECT-TYPE
+        SYNTAX      SEQUENCE  OF  KxVirtualAlarmEntry
+        MAX-ACCESS  not-accessible
+        STATUS      current
+        DESCRIPTION "Virtual alarm table."
+        ::=  { kxVirtualAlarm  2 }
+
+		
+    kxVirtualAlarmEntry OBJECT-TYPE
+        SYNTAX      KxVirtualAlarmEntry
+        MAX-ACCESS  not-accessible
+        STATUS      current
+        DESCRIPTION "Virtual alarm entry."
+        INDEX       {  kxVirtualAlarmIndex  }
+        ::=  { kxVirtualAlarmTable 1 }
+
+    KxVirtualAlarmEntry  ::=  SEQUENCE {
+        kxVirtualAlarmIndex  Integer32,
+        kxVirtualAlarmFriendlyName  OCTET STRING,
+        kxVirtualAlarmStatus  GsmStatus,
+        kxVirtualAlarmStatusTrapEnabled  MTOnOffStatus,
+        kxVirtualAlarmCauses  OCTET STRING
+        }
+		
+    kxVirtualAlarmIndex OBJECT-TYPE 
+        SYNTAX          Integer32  ( -2147483648 .. 2147483647  ) 
+        MAX-ACCESS      not-accessible
+        STATUS          current
+        DESCRIPTION     "Sequential index of kxVirtualAlarmTable."
+        ::=  {  kxVirtualAlarmEntry  1  }
+
+		
+    kxVirtualAlarmFriendlyName  OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Virtual alarm friendly name."
+        ::=  {  kxVirtualAlarmEntry  2  }
+
+
+    kxVirtualAlarmStatus    OBJECT-TYPE 
+        SYNTAX          GsmStatus  { disabled ( -1 ) , normal ( 10000 ) , warning ( 20000 ) , error ( 30000 ) , unknown ( 40000 ) } 
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Virtual alarm current status."
+        ::=  {  kxVirtualAlarmEntry  3  }
+
+
+    kxVirtualAlarmStatusTrapEnabled OBJECT-TYPE 
+        SYNTAX          MTOnOffStatus  { off ( 0 ) , on ( 1 ) } 
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "This attribute when on (1) indicates that a trap will be generated upon current virtual alarm status change.  The default value is off (0)."
+        ::=  {  kxVirtualAlarmEntry  4  }
+
+
+    kxVirtualAlarmCauses    OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      read-only
+        STATUS          current
+        DESCRIPTION     "Contains the list of alarm items friendly name (possibly one) that causes this virtual alarm.  The list separator is ;."
+        ::=  {  kxVirtualAlarmEntry  5  }
+
+    kxVirtualAlarmTraps OBJECT IDENTIFIER
+        ::=  {  kxVirtualAlarm  3  }
+
+    kxTrapFriendlyName  OBJECT-TYPE 
+        SYNTAX          OCTET STRING
+        MAX-ACCESS      accessible-for-notify
+        STATUS          current
+        DESCRIPTION     "Trap friendly name."
+        ::=  {  kxTrap  1  }
+
+    kxTrapSeverity  OBJECT-TYPE 
+        SYNTAX          GsmStatus  { disabled ( -1 ) , normal ( 10000 ) , warning ( 20000 ) , error ( 30000 ) , unknown ( 40000 ) } 
+        MAX-ACCESS      accessible-for-notify
+        STATUS          current
+        DESCRIPTION     "Trap severity."
+        ::=  {  kxTrap  2  }
+
+    statusKxVirtualAlarmStatus  NOTIFICATION-TYPE
+        OBJECTS         { kxVirtualAlarmFriendlyName, kxVirtualAlarmCauses, kxVirtualAlarmStatus, kxTrapFriendlyName, kxTrapSeverity }
+        STATUS          current
+        DESCRIPTION     "Trap sent if kxVirtualAlarmStatusTrapEnabled is on (1) and kxVirtualAlarmStatus status changed."
+        ::=  {  kxVirtualAlarmTraps  1  }
+
+    kxVirtualAlarmTrapsGroup    NOTIFICATION-GROUP
+        NOTIFICATIONS   { statusKxVirtualAlarmStatus }
+        STATUS          current
+        DESCRIPTION     "kxVirtualAlarm notification group."
+        ::=  {  kxVirtualAlarmTraps  2  }
+
+END

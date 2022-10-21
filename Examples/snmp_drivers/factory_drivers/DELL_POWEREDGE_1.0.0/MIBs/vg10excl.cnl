@@ -1,0 +1,67 @@
+GENERAL-VGATE-EXC-CONTROL-FILE
+EXCLUDE ipForwardNumber
+EXCLUDE ipForwardTable
+EXCLUDE at
+EXCLUDE tcp
+EXCLUDE egp
+EXCLUDE transmission
+EXCLUDE dot1dStp
+EXCLUDE dot1dSr
+EXCLUDE rip2PeerTable
+EXCLUDE ifTestTable
+EXCLUDE ifRcvAddressTable
+EXCLUDE ospfConfigErrorType
+EXCLUDE ospfPacketType
+EXCLUDE ospfPacketSrc
+EXCLUDE ospfIfStateChange
+EXCLUDE ospfVirtIfStateChange
+EXCLUDE ospfNbrStateChange
+EXCLUDE ospfVirtNbrStateChange
+EXCLUDE ospfIfConfigError
+EXCLUDE ospfVirtIfConfigError
+EXCLUDE ospfIfAuthFailure
+EXCLUDE ospfVirtIfAuthFailure
+EXCLUDE ospfIfRxBadPacket
+EXCLUDE ospfVirtIfRxBadPacket
+EXCLUDE ospfTxRetransmit
+EXCLUDE ospfVirtIfTxRetransmit
+EXCLUDE ospfOriginateLsa
+EXCLUDE ospfMaxAgeLsa
+EXCLUDE rndInactiveArpTimeOut
+EXCLUDE rndICMPTransmitionEnable
+EXCLUDE rndFileName
+EXCLUDE rndBrgLicense
+EXCLUDE ipRedundOperStatus
+EXCLUDE rsIpAdEntBackupAddr
+EXCLUDE ospfStubAreaTable
+EXCLUDE ospfAreaRangeTable
+EXCLUDE ospfHostTable
+EXCLUDE ospfVirtIfTable
+EXCLUDE ospfVirtNbrTable
+EXCLUDE ospfAuthType
+EXCLUDE ospfAreaAggregateEntry
+EXCLUDE rndIfBoardNum  
+EXCLUDE rndIfNetAddress
+EXCLUDE rndIfStatus    
+EXCLUDE rndIfClockType  
+EXCLUDE rndIfBaudRate
+EXCLUDE rndIfCost
+EXCLUDE rndIfCompression
+EXCLUDE rndIfCompressionStatus
+EXCLUDE rndIfCompressionRate
+EXCLUDE rndIfLATCompression
+EXCLUDE rndIfCompressionType
+EXCLUDE rndIfFilterMode
+EXCLUDE rndIfChannelType
+EXCLUDE rndIfBridge 
+EXCLUDE rndHighPriorityIf 
+EXCLUDE rndWanHeader
+EXCLUDE rndFACSdialNbrId
+EXCLUDE rndFACSSoketNum
+EXCLUDE rndFACSMask1Id
+EXCLUDE rndFACSMask2Id
+EXCLUDE rndFACSdialNbrId
+
+DEFINITIONS ::= BEGIN
+
+END

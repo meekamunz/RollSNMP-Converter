@@ -1,0 +1,104 @@
+    BGP4-MIB-A DEFINITIONS ::= BEGIN
+
+        IMPORTS
+            MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,
+            IpAddress, Integer32, Counter32, Gauge32, mib-2
+                FROM SNMPv2-SMI
+        --    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        --        FROM SNMPv2-CONF;
+            MODULE-COMPLIANCE, OBJECT-GROUP
+                  FROM SNMPv2-CONF;  
+
+
+      --  bgp MODULE-IDENTITY
+      --      LAST-UPDATED "9902100000Z"
+      --      ORGANIZATION "IETF IDR Working Group"
+      --      CONTACT-INFO "E-mail:  idr@merit.net
+
+      --                    Susan Hares  (Editor)
+      --                    Merit Network
+      --                    4251 Plymouth Road
+      --                    Suite C
+      --                    Ann Arbor, MI 48105-2785
+      --                    Tel: +1 734 936 2095
+      --                    Fax: +1 734 647 3185
+      --                    E-mail: skh@merit.edu
+
+      --                    Jeff Johnson (Editor)
+      --                    RedBack Networks, Inc.
+      --                    1389 Moffett Park Drive
+      --                    Sunnyvale, CA  94089-1134
+      --                    Tel: +1 408 548 3516
+      --                    Fax: +1 408 548 3599
+      --                    E-mail: jeff@redback.com"
+      --      DESCRIPTION
+      --              "The MIB module for BGP-4."
+      --      REVISION    "9902100000Z"
+      --      DESCRIPTION
+      --              "Corrected duplicate OBJECT IDENTIFIER
+      --               assignment in the conformance information."
+      --      REVISION    "9601080000Z"
+      --      DESCRIPTION
+      --              "1) Fixed the definitions of the traps to
+      --               make them equivalent to their initial
+      --               definition in RFC 1269.
+      --               2) Added compliance and conformance info."
+      --      ::= { mib-2 15 }
+
+
+        bgp    OBJECT IDENTIFIER ::={ mib-2 15 }
+
+        bgpVersion OBJECT-TYPE
+            ::= { bgp 1 }
+
+        bgpLocalAs OBJECT-TYPE
+            ::= { bgp 2 }
+
+
+
+        -- BGP Peer table.  This table contains, one entry per BGP
+        -- peer, information about the BGP peer.
+
+        bgpPeerTable OBJECT-TYPE
+            ::= { bgp 3 }
+
+
+
+        bgpIdentifier OBJECT-TYPE
+            ::= { bgp 4 }
+
+
+
+        -- BGP-4 Received Path Attribute Table.  This table contains,
+        -- one entry per path to a network, path attributes
+        -- received from all peers running BGP-4.
+
+        bgp4PathAttrTable OBJECT-TYPE
+            ::= { bgp 6 }
+
+        bgp4PathAttrEntry OBJECT-TYPE
+            ROW-STATUS-TYPE no-status-field
+            ::= { bgp4PathAttrTable 1 }
+
+
+        -- Traps.
+
+
+        bgpNotification OBJECT IDENTIFIER ::= { bgp 0 }
+
+
+        bgpEstablishedNotification TRAP-TYPE
+            ENTERPRISE bgpNotification
+            ERRCODE    RSG_ErrMsg_code_bgpEstablished_E
+            SEVERITY   INFO
+            ::= 1
+
+
+        bgpBackwardTransNotification TRAP-TYPE
+            ENTERPRISE bgpNotification
+            ERRCODE    RSG_ErrMsg_code_bgpBackwardTransition_E
+            SEVERITY   WARNING
+            ::= 2
+
+
+    END

@@ -1,0 +1,8 @@
+{
+  "includes": ["MorpheusMediaProcesses.rsnmp"],
+  "driverName": "Morpheus-media-processes",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Snell",
+  "deviceName": "MorpheusMediaProcesses",
+  "factory": true
+}

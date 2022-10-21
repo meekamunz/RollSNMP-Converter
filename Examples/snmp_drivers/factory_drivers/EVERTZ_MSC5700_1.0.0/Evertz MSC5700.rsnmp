@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- SVN $Id: Evertz MSC5700.rsnmp 3837 2021-01-04 11:41:38Z michaelmunns $ -->
+
+<!--
+	This file can be included in any RollSNMP configurations that monitors
+	Evertz MSC5700.
+
+	It assumes that standard-alias-include.rsnmp and standard-fields-include.rsnmp is already included.
+
+-->
+
+<DefinitionGroup>
+
+	<!-- Additional MIB folders from this library entry.
+		Remember that the path is relative to the config / program directory. -->
+	<MIBSource href="drivers/EVERTZ_MSC5700_1.0.0/MIBs"/>
+	
+		<OIDAlias id="EVERTZ EXPR MSC5700" oid=".iso.org.dod.internet.private.enterprises.evertz.evtzMiniExperimental.miniexprMSC5700IP" >
+			<OIDAlias id="TRAP MGM FAULTS" oid=".msc5700ipTRAPmgmFaults.mgmFaultsTable1Table.mgmFaultsTable1Entry.faultPresent" />
+			<OIDAlias id="TRAP MGM CTRL FAULTS" oid=".msc5700ipTRAPcontrolFaults.controlFaultsTable1Table.controlFaultsTable1Entry" />
+			<OIDAlias id="MSC5700 IP STATUS" oid=".msc5700ipstatus">
+				<OIDAlias id="STATUS TABLE ONE" oid=".statusTable1Table.statusTable1Entry" />
+				<OIDAlias id="PTP STATUS" oid=".statusTable2Table.statusTable2Entry" />
+			</OIDAlias>
+			<OIDAlias id="MSC5700 PTP" oid=".msc5700ipptp" >
+				<OIDAlias id="PTP TABLE ONE" oid=".ptpTable1Table.ptpTable1Entry" />
+				<OIDAlias id="PTP TABLE TWO" oid=".ptpTable2Table.ptpTable2Entry" />
+				<OIDAlias id="PTP TABLE THREE" oid=".ptpTable3Table.ptpTable3Entry" />
+			</OIDAlias>
+			<OIDAlias id="GPS" oid=".msc5700ipgps.gpsTable1Table.gpsTable1Entry" />
+			<OIDAlias id="TEST GENERATOR" oid=".msc5700iptestGenerator" >
+				<OIDAlias id="TEST GEN TABLE ONE" oid=".testGeneratorTable1Table.testGeneratorTable1Entry"/>
+				<OIDAlias id="TEST GEN TABLE TWO" oid=".testGeneratorTable2Table.testGeneratorTable2Entry"/>
+			</OIDAlias>
+			<OIDAlias id="IP TEST GEN" oid=".msc5700iptestGeneratorIP.testGeneratorIPTable1Table.testGeneratorIPTable1Entry"/>
+			<OIDAlias id="OPTIONS TABLE" oid=".msc5700ipoptions.optionsTable1Table.optionsTable1Entry" />
+		</OIDAlias>
+	
+	<UnitTypeDef typeName="EVERTZ_MSC5700_1.0.0" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>SVN $Id: Evertz MSC5700.rsnmp 3837 2021-01-04 11:41:38Z michaelmunns $</StaticString>
+		</StaticDef>
+
+		<!-- These fields reference some of the global MIB-2 translations. -->
+
+		<TranslationDef link="SYS DESCRIPTION" />
+		<TranslationDef link="SYS UPTIME" />
+		<TranslationDef link="SYS CONTACT" />
+		<TranslationDef link="SYS NAME" />
+		<TranslationDef link="SYS LOCATION" />
+
+		<!-- Evertz MSC 5700 -specific custom fields -->
+		
+		<!-- General Status -->
+		
+		<TranslationDef rcLogField="TEST_GEN_%d_MESSAGE_1" pollRate="120" >
+			<OID alias="TEST GEN TABLE TWO">.message1.#I</OID>
+			<GetNextArray dynamic="true" />
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEST_GEN_%d_MESSAGE_2" pollRate="120" >
+			<OID alias="TEST GEN TABLE TWO">.message2.#I</OID>
+			<GetNextArray dynamic="true" />
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="FAN_STATE" pollRate="60">
+			<OID alias="TRAP MGM FAULTS">.5.1</OID>
+			<NumRule value="1"  format="OK" />
+			<NumRule value="2"  format="WARN: Fan Fault"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEMP_STATE" pollRate="60">
+			<OID alias="TRAP MGM FAULTS">.7.1</OID>
+			<NumRule value="1"  format="OK" />
+			<NumRule value="2"  format="WARN: Overtemp Fault"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+				
+		<TranslationDef rcLogField="HARDWARE_STATE" pollRate="60">
+			<OID alias="TRAP MGM FAULTS">.6.1</OID>
+			<NumRule value="1"  format="OK" />
+			<NumRule value="2"  format="WARN: Hardware Fault"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="HARDWARE_SELF_DIAGNOSTICS" pollRate="60">
+			<OID alias="STATUS TABLE ONE">.hardware.1</OID>
+			<NumRule value="1" format="OK: Hardware Self Diagnostics OK"/>
+			<NumRule value="2" format="FAIL: Hardware Sefl Diagnostics Failure"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYSTEM_TIME" pollRate="10">
+			<OID alias="STATUS TABLE ONE">.systemTime.1</OID>
+			<!-- 'capture' doesn't work, but they may be a way to resolve this -->
+			<StringRule capture="([^SYS ].*)"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SYSTEM_DATE" pollRate="10">
+			<OID alias="STATUS TABLE ONE">.systemDate.1</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GPI_1_STATE" pollRate="10">
+			<OID alias="STATUS TABLE ONE">.gpi1.1</OID>
+			<NumRule value="1" format="Active" />
+			<NumRule value="2" format="Inactive" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GPI_2_STATE" pollRate="10">
+			<OID alias="STATUS TABLE ONE">.gpi2.1</OID>
+			<NumRule value="1" format="Active" />
+			<NumRule value="2" format="Inactive" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="BOOT_TIME" pollRate="10">
+			<OID alias="STATUS TABLE ONE">.bootTime.1</OID>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!-- Reference -->
+		
+		<TranslationDef rcLogField="REF_STATUS" pollRate="30">
+			<OID alias="STATUS TABLE ONE">.referenceInputStatus.1</OID>
+			<NumRule value="1" format="OK: Internal"/>
+			<NumRule value="2" format="OK: GPS OK"/>
+			<NumRule value="3" format="WARN: GPS Unlocked"/>
+			<NumRule value="4" format="OK: Video OK Narrow Range"/>
+			<NumRule value="5" format="OK: Video OK Wide Range"/>
+			<NumRule value="6" format="WARN: Video Unlocked"/>
+			<NumRule value="7" format="OK: Ten Mhz"/>
+			<NumRule value="8" format="WARN: Ten Mhz Unlocked"/>
+			<NumRule value="9" format="OK: PTP OK"/>
+			<NumRule value="10" format="WARN: PTP Unlocked"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="REF_LOCK_PRECENT" pollRate="30">
+			<ExpOID alias="STATUS TABLE ONE">.lockPercentDone.1</ExpOID>
+			<ConditionRule condition="$1 e 50 &lt;" format="WARN: Initializing - $1 percent" />
+			<ConditionRule condition="$1 e 100 &lt;" format="WARN: Approaching phase lock - $1 percent" />
+			<ConditionRule condition="$1 e 100 ==" format="OK: Phase Locked" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="INTERNAL_REFERENCE_LOCK_STABILITY" pollRate="60">
+			<ExpOID alias="STATUS TABLE ONE">.referenceInputStatus.1</ExpOID>	<!-- $1 -->
+			<ExpOID alias="STATUS TABLE ONE">.lockPercentFrequency.1</ExpOID>	<!-- $2 -->
+			<ConditionRule condition="$1 e 2 == e $2 e -5 &lt; AND" format="WARN: GPS lock unstable" />
+			<ConditionRule condition="$1 e 2 == e $2 e 75 &gt; AND" format="WARN: GPS lock unstable" />
+			<ConditionRule condition="$1 e 2 == e $2 e 75 &lt; AND" format="OK: GPS lock stable" />
+			<ConditionRule condition="$1 e 4 == e $2 e -75 &lt; AND" format="WARN: Video Narrow Range lock unstable" />
+			<ConditionRule condition="$1 e 4 == e $2 e 75 &gt; AND" format="WARN: Video Narrow Range lock unstable" />
+			<ConditionRule condition="$1 e 4 == e $2 e 75 &lt; AND" format="OK: Video Narrow Range lock stable" />
+			<ConditionRule condition="$1 e 7 == e $2 e -75 &lt; AND" format="WARN: 10Mhz lock unstable" />
+			<ConditionRule condition="$1 e 7 == e $2 e 75 &gt; AND" format="WARN: 10Mhz lock unstable" />
+			<ConditionRule condition="$1 e 7 == e $2 e 75 &lt; AND" format="OK: 10Mhz lock stable" />
+			<ConditionRule condition="$1 e 1 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 3 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 5 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 6 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 8 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 9 ==" format="INFO: N/A" />
+			<ConditionRule condition="$1 e 10 ==" format="INFO: N/A" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TIME_INPUT_STATUS" pollRate="60">
+			<OID alias="STATUS TABLE ONE">.timeInputStatus.1</OID>
+			<NumRule value="1" format="WARN: none" />
+			<NumRule value="2" format="OK: VITC PAL OK" />
+			<NumRule value="3" format="FAIL: VITC PAL Unlocked" />
+			<NumRule value="4" format="OK: VITC NTSC OK" />
+			<NumRule value="5" format="FAIL: VITC NTSC Unlocked" />
+			<NumRule value="6" format="OK: GPS OK" />
+			<NumRule value="7" format="FAIL: GPS Unlocked" />
+			<NumRule value="8" format="OK: SNTP OK" />
+			<NumRule value="9" format="FAIL: SNTP Unlocked" />
+			<NumRule value="10" format="OK: PTP OK" />
+			<NumRule value="11" format="FAIL: PTP Unlocked" />
+			<NumRule value="12" format="OK: LTC 25fps OK" />
+			<NumRule value="13" format="FAIL: LTC 25fps Unlocked" />
+			<NumRule value="14" format="OK: LTC 29fps OK" />
+			<NumRule value="15" format="FAIL: LTC 29fps Unlocked" />
+			<NumRule value="16" format="OK: IRIG OK" />
+			<NumRule value="17" format="FAIL: IRIG Unlocked" />
+			<NumRule value="18" format="OK: LTC OK" />
+			<NumRule value="19" format="FAIL: LTC Unlocked" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="TEN_MHZ_PRESENCE" pollRate="60">
+			<ExpOID alias="STATUS TABLE ONE">.tenMhzPresence.1</ExpOID>				<!-- $1 -->
+			<ExpOID alias="STATUS TABLE ONE">.referenceInputStatus.1</ExpOID>	<!-- $2 -->
+			<!-- If Ref is set to use 10Mhz $2=7 or 8.  7 is OK, 8 is fail, so for the presence, $2=7 and $1=1 gives a warning
+			and $2=8 and $1=1 gives a failure.  If 10Mhz not used, fields are INFO only -->
+			<ConditionRule condition="$2 e 7 == AND $1 e 1 ==" format="WARN: No 10Mhz or 5Mhz input" />
+			<ConditionRule condition="$2 e 7 == AND $1 e 2 ==" format="OK: 5Mhz input present" />
+			<ConditionRule condition="$2 e 7 == AND $1 e 3 ==" format="OK: 10Mhz input present" />
+			<ConditionRule condition="$2 e 8 == AND $1 e 1 ==" format="FAIL: No 10Mhz or 5Mhz input" />
+			<ConditionRule condition="$2 e 8 == AND $1 e 2 ==" format="OK: 5Mhz input present" />
+			<ConditionRule condition="$2 e 8 == AND $1 e 3 ==" format="OK: 10Mhz input present" />
+			<ConditionRule condition="$1 e 1 ==" format="INFO: No 10Mhz or 5Mhz input" />
+			<ConditionRule condition="$1 e 2 ==" format="INFO: 5Mhz input present" />
+			<ConditionRule condition="$1 e 3 ==" format="INFO: 10Mhz input present" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="INPUT_STD" pollRate="60">
+			<ExpOID alias="STATUS TABLE ONE">.videoPresence.1</ExpOID>				<!-- $1 -->
+			<ExpOID alias="STATUS TABLE ONE">.referenceInputStatus.1</ExpOID>	<!-- $2 -->
+			<!-- If Ref is set to use video $2=5 or 6.  5 is OK, 6 is fail, so for the presence, $2=5 and $1=1 gives a warning
+			and $2=6 and $1=1 gives a failure.  If video input not used, fields are INFO only -->
+			<ConditionRule condition="$2 e 5 == e $1 e 1 == AND" format="WARN: No video input" />
+			<ConditionRule condition="$2 e 5 == e $1 e 2 == AND" format="OK: sdPalB input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 3 == AND" format="OK: sdNtscM input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 4 == AND" format="OK: hd1080p2398 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 5 == AND" format="OK: hd1080p2424 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 6 == AND" format="OK: hd1080i50 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 7 == AND" format="OK: hd1080i5994 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 8 == AND" format="OK: hd1080i6060 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 9 == AND" format="OK: hd720p5994 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 10 == AND" format="OK: hd720p6060 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 11 == AND" format="OK: hd1080p2398sF input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 12 == AND" format="OK: hd1080p24sF input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 13 == AND" format="OK: hd1080p25 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 14 == AND" format="OK: hd1080p2997 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 15 == AND" format="OK: hd1080p3030 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 16 == AND" format="OK: hd1035i5994 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 17 == AND" format="OK: hd1035i6060 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 18 == AND" format="OK: hd720p50 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 19 == AND" format="OK: hd720p24 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 20 == AND" format="OK: hd720p23982398 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 21 == AND" format="OK: sd625i48 input present" />
+			<ConditionRule condition="$2 e 5 == e $1 e 22 == AND" format="OK: sd625i4795 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 1 == AND" format="FAIL: No video input" />
+			<ConditionRule condition="$2 e 6 == e $1 e 2 == AND" format="OK: sdPalB input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 3 == AND" format="OK: sdNtscM input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 4 == AND" format="OK: hd1080p2398 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 5 == AND" format="OK: hd1080p2424 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 6 == AND" format="OK: hd1080i50 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 7 == AND" format="OK: hd1080i5994 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 8 == AND" format="OK: hd1080i6060 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 9 == AND" format="OK: hd720p5994 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 10 == AND" format="OK: hd720p6060 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 11 == AND" format="OK: hd1080p2398sF input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 12 == AND" format="OK: hd1080p24sF input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 13 == AND" format="OK: hd1080p25 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 14 == AND" format="OK: hd1080p2997 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 15 == AND" format="OK: hd1080p3030 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 16 == AND" format="OK: hd1035i5994 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 17 == AND" format="OK: hd1035i6060 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 18 == AND" format="OK: hd720p50 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 19 == AND" format="OK: hd720p24 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 20 == AND" format="OK: hd720p23982398 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 21 == AND" format="OK: sd625i48 input present" />
+			<ConditionRule condition="$2 e 6 == e $1 e 22 == AND" format="OK: sd625i4795 input present" />
+			<ConditionRule condition="$1 e 1 ==" format="INFO: No video input" />
+			<ConditionRule condition="$1 e 2 ==" format="INFO: sdPalB input present" />
+			<ConditionRule condition="$1 e 3 ==" format="INFO: sdNtscM input present" />
+			<ConditionRule condition="$1 e 4 ==" format="INFO: hd1080p2398 input present" />
+			<ConditionRule condition="$1 e 5 ==" format="INFO: hd1080p2424 input present" />
+			<ConditionRule condition="$1 e 6 ==" format="INFO: hd1080i50 input present" />
+			<ConditionRule condition="$1 e 7 ==" format="INFO: hd1080i5994 input present" />
+			<ConditionRule condition="$1 e 8 ==" format="INFO: hd1080i6060 input present" />
+			<ConditionRule condition="$1 e 9 ==" format="INFO: hd720p5994 input present" />
+			<ConditionRule condition="$1 e 10 ==" format="INFO: hd720p6060 input present" />
+			<ConditionRule condition="$1 e 11 ==" format="INFO: hd1080p2398sF input present" />
+			<ConditionRule condition="$1 e 12 ==" format="INFO: hd1080p24sF input present" />
+			<ConditionRule condition="$1 e 13 ==" format="INFO: hd1080p25 input present" />
+			<ConditionRule condition="$1 e 14 ==" format="INFO: hd1080p2997 input present" />
+			<ConditionRule condition="$1 e 15 ==" format="INFO: hd1080p3030 input present" />
+			<ConditionRule condition="$1 e 16 ==" format="INFO: hd1035i5994 input present" />
+			<ConditionRule condition="$1 e 17 ==" format="INFO: hd1035i6060 input present" />
+			<ConditionRule condition="$1 e 18 ==" format="INFO: hd720p50 input present" />
+			<ConditionRule condition="$1 e 19 ==" format="INFO: hd720p24 input present" />
+			<ConditionRule condition="$1 e 20 ==" format="INFO: hd720p23982398 input present" />
+			<ConditionRule condition="$1 e 21 ==" format="INFO: sd625i48 input present" />
+			<ConditionRule condition="$1 e 22 ==" format="INFO: sd625i4795 input present" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!-- PTP -->
+		
+		<TranslationDef rcLogField="DELAY_REQ_PKT_RATE" pollRate="60">
+			<OID alias="STATUS TABLE ONE">.ptpSlaveDelayRequestRate.1</OID>
+			<NumRule value="1" format="1 packet every 2 seconds" />
+			<NumRule value="2" format="1 packet every second" />
+			<NumRule value="3" format="2 packets every second" />
+			<NumRule value="4" format="4 packets every second" />
+			<NumRule value="5" format="8 packets every second" />
+			<NumRule value="6" format="16 packets every second" />
+			<NumRule value="7" format="32 packets every second" />
+			<NumRule value="8" format="64 packets every second" />
+			<NumRule value="9" format="128 packets every second" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="SLAVE_DELAY_REQ_RATE" pollRate="60">
+			<OID alias="STATUS TABLE ONE">.ptpSlaveDelayRequestRate.1</OID>
+			<NumRule value="1" format="1 packet every 2 seconds" />
+			<NumRule value="2" format="1 packet every second" />
+			<NumRule value="3" format="2 packets every second" />
+			<NumRule value="4" format="4 packets every second" />
+			<NumRule value="5" format="8 packets every second" />
+			<NumRule value="6" format="16 packets every second" />
+			<NumRule value="7" format="32 packets every second" />
+			<NumRule value="8" format="64 packets every second" />
+			<NumRule value="9" format="128 packets every second" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_NAME" pollRate="300">
+			<OID alias="PTP STATUS">.ptpStateIndex.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="1" format="Interface 1G 1" />
+			<NumRule value="2" format="Interface 1G 2" />
+			<NumRule value="3" format="Interface 10G 1" />
+			<NumRule value="4" format="Interface 10G 2" />
+			<NumRule value="5" format="Front Interface" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_STATUS" pollRate="10">
+			<OID alias="PTP STATUS">.ptpState.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_GM_ID" pollRate="60">
+			<OID alias="PTP STATUS">.ptpGrandmaster.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<StringRule />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_PRIORITY_1" pollRate="60">
+			<ExpOID alias="TRAP MGM CTRL FAULTS">.controlFaultsFaultPresent.5.1</ExpOID>	<!-- $1 PTP PRIORITY1 STATE -->
+			<ExpOID alias="PTP TABLE ONE">.ptpPriority1.1</ExpOID>												<!-- $2 PRIORITY1 VALUE -->
+			<ConditionRule condition="$1 e 1 ==" format="OK: Priority $2" />
+			<ConditionRule condition="$1 e 2 ==" format="WARN: Value changed: $2" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_PRIORITY_2" pollRate="60">
+			<ExpOID alias="TRAP MGM CTRL FAULTS">.controlFaultsFaultPresent.6.1</ExpOID>	<!-- $1 PTP PRIORITY2 STATE -->
+			<ExpOID alias="PTP TABLE ONE">.ptpPriority2.1</ExpOID>												<!-- $2 PRIORITY2 VALUE -->
+			<ConditionRule condition="$1 e 1 ==" format="OK: $2" />
+			<ConditionRule condition="$1 e 2 ==" format="WARN: Value changed: $2" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_DOMAIN" pollRate="60">
+			<ExpOID alias="TRAP MGM CTRL FAULTS">.controlFaultsFaultPresent.4.1</ExpOID>	<!-- $1 PTP DOMAIN STATE -->
+			<ExpOID alias="PTP TABLE ONE">.ptpDomain.1</ExpOID>														<!-- $2 DOMAIN VALUE -->
+			<ConditionRule condition="$1 e 1 ==" format="OK: $2" />
+			<ConditionRule condition="$1 e 2 ==" format="WARN: Value changed: $2" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_MODE" pollRate="300">
+			<OID alias="PTP TABLE TWO">.ptpMode.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="1" format="IEEE 1588 Annex J" />
+			<NumRule value="2" format="SMPTE 2059" />
+			<NumRule value="3" format="AES67" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_SYNC_RATE" pollRate="300">
+			<OID alias="PTP TABLE TWO">.ptpSyncRate.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="1" format="1 packet every 2 seconds" />
+			<NumRule value="2" format="1 packet every second" />
+			<NumRule value="3" format="2 packets every second" />
+			<NumRule value="4" format="4 packets every second" />
+			<NumRule value="5" format="8 packets every second" />
+			<NumRule value="6" format="16 packets every second" />
+			<NumRule value="7" format="32 packets every second" />
+			<NumRule value="8" format="64 packets every second" />
+			<NumRule value="9" format="128 packets every second" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="PTP_%d_ANNOUNCE_RATE" pollRate="300">
+			<OID alias="PTP TABLE TWO">.ptpAnnounceRate.#I</OID>
+			<GetNextArray dynamic="true"/>
+			<NumRule value="1" format="1 packet every 16 seconds" />
+			<NumRule value="2" format="1 packet every 8 seconds" />
+			<NumRule value="3" format="1 packet every 4 seconds" />
+			<NumRule value="4" format="1 packet every 2 seconds" />
+			<NumRule value="5" format="1 packet every 1 second" />
+			<NumRule value="6" format="2 packets every second" />
+			<NumRule value="7" format="4 packets every second" />
+			<NumRule value="8" format="8 packets every second" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!--TranslationDef rcLogField="PTP_%d_PRIORITY1_CHANGED" pollRate="120">
+			<OID alias="TRAP MGM CTRL FAULTS">.controlFaultsFaultPresent.5</OID>
+			<NumRule value="2" format="WARN: PTP Priority1 changed" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef-->
+		
+		<!-- GPS -->
+		
+		<TranslationDef rcLogField="GPS_STATUS" pollRate="60">
+			<OID alias="STATUS TABLE ONE">.gpsHealth.1</OID>
+			<NumRule value="1" format="OK: GPS OK" />
+			<NumRule value="2" format="WARN: GPS Unlocked Searching For Satellites" />
+			<NumRule value="3" format="WARN: GPS Unlocked No Almanac" />
+			<NumRule value="4" format="WARN: GPS Unlocked Poor Signal" />
+			<NumRule value="5" format="WARN: GPS Unlocked No Satellites" />
+			<NumRule value="6" format="WARN: GPS Unlocked Only 1 Satellite" />
+			<NumRule value="7" format="WARN: GPS Unlocked Only 2 Satellites" />
+			<NumRule value="8" format="WARN: GPS Unlocked Only 3 Satellites" />
+			<NumRule value="9" format="WARN: GPS Unlocked Disconnected" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GPS_NUM_SATELLITES" pollRate="10">
+			<ExpOID alias="STATUS TABLE ONE">.gpsNumberSatellites.1</ExpOID>
+			<ConditionRule condition="$1 e 2 &lt;=" format="FAIL: $1 satellites" />
+			<ConditionRule condition="$1 e 4 &lt;=" format="WARN: $1 satellites" />
+			<ConditionRule condition="$1 e 4 &gt;" format="OK: $1 satellites" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GPS_ENABLED" pollRate="120">
+			<OID alias="GPS">.gpsEnabled.1</OID>
+			<NumRule value="1" format="WARN: GPS Disabled" />
+			<NumRule value="2" format="OK: GPS Enabled" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GLONASS_ENABLED" pollRate="120">
+			<OID alias="GPS">.glonassEnable.1</OID>
+			<NumRule value="1" format="WARN: Glonass Disabled" />
+			<NumRule value="2" format="OK: Glonass Enabled" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="GPS_LEAP_SECONDS" pollRate="120">
+			<OID alias="GPS">.leapSeconds.1</OID>
+			<NumRule format="%d"/>
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<!-- IP Test Generator -->
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_NAME" pollRate="300">
+			<OID alias="IP TEST GEN">.tgIndexip.#I</OID>
+			<GetNextArray dynamic="true" />
+			<NumRule value="1" format="IP Test Gen 5" />
+			<NumRule value="2" format="IP Test Gen 6" />
+			<NumRule value="3" format="IP Test Gen 7" />
+			<NumRule value="4" format="IP Test Gen 8" />
+			<NumRule value="5" format="IP Test Gen 9" />
+			<NumRule value="6" format="IP Test Gen 10" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>				<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.destinationIP.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>					<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.destinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_DEST_TTL" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>				<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.destinationTTL.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH1_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>		<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh1IP.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH2_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>		<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh2IP.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH3_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>		<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh3IP.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH4_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>		<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh4IP.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH1_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>									<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh1destinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH2_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>									<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh2destinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH3_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>									<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh3destinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH4_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>									<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh4destinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH1_SRC_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>						<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh1sourcePort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH2_SRC_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>						<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh2sourcePort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH3_SRC_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>						<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh3sourcePort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_AUD_CH4_SRC_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>						<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.audioCh4sourcePort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_ANC_DEST_IP" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>	<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.ancIP.#I.1</ExpOID>		<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_ANC_DEST_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>			<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.ancdestinationPort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="IP_TEST_GEN_%d_ANC_SRC_PORT" pollRate="300">
+			<ExpOID alias="OPTIONS TABLE">.tgPresent.1</ExpOID>				<!-- $1 -->
+			<ExpOID alias="IP TEST GEN">.ancsourcePort.#I.1</ExpOID>	<!-- $2 -->
+			<Array first="1" last="6" />
+			<!-- if $1 is not set to 'ipPresent' (value 3 to 6) then this data is null -->
+			<ConditionRule condition="$1 e 2 &gt;" format="$2" />
+			<ConditionRule condition="$1 e 2 &lt;=" format="INFO: IP Test gen not set" />
+			<ErrorRule format="FAIL:Unknown State" />
+			<ConstRule format="FAIL:Unknown"/>
+		</TranslationDef>
+			
+	</UnitTypeDef>
+
+</DefinitionGroup>

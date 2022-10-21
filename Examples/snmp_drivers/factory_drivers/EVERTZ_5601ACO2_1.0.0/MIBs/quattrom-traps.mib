@@ -1,0 +1,2193 @@
+-- Copyright 2002 Evertz Microsystems Ltd.
+
+QUATTROM-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	quattromInstance, quattromTraps
+		FROM QUATTROM-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { quattromTraps 1 }
+
+
+-- beginning of faultCondition1 1 VideoA trap
+
+	faultfaultCondition1FalseVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Cleared"
+	::= 1000
+
+	faultfaultCondition1TrueVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Alert"
+	::= 1001
+
+-- end of faultCondition1 VideoA trap
+-- beginning of faultCondition1 VideoB trap
+
+	faultfaultCondition1FalseVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Cleared"
+	::= 1002
+
+	faultfaultCondition1TrueVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Alert"
+	::= 1003
+
+-- end of faultCondition1 VideoB trap
+-- beginning of faultCondition1 VideoC trap
+
+	faultfaultCondition1FalseVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Cleared"
+	::= 1004
+
+	faultfaultCondition1TrueVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Alert"
+	::= 1005
+
+-- end of faultCondition1 VideoC trap
+-- beginning of faultCondition1 VideoD trap
+
+	faultfaultCondition1FalseVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Cleared"
+	::= 1006
+
+	faultfaultCondition1TrueVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 1 Alert"
+	::= 1007
+
+-- end of faultCondition1 VideoD trap
+-- beginning of faultCondition2 VideoA trap
+
+	faultfaultCondition2FalseVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Cleared"
+	::= 1008
+
+	faultfaultCondition2TrueVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Alert"
+	::= 1009
+
+-- end of faultCondition2 VideoA trap
+-- beginning of faultCondition2 VideoB trap
+
+	faultfaultCondition2FalseVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Cleared"
+	::= 1010
+
+	faultfaultCondition2TrueVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Alert"
+	::= 1011
+
+-- end of faultCondition2 VideoB trap
+-- beginning of faultCondition2 VideoC trap
+
+	faultfaultCondition2FalseVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Cleared"
+	::= 1012
+
+	faultfaultCondition2TrueVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Alert"
+	::= 1013
+
+-- end of faultCondition2 VideoC trap
+-- beginning of faultCondition2 VideoD trap
+
+	faultfaultCondition2FalseVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Cleared"
+	::= 1014
+
+	faultfaultCondition2TrueVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 2 Alert"
+	::= 1015
+
+-- end of faultCondition2 VideoD trap
+-- beginning of faultCondition3 VideoA trap
+
+	faultfaultCondition3FalseVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Cleared"
+	::= 1016
+
+	faultfaultCondition3TrueVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Alert"
+	::= 1017
+
+-- end of faultCondition3 VideoA trap
+-- beginning of faultCondition3 VideoB trap
+
+	faultfaultCondition3FalseVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Cleared"
+	::= 1018
+
+	faultfaultCondition3TrueVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Alert"
+	::= 1019
+
+-- end of faultCondition3 VideoB trap
+-- beginning of faultCondition3 VideoC trap
+
+	faultfaultCondition3FalseVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Cleared"
+	::= 1020
+
+	faultfaultCondition3TrueVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Alert"
+	::= 1021
+
+-- end of faultCondition3 VideoC trap
+-- beginning of faultCondition3 VideoD trap
+
+	faultVideoCFalse4Condition TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Cleared"
+	::= 1022
+
+	faultfaultCondition3TrueVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 3 Alert"
+	::= 1023
+
+-- end of faultCondition3 VideoD trap
+-- beginning of faultCondition4 VideoA trap
+
+	faultfaultCondition4FalseVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Cleared"
+	::= 1024
+
+	faultfaultCondition4TrueVideoA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Alert"
+	::= 1025
+
+-- end of faultCondition4 VideoA trap
+-- beginning of faultCondition4 VideoB trap
+
+	faultfaultCondition4FalseVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Cleared"
+	::= 1026
+
+	faultfaultCondition4TrueVideoB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Alert"
+	::= 1027
+
+-- end of faultCondition4 VideoB trap
+-- beginning of faultCondition4 VideoC trap
+
+	faultfaultCondition4FalseVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Cleared"
+	::= 1028
+
+	faultfaultCondition4TrueVideoC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Alert"
+	::= 1029
+
+-- end of faultCondition4 VideoC trap
+-- beginning of faultCondition4 VideoD trap
+
+	faultfaultCondition4FalseVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Cleared"
+	::= 1030
+
+	faultfaultCondition4TrueVideoD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Fault Condition 4 Alert"
+	::= 1031
+
+-- end of faultCondition4 VideoD trap
+-- beginning of videoInvalid videoSourceA trap
+
+	faultvideoInvalidFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video A OK"
+	::= 1032
+
+	faultvideoInvalidTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video A Missing Source"
+	::= 1033
+
+-- end of videoInvalid videoSourceA trap
+-- beginning of videoInvalid videoSourceB trap
+
+	faultvideoInvalidFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video B OK"
+	::= 1034
+
+	faultvideoInvalidTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video B Missing"
+	::= 1035
+
+-- end of videoInvalid videoSourceB trap
+-- beginning of videoInvalid videoSourceC trap
+
+	faultvideoInvalidFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video C OK"
+	::= 1036
+
+	faultvideoInvalidTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video C Missing"
+	::= 1037
+
+-- end of videoInvalid videoSourceC trap
+-- beginning of videoInvalid videoSourceD trap
+
+	faultvideoInvalidFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video D OK"
+	::= 1038
+
+	faultvideoInvalidTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video D Missing"
+	::= 1039
+
+-- end of videoInvalid videoSourceD trap
+-- beginning of lossOfAudio videoSourceA trap
+
+	faultlossOfAudioFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio OK Video A"
+	::= 1040
+
+	faultlossOfAudioTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Missing  Video A"
+	::= 1041
+
+-- end of lossOfAudio videoSourceA trap
+-- beginning of lossOfAudio videoSourceB trap
+
+	faultlossOfAudioFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio OK Video B"
+	::= 1042
+
+	faultlossOfAudioTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Missing Video B"
+	::= 1043
+
+-- end of lossOfAudio videoSourceB trap
+-- beginning of lossOfAudio videoSourceC trap
+
+	faultlossOfAudioFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio OK Video C"
+	::= 1044
+
+	faultlossOfAudioTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Missing  Video C"
+	::= 1045
+
+-- end of lossOfAudio videoSourceC trap
+-- beginning of lossOfAudio videoSourceD trap
+
+	faultlossOfAudioFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio OK  Video D"
+	::= 1046
+
+	faultlossOfAudioTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Missing Video D"
+	::= 1047
+
+-- end of lossOfAudio videoSourceD trap
+-- beginning of lossOfAudio12 videoSourceA trap
+
+	faultlossOfAudio12FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 OK Video A"
+	::= 1048
+
+	faultlossOfAudio12TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Missing Video A"
+	::= 1049
+
+-- end of lossOfAudio12 videoSourceA trap
+-- beginning of lossOfAudio12 videoSourceB trap
+
+	faultlossOfAudio12FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 OK Video B"
+	::= 1050
+
+	faultlossOfAudio12TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Missing   Video B"
+	::= 1051
+
+-- end of lossOfAudio12 videoSourceB trap
+-- beginning of lossOfAudio12 videoSourceC trap
+
+	faultlossOfAudio12FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 OK Video C"
+	::= 1052
+
+	faultlossOfAudio12TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Missing Video C"
+	::= 1053
+
+-- end of lossOfAudio12 videoSourceC trap
+-- beginning of lossOfAudio12 videoSourceD trap
+
+	faultlossOfAudio12FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 OK Video D"
+	::= 1054
+
+	faultlossOfAudio12TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Missing  Video D"
+	::= 1055
+
+-- end of lossOfAudio12 videoSourceD trap
+-- beginning of lossOfAudio34 videoSourceA trap
+
+	faultlossOfAudio34FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 OK Video A"
+	::= 1056
+
+	faultlossOfAudio34TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Missing Video A"
+	::= 1057
+
+-- end of lossOfAudio34 videoSourceA trap
+-- beginning of lossOfAudio34 videoSourceB trap
+
+	faultlossOfAudio34FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 OK  Video B"
+	::= 1058
+
+	faultlossOfAudio34TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Missing  Video B"
+	::= 1059
+
+-- end of lossOfAudio34 videoSourceB trap
+-- beginning of lossOfAudio34 videoSourceC trap
+
+	faultlossOfAudio34FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 OK Video C"
+	::= 1060
+
+	faultlossOfAudio34TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Missing Video C"
+	::= 1061
+
+-- end of lossOfAudio34 videoSourceC trap
+-- beginning of lossOfAudio34 videoSourceD trap
+
+	faultlossOfAudio34FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 OK Video D"
+	::= 1062
+
+	faultlossOfAudio34TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Missing  Video D"
+	::= 1063
+
+-- end of lossOfAudio34 videoSourceD trap
+-- beginning of lossOfAudio56 videoSourceA trap
+
+	faultlossOfAudio56FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 OK  Video A"
+	::= 1064
+
+	faultlossOfAudio56TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Missing Video A"
+	::= 1065
+
+-- end of lossOfAudio56 videoSourceA trap
+-- beginning of lossOfAudio56 videoSourceB trap
+
+	faultlossOfAudio56FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 OK Video B"
+	::= 1066
+
+	faultlossOfAudio56TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Missing  Video B"
+	::= 1067
+
+-- end of lossOfAudio56 videoSourceB trap
+-- beginning of lossOfAudio56 videoSourceC trap
+
+	faultlossOfAudio56FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 OK  Video C"
+	::= 1068
+
+	faultlossOfAudio56TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Missing Video C"
+	::= 1069
+
+-- end of lossOfAudio56 videoSourceC trap
+-- beginning of lossOfAudio56 videoSourceD trap
+
+	faultlossOfAudio56FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 OK Video D"
+	::= 1070
+
+	faultlossOfAudio56TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Missing  Video D"
+	::= 1071
+
+-- end of lossOfAudio56 videoSourceD trap
+-- beginning of apEDHError videoSourceA trap
+
+	faultapEDHErrorFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Cleared Video A"
+	::= 1072
+
+	faultapEDHErrorTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Present Video A"
+	::= 1073
+
+-- end of apEDHError videoSourceA trap
+-- beginning of apEDHError videoSourceB trap
+
+	faultapEDHErrorFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Cleared Video B"
+	::= 1074
+
+	faultapEDHErrorTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Present Video B"
+	::= 1075
+
+-- end of apEDHError videoSourceB trap
+-- beginning of apEDHError videoSourceC trap
+
+	faultapEDHErrorFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Cleared Video C"
+	::= 1076
+
+	faultapEDHErrorTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Present Video C"
+	::= 1077
+
+-- end of apEDHError videoSourceC trap
+-- beginning of apEDHError videoSourceD trap
+
+	faultapEDHErrorFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Cleared Video D"
+	::= 1078
+
+	faultapEDHErrorTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Active Picture EDH Error Present Video D"
+	::= 1079
+
+-- end of apEDHError videoSourceD trap
+-- beginning of ffEDHError videoSourceA trap
+
+	faultffEDHErrorFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Cleared Video A"
+	::= 1080
+
+	faultffEDHErrorTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Present  Video A"
+	::= 1081
+
+-- end of ffEDHError videoSourceA trap
+-- beginning of ffEDHError videoSourceB trap
+
+	faultffEDHErrorFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Cleared Video B"
+	::= 1082
+
+	faultffEDHErrorTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Present Video B"
+	::= 1083
+
+-- end of ffEDHError videoSourceB trap
+-- beginning of ffEDHError videoSourceC trap
+
+	faultffEDHErrorFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Cleared Video C"
+	::= 1084
+
+	faultffEDHErrorTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Present Video C"
+	::= 1085
+
+-- end of ffEDHError videoSourceC trap
+-- beginning of ffEDHError videoSourceD trap
+
+	faultffEDHErrorFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Cleared Video D"
+	::= 1086
+
+	faultffEDHErrorTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Full Field EDH Error Present Video D"
+	::= 1087
+
+-- end of ffEDHError videoSourceD trap
+-- beginning of phaseReversal12 videoSourceA trap
+
+	faultphaseReversal12FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase OK  Video A"
+	::= 1088
+
+	faultphaseReversal12TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase Reversed  Video A"
+	::= 1089
+
+-- end of phaseReversal12 videoSourceA trap
+-- beginning of phaseReversal12 videoSourceB trap
+
+	faultphaseReversal12FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase OK  Video B"
+	::= 1090
+
+	faultphaseReversal12TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase Reversed Video B"
+	::= 1091
+
+-- end of phaseReversal12 videoSourceB trap
+-- beginning of phaseReversal12 videoSourceC trap
+
+	faultphaseReversal12FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase OK  Video C"
+	::= 1092
+
+	faultphaseReversal12TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase Reversed Video C"
+	::= 1093
+
+-- end of phaseReversal12 videoSourceC trap
+-- beginning of phaseReversal12 videoSourceD trap
+
+	faultphaseReversal12FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase OK  Video D"
+	::= 1094
+
+	faultphaseReversal12TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Phase Reversed Video D"
+	::= 1095
+
+-- end of phaseReversal12 videoSourceD trap
+-- beginning of phaseReversal34 videoSourceA trap
+
+	faultphaseReversal34FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase OK  Video A"
+	::= 1096
+
+	faultphaseReversal34TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase Reversed Video A"
+	::= 1097
+
+-- end of phaseReversal34 videoSourceA trap
+-- beginning of phaseReversal34 videoSourceB trap
+
+	faultphaseReversal34FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase OK  Video B"
+	::= 1098
+
+	faultphaseReversal34TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase Reversed Video B"
+	::= 1099
+
+-- end of phaseReversal34 videoSourceB trap
+-- beginning of phaseReversal34 videoSourceC trap
+
+	faultphaseReversal34FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase OK Video C"
+	::= 1100
+
+	faultphaseReversal34TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase Reversed Video C"
+	::= 1101
+
+-- end of phaseReversal34 videoSourceC trap
+-- beginning of phaseReversal34 videoSourceD trap
+
+	faultphaseReversal34FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase OK Video D"
+	::= 1102
+
+	faultphaseReversal34TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Phase Reversed Video D"
+	::= 1103
+
+-- end of phaseReversal34 videoSourceD trap
+-- beginning of phaseReversal56 videoSourceA trap
+
+	faultphaseReversal56FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase OK Video A"
+	::= 1104
+
+	faultphaseReversal56TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase Reversed  Video A"
+	::= 1105
+
+-- end of phaseReversal56 videoSourceA trap
+-- beginning of phaseReversal56 videoSourceB trap
+
+	faultphaseReversal56FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase OK Video B"
+	::= 1106
+
+	faultphaseReversal56TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase Reversed  Video B"
+	::= 1107
+
+-- end of phaseReversal56 videoSourceB trap
+-- beginning of phaseReversal56 videoSourceC trap
+
+	faultphaseReversal56FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase OK  Video C"
+	::= 1108
+
+	faultphaseReversal56TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase Reversed Video C"
+	::= 1109
+
+-- end of phaseReversal56 videoSourceC trap
+-- beginning of phaseReversal56 videoSourceD trap
+
+	faultphaseReversal56FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase OK Video D"
+	::= 1110
+
+	faultphaseReversal56TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Phase Reversed Video D"
+	::= 1111
+
+-- end of phaseReversal56 videoSourceD trap
+-- beginning of audioOver12 videoSourceA trap
+
+	faultaudioOver12FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK  Video A"
+	::= 1112
+
+	faultaudioOver12TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Loud Video A"
+	::= 1113
+
+-- end of audioOver12 videoSourceA trap
+-- beginning of audioOver12 videoSourceB trap
+
+	faultaudioOver12FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK  Video B"
+	::= 1114
+
+	faultaudioOver12TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Loud  Video B"
+	::= 1115
+
+-- end of audioOver12 videoSourceB trap
+-- beginning of audioOver12 videoSourceC trap
+
+	faultaudioOver12FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK  Video C"
+	::= 1116
+
+	faultaudioOver12TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Loud Video C"
+	::= 1117
+
+-- end of audioOver12 videoSourceC trap
+-- beginning of audioOver12 videoSourceD trap
+
+	faultaudioOver12FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK Video D"
+	::= 1118
+
+	faultaudioOver12TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Loud  Video D"
+	::= 1119
+
+-- end of audioOver12 videoSourceD trap
+-- beginning of audioOver34 videoSourceA trap
+
+	faultaudioOver34FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK  Video A"
+	::= 1120
+
+	faultaudioOver34TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Loud Video A"
+	::= 1121
+
+-- end of audioOver34 videoSourceA trap
+-- beginning of audioOver34 videoSourceB trap
+
+	faultaudioOver34FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK  Video B"
+	::= 1122
+
+	faultaudioOver34TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Loud Video B"
+	::= 1123
+
+-- end of audioOver34 videoSourceB trap
+-- beginning of audioOver34 videoSourceC trap
+
+	faultaudioOver34FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK Video C"
+	::= 1124
+
+	faultaudioOver34TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Loud Video C"
+	::= 1125
+
+-- end of audioOver34 videoSourceC trap
+-- beginning of audioOver34 videoSourceD trap
+
+	faultaudioOver34FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK Video D"
+	::= 1126
+
+	faultaudioOver34TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Loud Video D"
+	::= 1127
+
+-- end of audioOver34 videoSourceD trap
+-- beginning of audioOver56 videoSourceA trap
+
+	faultaudioOver56FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK  Video A"
+	::= 1128
+
+	faultaudioOver56TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Loud Video A"
+	::= 1129
+
+-- end of audioOver56 videoSourceA trap
+-- beginning of audioOver56 videoSourceB trap
+
+	faultaudioOver56FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video B"
+	::= 1130
+
+	faultaudioOver56TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Loud  Video B"
+	::= 1131
+
+-- end of audioOver56 videoSourceB trap
+-- beginning of audioOver56 videoSourceC trap
+
+	faultaudioOver56FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK  Video C"
+	::= 1132
+
+	faultaudioOver56TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Loud  Video C"
+	::= 1133
+
+-- end of audioOver56 videoSourceC trap
+-- beginning of audioOver56 videoSourceD trap
+
+	faultaudioOver56FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video D"
+	::= 1134
+
+	faultaudioOver56TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Loud Video D"
+	::= 1135
+
+-- end of audioOver56 videoSourceD trap
+-- beginning of audioSilence12 videoSourceA trap
+
+	faultaudioSilence12FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK Video A"
+	::= 1136
+
+	faultaudioSilence12TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Quiet Video A"
+	::= 1137
+
+-- end of audioSilence12 videoSourceA trap
+-- beginning of audioSilence12 videoSourceB trap
+
+	faultaudioSilence12FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK Video B"
+	::= 1138
+
+	faultaudioSilence12TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Quiet  Video B"
+	::= 1139
+
+-- end of audioSilence12 videoSourceB trap
+-- beginning of audioSilence12 videoSourceC trap
+
+	faultaudioSilence12FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK Video C"                       
+	::= 1140
+
+	faultaudioSilence12TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Quiet Video C"
+	::= 1141
+
+-- end of audioSilence12 videoSourceC trap
+-- beginning of audioSilence12 videoSourceD trap
+
+	faultaudioSilence12FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level OK  Video D"
+	::= 1142
+
+	faultaudioSilence12TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Level Too Quiet Video D"
+	::= 1143
+
+-- end of audioSilence12 videoSourceD trap
+-- beginning of audioSilence34 videoSourceA trap
+
+	faultaudioSilence34FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK Video A"
+	::= 1144
+
+	faultaudioSilence34TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Quiet Video A"
+	::= 1145
+
+-- end of audioSilence34 videoSourceA trap
+-- beginning of audioSilence34 videoSourceB trap
+
+	faultaudioSilence34FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK  Video B"
+	::= 1146
+
+	faultaudioSilence34TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Quiet Video B"
+	::= 1147
+
+-- end of audioSilence34 videoSourceB trap
+-- beginning of audioSilence34 videoSourceC trap
+
+	faultaudioSilence34FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK Video C"
+	::= 1148
+
+	faultaudioSilence34TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Quiet Video C"
+	::= 1149
+
+-- end of audioSilence34 videoSourceC trap
+-- beginning of audioSilence34 videoSourceD trap
+
+	faultaudioSilence34FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level OK Video D"
+	::= 1150
+
+	faultaudioSilence34TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Level Too Quiet Video D"
+	::= 1151
+
+-- end of audioSilence34 videoSourceD trap
+-- beginning of audioSilence56 videoSourceA trap
+
+	faultaudioSilence56FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video A"
+	::= 1152
+
+	faultaudioSilence56TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Quiet Video A"
+	::= 1153
+
+-- end of audioSilence56 videoSourceA trap
+-- beginning of audioSilence56 videoSourceB trap
+
+	faultaudioSilence56FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video B"
+	::= 1154
+
+	faultaudioSilence56TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Quiet Video B"
+	::= 1155
+
+-- end of audioSilence56 videoSourceB trap
+-- beginning of audioSilence56 videoSourceC trap
+
+	faultaudioSilence56FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video C"
+	::= 1156
+
+	faultaudioSilence56TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Quiet Video C"
+	::= 1157
+
+-- end of audioSilence56 videoSourceC trap
+-- beginning of audioSilence56 videoSourceD trap
+
+	faultaudioSilence56FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level OK Video D"
+	::= 1158
+
+	faultaudioSilence56TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Level Too Quiet Video D"
+	::= 1159
+
+-- end of audioSilence56 videoSourceD trap
+-- beginning of audioMono12 videoSourceA trap
+
+	faultaudioMono12FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Stereo Video A"
+	::= 1160
+
+	faultaudioMono12TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Mono Video A"
+	::= 1161
+
+-- end of audioMono12 videoSourceA trap
+-- beginning of audioMono12 videoSourceB trap
+
+	faultaudioMono12FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Stereo Video B"
+	::= 1162
+
+	faultaudioMono12TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Mono Video B"
+	::= 1163
+
+-- end of audioMono12 videoSourceB trap
+-- beginning of audioMono12 videoSourceC trap
+
+	faultaudioMono12FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Stereo Video C"
+	::= 1164
+
+	faultaudioMono12TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Mono Video C"
+	::= 1165
+
+-- end of audioMono12 videoSourceC trap
+-- beginning of audioMono12 videoSourceD trap
+
+	faultaudioMono12FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Stereo Video D"
+	::= 1166
+
+	faultaudioMono12TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch1/2 Mono Video D"
+	::= 1167
+
+-- end of audioMono12 videoSourceD trap
+-- beginning of audioMono34 videoSourceA trap
+
+	faultaudioMono34FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Stereo Video A"
+	::= 1168
+
+	faultaudioMono34TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Mono Video A"
+	::= 1169
+
+-- end of audioMono34 videoSourceA trap
+-- beginning of audioMono34 videoSourceB trap
+
+	faultaudioMono34FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Stereo Video B"
+	::= 1170
+
+	faultaudioMono34TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Mono Video B"
+	::= 1171
+
+-- end of audioMono34 videoSourceB trap
+-- beginning of audioMono34 videoSourceC trap
+
+	faultaudioMono34FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Stereo Video C"
+	::= 1172
+
+	faultaudioMono34TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Mono Video C"
+	::= 1173
+
+-- end of audioMono34 videoSourceC trap
+-- beginning of audioMono34 videoSourceD trap
+
+	faultaudioMono34FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Stereo Video D"
+	::= 1174
+
+	faultaudioMono34TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch3/4 Mono Video D"
+	::= 1175
+
+-- end of audioMono34 videoSourceD trap
+-- beginning of audioMono56 videoSourceA trap
+
+	faultaudioMono56FalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Stereo Video A"
+	::= 1176
+
+	faultaudioMono56TruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Mono Video A"
+	::= 1177
+
+-- end of audioMono56 videoSourceA trap
+-- beginning of audioMono56 videoSourceB trap
+
+	faultaudioMono56FalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Stereo Video B"
+	::= 1178
+
+	faultaudioMono56TruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Mono Video B"
+	::= 1179
+
+-- end of audioMono56 videoSourceB trap
+-- beginning of audioMono56 videoSourceC trap
+
+	faultaudioMono56FalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Stereo Video C"
+	::= 1180
+
+	faultaudioMono56TruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Mono Video C"
+	::= 1181
+
+-- end of audioMono56 videoSourceC trap
+-- beginning of audioMono56 videoSourceD trap
+
+	faultaudioMono56FalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Stereo Video D"
+	::= 1182
+
+	faultaudioMono56TruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Audio Ch5/6 Mono Video D"
+	::= 1183
+
+-- end of audioMono56 videoSourceD trap
+-- beginning of lossOfVITC videoSourceA trap
+
+	faultlossOfVITCFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"VITC OK Video A"
+	::= 1184
+
+	faultlossOfVITCTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No VITC Video A"
+	::= 1185
+
+-- end of lossOfVITC videoSourceA trap
+-- beginning of lossOfVITC videoSourceB trap
+
+	faultlossOfVITCFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"VITC OK Video B"
+	::= 1186
+
+	faultlossOfVITCTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No VITC Video B"
+	::= 1187
+
+-- end of lossOfVITC videoSourceB trap
+-- beginning of lossOfVITC videoSourceC trap
+
+	faultlossOfVITCFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"VITC OK  Video C"
+	::= 1188
+
+	faultlossOfVITCTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No VITC Video C"
+	::= 1189
+
+-- end of lossOfVITC videoSourceC trap
+-- beginning of lossOfVITC videoSourceD trap
+
+	faultlossOfVITCFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"VITC OK Video D"
+	::= 1190
+
+	faultlossOfVITCTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No VITC Video D"
+	::= 1191
+
+-- end of lossOfVITC videoSourceD trap
+-- beginning of lossOfSID videoSourceA trap
+
+	faultlossOfSIDFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"SID OK Video A"
+	::= 1192
+
+	faultlossOfSIDTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No SID Video A"
+	::= 1193
+
+-- end of lossOfSID videoSourceA trap
+-- beginning of lossOfSID videoSourceB trap
+
+	faultlossOfSIDFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"SID OK Video B"
+	::= 1194
+
+	faultlossOfSIDTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No SID Video B"
+	::= 1195
+
+-- end of lossOfSID videoSourceB trap
+-- beginning of lossOfSID videoSourceC trap
+
+	faultlossOfSIDFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"SID OK Video C"
+	::= 1196
+
+	faultlossOfSIDTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No SID Video C"
+	::= 1197
+
+-- end of lossOfSID videoSourceC trap
+-- beginning of lossOfSID videoSourceD trap
+
+	faultlossOfSIDFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"SID OK Video D"
+	::= 1198
+
+	faultlossOfSIDTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No SID Video D"
+	::= 1199
+
+-- end of lossOfSID videoSourceD trap
+-- beginning of lossOfProgramRating videoSourceA trap
+
+	faultlossOfProgramRatingFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Program Rating OK Video A"
+	::= 1200
+
+	faultlossOfProgramRatingTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Program Rating Video A"
+	::= 1201
+
+-- end of lossOfProgramRating videoSourceA trap
+-- beginning of lossOfProgramRating videoSourceB trap
+
+	faultlossOfProgramRatingFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Program Rating OK Video B"
+	::= 1202
+
+	faultlossOfProgramRatingTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Program Rating Video B"
+	::= 1203
+
+-- end of lossOfProgramRating videoSourceB trap
+-- beginning of lossOfProgramRating videoSourceC trap
+
+	faultlossOfProgramRatingFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Program Rating OK Video C"
+	::= 1204
+
+	faultlossOfProgramRatingTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Program Rating Video C"
+	::= 1205
+
+-- end of lossOfProgramRating videoSourceC trap
+-- beginning of lossOfProgramRating videoSourceD trap
+
+	faultlossOfProgramRatingFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Program Rating OK Video D"
+	::= 1206
+
+	faultlossOfProgramRatingTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Program Rating Video D"
+	::= 1207
+
+-- end of lossOfProgramRating videoSourceD trap
+-- beginning of lossOfCC videoSourceA trap
+
+	faultlossOfCCFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Closed Captioning OK Video A"
+	::= 1208
+
+	faultlossOfCCTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Closed Captioning Video A"
+	::= 1209
+
+-- end of lossOfCC videoSourceA trap
+-- beginning of lossOfCC videoSourceB trap
+
+	faultlossOfCCFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Closed Captioning OK Video B"
+	::= 1210
+
+	faultlossOfCCTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Closed Captioning Video B"
+	::= 1211
+
+-- end of lossOfCC videoSourceB trap
+-- beginning of lossOfCC videoSourceC trap
+
+	faultlossOfCCFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Closed Captioning OK Video C"
+	::= 1212
+
+	faultlossOfCCTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Closed Captioning Video C"
+	::= 1213
+
+-- end of lossOfCC videoSourceC trap
+-- beginning of lossOfCC videoSourceD trap
+
+	faultlossOfCCFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Closed Captioning OK Video D"
+	::= 1214
+
+	faultlossOfCCTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"No Closed Captioning Video D"
+	::= 1215
+
+-- end of lossOfCC videoSourceD trap
+-- beginning of pictureFreeze videoSourceA trap
+
+	faultpictureFreezeFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Frozen Video A"
+	::= 1216
+
+	faultpictureFreezeTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Frozen Video A"
+	::= 1217
+
+-- end of pictureFreeze videoSourceA trap
+-- beginning of pictureFreeze videoSourceB trap
+
+	faultpictureFreezeFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Frozen Video B"
+	::= 1218
+
+	faultpictureFreezeTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Frozen Video B"
+	::= 1219
+
+-- end of pictureFreeze videoSourceB trap
+-- beginning of pictureFreeze videoSourceC trap
+
+	faultpictureFreezeFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Frozen Video C"
+	::= 1220
+
+	faultpictureFreezeTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Frozen Video C"
+	::= 1221
+
+-- end of pictureFreeze videoSourceC trap
+-- beginning of pictureFreeze videoSourceD trap
+
+	faultpictureFreezeFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Frozen Video D"
+	::= 1222
+
+	faultpictureFreezeTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Frozen Video D"
+	::= 1223
+
+-- end of pictureFreeze videoSourceD trap
+-- beginning of pictureBlack videoSourceA trap
+
+	faultpictureBlackFalsevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Black Video A"
+	::= 1224
+
+	faultpictureBlackTruevideoSourceA TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Black Video A"
+	::= 1225
+
+-- end of pictureBlack videoSourceA trap
+-- beginning of pictureBlack videoSourceB trap
+
+	faultpictureBlackFalsevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Black Video B"
+	::= 1226
+
+	faultpictureBlackTruevideoSourceB TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Black Video B"
+	::= 1227
+
+-- end of pictureBlack videoSourceB trap
+-- beginning of pictureBlack videoSourceC trap
+
+	faultpictureBlackFalsevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Black Video C" 
+	::= 1228
+
+	faultpictureBlackTruevideoSourceC TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Black Video C"
+	::= 1229
+
+-- end of pictureBlack videoSourceC trap
+-- beginning of pictureBlack videoSourceD trap
+
+	faultpictureBlackFalsevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Not Black Video D"
+	::= 1230
+
+	faultpictureBlackTruevideoSourceD TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"Video Black Video D"
+	::= 1231
+
+-- end of pictureBlack videoSourceD trap
+-- beginning of gpi1  trap
+
+	faultgpi1False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI1 OK"
+	::= 1232
+
+	faultgpi1True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI1 Enabled"
+	::= 1233
+
+-- end of gpi1  trap
+-- beginning of gpi2  trap
+
+	faultgpi2False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI2 OK"
+	::= 1234
+
+	faultgpi2True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI2 Enabled"
+	::= 1235
+
+-- end of gpi2  trap
+-- beginning of gpi3  trap
+
+	faultgpi3False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI3 OK"
+	::= 1236
+
+	faultgpi3True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI3 Enabled"
+	::= 1237
+
+-- end of gpi3  trap
+-- beginning of gpi4  trap
+
+	faultgpi4False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI4 OK"
+	::= 1238
+
+	faultgpi4True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI4 Enabled"
+	::= 1239
+
+-- end of gpi4  trap
+-- beginning of gpi5  trap
+
+	faultgpi5False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI5 OK"
+	::= 1240
+
+	faultgpi5True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI5 Enabled"
+	::= 1241
+
+-- end of gpi5  trap
+-- beginning of gpi6  trap
+
+	faultgpi6False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI6 OK"
+	::= 1242
+
+	faultgpi6True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI6 Enabled"
+	::= 1243
+
+-- end of gpi6  trap
+-- beginning of gpi7  trap
+
+	faultgpi7False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI7 OK"
+	::= 1244
+
+	faultgpi7True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI7 Enabled
+			"
+	::= 1245
+
+-- end of gpi7  trap
+-- beginning of gpi8  trap
+
+	faultgpi8False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI8 OK"
+	::= 1246
+
+	faultgpi8True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI8 Enabled" 
+	::= 1247
+
+-- end of gpi8  trap
+-- beginning of gpi9  trap
+
+	faultgpi9False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI9 OK"
+	::= 1248
+
+	faultgpi9True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI9 Enabled"
+	::= 1249
+
+-- end of gpi9  trap
+-- beginning of gpi10  trap
+
+	faultgpi10False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI10 OK"
+	::= 1250
+
+	faultgpi10True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI10 Enabled"
+	::= 1251
+
+-- end of gpi10  trap
+-- beginning of gpi11  trap
+
+	faultgpi11False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI11 OK"
+	::= 1252
+
+	faultgpi11True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI11 Enabled"
+	::= 1253
+
+-- end of gpi11  trap
+-- beginning of gpi12  trap
+
+	faultgpi12False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI12 OK"
+	::= 1254
+
+	faultgpi12True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ quattromInstance }
+		DESCRIPTION
+			"GPI12 Enabled" 
+	::= 1255
+
+-- end of gpi12  trap
+
+
+END

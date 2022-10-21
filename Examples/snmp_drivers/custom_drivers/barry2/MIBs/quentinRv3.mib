@@ -1,0 +1,920 @@
+--
+-- Title: Quentin Server MIB issue 1.1 (c) Quantel Ltd. 2010
+--
+
+QUANTEL-QUENTIN-ROCKY-SERVER-MIB
+
+--FORCE-INCLUDE <mib.h>
+--FORCE-INCLUDE <snmpdefs.h>
+--FORCE-INCLUDE "mibhand.h"
+
+DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY,
+        OBJECT-TYPE,
+        IpAddress,
+        Counter32,
+        Integer32 FROM SNMPv2-SMI
+        DisplayString FROM SNMPv2-TC
+        TRAP-TYPE FROM RFC-1215
+        quantelProduct FROM QUANTEL-MIB
+        ;
+
+-- Module Identification Definition
+
+quantelQuentinServerRV3 MODULE-IDENTITY
+    LAST-UPDATED "201001270000Z"
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"
+    DESCRIPTION "This is the Quentin Rocky V3 Server MIB"
+
+    ::= { quantelProduct 6 }
+
+system        OBJECT IDENTIFIER ::= { quantelQuentinServerRV3 1 }
+videoChannels OBJECT IDENTIFIER ::= { quantelQuentinServerRV3 2 }
+diskSystem    OBJECT IDENTIFIER ::= { quantelQuentinServerRV3 3 }
+clipnetSystem OBJECT IDENTIFIER ::= { quantelQuentinServerRV3 4 }
+
+-- System Group
+ambientTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The current ambient temperature measured in the system."
+    ::= { system 1 }
+
+maxAmbientTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The maximum ambient temperature measured in the system."
+    ::= { system 2 }
+
+crateTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The current temperature measured in the crate."
+    ::= { system 3 }
+
+maxCrateTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The maximum temperature measured in the crate."
+    ::= { system 4 }
+
+scatheTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The current temperature measured on the scathe card."
+    ::= { system 5 }
+
+maxScatheTemperature OBJECT-TYPE
+    SYNTAX  Integer32 (-50..200)
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The maximum temperature measured on the scathe card."
+    ::= { system 6 }
+
+psu1Status OBJECT-TYPE
+    SYNTAX  INTEGER {
+    missing(0),
+    failed(1),
+    ok(2)
+    }
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Current status of power supply 1."
+    ::= { system 7 }
+
+psu2Status OBJECT-TYPE
+    SYNTAX  INTEGER {
+    missing(0),
+    failed(1),
+    ok(2)
+    }
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Current status of power supply 2."
+    ::= { system 8 }
+
+sysbusErrorCount OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "A count of sysbus errors."
+    ::= { system 9 }
+
+cpuLoad OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The loading of the CPU as a percentage"
+    ::= { system 10 }
+
+--
+-- Fan Table
+--
+
+fanSetSpeed OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The speed the fans are currently set to"
+    ::= { system 19 }
+
+fanTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF FanEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of fan entries."
+    ::= { system 20 }
+
+    fanEntry OBJECT-TYPE
+        SYNTAX  FanEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A fan entry containing objects describing
+                     a particular fan."
+        INDEX   { fanIndex }
+        ::= { fanTable 1 }
+
+    FanEntry ::= SEQUENCE {
+            fanIndex  Integer32,
+            fanSpeed Integer32 }
+
+        fanIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each fan."
+            ::= { fanEntry 1 }
+
+        fanSpeed OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating the current speed of the fan."
+            ::= { fanEntry 2 }
+
+--
+-- Slot Table
+--
+
+slotTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF SlotEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of slot entries."
+    ::= { system 21 }
+
+    slotEntry OBJECT-TYPE
+        SYNTAX  SlotEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A slot entry containing objects describing
+                     a particular slot."
+        INDEX   { slotIndex }
+        ::= { slotTable 1 }
+
+    SlotEntry ::= SEQUENCE {
+            slotIndex  Integer32,
+            slotContents DisplayString,
+            slotTemp Integer32,
+            slotNumReboots Counter32}
+
+        slotIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each slot."
+            ::= { slotEntry 1 }
+
+        slotContents OBJECT-TYPE
+            SYNTAX DisplayString (SIZE (0..255))
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating what the slot contains."
+            ::= { slotEntry 2 }
+
+        slotTemp OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating the temperature of the slot."
+            ::= { slotEntry 3 }
+
+        slotNumReboots OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A value indicating the number of times the slot has rebooted."
+            ::= { slotEntry 4 }
+
+-- Video Channels Configuration Group
+
+videoChannelNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of video ports present on this system."
+    ::= { videoChannels 1 }
+
+--
+-- Video Port Table
+--
+
+videoChannelTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF VideoChannelEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of channel entries.  The number of
+                 entries is given by the value of videoChannelNumber."
+    ::= { videoChannels 2 }
+
+    videoChannelEntry OBJECT-TYPE
+        SYNTAX  VideoChannelEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A channel entry containing objects describing
+                     a particular video channel."
+        INDEX   { videoChannelIndex }
+        ::= { videoChannelTable 1 }
+
+    VideoChannelEntry ::= SEQUENCE {
+            videoChannelIndex  Integer32,
+            videoChannelStatus INTEGER,
+            videoChannelPlayedFrames Counter32,
+            videoChannelRecordedFrames Counter32,
+            videoChannelBlackFrames Counter32,
+            videoChannelBadFrames Counter32,
+            videoChannelSignatureErrors Counter32,
+            videoChannelBrowseFramesRecorded Counter32,
+            videoChannelFailedRecordedFrames Counter32,
+            videoChannelAudioGUIDErrors Counter32,
+            videoChannelReset Integer32,
+            videoChannelSpeed Integer32}
+
+        videoChannelIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of videoChannelNumber."
+            ::= { videoChannelEntry 1 }
+
+        videoChannelStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                idle(0),
+                play(1),
+                record(2),
+                offline(3),
+                fault(4),
+                booting(5),
+                playing(6),
+                recording(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the channel."
+            ::= { videoChannelEntry 2 }
+
+        videoChannelPlayedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames played."
+            ::= { videoChannelEntry 3 }
+
+        videoChannelRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames recorded."
+            ::= { videoChannelEntry 4 }
+
+        videoChannelBlackFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of black video frames played."
+            ::= { videoChannelEntry 5 }
+
+        videoChannelBadFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of bad video frames played."
+            ::= { videoChannelEntry 6 }
+
+        videoChannelSignatureErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of read signature errors."
+            ::= { videoChannelEntry 7 }
+
+        videoChannelBrowseFramesRecorded OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of Browse frames recorded."
+            ::= { videoChannelEntry 8 }
+
+        videoChannelFailedRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of frames that failed to be recorded."
+            ::= { videoChannelEntry 9 }
+
+        videoChannelAudioGUIDErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of audio frames played with GUID errors."
+            ::= { videoChannelEntry 10 }
+
+        videoChannelReset OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-write
+            STATUS  current
+            DESCRIPTION  "Resets all counters for this channel."
+            ::= { videoChannelEntry 11 }
+
+        videoChannelSpeed OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The current speed of the channel"
+            ::= { videoChannelEntry 12 }
+
+
+-- Disk System Configuration Group
+
+diskSystemStatus OBJECT-TYPE
+    SYNTAX  INTEGER {
+    booting(0),
+    operational(1),
+    faulty(2)
+    }
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "Current status of the disk system."
+    ::= { diskSystem 1 }
+
+diskSystemDiskReads OBJECT-TYPE
+    SYNTAX Counter32
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of protons that have been read from the disks."
+    ::= { diskSystem 2 }
+
+diskSystemDiskWrites OBJECT-TYPE
+    SYNTAX Counter32
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of protons that have been written to the disks."
+    ::= { diskSystem 3 }
+
+diskSystemReadErrors OBJECT-TYPE
+    SYNTAX Counter32
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of read errors that have occurred."
+    ::= { diskSystem 4 }
+
+diskSystemWriteErrors OBJECT-TYPE
+    SYNTAX Counter32
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION "The number of write errors that have occurred."
+    ::= { diskSystem 5 }
+
+diskSystemReset OBJECT-TYPE
+    SYNTAX Integer32
+    MAX-ACCESS read-write
+    STATUS current
+    DESCRIPTION "Reset all disk system counters."
+    ::= { diskSystem 6 }
+
+--
+-- Disk System Tables
+--
+
+--
+-- Link table
+--
+
+linkTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF LinkEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of link entries."
+    ::= { diskSystem 20 }
+
+    linkEntry OBJECT-TYPE
+        SYNTAX  LinkEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A link entry containing objects describing
+                     a particular fibre channel link."
+        INDEX   { linkControllerIndex, linkIndex }
+        ::= { linkTable 1 }
+
+    LinkEntry ::= SEQUENCE {
+            linkControllerIndex  Integer32,
+            linkIndex  Integer32,
+            linkStatus INTEGER,
+            linkReadBandwidth Counter32,
+            linkWriteBandwidth Counter32}
+
+        linkControllerIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..8)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each controller."
+            ::= { linkEntry 1 }
+
+        linkIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..8)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each link."
+            ::= { linkEntry 2 }
+
+        linkStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            failed(0),
+            ok(1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the link."
+            ::= { linkEntry 3 }
+
+        linkReadBandwidth OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The bandwidth of reads over the link."
+            ::= { linkEntry 4 }
+
+        linkWriteBandwidth OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The bandwidth of writes over the link."
+            ::= { linkEntry 5 }
+
+--
+-- Dylan table
+--
+
+dylanTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF DylanEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of dylan entries."
+    ::= { diskSystem 30 }
+
+    dylanEntry OBJECT-TYPE
+        SYNTAX  DylanEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A dylan entry containing objects describing
+                     a particular dylan."
+        INDEX   { dylanControllerIndex, dylanIndex }
+        ::= { dylanTable 1 }
+
+    DylanEntry ::= SEQUENCE {
+            dylanControllerIndex  Integer32,
+            dylanIndex  Integer32,
+            dylanPsuStatus INTEGER,
+            dylanSwitchStatus INTEGER,
+            dylanFanStatus INTEGER,
+            dylanTemperatureStatus INTEGER,
+            dylanDiskStatus INTEGER,
+            dylanRebuildStatus INTEGER,
+            dylanRebuildProgress Counter32,
+            dylanLowestDiskHealth Counter32}
+
+        dylanControllerIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..16)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each dylan controller."
+            ::= { dylanEntry 1 }
+
+        dylanIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..16)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each dylan."
+            ::= { dylanEntry 2 }
+
+        dylanPsuStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            notImplemented(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            missing(5),
+            unknown(6),
+            turnedOff(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the power supplies."
+            ::= { dylanEntry 3 }
+
+        dylanSwitchStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            notImplemented(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            missing(5),
+            unknown(6),
+            turnedOff(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the dylan switch."
+            ::= { dylanEntry 4 }
+
+        dylanFanStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            notImplemented(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            missing(5),
+            unknown(6),
+            turnedOff(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the dylan fans."
+            ::= { dylanEntry 5 }
+
+        dylanTemperatureStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            notImplemented(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            missing(5),
+            unknown(6),
+            turnedOff(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the dylan temperature."
+            ::= { dylanEntry 6 }
+
+        dylanDiskStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            notImplemented(0),
+            ok(1),
+            critical(2),
+            nonCritical(3),
+            unrecoverable(4),
+            missing(5),
+            unknown(6),
+            turnedOff(7)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the dylan disks."
+            ::= { dylanEntry 7 }
+
+        dylanRebuildStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+            done(0),
+            active(1),
+            failed(2)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the disk rebuild."
+            ::= { dylanEntry 8 }
+
+        dylanRebuildProgress OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The progress of the disk rebuild."
+            ::= { dylanEntry 9 }
+
+        dylanLowestDiskHealth OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The lowest health value for all disks in Dylan."
+            ::= { dylanEntry 10 }
+
+
+-- Clipnet Ports Configuration Group
+
+clipnetPortNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of clipnet ports present on this system."
+    ::= { clipnetSystem 1 }
+
+clipnetAtomsCopied OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms copied over the clipnet system."
+    ::= { clipnetSystem 2 }
+
+clipnetAtomsAborted OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms aborted over the clipnet system."
+    ::= { clipnetSystem 3 }
+
+clipnetAtomsRetried OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms retried over the clipnet system."
+    ::= { clipnetSystem 4 }
+
+--
+-- Clipnet Port Table
+--
+
+clipnetPortTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF ClipnetPortEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of clipnet port entries.  The number of
+                 entries is given by the value of clipnetPortNumber."
+    ::= { clipnetSystem 5 }
+
+    clipnetPortEntry OBJECT-TYPE
+        SYNTAX  ClipnetPortEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A clipnetport entry containing objects describing
+                     a particular clipnet port."
+        INDEX   { clipnetPortIndex }
+        ::= { clipnetPortTable 1 }
+
+    ClipnetPortEntry ::= SEQUENCE {
+            clipnetPortIndex  Integer32,
+            clipnetPortAddress IpAddress,
+            clipnetPortStatus INTEGER,
+            clipnetPortAtomsRead Counter32,
+            clipnetPortAtomsWritten Counter32,
+            clipnetPortLinkStatus INTEGER,
+            clipnetPortCommsErrors Counter32}
+
+        clipnetPortIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..8)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of clipnetPortNumber."
+            ::= { clipnetPortEntry 1 }
+
+        clipnetPortAddress OBJECT-TYPE
+                SYNTAX  IpAddress
+                MAX-ACCESS read-only
+                STATUS current
+                DESCRIPTION "The IP address of the Clipnet interface."
+            ::= { clipnetPortEntry 2 }
+
+        clipnetPortStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                faulty(0),
+                operational(1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the port."
+            ::= { clipnetPortEntry 3 }
+
+        clipnetPortAtomsRead OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms read."
+            ::= { clipnetPortEntry 4 }
+
+        clipnetPortAtomsWritten OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms written."
+            ::= { clipnetPortEntry 5 }
+
+        clipnetPortLinkStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                linkDown (0),
+                linkUp (1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the ethernet link."
+            ::= { clipnetPortEntry 6 }
+
+        clipnetPortCommsErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The current comms error index."
+            ::= { clipnetPortEntry 7 }
+
+clipnetReset OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-write
+    STATUS  current
+    DESCRIPTION "Reset clipnet system counters."
+    ::= { clipnetSystem 6 }
+
+-- Traps
+
+-- Server traps
+quentinServerFanFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES { fanIndex }
+    DESCRIPTION "Trap is sent when a fan fails"
+    ::= 1
+quentinServerFanNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES { fanIndex }
+    DESCRIPTION "Trap is sent when a fan fault is cleared"
+    ::= 2
+quentinServerPasswordExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when a password is close to expiry"
+    ::= 3
+quentinServerPasswordNotExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when a password expiry is cleared"
+    ::= 4
+quentinServerSystemDiskFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when fault detected with system disk"
+    ::= 5
+quentinServerSystemDiskNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when system disk fault is cleared"
+    ::= 6
+
+
+-- Over temperature traps
+overTemperatureFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { crateTemperature }
+    DESCRIPTION "Trap is sent when the crate temperature exceeds the maximum set"
+    ::= 12
+overTemperatureNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { crateTemperature }
+    DESCRIPTION "Trap is sent when the over temperature condition is cleared"
+    ::= 13
+-- Power supply traps
+psu1BlueFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when power supply 1 has a fault"
+    ::= 14
+psu1BlueNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when power supply 1 fault condition is cleared"
+    ::= 15
+psu2RedFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when power supply 2 has a fault"
+    ::= 16
+psu2RedNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    DESCRIPTION "Trap is sent when power supply 2 fault condition is cleared"
+    ::= 17
+-- Disk dylan traps
+dylanPsuFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan power supply fails"
+    ::= 20
+dylanPsuNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan power supply fault is cleared"
+    ::= 21
+dylanSwitchFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan switch fails"
+    ::= 22
+dylanSwitchNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan switch fault is cleared"
+    ::= 23
+dylanFanFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan fan fails"
+    ::= 24
+dylanFanNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan fan fault is cleared"
+    ::= 25
+dylanTemperatureFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan temperature fails"
+    ::= 26
+dylanTemperatureNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan temperature fault is cleared"
+    ::= 27
+dylanDiskFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan disk fails"
+    ::= 28
+dylanDiskNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan disk fault is cleared"
+    ::= 29
+dylanLinkFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan link fails"
+    ::= 30
+dylanLinkNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { dylanControllerIndex, dylanIndex }
+    DESCRIPTION "Trap is sent when a dylan link fault is cleared"
+    ::= 31
+-- Clipnet traps
+clipnetSystemLinkFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fails"
+    ::= 40
+clipnetSystemLinkNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fault is cleared"
+    ::= 41
+clipnetSystemCommsFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card detects excessive comms faults"
+    ::= 42
+clipnetSystemCommsNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card comms fault is cleared"
+    ::= 43
+-- Video channel traps
+videoChannelFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { videoChannelIndex, videoChannelStatus }
+    DESCRIPTION "Trap is sent when a video channel fails"
+    ::= 50
+videoChannelFaultNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { videoChannelIndex, videoChannelStatus }
+    DESCRIPTION "Trap is sent when a video channel fault is cleared"
+    ::= 51
+-- Slot traps
+slotFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { slotIndex }
+    DESCRIPTION "Trap is sent when a slot fails"
+    ::= 60
+slotFaultNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerRV3
+    VARIABLES  { slotIndex }
+    DESCRIPTION "Trap is sent when a slot fault is cleared"
+    ::= 61
+
+END
+

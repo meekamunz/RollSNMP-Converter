@@ -1,0 +1,980 @@
+-- UNIQUE TIME STAMP: 2013-03-04 17-12-47 DO NOT EDIT THIS LINE
+-- Copyright 2013 Evertz Microsystems Ltd.
+-- Mon Mar  4 17:12:47 2013
+-- Confidential
+FC3405-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    miniexprFC3405
+      FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+    OBJECT-TYPE
+      FROM RFC-1212;
+
+      
+    fc3405Monitor OBJECT IDENTIFIER ::= { miniexprFC3405 2}
+    sfpTXMonitor OBJECT IDENTIFIER ::= { miniexprFC3405 3}
+    sfpRXMonitor OBJECT IDENTIFIER ::= { miniexprFC3405 4}
+    fc3405Notify OBJECT IDENTIFIER ::= { miniexprFC3405 5}
+    fc3405Traps OBJECT IDENTIFIER ::= { miniexprFC3405 6}
+    fc3405Settings OBJECT IDENTIFIER ::= { miniexprFC3405 7}
+    sfpTXControl OBJECT IDENTIFIER ::= { miniexprFC3405 8}
+    sfpRXControl OBJECT IDENTIFIER ::= { miniexprFC3405 9}
+    sfpCOAXMonitor OBJECT IDENTIFIER ::= { miniexprFC3405 10}
+    sfpCOAXControl OBJECT IDENTIFIER ::= { miniexprFC3405 11}
+
+
+        
+-- Beginning of sfpMonitorTable
+    sfpMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF SfpMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The sfpMonitor table. "
+    ::= { fc3405Monitor 1 }
+
+    sfpMonitorEntry OBJECT-TYPE
+      SYNTAX SfpMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { sfpIndex }
+    ::= { sfpMonitorTable 1 }
+
+    SfpMonitorEntry ::= SEQUENCE {
+        sfpIndex     INTEGER,
+        sfpClass     INTEGER,
+        sfpType     INTEGER,
+        sfpSerialNum     OCTET STRING,
+        sfpVersion     OCTET STRING,
+        sfpUpgradeSupport     INTEGER
+    }
+
+
+    
+    sfpIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            sfp1(1),
+            sfp2(2),
+            sfp3(3),
+            sfp4(4),
+            sfp5(5),
+            sfp6(6),
+            sfp7(7),
+            sfp8(8),
+            sfp9(9),
+            sfp10(10),
+            sfp11(11),
+            sfp12(12),
+            sfp13(13),
+            sfp14(14),
+            sfp15(15),
+            sfp16(16)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is the index that is used to index several 
+      tables in this mib. "
+    ::= { sfpMonitorEntry 1 }
+
+    
+    sfpClass OBJECT-TYPE
+      SYNTAX INTEGER {
+            unknown(1),
+            tx2(2),
+            rx2(3),
+            tx1(4),
+            rx1(5),
+            tr(6),
+            coax1(7),
+            coax2(8)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter is used to describe the base class of SFPs.
+		Displayed as:
+		tx2 - Dual TX
+		rx2 - Dual RX
+		tx1 - Single TX
+		tx1 - Single RX
+		tr - T/R
+		coax1 - Single Coaxial Input
+		coax2 - Dual Coaxial Inputs
+		Device identified as tx2 should show both Channel as TX parameters.
+		Device identified as tx1 should only show channel A, as TX parameters, chB hides.
+		Device identified as rx2 should show both channel as RX parameters.
+		Device identified as rx1 should only show channel A as RX parameters., chB hides.
+		Device identified as tr should show channel A as TX parameters, chB as RX parameters.
+		Device identified as coax1 should show COAX parameters. Hide ACO2 parameters (switch mode and switch type). Hide RX/TX.
+		Device identified as coax2 should show COAX parameters. Show ACO2 parameters. (switch mode and switch type). Hide RX/TX. "
+    ::= { sfpMonitorEntry 2 }
+
+    
+    sfpType OBJECT-TYPE
+      SYNTAX INTEGER {
+            unknown(1),
+            dualtx(2),
+            dualrx(3),
+            dualtxnc(4),
+            txvr(5),
+            rclktx(6),
+            rclkrx(7),
+            dualrxstd(8),
+            dualrclkrx(9),
+            dualrxapd(10),
+            txvrtx(11),
+            txvrrx(12),
+            rclktxdwdm(13),
+            txvrapd(14),
+            txvrrxapd(15),
+            singrxstd(16),
+            dualtxs(17),
+            txvrs(18),
+            txvrdwdmapd(19),
+            dualtxncs(20),
+            da5(21),
+            da4aco2(22),
+            da4r(23),
+            dualrclktx(24),
+            dualrclktxcomb(25),
+            dualtxcomb(26),
+            dualrxstdh(27),
+            da4rh(28)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter describe the specific type of SFP.
+		 The following list describes values for this parameter:
+         unknown to be displayed as Unknown
+         dualtx to be displayed as 3405T-2
+         dualrx to be displayed as 3405R-2
+         dualtxnc to be displayed as 3405T-2-NC
+         txvr to be displayed as SFPTR
+         rclktx to be displayed as 3405T-R
+         rclkrx to be displayed as 3405OO-DA4.
+         dualrxstd to be displayed as SFP3R-2.
+         dualrclkrx to be displayed as 3405R-2R.
+         dualrxapd to be displayed as 3405R-2-H
+         txvrtx to be displayed as SFPT
+         txvrrx to be displayed as SFPR
+         rclktxdwdm to be displayed as 3405TDxxx-R
+         txvrapd to be displayed as SFPTR-H
+         txvrrxapd to be displayed as NSFPR-H
+         singrxstd to be displayed as SFP3R
+         dualtxs to be displayed as 3405T13-2-S
+         txvrs to be displayed as SFPTR-S
+         txvrdwdmapd to be displayed as SFPTRDxxx-H
+		 dualtxncs to be displayed as SFP3T-2-S
+		 da5 to be displayed as 3405DA5 
+		 da4aco2 to be displayed as 3405R2x1-DA4
+		 da4r to be displayed as 3405R-DA4R
+		 dualrclktx to be displayed as 3405T-2R
+		 dualrclktxcomb to be displayed as 3505Txx-2R-C
+		 dualtxcomb to be displayed as 3405TA-2
+		 dualrxstdh to be displayed as SFP3R2-H
+		 da4rh to be displayed as  3405-DA4R-H "
+    ::= { sfpMonitorEntry 3 }
+
+    
+    sfpSerialNum OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(17) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Serial number for SFP module, to be displayed as is. "
+    ::= { sfpMonitorEntry 4 }
+
+    
+    sfpVersion OBJECT-TYPE
+      SYNTAX OCTET STRING ( SIZE(8) )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Version number for the SFP module, to be shown as is.
+                 The controls shown for each SFP should be determined by the
+                 SFP version number and the SFP type.  If the version number is less
+                 than the listed version below, the controls associated with this SFP
+                 should not be shown.
+                 dualtx must be >= 1.0.28
+                 dualrx must be >= 1.0.20
+                 rclktx must be >= 1.0.1
+                 rclkrx must be >= 1.0.12
+                 dualrclkrx must be >= 1.0.8
+                 Any unlisted module must be >= 1.0.1.
+                 Special cases: if dualtx >= 1.0.41, then the two squelch controls
+                 should be combined into a single control. "
+    ::= { sfpMonitorEntry 5 }
+
+    
+    sfpUpgradeSupport OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates whether the SFP firmware can be upgraded using the second stage bootloader "
+    ::= { sfpMonitorEntry 6 }
+
+-- End of sfpMonitorTable
+
+
+        
+-- Beginning of txMonitorTable
+    txMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The txMonitor table. "
+    ::= { sfpTXMonitor 1 }
+
+    txMonitorEntry OBJECT-TYPE
+      SYNTAX TxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { tlaserIndex, sfpIndex }
+    ::= { txMonitorTable 1 }
+
+    TxMonitorEntry ::= SEQUENCE {
+        tlaserIndex     INTEGER,
+        txBiasCurrent     INTEGER,
+        txLaserEn     INTEGER,
+        txWavelength     INTEGER,
+        txLaserStatus     INTEGER,
+        txReclock     INTEGER
+    }
+
+
+    
+    tlaserIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            laserA(1),
+            laserB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This index is used in TX monitor table. "
+    ::= { txMonitorEntry 1 }
+
+    
+    txBiasCurrent OBJECT-TYPE
+      SYNTAX INTEGER ( 0..2147483647 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter display bias current on laser in units of 0.01mA.
+	  Display should convert it by dividing 100.0
+	  Show this control only for TX class SFPs. "
+    ::= { txMonitorEntry 2 }
+
+    
+    txLaserEn OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2),
+            na(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter tells about SFPTX laser staus.
+                 na should be displayed as N/A, it appears when second laser is not present.
+	             Show this control only for TX class SFPs.  This monitor should be labelled as
+                 'Channel Status' "
+    ::= { txMonitorEntry 3 }
+
+    
+    txWavelength OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter tells about wavelength supported by SFPTX's lasers, displayed in unit nm.
+	  For SFP with only one channel, the second wavelength may be 0. "
+    ::= { txMonitorEntry 4 }
+
+    
+    txLaserStatus OBJECT-TYPE
+      SYNTAX INTEGER {
+            fail(1),
+            ok(2),
+            na(3)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter tells about SFP TX laser status.
+	  na should be displayed as N/A, it appears when second laser is not present.
+	  Show this control only for TX class SFPs. This monitor should be shown as
+	  'Laser Status' "
+    ::= { txMonitorEntry 5 }
+
+    
+    txReclock OBJECT-TYPE
+      SYNTAX INTEGER {
+            na(1),
+            sd(2),
+            hd(3),
+            hd3g(4),
+            loss(5)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter displays the reclocker status, where na is displayed for non-reclocking SFPs.
+	   hd3g should be displayed as 3G.
+	   This control should only be displayed for TX class SFPs. "
+    ::= { txMonitorEntry 6 }
+
+-- End of txMonitorTable
+
+
+        
+-- Beginning of rxMonitorTable
+    rxMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF RxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The rxMonitor table. "
+    ::= { sfpRXMonitor 1 }
+
+    rxMonitorEntry OBJECT-TYPE
+      SYNTAX RxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { rlaserIndex, sfpIndex }
+    ::= { rxMonitorTable 1 }
+
+    RxMonitorEntry ::= SEQUENCE {
+        rlaserIndex     INTEGER,
+        rxLaserPwr     INTEGER,
+        rxReclock     INTEGER
+    }
+
+
+    
+    rlaserIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            laserA(1),
+            laserB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This index is used in RX monitor table. "
+    ::= { rxMonitorEntry 1 }
+
+    
+    rxLaserPwr OBJECT-TYPE
+      SYNTAX INTEGER ( -128..128 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter tells about SFPRX received power staus, in unit of 1 dbm.
+		Show this control only for RX class SFPs, named as Received optical power.
+		Display the string Loss when the optical power is lower than -30 dBm "
+    ::= { rxMonitorEntry 2 }
+
+    
+    rxReclock OBJECT-TYPE
+      SYNTAX INTEGER {
+            na(1),
+            sd(2),
+            hd(3),
+            hd3g(4),
+            loss(5)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter displays the reclocker status, where na is displayed for non-reclocking SFPs.
+	   This control should only be displayed for RX class SFPs. "
+    ::= { rxMonitorEntry 3 }
+
+-- End of rxMonitorTable
+
+
+        
+-- Beginning of mgmtFaultsTable
+    mgmtFaultsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF MgmtFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The mgmtFaults table. "
+    ::= { fc3405Notify 1 }
+
+    mgmtFaultsEntry OBJECT-TYPE
+      SYNTAX MgmtFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { mgmtSFPFaults, sfpIndex }
+    ::= { mgmtFaultsTable 1 }
+
+    MgmtFaultsEntry ::= SEQUENCE {
+        mgmtSFPFaults     INTEGER,
+        sendMgmtTrap     INTEGER,
+        mgmtFaultPresent     INTEGER,
+        trapValid     INTEGER
+    }
+
+
+    
+    mgmtSFPFaults OBJECT-TYPE
+      SYNTAX INTEGER {
+            txCarrier1(1),
+            txCarrier2(2),
+            rxLoss1(3),
+            rxLoss2(4),
+            rxOptPwrHigh1(5),
+            rxOptPwrHigh2(6),
+            rxOptPwrLow1(7),
+            rxOptPwrLow2(8),
+            noInputDetected1(9),
+            noInputDetected2(10),
+            reclockerLoss1(11),
+            reclockerLoss2(12),
+            txLaserFault1(13),
+            txLaserFault2(14),
+            sfpCommunicationLoss(15)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { mgmtFaultsEntry 1 }
+
+    
+    sendMgmtTrap OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to Turn Traps On and Off "
+    ::= { mgmtFaultsEntry 2 }
+
+    
+    mgmtFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check the status of fault(s) "
+    ::= { mgmtFaultsEntry 3 }
+
+    
+    trapValid OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Indicate if a particular trap is applicable to current SFP instance, 
+					and if trap is not applicable, trap should not be displayed to user. "
+    ::= { mgmtFaultsEntry 4 }
+
+-- End of mgmtFaultsTable
+
+
+        
+    trapDest1 OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the trap destination IP address 1. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Notify 2 }
+
+        
+    trapDest2 OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the trap destination IP address 2. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Notify 3 }
+
+        
+    trapDest3 OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the trap destination IP address 3. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Notify 4 }
+
+        
+    trapDest4 OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the trap destination IP address 4. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Notify 5 }
+
+        
+    trapDest5 OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the trap destination IP address 5. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Notify 6 }
+
+        
+    trapResend OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter should be display as a button, when user clicks, VLpro sets/sends a value 1 to 3405FC.
+	   This can trigger all the current faults to be resent. This variable should be used as write-only. "
+    ::= { fc3405Notify 7 }
+
+        
+-- Beginning of fcFaultsTable
+    fcFaultsTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF FcFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The fcFaults table. "
+    ::= { fc3405Notify 8 }
+
+    fcFaultsEntry OBJECT-TYPE
+      SYNTAX FcFaultsEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { fcFaultIndex }
+    ::= { fcFaultsTable 1 }
+
+    FcFaultsEntry ::= SEQUENCE {
+        fcFaultIndex     INTEGER,
+        fcsendTrap     INTEGER,
+        fcFaultPresent     INTEGER
+    }
+
+
+    
+    fcFaultIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            fan1bad(1),
+            fan2bad(2),
+            psu1fail(3),
+            psu2fail(4),
+            extpwr1fail(5),
+            extpwr2fail(6)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Fault Index "
+    ::= { fcFaultsEntry 1 }
+
+    
+    fcsendTrap OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " Used to Turn Traps On and Off "
+    ::= { fcFaultsEntry 2 }
+
+    
+    fcFaultPresent OBJECT-TYPE
+      SYNTAX INTEGER {
+            false(1),
+            true(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " Check the status of fault(s) "
+    ::= { fcFaultsEntry 3 }
+
+-- End of fcFaultsTable
+
+
+        
+    netIP OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the IP address of the frame controller. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Settings 1 }
+
+        
+    netSubnet OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the subnet mask used by the frame controller. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Settings 2 }
+
+        
+    netGateway OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the gateway address used by the frame controller. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Settings 3 }
+
+        
+    netBroadcast OBJECT-TYPE
+      SYNTAX INTEGER ( -2147483647..2147483647 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the broadcast adresss used by the frame controller. It is in an unsigned integer form, and to be displayed as IP address notation. "
+    ::= { fc3405Settings 4 }
+
+        
+    netApply OBJECT-TYPE
+      SYNTAX INTEGER ( 0..1 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter should be display as a button, when user clicks, VLpro sets/sends a value 1 to 3405FC.
+		 Will cause the frame controller to reset, applying changed network settings.
+		 This variable should be used as write-only. "
+    ::= { fc3405Settings 5 }
+
+        
+-- Beginning of txControlTable
+    txControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF TxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The txControl table. "
+    ::= { sfpTXControl 1 }
+
+    txControlEntry OBJECT-TYPE
+      SYNTAX TxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { tlaserIndex, sfpIndex }
+    ::= { txControlTable 1 }
+
+    TxControlEntry ::= SEQUENCE {
+        txSquelch     INTEGER
+    }
+
+
+    
+    txSquelch OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the status of the SFP automute feature, where 1
+	   is enabled and 0 is disabled. This control should only be displayed for TX class SFPs. "
+    ::= { txControlEntry 1 }
+
+-- End of txControlTable
+
+
+        
+-- Beginning of rxControlTable
+    rxControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF RxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The rxControl table. "
+    ::= { sfpRXControl 1 }
+
+    rxControlEntry OBJECT-TYPE
+      SYNTAX RxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { rlaserIndex, sfpIndex }
+    ::= { rxControlTable 1 }
+
+    RxControlEntry ::= SEQUENCE {
+        rxLowOptThresh     INTEGER,
+        rxInvert     INTEGER,
+        rxSlew     INTEGER,
+        rxSquelch     INTEGER,
+        rxSwapChan     INTEGER,
+        rxOutputRateCap     INTEGER
+    }
+
+
+    
+    rxLowOptThresh OBJECT-TYPE
+      SYNTAX INTEGER ( -40..-2 )
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " A trap will be sent when the optical power falls below this threshold (in dB).
+	   Show this control only for RX class SFPs. "
+    ::= { rxControlEntry 1 }
+
+    
+    rxInvert OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the SFP RX output inversion feature, where 1
+	   is enabled and 0 is disabled. This control should only be displayed for RX class SFPs. "
+    ::= { rxControlEntry 2 }
+
+    
+    rxSlew OBJECT-TYPE
+      SYNTAX INTEGER {
+            hd3g(1),
+            sd(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the SFP RX output slew feature, for SFPs lacking
+	   a reclocker. This control should only be displayed for dualrx and dualrxstd SFPs.
+	   hd3g should be displayed as HD/3G "
+    ::= { rxControlEntry 3 }
+
+    
+    rxSquelch OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter informs the status of the SFP RX automute feature, where 1
+	   is enabled and 0 is disabled. This control should only be displayed for
+	   RX class SFPs. "
+    ::= { rxControlEntry 4 }
+
+    
+    rxSwapChan OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the SFP cross point feature.  This feature is per SFP,
+	   so this control should only be shown once, and only for dualrxstd, dualrclkrx SFPs. "
+    ::= { rxControlEntry 5 }
+
+    
+    rxOutputRateCap OBJECT-TYPE
+      SYNTAX INTEGER {
+            bypass(1),
+            sd(2),
+            hd(3)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This controls the SFP output rate cap. Received signal rate will be muted if beyond the limit cap.
+	  This controls will override rxSquelch, so when this control is available, rxSquelch should be not be accessable. 
+	  This parameter is only applicable to the following SFP devices:
+		da4rh. "
+    ::= { rxControlEntry 6 }
+
+-- End of rxControlTable
+
+
+        
+-- Beginning of coaxMonitorTable
+    coaxMonitorTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF CoaxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The coaxMonitor table. "
+    ::= { sfpCOAXMonitor 1 }
+
+    coaxMonitorEntry OBJECT-TYPE
+      SYNTAX CoaxMonitorEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { coaxChannelIndex, sfpIndex }
+    ::= { coaxMonitorTable 1 }
+
+    CoaxMonitorEntry ::= SEQUENCE {
+        coaxChannelIndex     INTEGER,
+        coaxSignalPresence     INTEGER,
+        coaxSignalLock     INTEGER,
+        coaxSignalRate     INTEGER,
+        coaxCableEqualization     INTEGER
+    }
+
+
+    
+    coaxChannelIndex OBJECT-TYPE
+      SYNTAX INTEGER {
+            channelA(1),
+            channelB(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This index is used in the coax monitor table. "
+    ::= { coaxMonitorEntry 1 }
+
+    
+    coaxSignalPresence OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the signal presence on the indexed channel. "
+    ::= { coaxMonitorEntry 2 }
+
+    
+    coaxSignalLock OBJECT-TYPE
+      SYNTAX INTEGER {
+            no(1),
+            yes(2)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the status of the signal lock of the reclocker. "
+    ::= { coaxMonitorEntry 3 }
+
+    
+    coaxSignalRate OBJECT-TYPE
+      SYNTAX INTEGER {
+            na(1),
+            sd(2),
+            hd(3),
+            hd3g(4),
+            loss(5)
+            }
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the signal rate detected by the reclocker.
+	  1. Not Available 
+	  2. 270 Mb/s (SD)
+	  3. 1485 Mb/s (HD)
+	  4. 2970 Mb/s (3G)
+	  5. Loss 
+	   "
+    ::= { coaxMonitorEntry 4 }
+
+    
+    coaxCableEqualization OBJECT-TYPE
+      SYNTAX INTEGER ( 0..100 )
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION " This parameter indicates the percentage of cable equalization of the indexed channel "
+    ::= { coaxMonitorEntry 5 }
+
+-- End of coaxMonitorTable
+
+
+        
+-- Beginning of coaxControlTable
+    coaxControlTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF CoaxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION  " The coaxControl table. "
+    ::= { sfpCOAXControl 1 }
+
+    coaxControlEntry OBJECT-TYPE
+      SYNTAX CoaxControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION 
+                "
+                This entry object type is used to reference
+                all of the objects in the table
+                "
+        INDEX { coaxChannelIndex, sfpIndex }
+    ::= { coaxControlTable 1 }
+
+    CoaxControlEntry ::= SEQUENCE {
+        coaxOutputMute     INTEGER,
+        coaxReclockerMode     INTEGER,
+        coaxSwitchMode     INTEGER,
+        coaxSwitchType     INTEGER
+    }
+
+
+    
+    coaxOutputMute OBJECT-TYPE
+      SYNTAX INTEGER {
+            disabled(1),
+            enabled(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter enables or disables muting the coaxial outputs on loss of signal presence. "
+    ::= { coaxControlEntry 1 }
+
+    
+    coaxReclockerMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            autobypass(1),
+            forcedbypass(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter configures the bypass mode of the reclocker. 
+		Autobypass : Set reclocker to autobypass mode; pass data from input directly to outputs only if data rate is not locked.
+		Forced Bypass: Set reclocker to bypass mode; force reclocker to pass data from input directly to outputs "
+    ::= { coaxControlEntry 2 }
+
+    
+    coaxSwitchMode OBJECT-TYPE
+      SYNTAX INTEGER {
+            autoNoSwitchBack(1),
+            autoWithSwitchBack(2),
+            forcedChannelA(3),
+            forcedChannelB(4)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the switching mode of the automatic changeover feature. (ACO2)
+		Auto, with no switchback : CHA is primary input, Switch to CHB if CHA fails. No switchback if CHA recovers.
+		Auto, with switchback : CHA is primary input, Switch to CHB if CHA fails. Switchback to CHA if it recovers.
+		Forced Channel A: CHA is the input (forced). No switching 
+		Forced Channel B: CHB is the input (forced). No Switching "
+    ::= { coaxControlEntry 3 }
+
+    
+    coaxSwitchType OBJECT-TYPE
+      SYNTAX INTEGER {
+            signalPresenceLoss(1),
+            reclockLoss(2)
+            }
+      ACCESS read-write
+      STATUS mandatory
+      DESCRIPTION " This parameter controls the type of loss that triggers the automatic change over. (ACO2)
+		On Loss of Signal Presence.
+		On Loss of Signal Lock.
+	   "
+    ::= { coaxControlEntry 4 }
+
+-- End of coaxControlTable
+
+
+
+END

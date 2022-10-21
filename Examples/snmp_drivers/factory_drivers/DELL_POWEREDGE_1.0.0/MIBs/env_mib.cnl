@@ -1,0 +1,26 @@
+RADLAN-HWENVIROMENT-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    rlEnv                                       FROM RADLAN-MIB
+    DisplayString                               FROM SNMPv2-TC-v1
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                          FROM SNMPv2-TC;
+
+rlEnvPhysicalDescription OBJECT IDENTIFIER ::= { rlEnv 1 }
+
+rlEnvMonFanStatusTable OBJECT-TYPE
+        ::= { rlEnvPhysicalDescription 1 }
+
+rlEnvMonFanStatusEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+        ::= { rlEnvMonFanStatusTable 1 }
+
+rlEnvMonSupplyStatusTable OBJECT-TYPE
+        ::= { rlEnvPhysicalDescription 2 }
+
+rlEnvMonSupplyStatusEntry OBJECT-TYPE
+        ROW-STATUS-TYPE no-status-field
+        ::= { rlEnvMonSupplyStatusTable 1  }
+
+END
+

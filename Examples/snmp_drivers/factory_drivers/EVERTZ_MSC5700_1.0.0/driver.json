@@ -1,0 +1,8 @@
+{
+  "includes": ["Evertz MSC5700.rsnmp"],
+  "driverName": "MSC5700",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Evertz",
+  "deviceName": "Evertz MSC5700",
+  "factory": true
+}

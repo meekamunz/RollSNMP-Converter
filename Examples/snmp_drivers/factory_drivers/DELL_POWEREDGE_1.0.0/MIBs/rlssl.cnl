@@ -1,0 +1,24 @@
+RADLAN-SSL-A DEFINITIONS ::= BEGIN
+
+-- Title:      RADLAN AAA Private Extension
+-- Version:    7.35
+-- Date:       07 Jan 2004
+
+IMPORTS
+    rnd                                         FROM RADLAN-MIB
+    rlSsl                                       FROM RADLAN-SSL
+    DisplayString                               FROM SNMPv2-TC-v1
+    TruthValue, RowStatus                       FROM RADLAN-SNMPv2
+    Unsigned32, IpAddress,
+    MODULE-IDENTITY, OBJECT-TYPE                FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION                          FROM SNMPv2-TC;
+
+rlSslCertificateImportTable OBJECT-TYPE
+    ::= { rlSsl 6 }
+
+rlSslCertificateImportEntry  OBJECT-TYPE
+    STATUS-FIELD-NAME rlSslCertificateImportFragmentStatus
+    ROW-STATUS-TYPE v2-status-field
+    ::= { rlSslCertificateImportTable 1 }
+
+END

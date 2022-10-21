@@ -1,0 +1,483 @@
+-- Copyright 2012 Evertz Microsystems Ltd.
+-- Fri May 11 11:34:07 2012
+-- Confidential
+
+KEYER-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    keyerTraps
+        FROM KEYER-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { keyerTraps 1 }
+
+
+-- beginning of keyerGenerealError trap
+
+    faultkeyerGenerealErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer General Cleared"
+    ::= 1000
+    
+    faultkeyerGenerealErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer General Alert"
+    ::= 1001
+
+-- end of keyerGenerealError trap
+
+-- beginning of keyerVideoInvalid trap
+
+    faultkeyerVideoInvalidFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Valid"
+    ::= 1002
+    
+    faultkeyerVideoInvalidTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Invalid"
+    ::= 1003
+
+-- end of keyerVideoInvalid trap
+
+-- beginning of keyerRerenceUnlock trap
+
+    faultkeyerRerenceUnlockFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Reference Locked"
+    ::= 1004
+    
+    faultkeyerRerenceUnlockTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Reference Unlocked"
+    ::= 1005
+
+-- end of keyerRerenceUnlock trap
+
+-- beginning of keyerPowerSupply1Error trap
+
+    faultkeyerPowerSupply1ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Power Supply 1 Cleared"
+    ::= 1006
+    
+    faultkeyerPowerSupply1ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Power Supply 1 Error"
+    ::= 1007
+
+-- end of keyerPowerSupply1Error trap
+
+-- beginning of keyerPowerSupply2Error trap
+
+    faultkeyerPowerSupply2ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Power Supply 2 Cleared"
+    ::= 1008
+    
+    faultkeyerPowerSupply2ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Power Supply 2 Error"
+    ::= 1009
+
+-- end of keyerPowerSupply2Error trap
+
+-- beginning of keyerFan1Error trap
+
+    faultkeyerFan1ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 1 Cleared"
+    ::= 1010
+    
+    faultkeyerFan1ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 1 Error"
+    ::= 1011
+
+-- end of keyerFan1Error trap
+
+-- beginning of keyerFan2Error trap
+
+    faultkeyerFan2ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 2 Cleared"
+    ::= 1012
+    
+    faultkeyerFan2ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 2 Error"
+    ::= 1013
+
+-- end of keyerFan2Error trap
+
+-- beginning of keyerFan3Error trap
+
+    faultkeyerFan3ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 3 Cleared"
+    ::= 1014
+    
+    faultkeyerFan3ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 3 Error"
+    ::= 1015
+
+-- end of keyerFan3Error trap
+
+-- beginning of keyerFan4Error trap
+
+    faultkeyerFan4ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 4 Cleared"
+    ::= 1016
+    
+    faultkeyerFan4ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 4 Error"
+    ::= 1017
+
+-- end of keyerFan4Error trap
+
+-- beginning of keyerFan5Error trap
+
+    faultkeyerFan5ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 5 Cleared"
+    ::= 1018
+    
+    faultkeyerFan5ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 5 Error"
+    ::= 1019
+
+-- end of keyerFan5Error trap
+
+-- beginning of keyerFan6Error trap
+
+    faultkeyerFan6ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 6 Cleared"
+    ::= 1020
+    
+    faultkeyerFan6ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 6 Error"
+    ::= 1021
+
+-- end of keyerFan6Error trap
+
+-- beginning of keyerFan7Error trap
+
+    faultkeyerFan7ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 7 Cleared"
+    ::= 1022
+    
+    faultkeyerFan7ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 7 Error"
+    ::= 1023
+
+-- end of keyerFan7Error trap
+
+-- beginning of keyerFan8Error trap
+
+    faultkeyerFan8ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 8 Cleared"
+    ::= 1024
+    
+    faultkeyerFan8ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 8 Error"
+    ::= 1025
+
+-- end of keyerFan8Error trap
+
+-- beginning of keyerFan9Error trap
+
+    faultkeyerFan9ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 9 Cleared"
+    ::= 1026
+    
+    faultkeyerFan9ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 9 Error"
+    ::= 1027
+
+-- end of keyerFan9Error trap
+
+-- beginning of keyerFan10Error trap
+
+    faultkeyerFan10ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 10 Cleared"
+    ::= 1028
+    
+    faultkeyerFan10ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 10 Error"
+    ::= 1029
+
+-- end of keyerFan10Error trap
+
+-- beginning of keyerFan11Error trap
+
+    faultkeyerFan11ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 11 Cleared"
+    ::= 1030
+    
+    faultkeyerFan11ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Fan 11 Error"
+    ::= 1031
+
+-- end of keyerFan11Error trap
+
+-- beginning of keyerTemperature1OverError trap
+
+    faultkeyerTemperature1OverErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 1 Over temperatureOK"
+    ::= 1032
+    
+    faultkeyerTemperature1OverErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 1 Over temperatureOver"
+    ::= 1033
+
+-- end of keyerTemperature1OverError trap
+
+-- beginning of keyerTemperature2OverError trap
+
+    faultkeyerTemperature2OverErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 2 Over temperatureOK"
+    ::= 1034
+    
+    faultkeyerTemperature2OverErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 2 Over temperatureOver"
+    ::= 1035
+
+-- end of keyerTemperature2OverError trap
+
+-- beginning of keyerTemperature3OverError trap
+
+    faultkeyerTemperature3OverErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 3 Over temperatureOK"
+    ::= 1036
+    
+    faultkeyerTemperature3OverErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 3 Over temperatureOver"
+    ::= 1037
+
+-- end of keyerTemperature3OverError trap
+
+-- beginning of keyerTemperature4OverError trap
+
+    faultkeyerTemperature4OverErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 4 Over temperatureOK"
+    ::= 1038
+    
+    faultkeyerTemperature4OverErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Temperature 4 Over temperatureOver"
+    ::= 1039
+
+-- end of keyerTemperature4OverError trap
+
+-- beginning of keyerByPassActive trap
+
+    faultkeyerByPassActiveFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer By Pass Active"
+    ::= 1040
+    
+    faultkeyerByPassActiveTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer By Pass Inactive"
+    ::= 1041
+
+-- end of keyerByPassActive trap
+
+-- beginning of keyerInputInvalid1 trap
+
+    faultkeyerInputInvalid1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 1 Invalid Valid"
+    ::= 1042
+    
+    faultkeyerInputInvalid1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 1 Invalid Invalid"
+    ::= 1043
+
+-- end of keyerInputInvalid1 trap
+
+-- beginning of keyerInputInvalid2 trap
+
+    faultkeyerInputInvalid2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 2 Invalid Valid"
+    ::= 1044
+    
+    faultkeyerInputInvalid2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 2 Invalid Invalid"
+    ::= 1045
+
+-- end of keyerInputInvalid2 trap
+
+-- beginning of keyerInputInvalid3 trap
+
+    faultkeyerInputInvalid3False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 3 Invalid Valid"
+    ::= 1046
+    
+    faultkeyerInputInvalid3True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 3 Invalid Invalid"
+    ::= 1047
+
+-- end of keyerInputInvalid3 trap
+
+-- beginning of keyerInputInvalid4 trap
+
+    faultkeyerInputInvalid4False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 4 Invalid Valid"
+    ::= 1048
+    
+    faultkeyerInputInvalid4True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 4 Invalid Invalid"
+    ::= 1049
+
+-- end of keyerInputInvalid4 trap
+
+-- beginning of keyerInputInvalid5 trap
+
+    faultkeyerInputInvalid5False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 5 Invalid Valid"
+    ::= 1050
+    
+    faultkeyerInputInvalid5True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 5 Invalid Invalid"
+    ::= 1051
+
+-- end of keyerInputInvalid5 trap
+
+-- beginning of keyerInputInvalid6 trap
+
+    faultkeyerInputInvalid6False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 6 Invalid Valid"
+    ::= 1052
+    
+    faultkeyerInputInvalid6True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Video Input 6 Invalid Invalid"
+    ::= 1053
+
+-- end of keyerInputInvalid6 trap
+
+-- beginning of keyerAudioInputInvalid1 trap
+
+    faultkeyerAudioInputInvalid1False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Audio Input 1 Invalid Valid"
+    ::= 1054
+    
+    faultkeyerAudioInputInvalid1True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Audio Input 1 Invalid Invalid"
+    ::= 1055
+
+-- end of keyerAudioInputInvalid1 trap
+
+-- beginning of keyerAudioInputInvalid2 trap
+
+    faultkeyerAudioInputInvalid2False TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Audio Input 2 Invalid Valid"
+    ::= 1056
+    
+    faultkeyerAudioInputInvalid2True TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Keyer Audio Input 2 Invalid Invalid"
+    ::= 1057
+
+-- end of keyerAudioInputInvalid2 trap
+
+
+
+
+END

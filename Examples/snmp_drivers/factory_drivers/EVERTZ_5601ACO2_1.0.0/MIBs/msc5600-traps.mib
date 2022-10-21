@@ -1,0 +1,147 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Mon Oct 29 08:38:56 2007
+-- Confidential
+
+MSC5600-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    mscTraps
+        FROM MSC5600-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { mscTraps 1 }
+
+
+-- beginning of referenceFault trap
+
+    faultreferenceFaultFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Reference locked"
+    ::= 1000
+    
+    faultreferenceFaultTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Reference not locked"
+    ::= 1001
+
+-- end of referenceFault trap
+
+-- beginning of timeFault trap
+
+    faulttimeFaultFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Time locked"
+    ::= 1002
+    
+    faulttimeFaultTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Time not locked"
+    ::= 1003
+
+-- end of timeFault trap
+
+-- beginning of referenceJamNeeded trap
+
+    faultreferenceJamNeededFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Reference, user jam not needed"
+    ::= 1004
+    
+    faultreferenceJamNeededTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Reference, user jam needed"
+    ::= 1005
+
+-- end of referenceJamNeeded trap
+
+-- beginning of timeJamNeeded trap
+
+    faulttimeJamNeededFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Time user jam not needed"
+    ::= 1006
+    
+    faulttimeJamNeededTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Time user jam needed"
+    ::= 1007
+
+-- end of timeJamNeeded trap
+
+-- beginning of fanFailure trap
+
+    faultfanFailureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan Ok"
+    ::= 1008
+    
+    faultfanFailureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan failure"
+    ::= 1009
+
+-- end of fanFailure trap
+
+-- beginning of ps1Failure trap
+
+    faultps1FailureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power supply 1 ok"
+    ::= 1010
+    
+    faultps1FailureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power supply 1 failure"
+    ::= 1011
+
+-- end of ps1Failure trap
+
+-- beginning of ps2Failure trap
+
+    faultps2FailureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power supply 2 ok"
+    ::= 1012
+    
+    faultps2FailureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Power supply 2 failure"
+    ::= 1013
+
+-- end of ps2Failure trap
+
+-- beginning of internalHardwareFailure trap
+
+    faultinternalHardwareFailureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "internalHardware ok"
+    ::= 1014
+    
+    faultinternalHardwareFailureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "internalHardware failure"
+    ::= 1015
+
+-- end of internalHardwareFailure trap
+
+
+
+
+END

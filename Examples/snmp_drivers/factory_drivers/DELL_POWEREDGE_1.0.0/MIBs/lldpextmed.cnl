@@ -1,0 +1,201 @@
+LLDP-MED-CNL DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Counter32, NOTIFICATION-TYPE
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, TimeStamp, TruthValue
+        FROM SNMPv2-TC
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+    TimeFilter, ZeroBasedCounter32
+        FROM RMON2-MIB
+    AddressFamilyNumbers
+        FROM IANA-ADDRESS-FAMILY-NUMBERS-MIB
+    lldpMIB
+        FROM LLDP-MIB
+    lldpXMedMIB
+        FROM LLDP-EXT-MED-MIB;
+
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+--
+-- LLDP-MED Information
+--
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+lldpXMedNotifications    OBJECT IDENTIFIER ::= { lldpXMedMIB 0 }
+lldpXMedObjects          OBJECT IDENTIFIER ::= { lldpXMedMIB 1 }
+
+-- LLDP MED extension MIB groups
+
+lldpXMedConfig     OBJECT IDENTIFIER ::= { lldpXMedObjects 1 }
+lldpXMedLocalData  OBJECT IDENTIFIER ::= { lldpXMedObjects 2 }
+lldpXMedRemoteData OBJECT IDENTIFIER ::= { lldpXMedObjects 3 }
+
+------------------------------------------------------------------------------
+-- MED - Configuration
+------------------------------------------------------------------------------
+
+lldpXMedPortConfigTable   OBJECT-TYPE
+    ::= { lldpXMedConfig 2 }
+
+lldpXMedPortConfigEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedPortConfigTable 1 }
+
+
+------------------------------------------------------------------------------
+-- LLDP-MED - Local Device Information
+------------------------------------------------------------------------------
+---
+--- lldpXMedLocMediaPolicyTable: Local Media Policy
+---                        Information Table
+---
+---
+lldpXMedLocMediaPolicyTable   OBJECT-TYPE
+    ::= { lldpXMedLocalData 1 }
+
+lldpXMedLocMediaPolicyEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedLocMediaPolicyTable 1 }
+
+
+--- Location Information
+--- Local Location Information transmitted by an endpoint
+--- lldpXMedLocLocationTable - Location Information
+---
+
+lldpXMedLocLocationTable OBJECT-TYPE
+    ::= { lldpXMedLocalData 9 }
+
+lldpXMedLocLocationEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedLocLocationTable 1 }
+
+
+--- PSE Port Table
+
+lldpXMedLocXPoEPSEPortTable   OBJECT-TYPE
+    ::= { lldpXMedLocalData 11 }
+
+lldpXMedLocXPoEPSEPortEntry   OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedLocXPoEPSEPortTable 1 }
+
+
+
+------------------------------------------------------------------------------
+-- LLDP-MED  - Remote Devices Information
+------------------------------------------------------------------------------
+
+
+
+-- LLdpXMedRemCapabilitiesTable
+-- this table is read by a manager to determine what capabilities
+-- exists and are enabled on the remote system connected to the port
+
+-- The information in this table is based upon the information advertised
+-- by the remote device and received on each port in the capabilities TLV
+
+lldpXMedRemCapabilitiesTable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 1 }
+
+lldpXMedRemCapabilitiesEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemCapabilitiesTable 1 }
+
+
+
+---
+---
+--- lldpXMedRemMediaPolicyTable: Media Policy Table
+---
+---
+
+lldpXMedRemMediaPolicyTable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 2 }
+
+lldpXMedRemMediaPolicyEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemMediaPolicyTable 1 }
+
+
+
+--- lldpXMedRemInventoryTable - Remote Inventory Information
+---
+
+lldpXMedRemInventoryTable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 3 }
+
+lldpXMedRemInventoryEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemInventoryTable 1 }
+
+
+
+--- lldpXMedRemLocationTable - Remote Location Information
+---
+
+lldpXMedRemLocationTable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 4 }
+
+lldpXMedRemLocationEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemLocationTable 1 }
+
+
+
+--- lldpXMedRemXPoETable - Information about Remote PoE Device Type
+---
+
+lldpXMedRemXPoETable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 5 }
+
+lldpXMedRemXPoEEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemXPoETable 1 }
+
+
+
+--- lldpXMedRemXPoEPSETable - Extended PoE PSE Information from the remote device
+---
+
+lldpXMedRemXPoEPSETable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 6 }
+
+lldpXMedRemXPoEPSEEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemXPoEPSETable 1 }
+
+
+
+
+--- lldpXMedRemXPoEPDTable - Extended PoE PD Information from the remote device
+---
+
+lldpXMedRemXPoEPDTable OBJECT-TYPE
+    ::= { lldpXMedRemoteData 7 }
+
+lldpXMedRemXPoEPDEntry OBJECT-TYPE
+   ROW-STATUS-TYPE no-status-field
+    ::= { lldpXMedRemXPoEPDTable 1 }
+
+
+
+-- LLDP MED Extension Notifications
+-- Transmission of LLDP MED Extension Notification is controlled by the
+-- lldpNotificationInterval object in the LLDP MIB defined in
+-- IEEE 802.1AB-2005
+
+lldpXMedTopologyChangeDetected TRAP-TYPE --NOTIFICATION-TYPE
+      ENTERPRISE  lldpXMedNotifications
+      ERRCODE     RSG_ErrMsg_code_lldpMedTopologyChange_E
+      SEVERITY    INFO
+   ::= 1
+
+
+END

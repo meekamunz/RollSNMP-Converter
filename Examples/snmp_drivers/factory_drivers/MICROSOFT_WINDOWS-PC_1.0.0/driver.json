@@ -1,0 +1,8 @@
+{
+  "includes": ["Windows PC Regex.rsnmp"],
+  "driverName": "Windows-PC",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Microsoft",
+  "deviceName": "Windows PC Regex",
+  "factory": true
+}

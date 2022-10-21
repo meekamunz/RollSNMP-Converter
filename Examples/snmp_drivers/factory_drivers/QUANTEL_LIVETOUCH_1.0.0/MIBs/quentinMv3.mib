@@ -1,0 +1,457 @@
+--
+-- Title: Quentin Server MIB issue 1.0 (c) Quantel Ltd. 2003
+--
+
+QUANTEL-QUENTIN-MOLLY-SERVER-MIB
+
+--FORCE-INCLUDE <mib.h>
+--FORCE-INCLUDE <snmpdefs.h>
+--FORCE-INCLUDE "mibhand.h"
+
+DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY,
+        OBJECT-TYPE,
+        IpAddress,
+        Counter32,
+        Integer32 FROM SNMPv2-SMI
+        TRAP-TYPE FROM RFC-1215
+        quantelProduct FROM QUANTEL-MIB
+        ;
+
+-- Module Identification Definition
+
+quantelQuentinServerMV3 MODULE-IDENTITY
+    LAST-UPDATED "200410250000Z"
+    ORGANIZATION "Quantel"
+    CONTACT-INFO "Turnpike Road
+                  Newbury
+                  Berkshre RG14 2NE
+
+                  Tel   : +44(0)1635 48222
+                  Fax   : +44(0)1635 521258
+                  Web   : www.quantel.com
+                  E-mail: support@quantel.com"
+    DESCRIPTION "This is the Quentin Server MIB"
+
+    ::= { quantelProduct 7 }
+
+system        OBJECT IDENTIFIER ::= { quantelQuentinServerMV3 1 }
+videoChannels OBJECT IDENTIFIER ::= { quantelQuentinServerMV3 2 }
+diskSystem    OBJECT IDENTIFIER ::= { quantelQuentinServerMV3 3 }
+clipnetSystem OBJECT IDENTIFIER ::= { quantelQuentinServerMV3 4 }
+
+-- System Configuration Group
+
+cpuLoad OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The loading of the CPU as a percentage"
+    ::= { system 1 }
+
+-- Video Ports Configuration Group
+
+videoChannelNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of video ports present on this system."
+    ::= { videoChannels 1 }
+
+--
+-- Video Port Table
+--
+
+videoChannelTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF VideoChannelEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of port entries.  The number of
+                 entries is given by the value of videoChannelNumber."
+    ::= { videoChannels 2 }
+
+    videoChannelEntry OBJECT-TYPE
+        SYNTAX  VideoChannelEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A port entry containing objects describing
+                     a particular video port."
+        INDEX   { videoChannelIndex }
+        ::= { videoChannelTable 1 }
+
+    VideoChannelEntry ::= SEQUENCE {
+            videoChannelIndex  Integer32,
+            videoChannelStatus INTEGER,
+            videoChannelPlayedFrames Counter32,
+            videoChannelRecordedFrames Counter32,
+            videoChannelBlackFrames Counter32,
+            videoChannelBadFrames Counter32,
+            videoChannelSignatureErrors Counter32,
+            videoChannelBrowseFramesRecorded Counter32,
+            videoChannelFailedRecordedFrames Counter32,
+            videoChannelAudioGUIDErrors Counter32,
+            videoChannelReset Integer32 }
+
+        videoChannelIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of videoChannelNumber."
+            ::= { videoChannelEntry 1 }
+
+        videoChannelStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                idle(0),
+                play(1),
+                record(2)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the port."
+            ::= { videoChannelEntry 2 }
+
+        videoChannelPlayedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames played."
+            ::= { videoChannelEntry 3 }
+
+        videoChannelRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of video frames recorded."
+            ::= { videoChannelEntry 4 }
+
+        videoChannelBlackFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of black video frames played."
+            ::= { videoChannelEntry 5 }
+
+        videoChannelBadFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of bad video frames played."
+            ::= { videoChannelEntry 6 }
+
+        videoChannelSignatureErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of read signature errors."
+            ::= { videoChannelEntry 7 }
+
+        videoChannelBrowseFramesRecorded OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of browse frames recorded."
+            ::= { videoChannelEntry 8 }
+
+        videoChannelFailedRecordedFrames OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of frames that failed to be recorded."
+            ::= { videoChannelEntry 9 }
+
+        videoChannelAudioGUIDErrors OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "Number of audio frames played with GUID errors."
+            ::= { videoChannelEntry 10 }
+
+        videoChannelReset OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-write
+            STATUS  current
+            DESCRIPTION  "Resets all counters for this port."
+            ::= { videoChannelEntry 11 }
+
+
+
+-- Disk System Configuration Group
+
+diskSystemNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of disk interfaces present on this system."
+    ::= { diskSystem 1 }
+
+--
+-- Disk System Table
+--
+
+diskSystemTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF DiskSystemEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of disk system entries.  The number of
+                 entries is given by the value of diskSystemNumber."
+    ::= { diskSystem 2 }
+
+    diskSystemEntry OBJECT-TYPE
+        SYNTAX  DiskSystemEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A disk system entry containing objects describing
+                     a particular disk pack."
+        INDEX   { diskSystemIndex }
+        ::= { diskSystemTable 1 }
+
+    DiskSystemEntry ::= SEQUENCE {
+            diskSystemIndex  Integer32,
+            diskSystemStatus INTEGER,
+            diskSystemDiskReads Counter32,
+            diskSystemDiskWrites Counter32,
+            diskSystemCableReads Counter32,
+            diskSystemCableWrites Counter32,
+            diskSystemReadErrors Counter32,
+            diskSystemWriteErrors Counter32,
+            diskSystemRaidIndex Integer32,
+            diskSystemReset Integer32}
+
+        diskSystemIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..32)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each disk system.  Its value
+                         ranges between 0 and the value of diskSystemNumber."
+            ::= { diskSystemEntry 1 }
+
+        diskSystemStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                booting(0),
+                operational(1),
+                faulty(2)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the disk."
+            ::= { diskSystemEntry 2 }
+
+        diskSystemDiskReads OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of atoms that have been read from the disks."
+            ::= { diskSystemEntry 3 }
+
+        diskSystemDiskWrites OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of atoms that have been written to the disks."
+            ::= { diskSystemEntry 4 }
+
+        diskSystemCableReads OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of atoms read from the disk controller."
+            ::= { diskSystemEntry 5 }
+
+        diskSystemCableWrites OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of atoms written to the disk controller."
+            ::= { diskSystemEntry 6 }
+
+        diskSystemReadErrors OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of read errors that have occurred."
+            ::= { diskSystemEntry 7 }
+
+        diskSystemWriteErrors OBJECT-TYPE
+            SYNTAX Counter32
+            MAX-ACCESS read-only
+            STATUS current
+            DESCRIPTION "The number of write errors that have occurred."
+            ::= { diskSystemEntry 8 }
+
+        diskSystemRaidIndex OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "An index to indicate the number of raids on an interface
+                          ranges between 0 and the number of raids in a disk system."
+            ::= { diskSystemEntry 9 }
+
+        diskSystemReset OBJECT-TYPE
+            SYNTAX  Integer32
+            MAX-ACCESS  read-write
+            STATUS  current
+            DESCRIPTION  "Reset all disk system counters."
+            ::= { diskSystemEntry 10 }
+
+-- Clipnet Ports Configuration Group
+
+clipnetPortNumber OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of clipnet ports present on this system."
+    ::= { clipnetSystem 1 }
+
+clipnetAtomsCopied OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms copied over the clipnet system."
+    ::= { clipnetSystem 2 }
+
+clipnetAtomsAborted OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms aborted over the clipnet system."
+    ::= { clipnetSystem 3 }
+
+clipnetAtomsRetried OBJECT-TYPE
+    SYNTAX  Counter32
+    MAX-ACCESS  read-only
+    STATUS  current
+    DESCRIPTION "The number of atoms retried over the clipnet system."
+    ::= { clipnetSystem 4 }
+
+--
+-- Clipnet Port Table
+--
+
+clipnetPortTable OBJECT-TYPE
+    SYNTAX  SEQUENCE OF ClipnetPortEntry
+    MAX-ACCESS  not-accessible
+    STATUS  current
+    DESCRIPTION "A list of clipnet port entries.  The number of
+                 entries is given by the value of clipnetPortNumber."
+    ::= { clipnetSystem 5 }
+
+    clipnetPortEntry OBJECT-TYPE
+        SYNTAX  ClipnetPortEntry
+        MAX-ACCESS  not-accessible
+        STATUS  current
+        DESCRIPTION "A clipnetport entry containing objects describing
+                     a particular clipnet port."
+        INDEX   { clipnetPortIndex }
+        ::= { clipnetPortTable 1 }
+
+    ClipnetPortEntry ::= SEQUENCE {
+            clipnetPortIndex  Integer32,
+            clipnetPortAddress IpAddress,
+            clipnetPortStatus INTEGER,
+            clipnetPortAtomsRead Counter32,
+            clipnetPortAtomsWritten Counter32,
+            clipnetPortLinkStatus INTEGER}
+
+        clipnetPortIndex OBJECT-TYPE
+            SYNTAX  Integer32 (0..8)
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "A unique value for each interface.  Its value
+                         ranges between 0 and the value of clipnetPortNumber."
+            ::= { clipnetPortEntry 1 }
+
+        clipnetPortAddress OBJECT-TYPE
+                SYNTAX  IpAddress
+                MAX-ACCESS read-only
+                STATUS current
+                DESCRIPTION "The IP address of the Clipnet interface."
+            ::= { clipnetPortEntry 2 }
+
+        clipnetPortStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                faulty(0),
+                operational(1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION "Current status of the port."
+            ::= { clipnetPortEntry 3 }
+
+        clipnetPortAtomsRead OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms read."
+            ::= { clipnetPortEntry 4 }
+
+        clipnetPortAtomsWritten OBJECT-TYPE
+            SYNTAX  Counter32
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The total number of atoms written."
+            ::= { clipnetPortEntry 5 }
+
+        clipnetPortLinkStatus OBJECT-TYPE
+            SYNTAX  INTEGER {
+                linkDown (0),
+                linkUp (1)
+            }
+            MAX-ACCESS  read-only
+            STATUS  current
+            DESCRIPTION  "The status of the ethernet link."
+            ::= { clipnetPortEntry 6 }
+
+clipnetReset OBJECT-TYPE
+    SYNTAX  Integer32
+    MAX-ACCESS  read-write
+    STATUS  current
+    DESCRIPTION "Reset clipnet system counters."
+    ::= { clipnetSystem 6 }
+
+-- Traps
+
+-- Server traps
+quentinServerFanFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    DESCRIPTION "Trap is sent when a fan fails"
+    ::= 1
+quentinServerFanNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    DESCRIPTION "Trap is sent when a fan fault is cleared"
+    ::= 2
+quentinServerPasswordExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    DESCRIPTION "Trap is sent when a password is close to expiry"
+    ::= 3
+quentinServerPasswordNotExpired TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    DESCRIPTION "Trap is sent when a password expiry is cleared"
+    ::= 4
+
+-- Disk system traps
+diskSystemDiskFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    VARIABLES  { diskSystemIndex, diskSystemRaidIndex }
+    DESCRIPTION "Trap is sent when a disk fails"
+    ::= 10
+diskSystemDiskNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    VARIABLES  { diskSystemIndex, diskSystemRaidIndex }
+    DESCRIPTION "Trap is sent when a disk fault is cleared"
+    ::= 11
+-- Clipnet traps
+clipnetSystemLinkFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fails"
+    ::= 20
+clipnetSystemLinkNoFault TRAP-TYPE
+    ENTERPRISE quantelQuentinServerMV3
+    VARIABLES  { clipnetPortIndex }
+    DESCRIPTION "Trap is sent when a clipnet card link fault is cleared"
+    ::= 21
+END
+

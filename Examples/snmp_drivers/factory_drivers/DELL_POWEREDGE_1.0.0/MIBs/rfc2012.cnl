@@ -1,0 +1,69 @@
+TCP-MIB-A DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Gauge32,
+    Counter32, IpAddress, mib-2        FROM SNMPv2-SMI
+    MODULE-COMPLIANCE, OBJECT-GROUP    FROM SNMPv2-CONF;
+
+-- the TCP group
+
+tcp      OBJECT IDENTIFIER ::= { mib-2 6 }
+
+tcpRtoAlgorithm OBJECT-TYPE
+    ::= { tcp 1 }
+
+tcpRtoMin OBJECT-TYPE
+    ::= { tcp 2 }
+
+tcpRtoMax OBJECT-TYPE
+    ::= { tcp 3 }
+
+tcpMaxConn OBJECT-TYPE
+    ::= { tcp 4 }
+
+tcpActiveOpens OBJECT-TYPE
+    ::= { tcp 5 }
+
+tcpPassiveOpens OBJECT-TYPE
+    ::= { tcp 6 }
+
+tcpAttemptFails OBJECT-TYPE
+    ::= { tcp 7 }
+
+tcpEstabResets OBJECT-TYPE
+    ::= { tcp 8 }
+
+tcpCurrEstab OBJECT-TYPE
+    ::= { tcp 9 }
+
+
+tcpInSegs OBJECT-TYPE
+    ::= { tcp 10 }
+
+tcpOutSegs OBJECT-TYPE
+    ::= { tcp 11 }
+
+tcpRetransSegs OBJECT-TYPE
+    ::= { tcp 12 }
+
+
+-- the TCP Connection table
+
+-- The TCP connection table contains information about this
+-- entity's existing TCP connections.
+
+tcpConnTable OBJECT-TYPE
+    ::= { tcp 13 }
+
+tcpConnEntry OBJECT-TYPE
+    ROW-STATUS-TYPE no-status-field
+    ::= { tcpConnTable 1 }
+
+tcpInErrs OBJECT-TYPE
+    ::= { tcp 14 }
+
+tcpOutRsts OBJECT-TYPE
+    ::= { tcp 15 }
+
+END
+

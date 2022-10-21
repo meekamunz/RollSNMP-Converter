@@ -1,0 +1,323 @@
+-- Copyright 2007 Evertz Microsystems Ltd.
+-- Fri Nov 09 11:42:11 2007
+-- Confidential
+
+EQXXPT-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+    eqxXptTraps
+        FROM EQXXPT-MIB
+    TRAP-TYPE
+        FROM RFC-1215;
+
+    trapFault OBJECT IDENTIFIER ::= { eqxXptTraps 1 }
+
+
+-- beginning of frontCardOverTemperature trap
+
+    faultfrontCardOverTemperatureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Front of Card Over Temperature Cleared"
+    ::= 1000
+    
+    faultfrontCardOverTemperatureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Front of Card Over Temperature Alert"
+    ::= 1001
+
+-- end of frontCardOverTemperature trap
+
+-- beginning of midCardOverTemperature trap
+
+    faultmidCardOverTemperatureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Middle of Card Over Temperature Cleared"
+    ::= 1002
+    
+    faultmidCardOverTemperatureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Middle of Card Over Temperature Alert"
+    ::= 1003
+
+-- end of midCardOverTemperature trap
+
+-- beginning of xptOverTemperature trap
+
+    faultxptOverTemperatureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Crosspoint Over Temperature Cleared"
+    ::= 1004
+    
+    faultxptOverTemperatureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Crosspoint Over Temperature Alert"
+    ::= 1005
+
+-- end of xptOverTemperature trap
+
+-- beginning of fanFailure trap
+
+    faultfanFailureFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan Failure Cleared"
+    ::= 1006
+    
+    faultfanFailureTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Fan Failure Alert"
+    ::= 1007
+
+-- end of fanFailure trap
+
+-- beginning of voltage1V2Error trap
+
+    faultvoltage1V2ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 1.2V Out of Specification Cleared"
+    ::= 1008
+    
+    faultvoltage1V2ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 1.2V Out of Specification Alert"
+    ::= 1009
+
+-- end of voltage1V2Error trap
+
+-- beginning of voltage2V5Error trap
+
+    faultvoltage2V5ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 2.5V Out of Specification Cleared"
+    ::= 1010
+    
+    faultvoltage2V5ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 2.5V Out of Specification Alert"
+    ::= 1011
+
+-- end of voltage2V5Error trap
+
+-- beginning of voltage3V3Error trap
+
+    faultvoltage3V3ErrorFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 3.3V Out of Specification Cleared"
+    ::= 1012
+    
+    faultvoltage3V3ErrorTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Voltage Rail 3.3V Out of Specification Alert"
+    ::= 1013
+
+-- end of voltage3V3Error trap
+
+-- beginning of rxErrorFlinkControlBus trap
+
+    faultrxErrorFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Error Cleared"
+    ::= 1014
+    
+    faultrxErrorFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Error Alert"
+    ::= 1015
+
+-- end of rxErrorFlinkControlBus trap
+
+-- beginning of rxOverrunFlinkControlBus trap
+
+    faultrxOverrunFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Rx FIFO Overrun Error Cleared"
+    ::= 1016
+    
+    faultrxOverrunFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Rx FIFO Overrun Error Alert"
+    ::= 1017
+
+-- end of rxOverrunFlinkControlBus trap
+
+-- beginning of txOverrunFlinkControlBus trap
+
+    faulttxOverrunFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Tx FIFO Overrun Error Cleared"
+    ::= 1018
+    
+    faulttxOverrunFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Tx FIFO Overrun Error Alert"
+    ::= 1019
+
+-- end of txOverrunFlinkControlBus trap
+
+-- beginning of commsQuietFlinkControlBus trap
+
+    faultcommsQuietFlinkControlBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Comms Quiet Error Cleared"
+    ::= 1020
+    
+    faultcommsQuietFlinkControlBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Control Bus Receive Comms Quiet Error Alert"
+    ::= 1021
+
+-- end of commsQuietFlinkControlBus trap
+
+-- beginning of rxErrorFlinkStatusBus trap
+
+    faultrxErrorFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Error Cleared"
+    ::= 1022
+    
+    faultrxErrorFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Error Alert"
+    ::= 1023
+
+-- end of rxErrorFlinkStatusBus trap
+
+-- beginning of rxOverrunFlinkStatusBus trap
+
+    faultrxOverrunFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Rx FIFO Overrun Error Cleared"
+    ::= 1024
+    
+    faultrxOverrunFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Rx FIFO Overrun Error Alert"
+    ::= 1025
+
+-- end of rxOverrunFlinkStatusBus trap
+
+-- beginning of txOverrunFlinkStatusBus trap
+
+    faulttxOverrunFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Tx FIFO Overrun Error Cleared"
+    ::= 1026
+    
+    faulttxOverrunFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Tx FIFO Overrun Error Alert"
+    ::= 1027
+
+-- end of txOverrunFlinkStatusBus trap
+
+-- beginning of commsQuietFlinkStatusBus trap
+
+    faultcommsQuietFlinkStatusBusFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Comms Quiet Error Cleared"
+    ::= 1028
+    
+    faultcommsQuietFlinkStatusBusTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "F-Link Status Bus Receive Comms Quiet Error Alert"
+    ::= 1029
+
+-- end of commsQuietFlinkStatusBus trap
+
+-- beginning of primaryEthernetLinkDown trap
+
+    faultprimaryEthernetLinkDownFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Primary Ethernet Link Down Error Cleared"
+    ::= 1030
+    
+    faultprimaryEthernetLinkDownTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Primary Ethernet Link Down Error Alert"
+    ::= 1031
+
+-- end of primaryEthernetLinkDown trap
+
+-- beginning of secondaryEthernetLinkDown trap
+
+    faultsecondaryEthernetLinkDownFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Secondary Ethernet Link Down Error Cleared"
+    ::= 1032
+    
+    faultsecondaryEthernetLinkDownTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "Secondary Ethernet Link Down Error Alert"
+    ::= 1033
+
+-- end of secondaryEthernetLinkDown trap
+
+-- beginning of fvh50Missing trap
+
+    faultfvh50MissingFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 50Hz Reference Missing Cleared"
+    ::= 1034
+    
+    faultfvh50MissingTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 50Hz Reference Missing Alert"
+    ::= 1035
+
+-- end of fvh50Missing trap
+
+-- beginning of fvh60Missing trap
+
+    faultfvh60MissingFalse TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 60Hz Reference Missing Cleared"
+    ::= 1036
+    
+    faultfvh60MissingTrue TRAP-TYPE
+        ENTERPRISE  trapFault
+        DESCRIPTION
+            "FVH 60Hz Reference Missing Alert"
+    ::= 1037
+
+-- end of fvh60Missing trap
+
+
+
+
+END

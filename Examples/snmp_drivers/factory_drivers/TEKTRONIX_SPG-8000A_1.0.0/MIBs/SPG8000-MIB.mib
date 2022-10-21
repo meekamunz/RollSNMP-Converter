@@ -1,0 +1,324 @@
+SPG8000-MIB DEFINITIONS ::= BEGIN
+
+-- SPG8000 MIB
+
+-- IMPORTS: Include definitions from other mibs here, which is always
+-- the first item in a MIB file.
+IMPORTS
+	OBJECT-TYPE, Integer32,
+	MODULE-IDENTITY                       FROM SNMPv2-SMI
+	NOTIFICATION-TYPE                     FROM SNMPv2-SMI
+        enterprises                           FROM SNMPv2-SMI
+        DisplayString                         FROM SNMPv2-TC
+        TEXTUAL-CONVENTION                    FROM SNMPv2-TC
+        Float                                 FROM NET-SNMP-TC;
+
+--
+-- A brief description and update information about this mib.
+--
+spg8000		MODULE-IDENTITY
+    LAST-UPDATED	"201208131544Z"            -- 13 Aug 2012
+    ORGANIZATION	"Tektronix - Video Buisness Unit"
+    CONTACT-INFO 
+                "Tektronix Inc.
+                PO BOX 500
+                Beaverton OR, 97077, USA
+                http://www.tektronix.com
+                +1 503-627-2400"
+    DESCRIPTION  "SPG8000 Video Generator MIB"
+
+    ::= { tvtproducts 36 }
+
+-- Define typical mib nodes, like where the objects are going to lie.
+
+-- Tektronix top level OID definitions
+tek             OBJECT IDENTIFIER ::= { enterprises 128 }
+
+tvt             OBJECT IDENTIFIER ::= { tek 5 }
+
+tvtproducts     OBJECT IDENTIFIER ::= { tvt 1 }
+
+tvtmibs         OBJECT IDENTIFIER ::= { tvt 2 }
+
+traps           OBJECT IDENTIFIER ::= { spg8000 1 }
+
+status		OBJECT IDENTIFIER ::= { spg8000 2 }
+
+diag		OBJECT IDENTIFIER ::= { spg8000 3 }
+
+-- SPG group specific OID definitions
+trapPrefix      OBJECT IDENTIFIER ::= { traps 0 }
+
+
+trapDestnNum    OBJECT-TYPE
+    SYNTAX      INTEGER (0..3)
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "Trap destination number for use as an index in the trap destination table"
+
+    ::= { traps 1 }
+
+
+trapReport      OBJECT-TYPE
+    SYNTAX      INTEGER {
+        off(0),
+        on(1)
+    }
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION         "Enable/Disable trap reporting"
+
+    ::= { traps 2 }
+
+
+trapDestn       OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION         "Destination IP address for traps"
+
+    ::= { trapDestnEntry 1 }
+
+
+trapDestnTable  OBJECT-TYPE
+    SYNTAX      SEQUENCE OF TrapDestnEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "Table for trap destination addresses"
+    
+    ::= { traps 3 }
+
+
+trapDestnEntry  OBJECT-TYPE
+    SYNTAX      TrapDestnEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "a row in the trap destination address table"
+    INDEX { trapDestnNum }
+
+    ::= { trapDestnTable 1 }
+    
+TrapDestnEntry ::= SEQUENCE {
+    trapDestn   DisplayString
+}
+
+trapInfo        OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION         "Additional information sent along with the trap. (not accessible for GET/SET requests)"
+
+    ::= { traps 4 }
+
+
+alarmType       OBJECT-TYPE
+    SYNTAX      INTEGER {
+        alarm(0),
+        alarmStart(1),
+        alarmEnd(2)
+    }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION         "Alarm type.  An alarm is a discrete event.  Start and end events announce the start and end of a continuous alarm condition.  Discrete alarms may also be escalated to continuous alarms if the events occur too frequently.  The instrument may also send additional alarm start traps to provide updated information about the alarm state such as changes in faults detected or affected channels."
+
+    ::= { traps 5 }
+
+
+mainFanStopTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Main fan has stopped"
+
+    ::= { trapPrefix 1 }
+
+
+temperatureTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Measured temperature too high"
+
+    ::= { trapPrefix 2 }
+
+
+voltageTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power supply voltage has failed"
+
+    ::= { trapPrefix 3 }
+
+
+gpsSignalMissingTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "GPS signal missing"
+
+    ::= { trapPrefix 4 }
+
+
+genlockInputMissingTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "genlock input missing"
+
+    ::= { trapPrefix 5 }
+
+
+nearLossOfLockTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Near Loss of Lock"
+
+    ::= { trapPrefix 6 }
+
+
+vitcLtcMissingTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "VITC or LTC signal missing"
+
+    ::= { trapPrefix 7 }
+
+
+ltcOutsideSmpteTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "LTC signal outside of SMPTE"
+
+    ::= { trapPrefix 8 }
+
+
+lossOfLockTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Loss of Lock"
+
+    ::= { trapPrefix 9 }
+
+
+gpsFomTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "GPS FOM"
+
+    ::= { trapPrefix 10 }
+
+
+gpsAlarmTimeTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Alarm Time"
+
+    ::= { trapPrefix 11 }
+
+
+powerSupplyOneFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 fault"
+
+    ::= { trapPrefix 12 }
+
+
+powerSupplyTwoFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 fault"
+
+    ::= { trapPrefix 13 }
+
+
+powerSupplyOneTwhTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 TWH"
+
+    ::= { trapPrefix 14 }
+
+
+powerSupplyTwoTwhTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 TWH"
+
+    ::= { trapPrefix 15 }
+
+
+
+-- "status" types -------------------------------------------------
+versionInfoFwStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Firmware Version Info"
+
+    ::= { status 1 }
+
+versionInfoHwStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Hardware Version Info"
+
+    ::= { status 2 }
+
+frontPanelLedStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Front Panel Led Info"
+
+    ::= { status 3 }
+
+temperatureStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Temperatures Info"
+
+    ::= { status 4 }
+
+voltageStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Voltages Info"
+
+    ::= { status 5 }
+
+batteryStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System RTC Battery Info"
+
+    ::= { status 6 }
+
+fanStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Fan Info"
+
+    ::= { status 7 }
+
+powerSupplyHourStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Power Supply Hours Info"
+
+    ::= { status 8 }
+
+powerSupplyFomStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Power Supply TWH Info"
+
+    ::= { status 9 }
+
+powerSupplyLoadTestHistStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Power Supply Load Test History Info"
+
+    ::= { status 10 }
+
+powerSupplyTwelveVoltStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Power Supply 12 Volt Info"
+
+    ::= { status 11 }
+
+
+
+END

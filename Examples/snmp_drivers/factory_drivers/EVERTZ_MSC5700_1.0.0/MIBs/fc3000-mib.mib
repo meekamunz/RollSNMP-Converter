@@ -1,0 +1,355 @@
+-- Copyright 2003 Evertz Microsystems Ltd.
+-- 07/29/03
+-- Confidential
+-- Preliminary
+
+FC3000-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        miniexprFC3000
+                FROM EVERTZ-MINI-EXPERIMENTAL-NODE
+        OBJECT-TYPE
+                FROM RFC-1212;
+
+-- AGENT       
+        fc3000ProductLocation	OBJECT IDENTIFIER ::= { miniexprFC3000 3 }  
+        fc3000Hardware			OBJECT IDENTIFIER ::= { miniexprFC3000 4 }
+        fc3000Software          OBJECT IDENTIFIER ::= { miniexprFC3000 5 }
+        fc3000Notification		OBJECT IDENTIFIER ::= { miniexprFC3000 6 }
+        fc3000Traps				OBJECT IDENTIFIER ::= { miniexprFC3000 7 }
+            
+
+-- end of declaration section
+-- beginning of the product info table info
+
+	productLocationTable OBJECT-TYPE
+                SYNTAX SEQUENCE OF ProductLocationEntry
+                ACCESS not-accessible
+                STATUS mandatory
+                DESCRIPTION
+                "
+		        This table is indexed by product location instance and contains
+		        information on the insertion/removal counters, product name and
+		        the starting/ending slots.  
+                "
+        ::= { fc3000ProductLocation 1 }
+
+        productLocationEntry OBJECT-TYPE
+                SYNTAX ProductLocationEntry
+                ACCESS not-accessible
+                STATUS mandatory
+                DESCRIPTION
+                " 
+                "
+                INDEX { locationInstance }
+        ::= { productLocationTable 1 }
+
+        ProductLocationEntry ::= SEQUENCE {
+                locationInstance     INTEGER,
+                insertionCounter     INTEGER,
+                removalCounter       INTEGER,
+                productName          OCTET STRING,
+                productIP			 OCTET STRING,
+                productSlotStart     INTEGER,
+                productSlotEnd       INTEGER
+        }
+
+        locationInstance OBJECT-TYPE
+-- Modified M Snell S&W 8.5.2006: changed limits from 1-15 to 0-15, so that traps from frame controller
+-- with locationInstance.0=0 become legal to the net-snmp MIB compiler.
+                SYNTAX INTEGER ( 0..15 )
+                ACCESS read-only
+                STATUS mandatory
+                DESCRIPTION
+                "
+                This parameter is used to index everything in this table.
+                "
+        ::= { productLocationEntry 1 }
+        
+        insertionCounter OBJECT-TYPE
+                SYNTAX  INTEGER ( 0..32000 )
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter is a counter that keeps track of the
+		number of times a slot has had a product inserted in it.	         
+                "
+        ::= { productLocationEntry 2 }
+    
+        removalCounter OBJECT-TYPE
+                SYNTAX  INTEGER ( 0..32000 )
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter is a counter that keeps track of the number of times
+		a slot has had a product removed from it.	        
+                "
+        ::= { productLocationEntry 3 }
+        
+        productName OBJECT-TYPE
+                SYNTAX  OCTET STRING (SIZE(15))
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter shows the name of the product that is currently in
+		a particular slot in the frame.          
+                "
+        ::= { productLocationEntry 4 }
+
+		productIP OBJECT-TYPE
+                SYNTAX  OCTET STRING (SIZE(15))
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+                "
+        ::= { productLocationEntry 5 }
+
+        productSlotStart OBJECT-TYPE
+                SYNTAX  INTEGER (1..15)
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter returns the slot in which a particular card starts in
+                "
+        ::= { productLocationEntry 6 }
+
+        productSlotEnd OBJECT-TYPE
+                SYNTAX  INTEGER (1..15)
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                           "
+		This parameter returns the slot in which a particular card ends in
+                           "
+        ::= { productLocationEntry 7 }
+    
+-- end of the product location table
+-- start of the FC hardware objects
+
+        temperature OBJECT-TYPE
+                 SYNTAX  INTEGER ( -128..127 )
+                 ACCESS  read-only
+                 STATUS  mandatory
+                 DESCRIPTION 
+                 "
+	 	 This parameter is not currently supported by the hardware.  It will
+         be available on later versions of the FC.  
+         Note: A value of -128 signifies that the temperature feature is not
+         supported on this FC.
+                 "
+        ::= { fc3000Hardware 1 }
+
+        frameStatusLine OBJECT-TYPE
+                 SYNTAX  INTEGER { notok(1),
+				        ok(2)
+  		          }
+                 ACCESS  read-only
+                 STATUS  mandatory
+                 DESCRIPTION 
+                 "
+	 	 This parameter returns the status of the frame status line.  
+         It will return FALSE if the frame status line light is off, TRUE if 
+         the frame status line light is on.
+                 "
+        ::= { fc3000Hardware 2 }
+
+	    auxiliaryStatusLine OBJECT-TYPE
+                SYNTAX INTEGER { notok(1),
+                        ok(2)
+                }
+                ACCESS read-only
+                STATUS mandatory
+                DESCRIPTION
+                "
+                Auxiliary Status Line Parameter
+                "
+        ::= { fc3000Hardware 3 }            
+        
+        powerSupply1Status OBJECT-TYPE
+                 SYNTAX  INTEGER { notok(1),
+				  ok(2)
+  		 }
+                 ACCESS  read-only
+                 STATUS  mandatory
+                 DESCRIPTION 
+                 "
+	 	 This parameter returns the status of the power supply 1, False if the
+		 power supply 1 light is off, true if the power supply 1 is on 
+                 "
+        ::= { fc3000Hardware 4 }
+
+        powerSupply1Voltage OBJECT-TYPE
+                SYNTAX INTEGER ( 0..25 )
+                ACCESS read-only
+                STATUS mandatory
+                DESCRIPTION
+                "
+                Power Supply 1 Voltage Parameter.  It can have a range
+                of 0 to 25.
+                "
+        ::= { fc3000Hardware 5 }
+
+	    powerSupply2Status OBJECT-TYPE
+                 SYNTAX  INTEGER { notok(1),
+				  ok(2)
+  		 }
+                 ACCESS  read-only
+                 STATUS  mandatory
+                 DESCRIPTION 
+                 "
+	 	 This parameter returns the status of the power supply 2, False if the
+		 power supply 2 light is off, true if the power supply 2 is on
+                 "
+        ::= { fc3000Hardware 6 }
+
+        powerSupply2Voltage OBJECT-TYPE
+                SYNTAX INTEGER ( 0..25 )
+                ACCESS read-only
+                STATUS mandatory
+                DESCRIPTION
+                "
+                Power Supply 2 Voltage Parameter.  It can have a range from
+                0 to 25.
+                "
+        ::= { fc3000Hardware 7 }        
+
+-- end of the fc hardware table
+-- beginning of the Software Table
+     
+        softwareBuild OBJECT-TYPE
+                SYNTAX  OCTET STRING (SIZE(21))
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter allows the user to get the name of the software build, 
+        and its version as well.
+                "
+        ::= { fc3000Software 1 }
+        
+        softwareBuildDate OBJECT-TYPE
+                SYNTAX  OCTET STRING (SIZE(15))
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter allows the user to get the date on which the FC 
+        software was built.
+                "
+        ::= { fc3000Software 2 }
+
+        tagName OBJECT-TYPE
+                SYNTAX  OCTET STRING (SIZE(15))
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter allows the user to get the name of FC's software tag.	         
+                "
+        ::= { fc3000Software 3 }
+
+-- end of FC software table 
+
+-- start of the Faults management table
+
+        mgmFaultTable OBJECT-TYPE
+                SYNTAX SEQUENCE OF MgmFaultEntry
+                ACCESS not-accessible
+                STATUS mandatory
+                DESCRIPTION
+                "
+		This table contains information on traps and trap status for the FC.            
+                "
+        ::= { fc3000Notification 1 }
+
+        mgmFaultEntry OBJECT-TYPE
+                SYNTAX MgmFaultEntry
+                ACCESS not-accessible
+                STATUS mandatory
+                DESCRIPTION
+                " 
+                "
+                INDEX { faultName }
+        ::= { mgmFaultTable 1 }
+
+        MgmFaultEntry ::= SEQUENCE {
+                faultName		     INTEGER,  
+		        sendTrap	         INTEGER,
+		        faultPresent		     INTEGER 
+        }
+
+        faultName OBJECT-TYPE
+                SYNTAX  INTEGER { insertionRemoval1(1),
+				    insertionRemoval2(2),
+				    insertionRemoval3(3),
+				    insertionRemoval4(4),
+				    insertionRemoval5(5),
+				    insertionRemoval6(6),
+				    insertionRemoval7(7),
+				    insertionRemoval8(8),
+				    insertionRemoval9(9),
+				    insertionRemoval10(10),
+				    insertionRemoval11(11),
+				    insertionRemoval12(12),
+				    insertionRemoval13(13),
+				    insertionRemoval14(14),
+                    insertionRemoval15(15),
+        		    frameStatusLine(16),
+                    auxStatusLine(17),
+				    tempOver(18),
+				    tempUnder(19),
+                    powerSupply1UnderVoltage(20),
+                    powerSupply2UnderVoltage(21)
+                }
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter is the index for this table, its values correspond 
+        to the names of the traps that exist on the FC.  It can have values
+        of insertionRemoval 1 .. insertionRemoval 15, Auxiliary Status Line, 
+        Temperature Over, Temperature Under, Power Supply 1 Under Voltage,
+        and Power Supply 2 Under Voltage.
+                "
+        ::= { mgmFaultEntry 1 }
+
+        sendTrap OBJECT-TYPE
+                SYNTAX  INTEGER {false(1),
+				 true(2)
+		}   
+                ACCESS  read-write
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter allows the user to control whether a certain trap is 
+        sent or not sent for the FC.
+                "
+        ::= { mgmFaultEntry 2 }
+
+        faultPresent OBJECT-TYPE
+                SYNTAX  INTEGER {false(1),
+				 true(2)
+		}   
+                ACCESS  read-only
+                STATUS  mandatory
+                DESCRIPTION 
+                "
+		This parameter allows the user to check the status of a particular trap.	         
+                "
+        ::= { mgmFaultEntry 3 }
+     
+END
+
+
+
+
+
+
+    											
+                
+                

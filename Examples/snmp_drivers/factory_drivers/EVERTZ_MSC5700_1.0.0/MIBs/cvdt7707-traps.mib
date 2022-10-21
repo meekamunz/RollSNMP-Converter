@@ -1,0 +1,168 @@
+-- Copyright Evertz Microsystems Ltd.
+
+CVDT7707-TRAPS DEFINITIONS ::= BEGIN
+
+IMPORTS
+	cvdt7707Instance, cvdt7707Traps
+		FROM CVDT7707-MIB
+	TRAP-TYPE
+		FROM RFC-1215;
+
+	trapFault	OBJECT IDENTIFIER ::= { cvdt7707Traps 1 }
+
+-- beginning of lossOfVideoInputA  trap
+
+	faultlossOfVideoInputAFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Video OK Input A"
+	::= 1000
+
+	faultlossOfVideoInputATrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Loss of Video Input A"
+	::= 1001
+
+-- end of lossOfVideoInputA  trap
+-- beginning of lossOfVideoInputB  trap
+
+	faultlossOfVideoInputBFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Video OK Input B"
+	::= 1002
+
+	faultlossOfVideoInputBTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Loss of Video Input B"
+	::= 1003
+
+-- end of lossOfVideoInputB  trap
+-- beginning of audioSilence1  trap
+
+	faultaudioSilence1False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 1 Level OK"
+	::= 1004
+
+	faultaudioSilence1True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 1 Level Too Quiet"
+	::= 1005
+
+-- end of audioSilence1  trap
+-- beginning of audioSilence2  trap
+
+	faultaudioSilence2False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 2 Level OK"
+	::= 1006
+
+	faultaudioSilence2True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 2 Level Too Quiet"
+	::= 1007
+
+-- end of audioSilence2  trap
+-- beginning of audioSilence3  trap
+
+	faultaudioSilence3False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 3 Level OK"
+	::= 1008
+
+	faultaudioSilence3True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 3 Level Too Quiet"
+	::= 1009
+
+-- end of audioSilence3  trap
+-- beginning of audioSilence4  trap
+
+	faultaudioSilence4False TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 4 Level OK"
+	::= 1010
+
+	faultaudioSilence4True TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Audio Channel 4 Level Too Quiet"
+	::= 1011
+
+-- end of audioSilence4  trap
+-- beginning of laserNotOK  trap
+
+	faultlaserNotOKFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Laser OK"
+	::= 1012
+
+	faultlaserNotOKTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Laser Not OK"
+	::= 1013
+
+-- end of laserNotOK  trap
+-- beginning of fiberLinkLost  trap
+
+	faultfiberLinkLostFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Fiber Link OK"
+	::= 1014
+
+	faultfiberLinkLostTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Fiber Link Lost"
+	::= 1015
+
+-- end of fiberLinkLost  trap
+-- beginning of carrierWeak  trap
+
+	faultcarrierWeakFalse TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Carrier Strength OK"
+	::= 1016
+
+	faultcarrierWeakTrue TRAP-TYPE
+		ENTERPRISE	trapFault
+		VARIABLES	{ cvdt7707Instance }
+		DESCRIPTION
+			"Carrier Strength Weak"
+	::= 1017
+
+-- end of carrierWeak  trap
+
+
+END

@@ -1,0 +1,8 @@
+{
+  "includes": ["Arista_Supervisor.rsnmp"],
+  "driverName": "Supervisor",
+  "driverVersion": "1.0.0",
+  "manufacturer": "Arista",
+  "deviceName": "Arista Supervisor",
+  "factory": true
+}

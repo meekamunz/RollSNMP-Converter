@@ -1,0 +1,1785 @@
+ECO8000-MIB DEFINITIONS ::= BEGIN
+
+-- ECO8000 MIB 
+
+-- IMPORTS: Include definitions from other MIB's here, which is always
+-- the first item in a MIB file.
+IMPORTS
+	OBJECT-TYPE, Integer32,
+	MODULE-IDENTITY                       FROM SNMPv2-SMI
+	NOTIFICATION-TYPE                     FROM SNMPv2-SMI
+        enterprises                           FROM SNMPv2-SMI
+        DisplayString                         FROM SNMPv2-TC
+        TEXTUAL-CONVENTION                    FROM SNMPv2-TC;
+--
+-- A brief description and update information about this MIB.
+--
+eco8000		MODULE-IDENTITY
+    LAST-UPDATED	"201208131544Z"            -- 13 Aug 2012
+    ORGANIZATION	"Tektronix - Video Business Unit"
+    CONTACT-INFO 
+                "Tektronix Inc.
+                PO BOX 500
+                Beaverton OR, 97077, USA
+                http://www.tektronix.com
+                +1 503-627-2400"
+    DESCRIPTION  "Electrical Changeover MIB, Common MIB for ECO8000 and ECO8020 Devices"
+
+    ::= { tvtproducts 37 }
+
+-- Define typical MIB nodes, like where the objects are going to lie.
+
+-- Tektronix top level OID definitions
+tek           OBJECT IDENTIFIER ::= { enterprises 128 }
+
+tvt           OBJECT IDENTIFIER ::= { tek 5 }
+
+tvtproducts   OBJECT IDENTIFIER ::= { tvt 1 }
+
+tvtmibs       OBJECT IDENTIFIER ::= { tvt 2 }
+
+traps         OBJECT IDENTIFIER ::= { eco8000 1 }
+
+status		    OBJECT IDENTIFIER ::= { eco8000 2 }
+
+config 		   OBJECT IDENTIFIER ::= { eco8000 3 }
+
+channel		   OBJECT IDENTIFIER ::= { eco8000 4 }
+
+ltc           OBJECT IDENTIFIER ::= { eco8000 5 }
+
+notification		  OBJECT IDENTIFIER ::= { eco8000 6 }
+
+
+-- ECO group specific OID definitions
+trapPrefix      OBJECT IDENTIFIER ::= { traps 0 }
+
+
+trapDestnNum    OBJECT-TYPE
+    SYNTAX      INTEGER (0..3)
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "Trap destination number for use as an index in the trap destination table"
+
+    ::= { traps 1 }
+
+
+trapReport      OBJECT-TYPE
+    SYNTAX      INTEGER {
+        off(0),
+        on(1)
+    }
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION         "Enable/Disable trap reporting"
+
+    ::= { traps 2 }
+
+
+trapDestn       OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION         "Destination IP address for traps"
+
+    ::= { trapDestnEntry 1 }
+
+
+trapDestnTable  OBJECT-TYPE
+    SYNTAX      SEQUENCE OF TrapDestnEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "Table for trap destination addresses"
+    
+    ::= { traps 3 }
+
+
+trapDestnEntry  OBJECT-TYPE
+    SYNTAX      TrapDestnEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION         "A row in the trap destination address table"
+    INDEX { trapDestnNum }
+
+    ::= { trapDestnTable 1 }
+    
+TrapDestnEntry ::= SEQUENCE {
+    trapDestn   DisplayString
+}
+
+trapInfo        OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION         "Additional information sent along with the trap. (not accessible for GET/SET requests)"
+
+    ::= { traps 4 }
+
+
+alarmType       OBJECT-TYPE
+    SYNTAX      INTEGER {
+        alarm(0),
+        alarmStart(1),
+        alarmEnd(2)
+    }
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION         "Alarm type.  An alarm is a discrete event.  Start and end events announce the start and end of a continuous alarm condition.  Discrete alarms may also be escalated to continuous alarms if the events occur too frequently.  The instrument may also send additional alarm start traps to provide updated information about the alarm state such as changes in faults detected or affected channels."
+
+    ::= { traps 5 }
+
+
+    
+primaryFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Primary Fault Trap"
+
+    ::= { trapPrefix 1 }
+    
+backupFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Backup Fault Trap"
+
+    ::= { trapPrefix 2 }
+    
+primaryBackupSwitchTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Primary Backup Switch Trap"
+
+    ::= { trapPrefix 3 }
+
+
+powerSupply1LoadTestFailTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 Load Test Fail Trap"
+
+    ::= { trapPrefix 4 }
+
+
+powerSupply2LoadTestFailTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power supply 2 Load Test Fail Trap"
+
+    ::= { trapPrefix 5 }
+
+powerSupply1ACFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 AC Fault Trap"
+
+    ::= { trapPrefix 6 }
+
+
+powerSupply1DCFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 DC Fault Trap"
+
+    ::= { trapPrefix 7 }
+
+
+powerSupply2ACFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 AC Fault Trap"
+
+    ::= { trapPrefix 8 }
+
+
+powerSupply2DCFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 DC Fault Trap"
+
+    ::= { trapPrefix 9 }
+
+powerSupply1FanFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 Fan Fault Trap"
+
+    ::= { trapPrefix 10 }
+    
+powerSupply2FanFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 Fan Fault Trap"
+
+    ::= { trapPrefix 11 }
+    
+powerSupply1WarningTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 Warning Trap"
+
+    ::= { trapPrefix 12 }
+    
+powerSupply2WarningTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 Warning Trap"
+
+    ::= { trapPrefix 13 }
+    
+powerSupply1TemperatureFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 Temperature Fault Trap"
+
+    ::= { trapPrefix 14 }
+    
+powerSupply2TemperatureFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 Temperature Fault Trap"
+
+    ::= { trapPrefix 15 }
+    
+powerSupply1TWHWarningTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 1 Temperature Weighted Hours Warning Trap"
+
+    ::= { trapPrefix 16 }
+    
+powerSupply2TWHWarningTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply 2 Temperature Weighted Hours Warning Trap"
+
+    ::= { trapPrefix 17 }
+    
+powerSupplySwitchTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power Supply switch Trap"
+
+    ::= { trapPrefix 18 }
+    
+onBoardPowerSupplyFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "On Board Power Supply Fault Trap"
+
+    ::= { trapPrefix 19 }
+
+temperatureFaultTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Main Board Temperature Fault Trap"
+
+    ::= { trapPrefix 20 }
+
+backupTestDueTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Backup Test Due Trap"
+
+    ::= { trapPrefix 21 }
+
+powerOnStartTestFailedTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Power On Self-Test Failed Trap"
+
+    ::= { trapPrefix 22 }
+
+hrefRelayFailedTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "HRef Relay Failed Trap"
+
+    ::= { trapPrefix 23 }
+
+rebootNormalTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Reboot Normal Failed Trap"
+
+    ::= { trapPrefix 24 }
+
+rebootWatchdogTrap NOTIFICATION-TYPE
+    STATUS      current
+    DESCRIPTION         "Reboot Watchdog Failed Trap"
+
+    ::= { trapPrefix 25 }
+    
+-- "status" types -------------------------------------------------
+versionInfoFwStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Firmware Version Info"
+
+    ::= { status 1 }
+
+spgStatus OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"SPG front panel LED status"
+
+    ::= { status 2 }
+    
+dhcpEnable OBJECT-TYPE
+    SYNTAX      INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Returns whether DHCP is enabled or disabled"
+
+    ::= { status 3 }
+    
+temperatureStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Returns temperature for main board and each installed power supply"
+
+    ::= { status 4 }
+
+installedSwOptions OBJECT-TYPE
+    SYNTAX	DisplayString 
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Installed Software Options"
+
+    ::= { status 5 }
+    
+batteryStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Real Time Clock Battery Information"
+
+    ::= { status 6 }
+
+fanStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Fans Information"
+
+    ::= { status 7 }
+
+powerSupplyHourStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Reports Information of Both Power Supplies (PS1 and PS2) Hours"
+
+    ::= { status 8 }
+
+powerSupplyFOMStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Reports Information of Both power Supplies Figure of Merit Status"
+
+    ::= { status 9 }
+
+powerSupplyLoadTestHistStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Power Supply Load Test History Info"
+
+    ::= { status 10 }
+
+powerSupplyTwelveVoltStatus OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Reports Information of Both Power Supply 12 Volt Status"
+
+    ::= { status 11 }
+
+numberOfChannels OBJECT-TYPE
+   SYNTAX    INTEGER
+   MAX-ACCESS read-only
+   STATUS     current
+   DESCRIPTION          "Number of Channels"
+
+   ::= { status 12 }
+
+ecoAutoManual OBJECT-TYPE
+    SYNTAX      INTEGER {
+        auto(0),
+        manual(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Reports whether ECO operational mode is Auto or Manual"
+
+    ::= { status 13 }
+
+
+temperatureWeightedHours1 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION 	"Reports the Temperature Weighted Hours of PS1"
+
+    ::= { status 14 }
+
+temperatureWeightedHours2 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION 	"Reports the Temperature Weighted Hours of PS2"
+
+    ::= { status 15 }
+	
+webUIState OBJECT-TYPE
+    SYNTAX      INTEGER {
+        fullcontrol(0),
+        readonly(1),
+        disable(2)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Web User Interface enable state"
+
+    ::= { status 16 }
+	
+inputSourceSelect OBJECT-TYPE
+    SYNTAX      INTEGER {
+        primary(0),
+        backup(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Reports which input source is in use (primary or backup)"
+
+    ::= { status 17 }
+    
+powerOnSelfTestResult OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Power on Self Test Result"
+
+    ::= { status 18 }
+
+acInput1Status OBJECT-TYPE
+    SYNTAX              DisplayString 
+    MAX-ACCESS	        read-only
+    STATUS	        current
+    DESCRIPTION		"AC Input 1 status"
+
+    ::= { status 19 }
+
+dcInput1Status OBJECT-TYPE
+    SYNTAX              DisplayString 
+    MAX-ACCESS	        read-only
+    STATUS	        current
+    DESCRIPTION		"DC Input 1 status"
+
+    ::= { status 20 }
+
+acInput2Status OBJECT-TYPE
+    SYNTAX              DisplayString 
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "AC Input 2 status"
+
+    ::= { status 21 }
+
+dcInput2Status OBJECT-TYPE
+    SYNTAX              DisplayString 
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "DC Input 2 status"
+
+    ::= { status 22 }
+
+mainBoardPwrSupplies OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "Reports the status of the power supplies on the main board"
+
+    ::= { status 23 }
+
+module1PwrSupplies OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "Reports the status of the power supplies of the module 1 board"
+
+    ::= { status 24 }
+
+module2PwrSupplies OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "Reports the status of the power supplies of the module 2 board"
+
+    ::= { status 25 }
+
+module3PwrSupplies OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "Reports the status of the power supplies of the module 3 board"
+
+    ::= { status 26 }
+
+module4PwrSupplies  OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-only
+    STATUS              current
+    DESCRIPTION         "Reports the status of the power supplies of the module 4 board"
+
+    ::= { status 27 }
+
+pldSoftwareVersion OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"PLD version for main board"
+
+    ::= { status 28 }
+
+pldVersionOfModule1 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"PLD version for Module 1"
+
+    ::= { status 29 }
+
+pldVersionOfModule2 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"PLD version for Module 2"
+
+    ::= { status 30 }
+
+pldVersionOfModule3 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"PLD version for Module 3"
+
+    ::= { status 31 }
+
+
+pldVersionOfModule4 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"PLD version for Module 4"
+
+    ::= { status 32 }
+
+installedHWOptions OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"Gives the information about Installed Hardware Options (REF3/REF5/HREF3/HREF5)"
+
+    ::= { status 33 }
+
+combinerFwVersion OBJECT-TYPE
+    SYNTAX			DisplayString
+    MAX-ACCESS		read-only
+    STATUS			current
+    DESCRIPTION		"Combiner board firmware version"
+
+    ::= { status 34 }
+
+statusFault OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Status fault: A string of all current faults occurred"
+
+    ::= { status 35 }
+
+
+ipAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION 	"Reports the IP Address of the device"
+
+    ::= { status 36 }
+
+currentDateAndTime OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Current Real Time Clock Date and Time info"
+
+    ::= { status 37 }
+    
+backupTestInfo OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Backup test for the main power supply system"
+    ::= { status 38 }
+
+subnetMask OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"ECO subnet mask"
+
+    ::= { status 39 }
+    
+gatewayAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"ECO Gateway Address"
+
+    ::= { status 40 }
+
+macAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"ECO MAC Address"
+
+    ::= { status 41 }
+
+publicCommunity OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Public community string for reading"
+
+    ::= { status 42 }
+
+privateCommunity OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Private community string for reading and writing"
+
+    ::= { status 43 }
+
+primaryLEDStatus OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Primary LED status string: A string of all Primary LED display from FP"
+
+    ::= { status 44 }
+
+backupLEDStatus OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Backup LED status string: A string of all Backup LED display from FP"
+
+    ::= { status 45 }
+    
+hardwareVersionOfMainModule OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Hardware Version Info of Module Main"
+
+    ::= { status 46 }
+    
+hardwareVersionOfModule1 OBJECT-TYPE
+    SYNTAX	DisplayString
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION		"System Hardware Version Info of Module 1"
+
+    ::= { status 47 }
+    
+hardwareVersionOfModule2 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"System Hardware Version Info of Module 2"
+
+    ::= { status 48 }
+    
+hardwareVersionOfModule3 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"System Hardware Version Info of Module 3"
+
+    ::= { status 49 }
+    
+hardwareVersionOfModule4 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"System Hardware Version Info of Module 4"
+
+    ::= { status 50 }
+    
+module1Type OBJECT-TYPE
+    SYNTAX	INTEGER {
+        nomoduleinstalled(-1),
+        ref(0),
+        href(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION	"Module 1 Type Either REF or HREF, Get returns nomoduleinstalled(-1) if module 1 is not installed"
+
+    ::= { status 51 }
+    
+module2Type OBJECT-TYPE
+    SYNTAX	INTEGER {
+        nomoduleinstalled(-1),
+        ref(0),
+        href(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION	"Module 2 Type Either REF or HREF, Get returns nomoduleinstalled(-1) if module 2 is not installed"
+
+    ::= { status 52 }
+    
+module3Type OBJECT-TYPE
+    SYNTAX	INTEGER {
+        nomoduleinstalled(-1),
+        ref(0),
+        href(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION	"Module 3 Type Either REF or HREF, Get returns nomoduleinstalled(-1) if module 3 is not installed"
+
+    ::= { status 53 }
+    
+module4Type OBJECT-TYPE
+    SYNTAX	INTEGER {
+        nomoduleinstalled(-1),
+        ref(0),
+        href(1)
+    }
+    MAX-ACCESS	read-only
+    STATUS	current
+    DESCRIPTION	"Module 4 Type Either REF or HREF, Get returns nomoduleinstalled(-1) if module 4 is not installed"
+
+    ::= { status 54 }
+    
+trapAddress1 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Trap Address1"
+
+    ::= { status 55 }
+
+trapAddress2 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Trap Address2"
+
+    ::= { status 56 }
+
+trapAddress3 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Trap Address3"
+
+    ::= { status 57 }
+
+trapAddress4 OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-only
+    STATUS		current
+    DESCRIPTION		"Trap Address4"
+
+    ::= { status 58 }
+
+    
+panelEnableDuration OBJECT-TYPE
+    SYNTAX	INTEGER {
+        minute1(0),
+        minute5(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Sets the Front Panel Enable Duration to 1 Minute or 5 Minutes "
+	
+    ::= { config 1 }   
+    
+panelContrast 	OBJECT-TYPE
+    SYNTAX	INTEGER
+    MAX-ACCESS	read-write
+    STATUS	current
+    DESCRIPTION	"Front Panel display contrast ranges from 0 to 8"
+	
+    ::= { config 2 }
+	
+preferredPowerSupply		OBJECT-TYPE
+    SYNTAX      INTEGER {
+        one(0),
+        two(1)
+    }
+    MAX-ACCESS	        read-write
+    STATUS		current
+    DESCRIPTION		"Selects the preferred power Supply"
+
+    ::= { config 3 }
+
+startupDelay		OBJECT-TYPE
+    SYNTAX		INTEGER
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Sets the startup delay for activating the ECO automatic changeover system"
+
+    ::= { config 4 }
+
+spgInput		OBJECT-TYPE
+    SYNTAX      INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Enables and disables SPG Input: Enabling this will enable SPG input and also trigger and disabling this will disable both SPG input and SPG trigger"
+
+    ::= { config 5 }
+
+runPowerSupplyLoadTest OBJECT-TYPE
+    SYNTAX		INTEGER {
+        disable(0),
+        runpowersupplyloadtest(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Runs  power supply Load Test. Set with value runpowersupplyloadtest(1) to run power supply 1 and 2 Load Test. Setting with other value will have no effect. Get will return disable(0)"
+
+    ::= { config 6 }
+
+optionKey		OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Option key. It will be like XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-X"
+
+    ::= { config 7 }      
+    
+ltcChannelDirection	OBJECT-TYPE
+    SYNTAX      INTEGER {
+        input(0),
+        output(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Sets the direction of LTC  Channel as input or output"
+
+    ::= { config 8 }
+
+
+localTime  OBJECT-TYPE
+    SYNTAX	        DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Sets local time and gets current ECO Real Time Clock time"
+
+    ::= { config 9 }
+
+localDate OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Sets local date and gets current ECO Real Time Clock time"
+
+    ::= { config 10 }
+    
+dstMode           OBJECT-TYPE
+    SYNTAX      INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS    read-write
+    STATUS        current
+    DESCRIPTION      "Enables or disables automatic daylight savings time adjustment"
+    ::= { config 11 }
+
+dstOffset              OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the daylight saving time offset"
+    
+    ::= { config 12 }
+
+dstStartDate              OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the daylight savings start date"
+    
+    ::= { config 13 }
+
+dstStartTime              OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the daylight savings start time"
+    
+    ::= { config 14 }
+
+dstEndDate              OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the daylight savings end date"
+    
+    ::= { config 15 }
+
+dstEndTime       OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the daylight savings end time"
+    
+    ::= { config 16 }
+
+relayPath OBJECT-TYPE
+    SYNTAX		INTEGER {
+    disable(0),
+    enable(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Enable or disable Relay path"
+
+    ::= { config 17 }
+
+expansionPortMode OBJECT-TYPE
+    SYNTAX      INTEGER {
+        disabled(0),
+        master(1),
+        slave(2)                
+    }
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Sets the device to function as a master or slave when two ECO's are coupled via the expansion port"
+
+    ::= { config 18 }
+
+watchdogTimerEnable OBJECT-TYPE
+    SYNTAX		INTEGER {
+    disable(0),
+    enable(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Watchdog Timer Enable"
+
+    ::= { config 19 }
+
+timeZoneOffset       OBJECT-TYPE
+    SYNTAX              DisplayString
+    MAX-ACCESS          read-write
+    STATUS              current
+    DESCRIPTION         "Time zone offset"
+    
+    ::= { config 20 }
+
+cpuFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Enable/disable CPU Fault line mainly for MFG cpuFault testing. Set with value enable(1) to create CPU fault. Set with other value will have no effect. Get returns disable(0)"
+
+    ::= { config 21 }
+
+clearEventLog OBJECT-TYPE
+    SYNTAX	INTEGER {
+        disable(0),
+        clear(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Clears the event log. Set with value clear(1) to clear the contents of the log. Set with another value will have no effect. Get returns disable(0)."
+
+    ::= { config 22 }
+    
+factoryPreset OBJECT-TYPE
+    SYNTAX	INTEGER {
+        disable(0),
+        reset(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Reset system to factory default. Set value to reset (1) to reset system to factory default settings. Set with another value will have no effect. Get returns disable(0)."
+
+    ::= { config 23 }
+
+powerSupply1MfgDate OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Power supply 1 manufacturing date"
+
+
+    ::= { config 24 }
+    
+powerSupply2MfgDate OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Power supply 2 manufacturing date"
+
+
+    ::= { config 25 }
+    
+powerSupply1PartNo OBJECT-TYPE
+    SYNTAX		INTEGER
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Power supply 1 hardware part number"
+    
+
+    ::= { config 26 }
+    
+powerSupply2PartNo OBJECT-TYPE
+    SYNTAX		INTEGER
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Power supply 2 hardware part number"
+
+    ::= { config 27 }
+    
+smtpServerAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"SMTP server Address"
+
+    ::= { config 28 }
+
+generateLogFile         OBJECT-TYPE
+    SYNTAX		INTEGER {
+        sortbytime(0),
+        sortbytype(1),
+        lasteventbytype(2)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Generate a log file (eventLog.txt) with one of the three options sent and this will be used to download in web user interface"
+
+    ::= { config 29 }
+    
+frontPanelButtonPress OBJECT-TYPE
+    SYNTAX		INTEGER
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Gets last left-side front panel key press along with last right-side key pressed.  It returns a bit-wise word indicating 
+    			which indicates which keys have been pressed.  The key ID order is: BACKUP (lsb), PRIMARY, MANUAL, AUTO, RESET, ENABLE, 
+			BACK, ENTER, DOWN ARROW, RIGHT ARROW, UP ARROW (msb).
+                        The set operation on this will clear the information about the last key press."
+
+    ::= { config 30 }
+
+frontPanelLedTest OBJECT-TYPE
+    SYNTAX		INTEGER {
+        stop(0),
+        start(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"To run the frontpanel LED test"
+
+    ::= { config 31 }
+
+frontPanelTest OBJECT-TYPE
+    SYNTAX		INTEGER {
+    disable(0),
+    testfrontpanel(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Run frontpanel tests. Set value to frontpaneltest(1) will test the front panel. Set with another value will have no effect. Get returns disable(0)."
+
+    ::= { config 32 }
+
+loginName OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Login name/user name for the SMTP server"
+
+    ::= { config 33 }
+
+loginPassword OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Password for the user name for accessing SMTP server"
+
+    ::= { config 34 }
+
+fromEmailAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"E-mail Address to be sent From"
+
+    ::= { config 35 }
+
+toEmailAddress OBJECT-TYPE
+    SYNTAX		DisplayString
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"E-mail Address to be sent To"
+
+    ::= { config 36 }
+    
+
+beepTheBeeper   OBJECT-TYPE
+    SYNTAX		INTEGER {
+    disable(0),
+    beep(1)
+    }
+    MAX-ACCESS		read-write
+    STATUS		current
+    DESCRIPTION		"Beep the beeper. Set value to beep(1) to beep the beeper. Set with another value will have no effect. Get returns disable(0)."
+
+    ::= { config 70 }
+
+
+
+enableState OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Channel Enable/disable"
+
+    ::= { channelAttribute 2 }
+
+name         OBJECT-TYPE
+    SYNTAX 	DisplayString
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Sets/ Gets Channel Name"
+
+    ::= { channelAttribute 3 }
+    
+autoTriggerEnable      OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Channel Auto trigger Enable/disable "
+
+    ::= { channelAttribute 4 }
+  
+threshold       OBJECT-TYPE
+    SYNTAX       INTEGER {
+        ntsc(0),
+        pal(1),
+        trilevel(2),
+        aes(3),
+        wc1v(4),
+        wc5v(5),
+        sdisd(6),
+        sdihd(7),
+        sdi3G(8),
+        custom(9) 
+    }
+    MAX-ACCESS read-write
+    STATUS 	current
+    DESCRIPTION 	"Channel Threshold type"
+    ::= { channelAttribute 5 }
+   
+customThreshold      OBJECT-TYPE
+    SYNTAX 	 INTEGER
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Channel Custom Threshold Value"
+    ::= { channelAttribute 6 }
+
+refType         OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        ref(0),
+        href(1)
+    }
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel reference type"
+    ::= { channelAttribute 7 }
+
+primaryInputState       OBJECT-TYPE
+    SYNTAX      INTEGER {
+       	channelNoErrors(0),
+	channelErrordetected(1), 
+	channelErrors(2),
+	channelOff(3) 
+    }    
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel primary LED state from FP"
+    ::= { channelAttribute 8 }
+
+backupInputState       OBJECT-TYPE  
+    SYNTAX      INTEGER {
+       	channelNoErrors(0),
+	channelErrordetected(1),
+	channelErrors(2),
+        channelOff(3)
+    }   
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel backup LED state from FP"
+    ::= { channelAttribute 9 }
+   
+primaryInputVolt      OBJECT-TYPE
+    SYNTAX 	DisplayString 
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel primary input voltage"
+    ::= { channelAttribute 10 }
+
+backupInputVolt      OBJECT-TYPE
+    SYNTAX   	DisplayString 
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel backup input voltage"
+    ::= { channelAttribute 11 }
+
+enableAttenuation    OBJECT-TYPE
+    SYNTAX	INTEGER {
+    disable(0),
+    enable(1) 
+    }
+    MAX-ACCESS  read-write
+    STATUS	current
+    DESCRIPTION	  "Enable channel Attenuation"
+    ::= { channelAttribute 12 }    
+
+
+primaryVsThreshold      OBJECT-TYPE
+    SYNTAX   	DisplayString 
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel primary input value vs threshold in dB"
+    ::= { channelAttribute 13 }
+
+backupVsThreshold      OBJECT-TYPE
+    SYNTAX   	DisplayString 
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"Channel backup input value vs threshold in dB"
+    ::= { channelAttribute 14 }
+
+relayCheck      OBJECT-TYPE
+    SYNTAX   	INTEGER {
+    channelisnothref(-1),
+    disable(0),
+    enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Do Relay Checking for HRef Channel"
+    ::= { channelAttribute 15 }
+
+channelTable        OBJECT-TYPE
+    SYNTAX 	SEQUENCE OF ChannelAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"Table for All channels "
+    ::= { channel 1 }
+
+
+channelAttribute        OBJECT-TYPE
+    SYNTAX 	ChannelAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"A row in the channel table "
+    INDEX { currChannel }
+    ::= { channelTable 1 }          
+    
+currChannel OBJECT-TYPE
+    SYNTAX 	INTEGER (0..19 )
+    MAX-ACCESS not-accessible
+    STATUS	 current
+    DESCRIPTION "Currently selected channel this is used as index in tables"    
+      ::= { channelAttribute 1 }
+        
+  
+ChannelAttribute ::= SEQUENCE {
+    currChannel                 INTEGER,
+    enableState 		INTEGER,
+    name 			DisplayString,
+    autoTriggerEnable 		INTEGER,
+    threshold  			INTEGER,
+    customThreshold 		INTEGER,
+    refType 			INTEGER,
+    primaryInputState 		INTEGER,
+    backupInputState 		INTEGER,
+    primaryInputVolt 		DisplayString,
+    backupInputVolt 		DisplayString,
+    enableAttenuation  		INTEGER,
+    primaryVsThreshold  	DisplayString,
+    backupVsThreshold		DisplayString,
+    relayCheck                  INTEGER
+}
+
+ltcEnable OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Enable/disable LTC channel"
+
+    ::= { ltcAttribute 2 }
+
+ltcAutoTriggerEnable      OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"LTC Auto trigger Enable/disable channel"
+
+    ::= { ltcAttribute 3 }
+  
+ltcThreshold       OBJECT-TYPE
+    SYNTAX       INTEGER {
+    v05(0),
+    v10(1),
+    v15(2),
+    v20(3),
+    v25(4),
+    v30(5),
+    v35(6),
+    v40(7),
+    v45(8),
+    v50(9),
+    vCustom(10)
+    
+}
+    MAX-ACCESS read-write
+    STATUS 	current
+    DESCRIPTION 	"LTC channel Threshold type"
+    ::= { ltcAttribute 4 }
+   
+ltcCustomThreshold      OBJECT-TYPE
+    SYNTAX 	 INTEGER
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"LTC channel Custom input Threshold Value"
+    ::= { ltcAttribute 5 }
+
+ltcPrimaryInputState      OBJECT-TYPE
+    SYNTAX 	 INTEGER {
+       	ltcNoErrors(0),
+	ltcErrordetected(1), 
+	ltcErrors(2),
+        ltcOff(3)
+	}
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"LTC channel Primary LED status from frontpanel"
+    ::= { ltcAttribute 6 }
+
+ltcBackupInputState      OBJECT-TYPE
+    SYNTAX 	INTEGER {
+       	ltcNoErrors(0),
+	ltcErrordetected(1), 
+	ltcErrors(2),
+	ltcOff(3)
+	}
+    MAX-ACCESS 	read-only
+    STATUS 	current
+    DESCRIPTION 	"LTC channel Backup LED Status from frontpanel"
+    ::= { ltcAttribute 7 }
+
+ltcName         OBJECT-TYPE
+    SYNTAX 	DisplayString
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Sets/ Gets LTC Name"
+
+    ::= { ltcAttribute 8 }
+    
+ltcPrimaryInputVsThreshold  OBJECT-TYPE
+    SYNTAX 	DisplayString
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"LTC Channel primary input value vs threshold in dB"
+
+    ::= { ltcAttribute 9 }
+
+ltcBackupInputVsThreshold   OBJECT-TYPE
+    SYNTAX 	DisplayString
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"LTC Channel primary input value vs threshold in dB"
+
+    ::= { ltcAttribute 10 }
+    
+ltcTable        OBJECT-TYPE
+    SYNTAX 	SEQUENCE OF LTCAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"Table for All LTC channels"
+    ::= { ltc 1 }
+
+
+ltcAttribute        OBJECT-TYPE
+    SYNTAX 	LTCAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"A row in the LTC table "
+    INDEX { currentLTCChannel }
+    ::= { ltcTable 1 }          
+    
+currentLTCChannel OBJECT-TYPE
+    SYNTAX 	INTEGER (0..3 )
+    MAX-ACCESS not-accessible
+    STATUS	 current
+    DESCRIPTION "Currently selected LTC channel this is used as index in tables"    
+    ::= { ltcAttribute 1 }
+
+LTCAttribute ::= SEQUENCE {
+    currentLTCChannel           INTEGER,
+    ltcEnable 			INTEGER,
+    ltcAutoTriggerEnable 	INTEGER,
+    ltcThreshold  		INTEGER,
+    ltcCustomThreshold 		INTEGER,
+    ltcPrimaryInputState	INTEGER,
+    ltcBackupInputState		INTEGER,
+    ltcName 			DisplayString,
+    ltcPrimaryInputVsThreshold  	DisplayString,
+    ltcBackupInputVsThreshold	DisplayString
+    }
+
+primaryFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Primary Fault Notification Enable"
+
+    ::= { notificationAttribute 2 }
+
+backupFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Backup Fault Notification Enable"
+
+    ::= { notificationAttribute 3 }
+
+primaryBackupSwitch OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Primary Backup Switch Notification enable"
+
+    ::= { notificationAttribute 4 }
+
+powerSupply1LoadTestFail OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 1 Load Test Fail Notification Enable"
+
+    ::= { notificationAttribute 5 }
+
+powerSupply2LoadTestFail OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 2 Load Test Fail Notification Enable"
+
+    ::= { notificationAttribute 6 }
+
+    
+powerSupply1ACFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"AC Power Supply 1 Notification Enable"
+
+    ::= { notificationAttribute 7 }
+
+powerSupply1DCFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"DC Power Supply 1 Notification Enable"
+
+    ::= { notificationAttribute 8 }
+
+powerSupply2ACFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"AC Power Supply 2 Notification Enable"
+
+    ::= { notificationAttribute 9 }
+
+powerSupply2DCFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"DC Power Supply 2 Notification Enable"
+
+    ::= { notificationAttribute 10 }
+
+powerSupply1FanFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 1 Fan Fault Notification Enable "
+
+    ::= { notificationAttribute 11 }
+
+powerSupply2FanFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 2 Fan Fault Notification Enable"
+
+    ::= { notificationAttribute 12 }
+    
+powerSupply1Warning OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 1 Warning Notification Enable"
+
+    ::= { notificationAttribute 13 }
+
+
+powerSupply2Warning OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 2 Warning Notification Enable"
+
+    ::= { notificationAttribute 14 }
+
+    
+powerSupply1TemperatureFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 1 Temperature Fault Notification Enable"
+
+    ::= { notificationAttribute 15 }
+
+powerSupply2TemperatureFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 2 Temperature Fault Notification Enable"
+
+    ::= { notificationAttribute 16 }
+
+powerSupply1TWHWarning OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 1 Temperature Weighted Hours Warning Notification Enable"
+
+    ::= { notificationAttribute 17 }
+
+powerSupply2TWHWarning OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply 2 Temperature Weighted Hours Warning Notification Enable"
+
+    ::= { notificationAttribute 18 }
+
+powerSupplySwitch OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power Supply Switch Notification Enable"
+
+    ::= { notificationAttribute 19 }
+
+onBoardPowerSupplyFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"On Board Power Supply Fault Notification Enable"
+
+    ::= { notificationAttribute 20 }
+
+temperatureFault OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Temperature Fault Notification Enable"
+
+    ::= { notificationAttribute 21 }
+
+backupTestDue OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Backup Test Due Notification Enable"
+
+    ::= { notificationAttribute 22 }
+
+powerOnStartTestFailed OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Power On Start Test Failed Notification Enable"
+
+    ::= { notificationAttribute 23 }
+
+
+hrefRelayFailed OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"HRef relay Failed Notification Enable"
+
+    ::= { notificationAttribute 24 }
+
+
+rebootNormal OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Reboot normal Notification Enable"
+
+    ::= { notificationAttribute 25 }
+    
+rebootWatchdog OBJECT-TYPE
+    SYNTAX 	INTEGER {
+        disable(0),
+        enable(1)
+    }
+    MAX-ACCESS 	read-write
+    STATUS 	current
+    DESCRIPTION 	"Reboot watchdog Notification Enable"
+
+    ::= { notificationAttribute 26 }
+    
+notificationTable        OBJECT-TYPE
+    SYNTAX 	SEQUENCE OF NotificationAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"Table for All Notifications"
+    ::= { notification 1 }
+
+
+notificationAttribute        OBJECT-TYPE
+    SYNTAX 	NotificationAttribute
+    MAX-ACCESS 	not-accessible
+    STATUS 	current
+    DESCRIPTION 	"A row in the Notification Table "
+    INDEX { currNotification }
+    ::= { notificationTable  1 }          
+    
+currNotification OBJECT-TYPE
+    SYNTAX 	INTEGER (0..5)
+    MAX-ACCESS not-accessible
+    STATUS	 current
+    DESCRIPTION "Currently selected notification element this is used as index in tables"    
+    ::= { notificationAttribute 1 }
+
+NotificationAttribute ::= SEQUENCE {
+    currNotification             INTEGER,
+    primaryFault                 INTEGER,
+    backupFault                  INTEGER,
+    primaryBackupSwitch          INTEGER,
+    powerSupply1LoadTestFail     INTEGER,
+    powerSupply2LoadTestFail     INTEGER,
+    powerSupply1ACFault          INTEGER,
+    powerSupply1DCFault          INTEGER,
+    powerSupply2ACFault          INTEGER,
+    powerSupply2DCFault          INTEGER,
+    powerSupply1FanFault         INTEGER,
+    powerSupply2FanFault         INTEGER,
+    powerSupply1Warning          INTEGER,
+    powerSupply2Warning          INTEGER,
+    powerSupply1TemperatureFault INTEGER,
+    powerSupply2TemperatureFault INTEGER,
+    powerSupply1TWHWarning       INTEGER,
+    powerSupply2TWHWarning       INTEGER,
+    powerSupplySwitch            INTEGER,
+    onBoardPowerSupplyFault      INTEGER,
+    temperatureFault             INTEGER,
+    backupTestDue                 INTEGER,
+    powerOnStartTestFailed       INTEGER,
+    hrefRelayFailed              INTEGER,
+    rebootNormal                 INTEGER,
+    rebootWatchdog               INTEGER
+}
+END
