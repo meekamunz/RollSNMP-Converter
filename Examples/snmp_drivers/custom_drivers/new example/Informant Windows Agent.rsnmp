@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CVS $Id: Informant Windows Agent.rsnmp 3734 2018-07-05 07:53:54Z kadhimboyd $ -->
+
+<!--
+	This config has initially been created for debug purposes.  
+	Informant agent reports the CPU time of a PC, polling every second instead of the generic windows SNMP agent which is slower.  
+	Therefor RollSNMP can poll this agent as fast as 1 time every second.
+	 
+-->
+
+<DefinitionGroup>
+
+	<MIBSource path="SNMP Library\Informant Windows Agent\MIBs"/>
+
+	<OIDAlias id="INFORMANT" oid=".iso.org.dod.internet.private.enterprises.wtcs" >
+		<OIDAlias id="CPU TABLE" oid=".informant.standard.processorTable"/>
+	</OIDAlias>	
+	
+	<UnitTypeDef typeName="Informant Windows Agent" >
+
+		<!-- Standard field which we put in all library files -->
+		<StaticDef rcLogField="SNMPCONFIG" >
+			<StaticString>CVS $Id: Informant Windows Agent.rsnmp 3734 2018-07-05 07:53:54Z kadhimboyd $</StaticString>
+		</StaticDef>
+
+		<!-- Informant specific entries.-->
+<!--  Causes Bind Error
+		<TranslationDef rcLogField="CPU_LOAD_TOTAL"  pollRate="1" >
+			<OID alias="CPU TABLE">.processorEntry.cpuPercentProcessorTime.6.95.84.111.116.97.108 </OID>
+			<NumRule format="%d%%" />
+		</TranslationDef>
+-->		
+		
+		<TranslationDef rcLogField="CPU_LOAD_TOTAL"  pollRate="60" >
+			<OID>.1.3.6.1.4.1.9600.1.2.65.1.9.6.95.84.111.116.97.108</OID>
+			<NumRule format="%d%%" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="WARN:Service Stopped" />
+		</TranslationDef>
+		
+		<TranslationDef rcLogField="CPU_LOAD_STATE"  pollRate="60" >
+			<OID>.1.3.6.1.4.1.9600.1.2.65.1.9.6.95.84.111.116.97.108</OID>
+			<NumRule valueMin="90" format="FAIL:CPU Overloading" />
+			<NumRule valueMin="75" format="WARN:CPU High" />
+			<NumRule format="OK" />
+			<StringRule format="%s%% CPU loading (str)" />
+			<ConstRule format="WARN:Unknown?" />
+			<ErrorRule format="WARN:Service Stopped" />
+		</TranslationDef>		
+		
+	</UnitTypeDef>
+</DefinitionGroup>
+
+

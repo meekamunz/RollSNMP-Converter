@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Examples",
+    "\\Examples\\snmp_drivers"
   ],
-  "SelectedNode": "\\C:\\Sandbox\\RollSNMP-Converter",
+  "SelectedNode": "\\Examples",
   "PreviewInSolutionExplorer": false
 }
