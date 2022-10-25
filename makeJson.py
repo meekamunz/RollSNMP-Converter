@@ -13,7 +13,7 @@ def setDriverVersion(inputFile):
         search = 'StaticString'
         
         matchLines = []
-        i = 0
+        i=0
         
         # find lines matching search, add to list
         for line in lines:
@@ -70,12 +70,12 @@ def setIncludes(inputFile):
 
 # setManufacturer
 def setManufacturer(inputFile):
-    l0=inputFile.split('\\')
+    l0=inputFile.split('/')
     
     # get XML position
     if 'XML' in l0: xmlPos=l0.index('XML')
     elif 'xml' in l0: xmlPos=l0.index('xml')
-    else: return 'Manufacturer error - no XML in path.'
+    else: return 'Error: Manufacturer - no XML in path.'
     
     # move to manufacturer position and return manufacturer
     manufacturer = l0[xmlPos-2]
@@ -110,7 +110,7 @@ def setDriverName(inputFile):
             # get XML position
             if 'XML' in l0: xmlPos=l0.index('XML')
             elif 'xml' in l0: xmlPos=l0.index('xml')
-            else: return 'Driver Name error - no XML in path.'
+            else: return 'Error: Driver Name - no XML in path.'
             
             # move to manufacturer position and return manufacturer
             driverName = l0[xmlPos-1]
@@ -130,13 +130,13 @@ def setDriverName(inputFile):
         return driverName
 
 # build json
-def jsonData(inputFile):
+def jsonData(inputFile, path):
     includes=setIncludes(inputFile)
     manufacturer=setManufacturer(inputFile)
     driverName=setDriverName(inputFile)
     driverVersion=setDriverVersion(inputFile)
     dict = {'includes':[f'{includes}'], 'manufacturer':manufacturer, 'driverName':driverName, 'driverVersion':driverVersion, 'deviceName':f'{manufacturer} - {driverName}'}
     jsonString=json.dumps(dict, indent=4)
-    f = open('driver.json', 'w')
+    f = open(f'{path}\GVO\driver.json', 'w')
     f.write(jsonString)
     f.close

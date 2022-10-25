@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Examples",
-    "\\Examples\\snmp_drivers"
+    "\\Examples\\snmp_drivers",
+    "\\Examples\\snmp_drivers\\custom_drivers",
+    "\\Examples\\snmp_drivers\\custom_drivers\\barry",
+    "\\Examples\\snmp_drivers\\custom_drivers\\new example"
   ],
-  "SelectedNode": "\\Examples",
+  "SelectedNode": "\\snmp-packager.py",
   "PreviewInSolutionExplorer": false
 }
