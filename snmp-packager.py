@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, json
 from re import L
 import tkinter as tk
 import tkinter.filedialog as fd
@@ -51,7 +51,7 @@ def getMIBs(path):
                 shutil.copy(item, os.path.join(f'{path}\GVO\MIBs'))
     else: return
 
-# convert *.rsnmp to GVO version and copy to location
+# convert *.rsnmp to GVO version and copy to GVO location
 def convertSNMP(driver, path):
     with open(driver, 'r') as f:
         lines = f.readlines()
@@ -105,8 +105,20 @@ def convertSNMP(driver, path):
     # handle errors
     else: print(error)
 
+# gather included drivers
+def checkIncludes(path):
+    f = open(f'{path}\GVO\driver.json')
+    data = json.load(f)
+    includes=[]
+    for a in data['includes']:
+        b=a.split(', ')
+        includes.extend(b[:-1])
+
+    if len(includes) == 1: includes=False
+     
+    return includes
+
 # TODO
-# convert and collect dependant drivers
 # zip up into package
 
 # main
@@ -117,6 +129,14 @@ if __name__ == "__main__":
         getMIBs(driverFile['filePath'])
         convertSNMP(driverFile['fullPath'], driverFile['filePath'])
         jsonData(driverFile['fullPath'], driverFile['filePath'])
+        includes=checkIncludes(driverFile['filePath'])
+        if includes != False:
+            # included drivers moved, convert drivers
+            print(includes)
+            # CARRY ON HERE - FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Sandbox\\SNMP Library\\Cisco\\Common\\XML/GVO/DefinitionsQVC_JP.rsnmp'
+            for i in includes[1:]:
+                convertSNMP(f'{driverFile["filePath"]}/GVO/{i}', f'{driverFile["filePath"]}/GVO')
+        else: print('Error: no includes detected')
     else:
         print('User cancelled operation.')
         sleep(2)
