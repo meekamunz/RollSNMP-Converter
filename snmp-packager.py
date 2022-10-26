@@ -49,7 +49,15 @@ def getMIBs(path):
             print(f'{item} copied to {path}\GVO\MIBs\{item}')
 
 # convert *.rsnmp to GVO version and copy to GVO location
+# chris has done the MIBSource change, just need to do the move
 def convertSNMP(driver, path):
+
+    # grab driver name
+    n0=driver.split('/')
+    n1=n0[-1]
+    n2=n1.split('.')
+    name=n2[0]
+
     print(f'Converting {driver}...')
     with open(driver, 'r') as f:
         lines = f.readlines()
@@ -67,23 +75,25 @@ def convertSNMP(driver, path):
     # if list is empty, print error
     if len(matchLines)==0:
         MIBSource=False
-        error = 'Error: MIB source path not detected'
+        error = 'WARN: MIB source path not detected, original file used'
         # copy the file anyway incase this is correct
         parts = driver.split('/')
         shutil.copy(driver, os.path.join(f'{path}\GVO\{parts[-1]}'))
     # if list == 1 extract mib source path data
     elif len(matchLines)==1:
-            # read in string
-            s0=''.join(matchLines[0])
-            # split at ", grab the path
-            s1=s0.split('\"')
-            s2=s1[1]
-            # split at \
-            s3=s2.split('\\')
-            # create new MIB source, remving 'SNMP Library' entry
-            s4=s3[1:]
-            s5='/'.join(s4)
-            MIBSource = f'/t<MIBSource path="{s5}"/>'
+        # not sure if original path is correct, should it be manufacturer/MIBs, or driverName/MIBs?
+        ## read in string
+        #s0=''.join(matchLines[0])
+        ## split at ", grab the path
+        #s1=s0.split('\"')
+        #s2=s1[1]
+        ## split at \
+        #s3=s2.split('\\')
+        ## create new MIB source, remving 'SNMP Library' entry
+        #s4=s3[1:]
+        #s5='/'.join(s4)
+        #MIBSource = f'/t<MIBSource path="{s5}"/>'
+        MIBSource = f'/t<MIBSource path="{name}/MIBs"/>'
     # catch multiple entries
     else:
         MIBSource=False

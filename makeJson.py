@@ -61,6 +61,7 @@ def setIncludes(inputFile):
             l3.append(b[-1])
         l4=l0[-1].split('/')
         l3.append(l4[-1])
+        # needs each entry quoted
         includes = ', '.join(l3)
     
     else:
@@ -73,6 +74,7 @@ def setManufacturer(inputFile):
     l0=inputFile.split('/')
     
     # get XML position
+    # check for correct folder!
     if 'XML' in l0: xmlPos=l0.index('XML')
     elif 'xml' in l0: xmlPos=l0.index('xml')
     else: return 'Error: Manufacturer - no XML in path.'
