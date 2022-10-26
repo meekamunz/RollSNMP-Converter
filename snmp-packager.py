@@ -1,5 +1,4 @@
 import os, shutil, json
-from re import L
 import tkinter as tk
 import tkinter.filedialog as fd
 from time import sleep
@@ -13,7 +12,6 @@ root.withdraw()
 def folderStructure(path):
     try:
         newDir = f'{path}\GVO\MIBs'
-        print(newDir)
         os.makedirs(newDir)
         #OS ERROR HERE
     except OSError as e:
@@ -33,26 +31,26 @@ def inputFile():
 # collect required MIBs
 def getMIBs(path):
     # get a list of files?
-    mibsNeeded=yesNo('Are separate MIB files required?', default='yes')
-    if mibsNeeded==True:
-        getFiles=fd.askopenfilenames(title='Select MIBs...')
-        if getFiles == '': mibsList='empty files list'
-        else:
-            mibsList=[]
-            for a in getFiles:
-                b=a.split(', ')
-                mibsList.extend(b)
-        # check list is not empty
-        if mibsList == 'empty files list':
-            print('Error - no MIBs selected.')
-        else:
-            # copy drivers to \GVO\MIB location
-            for item in mibsList:
-                shutil.copy(item, os.path.join(f'{path}\GVO\MIBs'))
-    else: return
+    print('Select MIB files...')
+    getFiles=fd.askopenfilenames(title='Select MIBs...')
+    if getFiles == '': mibsList='empty files list'
+    else:
+        mibsList=[]
+        for a in getFiles:
+            b=a.split(', ')
+            mibsList.extend(b)
+    # check list is not empty
+    if mibsList == 'empty files list':
+        print('Error - no MIBs selected.')
+    else:
+        # copy drivers to \GVO\MIB location
+        for item in mibsList:
+            shutil.copy(item, os.path.join(f'{path}\GVO\MIBs'))
+            print(f'{item} copied to {path}\GVO\MIBs\{item}')
 
 # convert *.rsnmp to GVO version and copy to GVO location
 def convertSNMP(driver, path):
+    print(f'Converting {driver}...')
     with open(driver, 'r') as f:
         lines = f.readlines()
         search = '<MIBSource path='
@@ -70,6 +68,9 @@ def convertSNMP(driver, path):
     if len(matchLines)==0:
         MIBSource=False
         error = 'Error: MIB source path not detected'
+        # copy the file anyway incase this is correct
+        parts = driver.split('/')
+        shutil.copy(driver, os.path.join(f'{path}\GVO\{parts[-1]}'))
     # if list == 1 extract mib source path data
     elif len(matchLines)==1:
             # read in string
@@ -82,11 +83,11 @@ def convertSNMP(driver, path):
             # create new MIB source, remving 'SNMP Library' entry
             s4=s3[1:]
             s5='/'.join(s4)
-            MIBSource = f'\t<MIBSource path="{s5}"/>'
+            MIBSource = f'/t<MIBSource path="{s5}"/>'
     # catch multiple entries
     else:
         MIBSource=False
-        error = 'Error: multiple MIBSource entries'
+        error = f'Error: multiple MIBSource entries: {matchLines}'
         
     if MIBSource != False:
         # replace original matchLines[0] with new MIBSource
@@ -101,11 +102,15 @@ def convertSNMP(driver, path):
         with open(f'{path}\GVO\{name[-1]}', 'w') as f:
             f.write(fileData)
             f.close()
+        print('Complete')
     
     # handle errors
-    else: print(error)
+    else:
+        print(f'{driver} not converted, please check error message')
+        print(error)
 
 # gather included drivers
+# assumes that included drivers are in the same path as main driver
 def checkIncludes(path):
     f = open(f'{path}\GVO\driver.json')
     data = json.load(f)
@@ -114,29 +119,59 @@ def checkIncludes(path):
         b=a.split(', ')
         includes.extend(b[:-1])
 
-    if len(includes) == 1: includes=False
-     
+    if len(includes) == 0: includes=False
+    
     return includes
 
-# TODO
 # zip up into package
+def zipup(path, driver):
+    # remove '.rsnmp' from driver name
+    s=[]
+    s=driver.split('.')
+    name=s[0]
+
+    # make 'name' directory
+    os.mkdir(f'{path}/GVO/{name}')
+
+    # copy GVO folder content to new folder 'name'
+    src_dir=f'{path}/GVO/'
+    dst_dir=f'{path}/GVO/{name}/'
+
+    fileNames=os.listdir(src_dir)
+
+    for f in fileNames:
+        try:
+            shutil.move(os.path.join(src_dir+f), os.path.join(dst_dir+f))
+        except: continue
+
+    # zip up
+    os.chdir(f'{path}\GVO')
+    shutil.make_archive(name, 'zip', f'{path}\GVO\{name}')
+
+    # remove unzipped version
+    shutil.rmtree(f'{path}\GVO\{name}')
 
 # main
 if __name__ == "__main__":
-    driverFile = inputFile()
-    if driverFile!=False:
-        folderStructure(driverFile['filePath'])
-        getMIBs(driverFile['filePath'])
-        convertSNMP(driverFile['fullPath'], driverFile['filePath'])
-        jsonData(driverFile['fullPath'], driverFile['filePath'])
-        includes=checkIncludes(driverFile['filePath'])
-        if includes != False:
-            # included drivers moved, convert drivers
-            print(includes)
-            # CARRY ON HERE - FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Sandbox\\SNMP Library\\Cisco\\Common\\XML/GVO/DefinitionsQVC_JP.rsnmp'
-            for i in includes[1:]:
-                convertSNMP(f'{driverFile["filePath"]}/GVO/{i}', f'{driverFile["filePath"]}/GVO')
-        else: print('Error: no includes detected')
-    else:
-        print('User cancelled operation.')
-        sleep(2)
+    loop=True
+    while loop:
+        driverFile = inputFile()
+        if driverFile!=False:
+            folderStructure(driverFile['filePath'])
+            getMIBs(driverFile['filePath'])
+            convertSNMP(driverFile['fullPath'], driverFile['filePath'])
+            jsonData(driverFile['fullPath'], driverFile['filePath'])
+            includes=checkIncludes(driverFile['filePath'])
+            if includes != False:
+                # included drivers moved, convert drivers
+                for i in includes:
+                    driver=f'{driverFile["filePath"]}/{i}'
+                    driver.replace('\\', '/')
+                    outputPath=f'{driverFile["filePath"]}'
+                    convertSNMP(driver, outputPath)
+            zipup(driverFile['filePath'], driverFile['fileName'])
+        else:
+            print('User cancelled operation.')
+            sleep(2)
+        repeat=yesNo('Convert another driver?', default="no")
+        loop=repeat

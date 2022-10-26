@@ -48,7 +48,6 @@ def setDriverVersion(inputFile):
     return driverVersion
 
 # setIncludes
-#need to find dependant drivers
 def setIncludes(inputFile):
     l0=inputFile.split('\\')
     # handle dependant drivers
@@ -60,7 +59,8 @@ def setIncludes(inputFile):
         for a in l2:
             b=a.split('/')
             l3.append(b[-1])
-        l3.append(l0[-1])
+        l4=l0[-1].split('/')
+        l3.append(l4[-1])
         includes = ', '.join(l3)
     
     else:
