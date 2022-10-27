@@ -60,9 +60,8 @@ def setIncludes(inputFile):
             b=a.split('/')
             l3.append(b[-1])
         l4=l0[-1].split('/')
-        l3.append(l4[-1])
-        # needs each entry quoted
-        includes = ', '.join(l3)
+        # needs each entry quoted, so leave as list
+        includes = l3+l4
     
     else:
         includes = l0[-1]
@@ -71,16 +70,14 @@ def setIncludes(inputFile):
 
 # setManufacturer
 def setManufacturer(inputFile):
-    l0=inputFile.split('/')
+    l0=inputFile.split('\\')
     
-    # get XML position
-    # check for correct folder!
-    if 'XML' in l0: xmlPos=l0.index('XML')
-    elif 'xml' in l0: xmlPos=l0.index('xml')
-    else: return 'Error: Manufacturer - no XML in path.'
+    # get 'SNMP Library' position
+    if 'SNMP Library' in l0: libraryPos=l0.index('SNMP Library')
+    else: return 'Error: Manufacturer - no \'SNMP Library\' in path.'
     
     # move to manufacturer position and return manufacturer
-    manufacturer = l0[xmlPos-2]
+    manufacturer = l0[libraryPos+1]
     return manufacturer
 
 # setDriverName
@@ -137,8 +134,8 @@ def jsonData(inputFile, path):
     manufacturer=setManufacturer(inputFile)
     driverName=setDriverName(inputFile)
     driverVersion=setDriverVersion(inputFile)
-    dict = {'includes':[f'{includes}'], 'manufacturer':manufacturer, 'driverName':driverName, 'driverVersion':driverVersion, 'deviceName':f'{manufacturer} - {driverName}'}
+    dict = {'includes':includes, 'manufacturer':manufacturer, 'driverName':driverName, 'driverVersion':driverVersion, 'deviceName':f'{manufacturer} - {driverName}'}
     jsonString=json.dumps(dict, indent=4)
-    f = open(f'{path}\GVO\driver.json', 'w')
+    f = open(f'{path}\driver.json', 'w')
     f.write(jsonString)
     f.close

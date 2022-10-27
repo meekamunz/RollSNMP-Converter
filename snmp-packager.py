@@ -1,6 +1,7 @@
-import os, shutil, json
+import os, shutil, json, re
 import tkinter as tk
 import tkinter.filedialog as fd
+from pathlib import Path
 from time import sleep
 from makeJson import jsonData
 from functions import yesNo
@@ -8,15 +9,23 @@ from functions import yesNo
 root = tk.Tk()
 root.withdraw()
 
+MIB_SOURCE_REGEX = r'<MIBSource.*href=".*?".*?>'
+
+GLOBAL_TRANSLATION_DEF_LINK_REGEX = r'<GlobalTranslationDef.*link="(.*?)".*?>'
+TRANSLATION_DEF_LINK_REGEX = r'(<TranslationDef.*link=")(.*?)(".*?>)'
+
 # create folder structure
-def folderStructure(path):
+def folderStructure(path, name):
     try:
-        newDir = f'{path}\GVO\MIBs'
+        newDir = f'{path}\GVO\{name}\MIBs'
         os.makedirs(newDir)
-        #OS ERROR HERE
     except OSError as e:
         print ("Error: Creation of the directory %s failed" % newDir)
         print (e)
+
+# copy driver to GVO dir
+def copyDriver(driver, path, name):
+    shutil.copy(driver, os.path.join(f'{path}\GVO\{name}'))
 
 # select inputFile
 def inputFile():
@@ -29,7 +38,7 @@ def inputFile():
     return inputFile
 
 # collect required MIBs
-def getMIBs(path):
+def getMIBs(path, name):
     # get a list of files?
     print('Select MIB files...')
     getFiles=fd.askopenfilenames(title='Select MIBs...')
@@ -45,8 +54,7 @@ def getMIBs(path):
     else:
         # copy drivers to \GVO\MIB location
         for item in mibsList:
-            shutil.copy(item, os.path.join(f'{path}\GVO\MIBs'))
-            print(f'{item} copied to {path}\GVO\MIBs\{item}')
+            shutil.copy(item, os.path.join(f'{path}\GVO\{name}\MIBs'))
 
 # convert *.rsnmp to GVO version and copy to GVO location
 # chris has done the MIBSource change, just need to do the move
@@ -119,67 +127,58 @@ def convertSNMP(driver, path):
         print(f'{driver} not converted, please check error message')
         print(error)
 
-# gather included drivers
+# gather list of included drivers
 # assumes that included drivers are in the same path as main driver
 def checkIncludes(path):
-    f = open(f'{path}\GVO\driver.json')
+    f = open(f'{path}\driver.json')
     data = json.load(f)
     includes=[]
-    for a in data['includes']:
-        b=a.split(', ')
-        includes.extend(b[:-1])
-
+    if isinstance(data['includes'], list)==True: includes.extend(data['includes'][:-1])
+            
     if len(includes) == 0: includes=False
-    
+    f.close
     return includes
 
 # zip up into package
 def zipup(path, driver):
-    # remove '.rsnmp' from driver name
-    s=[]
-    s=driver.split('.')
-    name=s[0]
-
-    # make 'name' directory
-    os.mkdir(f'{path}/GVO/{name}')
-
-    # copy GVO folder content to new folder 'name'
-    src_dir=f'{path}/GVO/'
-    dst_dir=f'{path}/GVO/{name}/'
-
-    fileNames=os.listdir(src_dir)
-
-    for f in fileNames:
-        try:
-            shutil.move(os.path.join(src_dir+f), os.path.join(dst_dir+f))
-        except: continue
-
-    # zip up
-    os.chdir(f'{path}\GVO')
-    shutil.make_archive(name, 'zip', f'{path}\GVO\{name}')
-
+    os.chdir(f'{path}\GVO\\')
+    shutil.make_archive(driver, 'zip', f'{path}\GVO\{driver}')
     # remove unzipped version
-    shutil.rmtree(f'{path}\GVO\{name}')
+    shutil.rmtree(f'{path}\GVO\{driver}')
 
 # main
 if __name__ == "__main__":
     loop=True
     while loop:
         driverFile = inputFile()
+        s=[]
+        s=driverFile['fileName'].split('.')
+        driverName=s[0]
         if driverFile!=False:
-            folderStructure(driverFile['filePath'])
-            getMIBs(driverFile['filePath'])
-            convertSNMP(driverFile['fullPath'], driverFile['filePath'])
-            jsonData(driverFile['fullPath'], driverFile['filePath'])
-            includes=checkIncludes(driverFile['filePath'])
+            folderStructure(driverFile['filePath'], driverName)
+            getMIBs(driverFile['filePath'], driverName)
+            copyDriver(driverFile['fullPath'], driverFile['filePath'], driverName)
+
+            # don't need this now
+            #convertSNMP(driverFile['fullPath'], driverFile['filePath'])
+            
+            # create gvo driver file full path & fill location
+            gvoDriver=driverFile['filePath']+'\\GVO\\'+driverName+'\\'+driverFile['fileName']
+            gvoDriverLoc=driverFile['filePath']+'\\GVO\\'+driverName
+
+            # create driver.json
+            jsonData(gvoDriver, gvoDriverLoc)
+
+            # move any dependant drivers
+            includes=checkIncludes(gvoDriverLoc)
             if includes != False:
-                # included drivers moved, convert drivers
+                # move included drivers
                 for i in includes:
-                    driver=f'{driverFile["filePath"]}/{i}'
-                    driver.replace('\\', '/')
-                    outputPath=f'{driverFile["filePath"]}'
-                    convertSNMP(driver, outputPath)
-            zipup(driverFile['filePath'], driverFile['fileName'])
+                    copyDriver(driverFile['filePath']+'\\'+i, driverFile['filePath'], driverName)
+
+            # convert MIB Source can be done on the server
+ 
+            zipup(driverFile['filePath'], driverName)
         else:
             print('User cancelled operation.')
             sleep(2)

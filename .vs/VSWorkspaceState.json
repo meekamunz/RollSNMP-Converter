@@ -7,9 +7,7 @@
     "\\Examples\\snmp_drivers\\custom_drivers\\barry",
     "\\Examples\\snmp_drivers\\custom_drivers\\barry2",
     "\\Examples\\snmp_drivers\\custom_drivers\\new example",
-    "\\Examples\\snmp_drivers\\factory_drivers",
     "\\Examples\\snmp_drivers\\factory_drivers\\QUANTEL_LIVETOUCH_1.0.0"
   ],
-  "SelectedNode": "\\snmp-packager.py",
   "PreviewInSolutionExplorer": false
 }

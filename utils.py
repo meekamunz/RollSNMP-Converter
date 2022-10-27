@@ -95,10 +95,10 @@ def update_driver_mib_paths(snmp_library_dir, rsnmp_file):
     driver_dir = os.path.dirname(rsnmp_file)
     mibs_path = os.path.join(os.path.relpath(driver_dir, snmp_library_dir), 'MIBs')
     mibs_href = mibs_path.replace('\\', '/')
-
+    
     with open(rsnmp_file, 'r') as f:
         content = re.sub(MIB_SOURCE_REGEX, f'<MIBSource href="{mibs_href}"/>', f.read())
-
+        
     with open(rsnmp_file, 'w') as f:
         f.write(content)
 
