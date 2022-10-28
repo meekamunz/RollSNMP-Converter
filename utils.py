@@ -17,7 +17,7 @@ def log(message):
 
 def get_includes_from_includes_json(snmp_library_dir, file):
     includes = []
-
+    
     with open(file, "r") as f:
         try:
             includes_json = json.loads(f.read())
@@ -27,7 +27,7 @@ def get_includes_from_includes_json(snmp_library_dir, file):
             includes_path = os.path.relpath(os.path.join(os.path.dirname(file), include), snmp_library_dir)
             href = includes_path.replace('\\', '/')
             includes.append(href)
-
+            
     return includes
 
 
@@ -44,7 +44,7 @@ def get_driver_id_from_driver_json(file):
             driver = json.loads(f.read())
         except json.decoder.JSONDecodeError as e:
             return ''
-
+        
         return get_driver_id(driver)
 
 
@@ -61,7 +61,7 @@ def get_driver_json_from_driver_id(snmp_library_dir, driver_id):
 
 def get_includes_from_driver_json(snmp_library_dir, file):
     includes = []
-
+    
     with open(file, "r") as f:
         try:
             driver = json.loads(f.read())
@@ -72,18 +72,18 @@ def get_includes_from_driver_json(snmp_library_dir, file):
                 driver_path = os.path.relpath(os.path.join(os.path.dirname(file), include), snmp_library_dir)
                 href = driver_path.replace('\\', '/')
                 includes.append(href)
-
+                
     return includes
 
 
 def get_includes(snmp_library_dir, path):
     includes = []
-
+    
     # Parse includes file
     files = Path(path).rglob('includes.json')
     for file in files:
         includes.extend(get_includes_from_includes_json(snmp_library_dir, file))
-
+        
     # Parse driver file
     files = Path(path).rglob('driver.json')
     for file in files:
@@ -118,7 +118,7 @@ def update_driver_type_name(driver_dir):
             text = f.read()
             regex = r'(<UnitTypeDef.*typeName=").*?(".*?>)'
             text = re.sub(regex, rf'\1{driver_id}\2', text)
-
+            
         with open(rsnmp_file, 'w') as f:
             f.write(text)
 
@@ -133,35 +133,35 @@ def update_library_type_names(snmp_library_dir):
 def update_driver_link_names(driver_dir):
     driver_json_file = os.path.join(driver_dir, 'driver.json')
     driver_id = get_driver_id_from_driver_json(driver_json_file)
-
+    
     rsnmp_files = Path(driver_dir).rglob('*.rsnmp')
-
+    
     # Get existing link names
     links = []
     for file in rsnmp_files:
         with open(file, 'r') as f:
             matches = re.findall(GLOBAL_TRANSLATION_DEF_LINK_REGEX, f.read())
             links.extend(matches)
-
+            
     rsnmp_files = Path(driver_dir).rglob('*.rsnmp')
-
+    
     for file in rsnmp_files:
         with open(file, 'r') as f:
             text = f.read()
-
+            
         for link in links:
             # Don't process links that have already been updated
             if '::' in link:
                 continue
-
+            
             new_link = f'{driver_id}::{link}'
-
+            
             regex = rf'(<GlobalTranslationDef.*link="){link}(".*?>)'
             text = re.sub(regex, rf'\1{new_link}\2', text)
-
+            
             regex = rf'(<TranslationDef.*link="){link}(".*?>)'
             text = re.sub(regex, rf'\1{new_link}\2', text)
-
+            
         with open(file, 'w') as f:
             f.write(text)
 
@@ -186,7 +186,7 @@ def update_library_driver_directory_names(snmp_library_dir):
     file_list = []
     for file in files:
         file_list.append(file)
-
+        
     for file in file_list:
         driver_dir = os.path.dirname(file)
         update_library_driver_directory_name(driver_dir)
