@@ -57,8 +57,7 @@ def getMIBs(path, name):
             shutil.copy(item, os.path.join(f'{path}\GVO\{name}\MIBs'))
 
 # convert *.rsnmp to GVO version and copy to GVO location
-# chris has done the MIBSource change, just need to do the move
-def convertSNMP(driver, path):
+def convertSNMP(driver, path, driverName):
 
     # grab driver name
     n0=driver.split('/')
@@ -117,10 +116,11 @@ def convertSNMP(driver, path):
         # grab driver name
         name=driver.split('/')
         # write new driver
-        with open(f'{path}\GVO\{name[-1]}', 'w') as f:
+        with open(f'{path}\GVO\{driverName}\{name[-1]}', 'w') as f:
             f.write(fileData)
             f.close()
         print('Complete')
+        
     
     # handle errors
     else:
@@ -159,8 +159,8 @@ if __name__ == "__main__":
             getMIBs(driverFile['filePath'], driverName)
             copyDriver(driverFile['fullPath'], driverFile['filePath'], driverName)
 
-            # don't need this now
-            #convertSNMP(driverFile['fullPath'], driverFile['filePath'])
+            # convert driver to GVO
+            convertSNMP(driverFile['fullPath'], driverFile['filePath'], driverName)
             
             # create gvo driver file full path & fill location
             gvoDriver=driverFile['filePath']+'\\GVO\\'+driverName+'\\'+driverFile['fileName']
@@ -176,8 +176,6 @@ if __name__ == "__main__":
                 for i in includes:
                     copyDriver(driverFile['filePath']+'\\'+i, driverFile['filePath'], driverName)
 
-            # convert MIB Source can be done on the server
- 
             zipup(driverFile['filePath'], driverName)
         else:
             print('User cancelled operation.')

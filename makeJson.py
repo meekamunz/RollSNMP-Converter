@@ -64,7 +64,8 @@ def setIncludes(inputFile):
         includes = l3+l4
     
     else:
-        includes = l0[-1]
+        # return includes as a list
+        includes = [l0[-1]]
     
     return includes
 
